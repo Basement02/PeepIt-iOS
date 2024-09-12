@@ -8,18 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305C92C932341003B00FE /* PeepItApp.swift */; };
-		ABC305CC2C932341003B00FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* ContentView.swift */; };
+		ABC305CC2C932341003B00FE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* HomeView.swift */; };
 		ABC305CE2C932342003B00FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305CD2C932342003B00FE /* Assets.xcassets */; };
 		ABC305D12C932342003B00FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305D02C932342003B00FE /* Preview Assets.xcassets */; };
 		ABC305DD2C9328B1003B00FE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = ABC305DC2C9328B1003B00FE /* ComposableArchitecture */; };
+		ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305DE2C93345D003B00FE /* HomeStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ABC305C62C932341003B00FE /* PeepIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeepIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC305C92C932341003B00FE /* PeepItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItApp.swift; sourceTree = "<group>"; };
-		ABC305CB2C932341003B00FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ABC305CB2C932341003B00FE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ABC305CD2C932342003B00FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABC305D02C932342003B00FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ABC305DE2C93345D003B00FE /* HomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +81,8 @@
 		ABC305D82C9324E2003B00FE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				ABC305CB2C932341003B00FE /* ContentView.swift */,
+				ABC305CB2C932341003B00FE /* HomeView.swift */,
+				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -169,7 +172,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABC305CC2C932341003B00FE /* ContentView.swift in Sources */,
+				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
+				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
