@@ -10,4 +10,12 @@ import ComposableArchitecture
 @Reducer
 struct HomeStore {
     
+    @ObservableState
+    struct State {
+
+    }
+
+    enum Action {
+
+    }
 }

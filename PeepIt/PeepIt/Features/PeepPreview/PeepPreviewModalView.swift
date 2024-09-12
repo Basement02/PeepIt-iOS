@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct PeepPreviewModalView: View {
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            Color.white
+
+            Text("미리보기 핍")
+        }
     }
 }
-
 #Preview {
     PeepPreviewModalView()
 }

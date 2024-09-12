@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct ContentView: View {
+    let store: StoreOf<HomeStore>
 
     var body: some View {
         ZStack {
@@ -33,6 +35,14 @@ struct ContentView: View {
                 }
                 .padding(.horizontal, 17)
             }
+        }
+        .sheet(isPresented: .constant(true)) {
+            PeepPreviewModalView()
+                .ignoresSafeArea()
+                .frame(maxWidth: .infinity)
+                .clearModalBackground()
+                .presentationDetents([.height(60), .medium])
+                .interactiveDismissDisabled()
         }
     }
 }
@@ -91,5 +101,7 @@ extension ContentView {
 }
 
 #Preview {
-    ContentView()
+    ContentView(
+        store: .init(initialState: HomeStore.State()) { HomeStore() }
+    )
 }
