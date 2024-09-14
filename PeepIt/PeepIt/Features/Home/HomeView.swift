@@ -25,47 +25,50 @@ struct HomeView: View {
     let store: StoreOf<HomeStore>
 
     var body: some View {
-        ZStack {
-            Color(UIColor.systemGray6)
-                .ignoresSafeArea()
+        WithViewStore(self.store, observe: {$0}) { viewStore in
+            ZStack {
+                Color(UIColor.systemGray6)
+                    .ignoresSafeArea()
 
-            VStack {
-                HStack {
-                    moreButton
-                    Spacer()
-                    setMyTownButton
-                    Spacer()
-                    profileButton
-                }
-                .padding(.horizontal, 17)
-
-                Spacer()
-
-                HStack {
-                    currentLocationButton
-                    Spacer()
-                    uploadPeepButton
-                }
-                .padding(.horizontal, 17)
-                .padding(
-                    .bottom, store.state.sheetHeight + 17
-                )
-            }
-        }
-        .sheet(isPresented: .constant(true)) {
-            GeometryReader { geometry in
-                PeepPreviewModalView(store: store)
-                    .frame(maxWidth: .infinity)
-                    .clearModalBackground()
-                    .interactiveDismissDisabled()
-                    .presentationDetents(
-                        Set(SheetType.allCases.map {
-                            PresentationDetent.height($0.height)
-                        })
-                    )
-                    .onChange(of: geometry.size.height) { newHeight in
-                        store.send(.setSheetHeight(height: newHeight))
+                VStack {
+                    HStack {
+                        moreButton
+                        Spacer()
+                        setMyTownButton
+                        Spacer()
+                        profileButton
                     }
+                    .padding(.horizontal, 17)
+
+                    Spacer()
+
+                    HStack {
+                        currentLocationButton
+                        Spacer()
+                        uploadPeepButton
+                    }
+                    .padding(.horizontal, 17)
+                    .padding(
+                        .bottom, viewStore.state.sheetHeight + 17
+                    )
+                }
+            }
+            .sheet(isPresented: .constant(true)) {
+                GeometryReader { geometry in
+                    PeepPreviewModalView(store: store)
+                        .frame(maxWidth: .infinity)
+                        .clearModalBackground()
+                        .presentCornerRadius(40)
+                        .interactiveDismissDisabled()
+                        .presentationDetents(
+                            Set(SheetType.allCases.map {
+                                PresentationDetent.height($0.height)
+                            })
+                        )
+                        .onChange(of: geometry.size.height) { newHeight in
+                            store.send(.setSheetHeight(height: newHeight))
+                        }
+                }
             }
         }
     }

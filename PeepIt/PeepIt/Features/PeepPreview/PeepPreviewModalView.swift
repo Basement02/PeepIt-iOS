@@ -12,21 +12,23 @@ struct PeepPreviewModalView: View {
     let store: StoreOf<HomeStore>
 
     var body: some View {
-        VStack {
-            if !store.state.isExpanded {
-                scrollUpLabel
-                    .padding(.top, 33)
-                    .padding(.bottom, 16)
-            }
-
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 18){
-                    ForEach(1...5, id: \.self) { _ in
-                        PeepPreviewCell(peep: .stubPeep1)
-                    }
+        WithViewStore(self.store, observe: {$0}) { viewStore in
+            VStack {
+                if viewStore.state.isScrolledDown {
+                    scrollUpLabel
+                        .padding(.top, 33)
+                        .padding(.bottom, 16)
                 }
-                .padding(.top, 37)
-                .padding(.horizontal, 18)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 18){
+                        ForEach(1...5, id: \.self) { _ in
+                            PeepPreviewCell(peep: .stubPeep1)
+                        }
+                    }
+                    .padding(.top, 37)
+                    .padding(.horizontal, 18)
+                }
             }
         }
     }
