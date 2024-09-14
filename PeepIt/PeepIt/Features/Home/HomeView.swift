@@ -8,20 +8,20 @@
 import SwiftUI
 import ComposableArchitecture
 
-enum SheetType {
-    case fold, unfold
+enum SheetType: CaseIterable {
+    case scrollDown, scrollUp
 
     var height: CGFloat {
         switch self {
-        case .fold:
-            return CGFloat(60)
-        case .unfold:
+        case .scrollDown:
+            return CGFloat(69)
+        case .scrollUp:
             return CGFloat(500)
         }
     }
 }
 
-struct ContentView: View {
+struct HomeView: View {
     let store: StoreOf<HomeStore>
 
     var body: some View {
@@ -48,32 +48,30 @@ struct ContentView: View {
                 }
                 .padding(.horizontal, 17)
                 .padding(
-                    .bottom, store.state.sheetType.height + 17
+                    .bottom, store.state.sheetHeight + 17
                 )
             }
         }
         .sheet(isPresented: .constant(true)) {
-            PeepPreviewModalView()
-                .ignoresSafeArea()
-                .frame(maxWidth: .infinity)
-                .clearModalBackground()
-                .presentationDetents([.height(60), .height(500)])
-                .interactiveDismissDisabled()
-                .background(GeometryReader { geometry in
-                    Color.clear
-                        .onChange(of: geometry.size.height) { newHeight in
-                            if newHeight == SheetType.fold.height {
-                                store.send(.setSheet(isExpanded: false))
-                            } else if newHeight == SheetType.unfold.height {
-                                store.send(.setSheet(isExpanded: true))
-                            }
-                        }
-                })
+            GeometryReader { geometry in
+                PeepPreviewModalView(store: store)
+                    .frame(maxWidth: .infinity)
+                    .clearModalBackground()
+                    .interactiveDismissDisabled()
+                    .presentationDetents(
+                        Set(SheetType.allCases.map {
+                            PresentationDetent.height($0.height)
+                        })
+                    )
+                    .onChange(of: geometry.size.height) { newHeight in
+                        store.send(.setSheetHeight(height: newHeight))
+                    }
+            }
         }
     }
 }
 
-extension ContentView {
+extension HomeView {
 
     private var moreButton: some View {
         Button {
@@ -127,7 +125,9 @@ extension ContentView {
 }
 
 #Preview {
-    ContentView(
-        store: .init(initialState: HomeStore.State()) { HomeStore() }
+    HomeView(
+        store: .init(initialState: HomeStore.State()) {
+            HomeStore()
+        }
     )
 }

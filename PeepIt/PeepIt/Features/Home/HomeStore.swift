@@ -13,18 +13,20 @@ struct HomeStore {
     
     @ObservableState
     struct State {
-        var sheetType: SheetType = .fold
+        var sheetHeight: CGFloat = SheetType.scrollDown.height
+        var isExpanded: Bool = false
     }
 
     enum Action {
-        case setSheet(isExpanded: Bool)
+        case setSheetHeight(height: CGFloat)
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .setSheet(isExpanded):
-                state.sheetType = isExpanded ? .unfold : .fold
+            case let .setSheetHeight(height):
+                state.sheetHeight = height
+                state.isExpanded = (height == SheetType.scrollUp.height)
                 return .none
             }
         }
