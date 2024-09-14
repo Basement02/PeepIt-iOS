@@ -11,10 +11,9 @@ import ComposableArchitecture
 @Reducer
 struct HomeStore {
     
-    @ObservableState
-    struct State {
+    struct State: Equatable {
         var sheetHeight: CGFloat = SheetType.scrollDown.height
-        var isExpanded: Bool = false
+        var isScrolledDown: Bool = false
     }
 
     enum Action {
@@ -26,7 +25,7 @@ struct HomeStore {
             switch action {
             case let .setSheetHeight(height):
                 state.sheetHeight = height
-                state.isExpanded = (height == SheetType.scrollUp.height)
+                state.isScrolledDown = (height == SheetType.scrollDown.height)
                 return .none
             }
         }

@@ -58,7 +58,6 @@ struct HomeView: View {
                     PeepPreviewModalView(store: store)
                         .frame(maxWidth: .infinity)
                         .clearModalBackground()
-                        .presentCornerRadius(40)
                         .interactiveDismissDisabled()
                         .presentationDetents(
                             Set(SheetType.allCases.map {
