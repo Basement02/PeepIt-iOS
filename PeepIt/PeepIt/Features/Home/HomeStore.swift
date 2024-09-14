@@ -18,6 +18,7 @@ struct HomeStore {
 
     enum Action {
         case setSheetHeight(height: CGFloat)
+        case previewPeepTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -26,6 +27,11 @@ struct HomeStore {
             case let .setSheetHeight(height):
                 state.sheetHeight = height
                 state.isScrolledDown = (height == SheetType.scrollDown.height)
+                return .none
+
+            case .previewPeepTapped:
+                // TODO: 상세 핍 이동
+                print("tap: preview peep")
                 return .none
             }
         }

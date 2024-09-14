@@ -27,6 +27,9 @@ struct PeepPreviewModalView: View {
                         HStack(spacing: 18){
                             ForEach(1...5, id: \.self) { _ in
                                 PeepPreviewCell(peep: .stubPeep1)
+                                    .onTapGesture {
+                                        store.send(.previewPeepTapped)
+                                    }
                             }
                         }
                         .padding(.top, 37)
