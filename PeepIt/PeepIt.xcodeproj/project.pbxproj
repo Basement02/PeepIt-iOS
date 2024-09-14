@@ -8,18 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305C92C932341003B00FE /* PeepItApp.swift */; };
-		ABC305CC2C932341003B00FE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* ContentView.swift */; };
+		ABC305CC2C932341003B00FE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* HomeView.swift */; };
 		ABC305CE2C932342003B00FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305CD2C932342003B00FE /* Assets.xcassets */; };
 		ABC305D12C932342003B00FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305D02C932342003B00FE /* Preview Assets.xcassets */; };
 		ABC305DD2C9328B1003B00FE /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = ABC305DC2C9328B1003B00FE /* ComposableArchitecture */; };
+		ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305DE2C93345D003B00FE /* HomeStore.swift */; };
+		ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */; };
+		ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */; };
+		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
+		ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserProfile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		ABC305C62C932341003B00FE /* PeepIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeepIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC305C92C932341003B00FE /* PeepItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItApp.swift; sourceTree = "<group>"; };
-		ABC305CB2C932341003B00FE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		ABC305CB2C932341003B00FE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		ABC305CD2C932342003B00FE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABC305D02C932342003B00FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		ABC305DE2C93345D003B00FE /* HomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeStore.swift; sourceTree = "<group>"; };
+		ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewModalView.swift; sourceTree = "<group>"; };
+		ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgroundViewModifier.swift; sourceTree = "<group>"; };
+		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
+		ABC305F22C95A567003B00FE /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				ABC305D72C9324CC003B00FE /* Features */,
+				ABC305EF2C95A4BF003B00FE /* Models */,
+				ABC305E72C933EF3003B00FE /* Components */,
 				ABC305DA2C932514003B00FE /* Resources */,
 				ABC305C92C932341003B00FE /* PeepItApp.swift */,
 			);
@@ -72,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				ABC305D82C9324E2003B00FE /* Home */,
+				ABC305E02C933A45003B00FE /* PeepPreview */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -79,7 +92,8 @@
 		ABC305D82C9324E2003B00FE /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				ABC305CB2C932341003B00FE /* ContentView.swift */,
+				ABC305CB2C932341003B00FE /* HomeView.swift */,
+				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -91,6 +105,39 @@
 				ABC305CF2C932342003B00FE /* Preview Content */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		ABC305E02C933A45003B00FE /* PeepPreview */ = {
+			isa = PBXGroup;
+			children = (
+				ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */,
+			);
+			path = PeepPreview;
+			sourceTree = "<group>";
+		};
+		ABC305E72C933EF3003B00FE /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				ABC305F62C95C8D7003B00FE /* Modifiers */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		ABC305EF2C95A4BF003B00FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
+				ABC305F22C95A567003B00FE /* UserProfile.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		ABC305F62C95C8D7003B00FE /* Modifiers */ = {
+			isa = PBXGroup;
+			children = (
+				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
+			);
+			path = Modifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,7 +216,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABC305CC2C932341003B00FE /* ContentView.swift in Sources */,
+				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
+				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
+				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
+				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
+				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
