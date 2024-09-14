@@ -58,6 +58,7 @@ struct HomeView: View {
                     PeepPreviewModalView(store: store)
                         .frame(maxWidth: .infinity)
                         .clearModalBackground()
+                        .ignoresSafeArea()
                         .interactiveDismissDisabled()
                         .presentationDetents(
                             Set(SheetType.allCases.map {

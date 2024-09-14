@@ -13,21 +13,25 @@ struct PeepPreviewModalView: View {
 
     var body: some View {
         WithViewStore(self.store, observe: {$0}) { viewStore in
-            VStack {
-                if viewStore.state.isScrolledDown {
-                    scrollUpLabel
-                        .padding(.top, 33)
-                        .padding(.bottom, 16)
-                }
-
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 18){
-                        ForEach(1...5, id: \.self) { _ in
-                            PeepPreviewCell(peep: .stubPeep1)
-                        }
+            ZStack {
+                Color.white
+                
+                VStack {
+                    if viewStore.state.isScrolledDown {
+                        scrollUpLabel
+                            .padding(.top, 33)
+                            .padding(.bottom, 16)
                     }
-                    .padding(.top, 37)
-                    .padding(.horizontal, 18)
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: 18){
+                            ForEach(1...5, id: \.self) { _ in
+                                PeepPreviewCell(peep: .stubPeep1)
+                            }
+                        }
+                        .padding(.top, 37)
+                        .padding(.horizontal, 18)
+                    }
                 }
             }
         }
