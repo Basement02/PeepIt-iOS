@@ -36,7 +36,7 @@ struct PeepDetailView: View {
                     VStack(alignment: .trailing, spacing: 28) {
                         if store.state.showReactionList {
                             reactionListView
-                                .padding(.trailing, -10)
+                                .padding(.trailing, -6)
                         }
 
                         reactionButton
@@ -137,19 +137,16 @@ extension PeepDetailView {
 
     private var reactionListView: some View {
         VStack {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            ForEach(0..<5) { _ in
+                Circle()
+                    .frame(width: 39, height: 39)
+                    .foregroundStyle(Color.gray)
+            }
         }
-        .padding(10)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 12)
         .background {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(Color.init(uiColor: .systemGray4))
         }
     }
