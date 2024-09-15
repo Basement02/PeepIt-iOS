@@ -17,6 +17,8 @@
 		ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */; };
 		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
 		ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserProfile.swift */; };
+		ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */; };
+		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgroundViewModifier.swift; sourceTree = "<group>"; };
 		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
 		ABC305F22C95A567003B00FE /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
+		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +89,7 @@
 			children = (
 				ABC305D82C9324E2003B00FE /* Home */,
 				ABC305E02C933A45003B00FE /* PeepPreview */,
+				ABD631BF2C97579C00AFF299 /* PeepDetail */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -138,6 +143,15 @@
 				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		ABD631BF2C97579C00AFF299 /* PeepDetail */ = {
+			isa = PBXGroup;
+			children = (
+				ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */,
+				ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */,
+			);
+			path = PeepDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,8 +235,10 @@
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
+				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
