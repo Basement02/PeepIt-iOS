@@ -6,45 +6,54 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct PeepDetailView: View {
+    let store: StoreOf<PeepDetailStore>
 
     var body: some View {
-        ZStack {
-            Color.white
+        WithPerceptionTracking {
+            ZStack {
+                Color.white
 
-            VStack {
-                HStack {
-                    backButton
+                VStack {
+                    HStack {
+                        backButton
+                        Spacer()
+
+                        VStack(spacing: 12) {
+                            locationButton
+                            timeLabel
+                        }
+
+                        Spacer()
+                        moreButton
+                    }
+                    .padding(.horizontal, 17)
+
                     Spacer()
 
-                    VStack(spacing: 12) {
-                        locationButton
-                        timeLabel
+                    VStack(alignment: .trailing, spacing: 28) {
+                        if store.state.showReactionList {
+                            reactionListView
+                                .padding(.trailing, -10)
+                        }
+
+                        reactionButton
+
+                        HStack(spacing: 0) {
+                            profileView
+                                .padding(.trailing, 8)
+
+                            bubbleView
+                                .padding(.trailing, 17)
+
+                            chattingButton
+                        }
                     }
-
-                    Spacer()
-                    moreButton
+                    .padding(.leading, 29)
+                    .padding(.trailing, 20)
                 }
-                .padding(.horizontal, 17)
-
-                Spacer()
-
-                VStack(alignment: .trailing, spacing: 28) {
-                    reactionButton
-
-                    HStack(spacing: 0) {
-                        profileView
-                            .padding(.trailing, 8)
-
-                        bubbleView
-                            .padding(.trailing, 17)
-
-                        chattingButton
-                    }
-                }
-                .padding(.leading, 29)
-                .padding(.trailing, 20)
             }
         }
     }
@@ -116,15 +125,38 @@ extension PeepDetailView {
 
     private var reactionButton: some View {
         Button {
-
+            store.send(
+                .setShowingReactionState(!store.state.showReactionList)
+            )
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
+
+    private var reactionListView: some View {
+        VStack {
+            Rectangle()
+                .frame(width: 39, height: 39)
+                .foregroundStyle(Color.gray)
+            Rectangle()
+                .frame(width: 39, height: 39)
+                .foregroundStyle(Color.gray)
+            Rectangle()
+                .frame(width: 39, height: 39)
+                .foregroundStyle(Color.gray)
+        }
+        .padding(10)
+        .background {
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundStyle(Color.init(uiColor: .systemGray4))
+        }
+    }
 }
 
 #Preview {
-    PeepDetailView()
+    PeepDetailView(
+        store: .init(initialState: PeepDetailStore.State()) { PeepDetailStore() }
+    )
 }
