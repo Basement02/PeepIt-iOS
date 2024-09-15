@@ -13,10 +13,14 @@ struct PeepDetailStore {
     @ObservableState
     struct State: Equatable {
         var showReactionList = false
+        var showChat = false
+        var chat = ChatStore.State()
     }
 
     enum Action {
         case setShowingReactionState(Bool)
+        case setShowChat(Bool)
+        case chat(ChatStore.Action)
     }
 
     var body: some Reducer<State, Action> {
@@ -24,6 +28,14 @@ struct PeepDetailStore {
             switch action {
             case let .setShowingReactionState(newState):
                 state.showReactionList = newState
+                return .none
+
+            case let .setShowChat(newState):
+                state.showChat = newState
+                return .none
+
+            case let .chat(.closeChatButtonTapped):
+                state.showChat = false
                 return .none
             }
         }

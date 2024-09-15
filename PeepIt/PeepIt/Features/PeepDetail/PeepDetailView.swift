@@ -54,6 +54,10 @@ struct PeepDetailView: View {
                     .padding(.leading, 29)
                     .padding(.trailing, 20)
                 }
+
+                if store.state.showChat {
+                    ChatView(store: store.scope(state: \.chat, action: \.chat))
+                }
             }
         }
     }
@@ -66,7 +70,7 @@ extension PeepDetailView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -76,7 +80,7 @@ extension PeepDetailView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -115,7 +119,7 @@ extension PeepDetailView {
 
     private var chattingButton: some View {
         Button {
-
+            store.send(.setShowChat(!store.state.showChat))
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
