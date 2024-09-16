@@ -10,14 +10,19 @@ import ComposableArchitecture
 
 @Reducer
 struct HomeStore {
-    
+
+    @ObservableState
     struct State: Equatable {
         var sheetHeight: CGFloat = SheetType.scrollDown.height
         var isScrolledDown: Bool = false
+        var offset: CGFloat = 0
+        var lastOffset: CGFloat = 0
     }
 
     enum Action {
         case setSheetHeight(height: CGFloat)
+        case dragChanged(translationHeight: CGFloat)
+        case drageEnded
         case previewPeepTapped
     }
 
@@ -29,8 +34,25 @@ struct HomeStore {
                 state.isScrolledDown = (height == SheetType.scrollDown.height)
                 return .none
 
+            case let .dragChanged(translationHeight):
+                state.offset = max(
+                    translationHeight,
+                    -(SheetType.scrollUp.height - SheetType.scrollDown.height)
+                ) + state.lastOffset
+
+                return .send(.setSheetHeight(height: -state.offset + SheetType.scrollDown.height))
+
+            case .drageEnded:
+                if -state.offset > SheetType.scrollUp.height / 2 {
+                    state.offset = -(SheetType.scrollUp.height - SheetType.scrollDown.height)
+                } else {
+                    state.offset = 0
+                }
+                
+                state.lastOffset = state.offset
+                return .send(.setSheetHeight(height: -state.offset + SheetType.scrollDown.height))
+
             case .previewPeepTapped:
-                // TODO: 상세 핍 이동
                 print("tap: preview peep")
                 return .none
             }
