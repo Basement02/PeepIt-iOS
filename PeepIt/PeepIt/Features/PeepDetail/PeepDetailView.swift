@@ -21,15 +21,14 @@ struct PeepDetailView: View {
                         backButton
                         Spacer()
 
-                        VStack(spacing: 12) {
-                            locationButton
-                            timeLabel
-                        }
+                        locationButton
 
                         Spacer()
                         moreButton
                     }
                     .padding(.horizontal, 17)
+
+                    timeLabel
 
                     Spacer()
 
