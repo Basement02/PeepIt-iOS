@@ -12,12 +12,12 @@ struct PeepPreviewModalView: View {
     let store: StoreOf<HomeStore>
 
     var body: some View {
-        WithViewStore(self.store, observe: {$0}) { viewStore in
+        WithPerceptionTracking {
             ZStack {
                 Color.white
-                
+
                 VStack {
-                    if viewStore.state.isScrolledDown {
+                    if store.state.isScrolledDown {
                         scrollUpLabel
                             .padding(.top, 33)
                             .padding(.bottom, 16)
@@ -34,9 +34,13 @@ struct PeepPreviewModalView: View {
                         }
                         .padding(.top, 37)
                         .padding(.horizontal, 18)
+                        .padding(.bottom, 24)
                     }
+
+                    Spacer()
                 }
             }
+            .ignoresSafeArea()
         }
     }
 

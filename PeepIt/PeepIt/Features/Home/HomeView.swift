@@ -14,9 +14,9 @@ enum SheetType: CaseIterable {
     var height: CGFloat {
         switch self {
         case .scrollDown:
-            return CGFloat(69)
+            return CGFloat(84)
         case .scrollUp:
-            return CGFloat(500)
+            return CGFloat(509)
         }
     }
 }
@@ -24,8 +24,11 @@ enum SheetType: CaseIterable {
 struct HomeView: View {
     let store: StoreOf<HomeStore>
 
+    @State var offset: CGFloat = 0
+    @State var lastOffset: CGFloat = 0
+
     var body: some View {
-        WithViewStore(self.store, observe: {$0}) { viewStore in
+        WithPerceptionTracking {
             ZStack {
                 Color(UIColor.systemGray6)
                     .ignoresSafeArea()
@@ -49,27 +52,20 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 17)
                     .padding(
-                        .bottom, viewStore.state.sheetHeight + 17
+                        .bottom, store.state.sheetHeight + 17
                     )
                 }
-            }
-            .sheet(isPresented: .constant(true)) {
-                GeometryReader { geometry in
-                    PeepPreviewModalView(store: store)
-                        .frame(maxWidth: .infinity)
-                        .clearModalBackground()
-                        .ignoresSafeArea()
-                        .interactiveDismissDisabled()
-                        .presentationDetents(
-                            Set(SheetType.allCases.map {
-                                PresentationDetent.height($0.height)
-                            })
-                        )
-                        .onChange(of: geometry.size.height) { newHeight in
-                            store.send(.setSheetHeight(height: newHeight))
-                        }
+
+                peepPreviewView
+
+                if store.isPeepDetailShowed {
+                    PeepDetailView(
+                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                    )
                 }
+
             }
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 }
@@ -81,7 +77,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -101,7 +97,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -111,7 +107,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -121,8 +117,36 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
+        }
+    }
+
+    private var peepPreviewView: some View {
+        GeometryReader { proxy in
+            WithPerceptionTracking {
+                let height = proxy
+                    .frame(in: .global)
+                    .height
+
+                PeepPreviewModalView(store: self.store)
+                    .offset(y: height - SheetType.scrollDown.height)
+                    .offset(y: store.state.offset)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                store.send(
+                                    .dragChanged(translationHeight: value.translation.height)
+                                )
+                            }
+                            .onEnded { _ in
+                                store.send(.drageEnded)
+                            }
+                    )
+                    .onAppear {
+                        store.send(.setSheetHeight(height: SheetType.scrollDown.height))
+                    }
+            }
         }
     }
 }
@@ -134,3 +158,4 @@ extension HomeView {
         }
     )
 }
+
