@@ -58,6 +58,12 @@ struct HomeView: View {
 
                 peepPreviewView
 
+                if store.isPeepDetailShowed {
+                    PeepDetailView(
+                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                    )
+                }
+
             }
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -71,7 +77,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -91,7 +97,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -101,7 +107,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }
@@ -111,7 +117,7 @@ extension HomeView {
 
         } label: {
             Rectangle()
-                .frame(width: 30, height: 30)
+                .frame(width: 39, height: 39)
                 .foregroundStyle(Color.gray)
         }
     }

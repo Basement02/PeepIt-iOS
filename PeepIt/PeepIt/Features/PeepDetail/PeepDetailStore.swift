@@ -20,10 +20,15 @@ struct PeepDetailStore {
     enum Action {
         case setShowingReactionState(Bool)
         case setShowChat(Bool)
+        case closeView
         case chat(ChatStore.Action)
     }
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.chat, action: \.chat) {
+            ChatStore()
+        }
+        
         Reduce { state, action in
             switch action {
             case let .setShowingReactionState(newState):
@@ -34,8 +39,11 @@ struct PeepDetailStore {
                 state.showChat = newState
                 return .none
 
-            case let .chat(.closeChatButtonTapped):
+            case .chat(.closeChatButtonTapped):
                 state.showChat = false
+                return .none
+
+            case .closeView:
                 return .none
             }
         }

@@ -17,6 +17,9 @@ struct HomeStore {
         var isScrolledDown: Bool = false
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
+        var isPeepDetailShowed: Bool = false
+
+        var peepDetail = PeepDetailStore.State()
     }
 
     enum Action {
@@ -24,9 +27,14 @@ struct HomeStore {
         case dragChanged(translationHeight: CGFloat)
         case drageEnded
         case previewPeepTapped
+        case peepDetail(PeepDetailStore.Action)
     }
 
     var body: some Reducer<State, Action> {
+        Scope(state: \.peepDetail, action: \.peepDetail) {
+            PeepDetailStore()
+        }
+        
         Reduce { state, action in
             switch action {
             case let .setSheetHeight(height):
@@ -53,7 +61,14 @@ struct HomeStore {
                 return .send(.setSheetHeight(height: -state.offset + SheetType.scrollDown.height))
 
             case .previewPeepTapped:
-                print("tap: preview peep")
+                state.isPeepDetailShowed = true
+                return .none
+
+            case .peepDetail(.closeView):
+                state.isPeepDetailShowed = false
+                return .none
+
+            default:
                 return .none
             }
         }

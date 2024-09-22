@@ -15,6 +15,7 @@ struct PeepDetailView: View {
         WithPerceptionTracking {
             ZStack {
                 Color.white
+                    .ignoresSafeArea()
 
                 VStack {
                     HStack {
@@ -52,12 +53,14 @@ struct PeepDetailView: View {
                     }
                     .padding(.leading, 29)
                     .padding(.trailing, 20)
+                    .padding(.bottom, 40)
                 }
 
                 if store.state.showChat {
                     ChatView(store: store.scope(state: \.chat, action: \.chat))
                 }
             }
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 }
@@ -66,7 +69,7 @@ extension PeepDetailView {
 
     private var backButton: some View {
         Button {
-
+            store.send(.closeView)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
