@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
-    let store: StoreOf<HomeStore>
+    var store: StoreOf<HomeStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -42,19 +42,13 @@ struct HomeView: View {
 
                 peepPreviewView
 
+                sideMenuView
+
                 if store.isPeepDetailShowed {
                     PeepDetailView(
                         store: store.scope(state: \.peepDetail, action: \.peepDetail)
                     )
                 }
-
-                if store.isSideMenuShowed {
-                    SideMenuView(
-                        store: store.scope(state: \.sideMenu, action: \.sideMenu)
-                    )
-                    .transition(.move(edge: .leading))
-                }
-
             }
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -63,10 +57,29 @@ struct HomeView: View {
 
 extension HomeView {
 
+    private var sideMenuView: some View {
+        SideMenuView(
+            store: store.scope(state: \.sideMenu, action: \.sideMenu)
+
+        )
+        .offset(x: store.sideMenuOffset)
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        if value.translation.width <= 0 {
+                            store.send(.dragSideMenu(dragWidth: value.translation.width))
+                        }
+                    }
+                    .onEnded { _ in
+                        store.send(.dragSideMenuEnded)
+                    }
+            )
+    }
+
     private var moreButton: some View {
         Button {
             store.send(
-                .sideMenuTapped, animation: .easeIn(duration: 0.3)
+                .sideMenuButtonTapped, animation: .easeIn(duration: 0.3)
             )
         } label: {
             Rectangle()
@@ -129,11 +142,11 @@ extension HomeView {
                         DragGesture()
                             .onChanged { value in
                                 store.send(
-                                    .dragChanged(translationHeight: value.translation.height)
+                                    .modalDragged(dragHeight: value.translation.height)
                                 )
                             }
                             .onEnded { _ in
-                                store.send(.drageEnded)
+                                store.send(.modalDragEnded)
                             }
                     )
                     .onAppear {

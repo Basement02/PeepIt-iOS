@@ -17,7 +17,7 @@ struct PeepPreviewModalView: View {
                 Color.white
 
                 VStack {
-                    if store.state.isScrolledDown {
+                    if store.state.isSheetScrolledDown {
                         scrollUpLabel
                             .padding(.top, 33)
                             .padding(.bottom, 16)
