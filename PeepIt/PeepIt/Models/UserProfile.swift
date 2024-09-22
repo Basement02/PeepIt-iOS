@@ -22,4 +22,12 @@ extension UserProfile {
             profileImage: "https://images.unsplash.com/photo-1726268591596-07bb5a41cf75?q=80&w=2350&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         )
     }
+
+    static var stubUser2: UserProfile {
+        return .init(
+            id: "user2_id",
+            nickname: "user2_nickname",
+            profileImage: "https://images.unsplash.com/photo-1726268591596-07bb5a41cf75?q=80&w=2350&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        )
+    }
 }
