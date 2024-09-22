@@ -8,24 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-enum SheetType: CaseIterable {
-    case scrollDown, scrollUp
-
-    var height: CGFloat {
-        switch self {
-        case .scrollDown:
-            return CGFloat(84)
-        case .scrollUp:
-            return CGFloat(509)
-        }
-    }
-}
-
 struct HomeView: View {
-    let store: StoreOf<HomeStore>
-
-    @State var offset: CGFloat = 0
-    @State var lastOffset: CGFloat = 0
+    var store: StoreOf<HomeStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -52,18 +36,21 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 17)
                     .padding(
-                        .bottom, store.state.sheetHeight + 17
+                        .bottom, store.peepPreviewModal.sheetHeight + 17
                     )
                 }
 
                 peepPreviewView
+
+                SideMenuView(
+                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                )
 
                 if store.isPeepDetailShowed {
                     PeepDetailView(
                         store: store.scope(state: \.peepDetail, action: \.peepDetail)
                     )
                 }
-
             }
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -74,7 +61,9 @@ extension HomeView {
 
     private var moreButton: some View {
         Button {
-
+            store.send(
+                .sideMenuButtonTapped, animation: .easeIn(duration: 0.3)
+            )
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
@@ -129,24 +118,41 @@ extension HomeView {
                     .frame(in: .global)
                     .height
 
-                PeepPreviewModalView(store: self.store)
-                    .offset(y: height - SheetType.scrollDown.height)
-                    .offset(y: store.state.offset)
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                store.send(
-                                    .dragChanged(translationHeight: value.translation.height)
-                                )
-                            }
-                            .onEnded { _ in
-                                store.send(.drageEnded)
-                            }
+                PeepPreviewModalView(
+                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
+                )
+                .offset(y: height - SheetType.scrollDown.height)
+                .offset(y: store.peepPreviewModal.offset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            store.send(
+                                .peepPreviewModal(.modalDragged(dragHeight: value.translation.height))
+                            )
+                        }
+                        .onEnded { _ in
+                            store.send(.peepPreviewModal(.modalDragEnded))
+                        }
+                )
+                .onAppear {
+                    store.send(
+                        .peepPreviewModal(.setSheetHeight(height: SheetType.scrollDown.height))
                     )
-                    .onAppear {
-                        store.send(.setSheetHeight(height: SheetType.scrollDown.height))
-                    }
+                }
             }
+        }
+    }
+}
+
+enum SheetType: CaseIterable {
+    case scrollDown, scrollUp
+
+    var height: CGFloat {
+        switch self {
+        case .scrollDown:
+            return CGFloat(84)
+        case .scrollUp:
+            return CGFloat(509)
         }
     }
 }
