@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
-    let store: StoreOf<HomeStore>
+    let store: StoreOf<PeepModalStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -17,7 +17,7 @@ struct PeepPreviewModalView: View {
                 Color.white
 
                 VStack {
-                    if store.state.isSheetScrolledDown {
+                    if store.isSheetScrolledDown {
                         scrollUpLabel
                             .padding(.top, 33)
                             .padding(.bottom, 16)
@@ -28,7 +28,7 @@ struct PeepPreviewModalView: View {
                             ForEach(1...5, id: \.self) { _ in
                                 PeepPreviewCell(peep: .stubPeep1)
                                     .onTapGesture {
-                                        store.send(.previewPeepTapped)
+                                        store.send(.peepCellTapped)
                                     }
                             }
                         }
@@ -113,8 +113,8 @@ fileprivate struct PeepPreviewCell: View {
 
 #Preview {
     PeepPreviewModalView(
-        store: .init(initialState: HomeStore.State()) {
-            HomeStore()
+        store: .init(initialState: PeepModalStore.State()) {
+            PeepModalStore()
         }
     )
 }

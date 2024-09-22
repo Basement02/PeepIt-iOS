@@ -13,61 +13,38 @@ struct HomeStore {
 
     @ObservableState
     struct State: Equatable {
-        var sheetHeight = SheetType.scrollDown.height
-        var isSheetScrolledDown = false
-        var offset = CGFloat(0)
-        var lastOffset = CGFloat(0)
         var isPeepDetailShowed = false
-        var isSideMenuShowed = false
-        var sideMenuOffset = -Constant.screenWidth
 
+        var peepPreviewModal = PeepModalStore.State()
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()
     }
 
     enum Action {
-        case setSheetHeight(height: CGFloat)
-        case modalDragged(dragHeight: CGFloat)
-        case modalDragEnded
-        case previewPeepTapped
+        case goToPeepTapped
+        case sideMenuButtonTapped
+        
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
-        case sideMenuButtonTapped
-        case dragSideMenu(dragWidth: CGFloat)
-        case dragSideMenuEnded
+        case peepPreviewModal(PeepModalStore.Action)
     }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.peepDetail, action: \.peepDetail) {
             PeepDetailStore()
         }
-        
+
+        Scope(state: \.peepPreviewModal, action: \.peepPreviewModal) {
+            PeepModalStore()
+        }
+
+        Scope(state: \.sideMenu, action: \.sideMenu) {
+            SideMenuStore()
+        }
+
         Reduce { state, action in
             switch action {
-            case let .setSheetHeight(height):
-                state.sheetHeight = height
-                state.isSheetScrolledDown = (height == SheetType.scrollDown.height)
-                return .none
-
-            case let .modalDragged(dragHeight):
-                state.offset = max(
-                    dragHeight,
-                    -(SheetType.scrollUp.height - SheetType.scrollDown.height)
-                ) + state.lastOffset
-
-                return .send(.setSheetHeight(height: -state.offset + SheetType.scrollDown.height))
-
-            case .modalDragEnded:
-                if -state.offset > SheetType.scrollUp.height / 2 {
-                    state.offset = -(SheetType.scrollUp.height - SheetType.scrollDown.height)
-                } else {
-                    state.offset = 0
-                }
-                
-                state.lastOffset = state.offset
-                return .send(.setSheetHeight(height: -state.offset + SheetType.scrollDown.height))
-
-            case .previewPeepTapped:
+            case .goToPeepTapped:
                 state.isPeepDetailShowed = true
                 return .none
 
@@ -76,18 +53,14 @@ struct HomeStore {
                 return .none
 
             case .sideMenuButtonTapped:
-                state.sideMenuOffset = 0
+                state.sideMenu.sideMenuOffset = 0
                 return .none
 
             case .sideMenu:
                 return .none
 
-            case let .dragSideMenu(dragWidth):
-                state.sideMenuOffset = dragWidth
-                return .none
-
-            case .dragSideMenuEnded:
-                state.sideMenuOffset = -Constant.screenWidth
+            case .peepPreviewModal(.peepCellTapped):
+                state.isPeepDetailShowed = true
                 return .none
 
             default:

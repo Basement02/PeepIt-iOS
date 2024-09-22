@@ -12,44 +12,60 @@ struct SideMenuView: View {
     let store: StoreOf<SideMenuStore>
 
     var body: some View {
-        ZStack {
-            Color.white
-                .ignoresSafeArea()
+        WithPerceptionTracking {
+            ZStack {
+                Color.white
+                    .ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 0) {
-                HStack {
-                    Rectangle()
-                        .frame(width: 39, height: 39)
-                        .foregroundStyle(Color.gray)
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        Rectangle()
+                            .frame(width: 39, height: 39)
+                            .foregroundStyle(Color.gray)
+                        Spacer()
+                    }
+                    .padding(.top, 34)
+                    .padding(.bottom, 50)
+
+                    ForEach(SideMenuType.allCases, id: \.self) { menu in
+                        MenuView(menuType: menu)
+                    }
+
+                    divideView
+                        .padding(.top, 13)
+
+                    HStack {
+                        logoutButton
+                        Spacer()
+                        settingButton
+                    }
+                    .padding(.top, 25)
+
                     Spacer()
+
+                    goToAppStoreButton
+                        .padding(.bottom, 16)
+
+                    versionLabel
+                        .padding(.bottom, 24)
                 }
-                .padding(.bottom, 50)
-
-                ForEach(SideMenuType.allCases, id: \.self) { menu in
-                    MenuView(menuType: menu)
-                }
-
-                divideView
-                    .padding(.top, 13)
-
-                HStack {
-                    logoutButton
-                    Spacer()
-                    settingButton
-                }
-                .padding(.top, 25)
-
-                Spacer()
-
-                goToAppStoreButton
-                    .padding(.bottom, 16)
-
-                versionLabel
-                    .padding(.bottom, 24)
+                .padding(.horizontal, 17)
             }
-            .padding(.horizontal, 17)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .offset(x: store.sideMenuOffset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            if value.translation.width <= 0 {
+                                store.send(.dragSideMenu(dragWidth: value.translation.width))
+                            }
+                        }
+                        .onEnded { _ in
+                            store.send(.dragSideMenuEnded)
+                            store.send(.dragSideMenu(dragWidth: -Constant.screenWidth))
+                        }
+                )
         }
-        .ignoresSafeArea(.all, edges: .bottom)
     }
 
     private var divideView: some View {

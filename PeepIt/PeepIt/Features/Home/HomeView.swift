@@ -36,13 +36,15 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 17)
                     .padding(
-                        .bottom, store.state.sheetHeight + 17
+                        .bottom, store.peepPreviewModal.sheetHeight + 17
                     )
                 }
 
                 peepPreviewView
 
-                sideMenuView
+                SideMenuView(
+                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                )
 
                 if store.isPeepDetailShowed {
                     PeepDetailView(
@@ -56,25 +58,6 @@ struct HomeView: View {
 }
 
 extension HomeView {
-
-    private var sideMenuView: some View {
-        SideMenuView(
-            store: store.scope(state: \.sideMenu, action: \.sideMenu)
-
-        )
-        .offset(x: store.sideMenuOffset)
-            .gesture(
-                DragGesture()
-                    .onChanged { value in
-                        if value.translation.width <= 0 {
-                            store.send(.dragSideMenu(dragWidth: value.translation.width))
-                        }
-                    }
-                    .onEnded { _ in
-                        store.send(.dragSideMenuEnded)
-                    }
-            )
-    }
 
     private var moreButton: some View {
         Button {
@@ -135,23 +118,27 @@ extension HomeView {
                     .frame(in: .global)
                     .height
 
-                PeepPreviewModalView(store: self.store)
-                    .offset(y: height - SheetType.scrollDown.height)
-                    .offset(y: store.state.offset)
-                    .gesture(
-                        DragGesture()
-                            .onChanged { value in
-                                store.send(
-                                    .modalDragged(dragHeight: value.translation.height)
-                                )
-                            }
-                            .onEnded { _ in
-                                store.send(.modalDragEnded)
-                            }
+                PeepPreviewModalView(
+                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
+                )
+                .offset(y: height - SheetType.scrollDown.height)
+                .offset(y: store.peepPreviewModal.offset)
+                .gesture(
+                    DragGesture()
+                        .onChanged { value in
+                            store.send(
+                                .peepPreviewModal(.modalDragged(dragHeight: value.translation.height))
+                            )
+                        }
+                        .onEnded { _ in
+                            store.send(.peepPreviewModal(.modalDragEnded))
+                        }
+                )
+                .onAppear {
+                    store.send(
+                        .peepPreviewModal(.setSheetHeight(height: SheetType.scrollDown.height))
                     )
-                    .onAppear {
-                        store.send(.setSheetHeight(height: SheetType.scrollDown.height))
-                    }
+                }
             }
         }
     }

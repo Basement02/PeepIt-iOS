@@ -10,6 +10,7 @@
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
 		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
 		AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE502CA00FDC00D8DC1F /* Constant.swift */; };
+		AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE522CA0123D00D8DC1F /* PeepModalStore.swift */; };
 		ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305C92C932341003B00FE /* PeepItApp.swift */; };
 		ABC305CC2C932341003B00FE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* HomeView.swift */; };
 		ABC305CE2C932342003B00FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305CD2C932342003B00FE /* Assets.xcassets */; };
@@ -30,6 +31,7 @@
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
 		AB53DE502CA00FDC00D8DC1F /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		AB53DE522CA0123D00D8DC1F /* PeepModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalStore.swift; sourceTree = "<group>"; };
 		ABC305C62C932341003B00FE /* PeepIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeepIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC305C92C932341003B00FE /* PeepItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItApp.swift; sourceTree = "<group>"; };
 		ABC305CB2C932341003B00FE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */,
+				AB53DE522CA0123D00D8DC1F /* PeepModalStore.swift */,
 			);
 			path = PeepPreview;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
+				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

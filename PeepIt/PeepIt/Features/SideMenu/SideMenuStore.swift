@@ -13,17 +13,24 @@ struct SideMenuStore {
     
     @ObservableState
     struct State: Equatable {
-
+        var sideMenuOffset = -Constant.screenWidth
     }
 
     enum Action {
-        
+        case dragSideMenu(dragWidth: CGFloat)
+        case dragSideMenuEnded
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-                
+            case let .dragSideMenu(dragWidth):
+                state.sideMenuOffset = dragWidth
+                return .none
+
+            case .dragSideMenuEnded:
+                state.sideMenuOffset = -Constant.screenWidth
+                return .none
             }
         }
     }
