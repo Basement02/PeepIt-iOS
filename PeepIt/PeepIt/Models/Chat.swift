@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Chat {
+struct Chat: Equatable, Hashable {
     let user: UserProfile
     let message: String
     let sendTime: String

@@ -45,6 +45,9 @@ struct PeepDetailStore {
 
             case .closeView:
                 return .none
+
+            default:
+                return .none
             }
         }
     }

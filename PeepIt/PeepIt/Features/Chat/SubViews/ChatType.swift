@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum ChatType {
+enum ChatType: Equatable, Hashable {
     case mine
     case uploader
     case others
