@@ -5,7 +5,7 @@
 //  Created by 김민 on 9/12/24.
 //
 
-import SwiftUI
+import Foundation
 import ComposableArchitecture
 
 @Reducer
@@ -19,7 +19,7 @@ struct HomeStore {
         var lastOffset = CGFloat(0)
         var isPeepDetailShowed = false
         var isSideMenuShowed = false
-        var sideMenuOffset = -UIScreen.main.bounds.width
+        var sideMenuOffset = -Constant.screenWidth
 
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()
@@ -87,7 +87,7 @@ struct HomeStore {
                 return .none
 
             case .dragSideMenuEnded:
-                state.sideMenuOffset = -UIScreen.main.bounds.width
+                state.sideMenuOffset = -Constant.screenWidth
                 return .none
 
             default:
