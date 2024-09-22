@@ -52,6 +52,7 @@ struct HomeView: View {
                     SideMenuView(
                         store: store.scope(state: \.sideMenu, action: \.sideMenu)
                     )
+                    .transition(.move(edge: .leading))
                 }
 
             }
@@ -64,7 +65,9 @@ extension HomeView {
 
     private var moreButton: some View {
         Button {
-            store.send(.sideMenuButtonTapped)
+            store.send(
+                .sideMenuTapped, animation: .easeIn(duration: 0.3)
+            )
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)

@@ -31,7 +31,7 @@ struct HomeStore {
         case previewPeepTapped
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
-        case sideMenuButtonTapped
+        case sideMenuTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -72,7 +72,7 @@ struct HomeStore {
                 state.isPeepDetailShowed = false
                 return .none
 
-            case .sideMenuButtonTapped:
+            case .sideMenuTapped:
                 state.isSideMenuShowed = true
                 return .none
 
