@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct SideMenuView: View {
+    let store: StoreOf<SideMenuStore>
 
     var body: some View {
         ZStack {
             Color.white
+                .ignoresSafeArea()
 
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
@@ -42,9 +45,11 @@ struct SideMenuView: View {
                     .padding(.bottom, 16)
 
                 versionLabel
+                    .padding(.bottom, 24)
             }
             .padding(.horizontal, 17)
         }
+        .ignoresSafeArea(.all, edges: .bottom)
     }
 
     private var divideView: some View {
@@ -66,7 +71,7 @@ struct SideMenuView: View {
 
     private var settingButton: some View {
         Button {
-            // TODO: 설정 
+            // TODO: 설정
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
@@ -137,5 +142,9 @@ enum SideMenuType: CaseIterable {
 
 
 #Preview {
-    SideMenuView()
+    SideMenuView(
+        store: .init(initialState: SideMenuStore.State()) {
+                SideMenuStore()
+            }
+    )
 }

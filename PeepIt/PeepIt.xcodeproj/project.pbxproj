@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
+		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
 		ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305C92C932341003B00FE /* PeepItApp.swift */; };
 		ABC305CC2C932341003B00FE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305CB2C932341003B00FE /* HomeView.swift */; };
 		ABC305CE2C932342003B00FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABC305CD2C932342003B00FE /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
 		ABC305C62C932341003B00FE /* PeepIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeepIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABC305C92C932341003B00FE /* PeepItApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItApp.swift; sourceTree = "<group>"; };
 		ABC305CB2C932341003B00FE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */,
+				AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
+				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
 				ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */,
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,

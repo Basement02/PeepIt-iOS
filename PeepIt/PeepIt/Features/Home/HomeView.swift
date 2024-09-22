@@ -8,24 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-enum SheetType: CaseIterable {
-    case scrollDown, scrollUp
-
-    var height: CGFloat {
-        switch self {
-        case .scrollDown:
-            return CGFloat(84)
-        case .scrollUp:
-            return CGFloat(509)
-        }
-    }
-}
-
 struct HomeView: View {
     let store: StoreOf<HomeStore>
-
-    @State var offset: CGFloat = 0
-    @State var lastOffset: CGFloat = 0
 
     var body: some View {
         WithPerceptionTracking {
@@ -64,6 +48,12 @@ struct HomeView: View {
                     )
                 }
 
+                if store.isSideMenuShowed {
+                    SideMenuView(
+                        store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                    )
+                }
+
             }
             .ignoresSafeArea(.all, edges: .bottom)
         }
@@ -74,7 +64,7 @@ extension HomeView {
 
     private var moreButton: some View {
         Button {
-
+            store.send(.sideMenuButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
@@ -147,6 +137,19 @@ extension HomeView {
                         store.send(.setSheetHeight(height: SheetType.scrollDown.height))
                     }
             }
+        }
+    }
+}
+
+enum SheetType: CaseIterable {
+    case scrollDown, scrollUp
+
+    var height: CGFloat {
+        switch self {
+        case .scrollDown:
+            return CGFloat(84)
+        case .scrollUp:
+            return CGFloat(509)
         }
     }
 }

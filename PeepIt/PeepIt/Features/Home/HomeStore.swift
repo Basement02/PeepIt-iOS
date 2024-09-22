@@ -18,8 +18,10 @@ struct HomeStore {
         var offset: CGFloat = 0
         var lastOffset: CGFloat = 0
         var isPeepDetailShowed: Bool = false
+        var isSideMenuShowed: Bool = false
 
         var peepDetail = PeepDetailStore.State()
+        var sideMenu = SideMenuStore.State()
     }
 
     enum Action {
@@ -28,6 +30,8 @@ struct HomeStore {
         case drageEnded
         case previewPeepTapped
         case peepDetail(PeepDetailStore.Action)
+        case sideMenu(SideMenuStore.Action)
+        case sideMenuButtonTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -66,6 +70,13 @@ struct HomeStore {
 
             case .peepDetail(.closeView):
                 state.isPeepDetailShowed = false
+                return .none
+
+            case .sideMenuButtonTapped:
+                state.isSideMenuShowed = true
+                return .none
+
+            case .sideMenu:
                 return .none
 
             default:
