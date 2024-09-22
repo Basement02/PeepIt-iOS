@@ -140,7 +140,6 @@ enum SideMenuType: CaseIterable {
     }
 }
 
-
 #Preview {
     SideMenuView(
         store: .init(initialState: SideMenuStore.State()) {
