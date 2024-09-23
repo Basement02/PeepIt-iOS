@@ -151,7 +151,7 @@
 				ABC305E02C933A45003B00FE /* PeepPreview */,
 				ABD631BF2C97579C00AFF299 /* PeepDetail */,
 				ABD631C72C97610200AFF299 /* Chat */,
-				ABD3CAA12CA08D3F00438747 /* MyProfile */,
+				ABD3CAA12CA08D3F00438747 /* Profile */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -211,14 +211,14 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
-		ABD3CAA12CA08D3F00438747 /* MyProfile */ = {
+		ABD3CAA12CA08D3F00438747 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				ABD3CAA82CA1AC7200438747 /* SubViews */,
-				ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */,
-				ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */,
+				ABD3CAB12CA1BD7C00438747 /* My */,
+				ABD3CAB22CA1BD8700438747 /* Others */,
 			);
-			path = MyProfile;
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		ABD3CAA82CA1AC7200438747 /* SubViews */ = {
@@ -229,6 +229,22 @@
 				ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		ABD3CAB12CA1BD7C00438747 /* My */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */,
+				ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */,
+			);
+			path = My;
+			sourceTree = "<group>";
+		};
+		ABD3CAB22CA1BD8700438747 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Others;
 			sourceTree = "<group>";
 		};
 		ABD631BF2C97579C00AFF299 /* PeepDetail */ = {
