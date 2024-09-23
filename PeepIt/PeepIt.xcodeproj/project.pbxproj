@@ -31,6 +31,7 @@
 		ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAAB2CA1B1D000438747 /* CommentedPeepCell.swift */; };
 		ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */; };
 		ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAAF2CA1B52000438747 /* Peep.swift */; };
+		ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */; };
 		ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */; };
 		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
@@ -62,6 +63,7 @@
 		ABD3CAAB2CA1B1D000438747 /* CommentedPeepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentedPeepCell.swift; sourceTree = "<group>"; };
 		ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTabType.swift; sourceTree = "<group>"; };
 		ABD3CAAF2CA1B52000438747 /* Peep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peep.swift; sourceTree = "<group>"; };
+		ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
 		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				ABD3CAA92CA1AC8400438747 /* ReactedPeepCell.swift */,
 				ABD3CAAB2CA1B1D000438747 /* CommentedPeepCell.swift */,
 				ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */,
+				ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
+				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
 				ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */,

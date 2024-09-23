@@ -17,7 +17,6 @@ struct MyProfileView: View {
                 .padding(.bottom, 29)
 
             profileView
-                .padding(.bottom, 20)
 
             peepTabView
 
@@ -61,14 +60,9 @@ struct MyProfileView: View {
     }
 
     private var profileView: some View {
-        HStack(spacing: 20) {
-            Circle()
-                .frame(width: 97, height: 97)
-
-            VStack(alignment: .leading, spacing: 17) {
-                Text("닉네임")
-                Text("활동 동네")
-            }
+        ZStack(alignment: .trailing) {
+            UserProfileView(profile: .stubUser1)
+                .padding(.bottom, 20)
 
             Spacer()
 
