@@ -32,6 +32,8 @@
 		ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */; };
 		ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAAF2CA1B52000438747 /* Peep.swift */; };
 		ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */; };
+		ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */; };
+		ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */; };
 		ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */; };
 		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
@@ -64,6 +66,8 @@
 		ABD3CAAD2CA1B32D00438747 /* MyProfileTabType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileTabType.swift; sourceTree = "<group>"; };
 		ABD3CAAF2CA1B52000438747 /* Peep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Peep.swift; sourceTree = "<group>"; };
 		ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileView.swift; sourceTree = "<group>"; };
+		ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileStore.swift; sourceTree = "<group>"; };
 		ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
 		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -218,7 +222,7 @@
 			children = (
 				ABD3CAA82CA1AC7200438747 /* SubViews */,
 				ABD3CAB12CA1BD7C00438747 /* My */,
-				ABD3CAB22CA1BD8700438747 /* Others */,
+				ABD3CAB52CA1BF2100438747 /* Others */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -243,9 +247,11 @@
 			path = My;
 			sourceTree = "<group>";
 		};
-		ABD3CAB22CA1BD8700438747 /* Others */ = {
+		ABD3CAB52CA1BF2100438747 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */,
+				ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */,
 			);
 			path = Others;
 			sourceTree = "<group>";
@@ -362,6 +368,8 @@
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
+				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
+				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,

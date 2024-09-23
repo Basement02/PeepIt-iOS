@@ -100,8 +100,8 @@ struct MyProfileView: View {
 
     private var uploadPeepListView: some View {
         let columns = [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
+            GridItem(.flexible(), spacing: 13),
+            GridItem(.flexible(), spacing: 13),
             GridItem(.flexible())
         ]
 
