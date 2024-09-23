@@ -33,6 +33,9 @@ struct MyProfileView: View {
         }
         .padding(.horizontal, 20)
         .ignoresSafeArea(.all, edges: .bottom)
+        .onAppear {
+            store.send(.onAppear)
+        }
     }
 
     private var topBar: some View {

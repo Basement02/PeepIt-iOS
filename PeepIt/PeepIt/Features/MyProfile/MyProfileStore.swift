@@ -20,6 +20,7 @@ struct MyProfileStore {
     }
 
     enum Action {
+        case onAppear
         case peepTabTapped(selection: PeepTabType)
         case loadUploadedPeeps
         case loadReactedPeeps
@@ -29,6 +30,11 @@ struct MyProfileStore {
     var body: some Reducer<State, Action>  {
         Reduce { state, action in
             switch action {
+
+            case .onAppear:
+                return .merge(
+                    .send(.loadUploadedPeeps)
+                )
 
             case let .peepTabTapped(selection):
                 state.peepTabSelection = selection
