@@ -60,14 +60,12 @@ struct HomeStore {
                 state.isPeepDetailShowed = false
                 return .none
 
-
-            case .sideMenu:
+            case .sideMenu(.settingButtonTapped):
                 return .none
 
             case .peepPreviewModal(.peepCellTapped):
                 state.isPeepDetailShowed = true
                 return .none
-
 
             default:
                 return .none

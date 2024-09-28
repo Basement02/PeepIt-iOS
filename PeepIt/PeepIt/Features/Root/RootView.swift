@@ -25,6 +25,9 @@ struct RootView: View {
 
                     case let .myProfile(store):
                         MyProfileView(store: store)
+
+                    case let .setting(store):
+                        SettingView(store: store)
                     }
                 }
             }

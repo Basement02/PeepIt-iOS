@@ -87,7 +87,7 @@ struct SideMenuView: View {
 
     private var settingButton: some View {
         Button {
-            // TODO: 설정
+            store.send(.settingButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)

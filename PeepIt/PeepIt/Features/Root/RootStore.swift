@@ -15,6 +15,7 @@ struct RootStore {
     enum Path {
         case home(HomeStore)
         case myProfile(MyProfileStore)
+        case setting(SettingStore)
     }
 
     @ObservableState
@@ -32,7 +33,6 @@ struct RootStore {
 
     enum Action {
         case path(StackActionOf<Path>)
-        case home(HomeStore.Action)
     }
 
     var body: some Reducer<State, Action> {
@@ -53,12 +53,14 @@ struct RootStore {
                     state.path.pop(from: id)
                     return .none
 
+                /// 사이드메뉴 - 설정 버튼
+                case .element(id: _, action: .home(.sideMenu(.settingButtonTapped))):
+                    state.path.append(.setting(.init()))
+                    return .none
+
                 default:
                     return .none
                 }
-
-            case .home:
-                return .none
             }
         }
         .forEach(\.path, action: \.path)
