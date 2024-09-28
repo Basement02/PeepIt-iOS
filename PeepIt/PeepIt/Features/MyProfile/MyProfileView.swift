@@ -12,36 +12,39 @@ struct MyProfileView: View {
     let store: StoreOf<MyProfileStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            topBar
-                .padding(.bottom, 29)
+        WithPerceptionTracking {
+            VStack(spacing: 0) {
+                topBar
+                    .padding(.bottom, 29)
 
-            profileView
-                .padding(.bottom, 20)
+                profileView
+                    .padding(.bottom, 20)
 
-            peepTabView
+                peepTabView
 
-            switch store.peepTabSelection {
-            case .uploaded:
-                uploadPeepListView
+                switch store.peepTabSelection {
+                case .uploaded:
+                    uploadPeepListView
 
-            case .myActivity:
-                activityListView
+                case .myActivity:
+                    activityListView
+                }
+
+                Spacer()
             }
-
-            Spacer()
-        }
-        .padding(.horizontal, 20)
-        .ignoresSafeArea(.all, edges: .bottom)
-        .onAppear {
-            store.send(.onAppear)
+            .padding(.horizontal, 20)
+            .toolbar(.hidden, for: .navigationBar)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .onAppear {
+                store.send(.onAppear)
+            }
         }
     }
 
     private var topBar: some View {
         HStack {
             Button {
-
+                store.send(.backButtonTapped)
             } label: {
                 Text("뒤로")
             }

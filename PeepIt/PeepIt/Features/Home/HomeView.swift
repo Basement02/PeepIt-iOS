@@ -84,7 +84,7 @@ extension HomeView {
 
     private var profileButton: some View {
         Button {
-
+            store.send(.profileButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)

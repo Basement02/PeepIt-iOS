@@ -22,6 +22,9 @@ struct RootView: View {
 
                     case let .home(store):
                         HomeView(store: store)
+
+                    case let .myProfile(store):
+                        MyProfileView(store: store)
                     }
                 }
             }

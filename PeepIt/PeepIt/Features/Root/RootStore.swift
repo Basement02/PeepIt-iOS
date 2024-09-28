@@ -14,6 +14,7 @@ struct RootStore {
     @Reducer(state: .equatable)
     enum Path {
         case home(HomeStore)
+        case myProfile(MyProfileStore)
     }
 
     @ObservableState
@@ -40,7 +41,18 @@ struct RootStore {
             switch action {
 
             case let .path(action):
+
                 switch action {
+                /// 프로필로 이동
+                case .element(id: _, action: .home(.profileButtonTapped)):
+                    state.path.append(.myProfile(.init()))
+                    return .none
+
+                /// 프로필 뒤로가기 버튼
+                case let .element(id, action: .myProfile(.backButtonTapped)):
+                    state.path.pop(from: id)
+                    return .none
+
                 default:
                     return .none
                 }
