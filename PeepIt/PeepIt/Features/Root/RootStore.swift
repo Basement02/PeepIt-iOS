@@ -13,14 +13,12 @@ struct RootStore {
 
     @Reducer(state: .equatable)
     enum Path {
-
+        case home(HomeStore)
     }
 
     @ObservableState
     struct State {
-        var path = StackState<Path.State>()
-
-        var authState = LoginState.authorized
+        var path = StackState<Path.State>([RootStore.rootPath])
 
         var home = HomeStore.State()
 
@@ -38,10 +36,6 @@ struct RootStore {
 
     var body: some Reducer<State, Action> {
 
-        Scope(state: \.home, action: \.home) {
-            HomeStore()
-        }
-
         Reduce { state, action in
             switch action {
 
@@ -56,5 +50,12 @@ struct RootStore {
             }
         }
         .forEach(\.path, action: \.path)
+    }
+}
+
+extension RootStore {
+
+    private static var rootPath: Path.State {
+        return .home(.init())
     }
 }

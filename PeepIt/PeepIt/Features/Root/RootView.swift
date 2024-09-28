@@ -13,20 +13,17 @@ struct RootView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
+            NavigationStack(
+                path: $store.scope(state: \.path, action: \.path),
+                root: { Color.clear }
+            ) { store in
+                WithPerceptionTracking {
+                    switch store.case {
 
-                Group {
-                    switch store.authState {
-                    case .authorized:
-                        HomeView(store: store.scope(state: \.home, action: \.home))
-
-                    case .notRegistered, .registered:
-                        Text("Onboarding")
+                    case let .home(store):
+                        HomeView(store: store)
                     }
                 }
-
-            } destination: { store in
-                EmptyView()
             }
         }
     }

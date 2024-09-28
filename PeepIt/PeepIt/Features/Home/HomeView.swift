@@ -53,6 +53,7 @@ struct HomeView: View {
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }
