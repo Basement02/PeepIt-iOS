@@ -17,8 +17,12 @@ struct MyProfileView: View {
                 topBar
                     .padding(.bottom, 29)
 
+<<<<<<< HEAD:PeepIt/PeepIt/Features/MyProfile/MyProfileView.swift
                 profileView
                     .padding(.bottom, 20)
+=======
+            profileView
+>>>>>>> a284fab8a78030e0f461cd99c6617a734edc1fe6:PeepIt/PeepIt/Features/Profile/My/MyProfileView.swift
 
                 peepTabView
 
@@ -64,14 +68,9 @@ struct MyProfileView: View {
     }
 
     private var profileView: some View {
-        HStack(spacing: 20) {
-            Circle()
-                .frame(width: 97, height: 97)
-
-            VStack(alignment: .leading, spacing: 17) {
-                Text("닉네임")
-                Text("활동 동네")
-            }
+        ZStack(alignment: .trailing) {
+            UserProfileView(profile: .stubUser1)
+                .padding(.bottom, 20)
 
             Spacer()
 
@@ -109,8 +108,8 @@ struct MyProfileView: View {
 
     private var uploadPeepListView: some View {
         let columns = [
-            GridItem(.flexible()),
-            GridItem(.flexible()),
+            GridItem(.flexible(), spacing: 13),
+            GridItem(.flexible(), spacing: 13),
             GridItem(.flexible())
         ]
 
