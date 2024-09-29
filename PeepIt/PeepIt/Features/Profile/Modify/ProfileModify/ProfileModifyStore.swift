@@ -19,6 +19,19 @@ struct ProfileModifyStore {
     }
 
     enum Action {
-        
+        case nicknameButtonTapped
+        case genderButtonTapped
+    }
+
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .nicknameButtonTapped:
+                return .none
+
+            case .genderButtonTapped:
+                return .none
+            }
+        }
     }
 }
