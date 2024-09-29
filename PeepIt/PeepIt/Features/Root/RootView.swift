@@ -40,6 +40,9 @@ struct RootView: View {
 
                     case let .upload(store):
                         UploadView(store: store)
+
+                    case let .profileModify(store):
+                        ProfileModifyView(store: store)
                     }
                 }
             }

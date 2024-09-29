@@ -18,6 +18,8 @@
 		AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D212CA9429600C1E430 /* AnnounceView.swift */; };
 		AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D242CA943CA00C1E430 /* UploadStore.swift */; };
 		AB468D272CA943E500C1E430 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D262CA943E500C1E430 /* UploadView.swift */; };
+		AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */; };
+		AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */; };
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
 		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
 		AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE502CA00FDC00D8DC1F /* Constant.swift */; };
@@ -65,6 +67,8 @@
 		AB468D212CA9429600C1E430 /* AnnounceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceView.swift; sourceTree = "<group>"; };
 		AB468D242CA943CA00C1E430 /* UploadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStore.swift; sourceTree = "<group>"; };
 		AB468D262CA943E500C1E430 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyStore.swift; sourceTree = "<group>"; };
+		AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyView.swift; sourceTree = "<group>"; };
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
 		AB53DE502CA00FDC00D8DC1F /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
@@ -155,6 +159,15 @@
 				AB468D262CA943E500C1E430 /* UploadView.swift */,
 			);
 			path = PeepUpload;
+			sourceTree = "<group>";
+		};
+		AB468D292CA94A1C00C1E430 /* Modify */ = {
+			isa = PBXGroup;
+			children = (
+				AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */,
+				AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */,
+			);
+			path = Modify;
 			sourceTree = "<group>";
 		};
 		AB469C6F2C9FED5E00DC7B8A /* SideMenu */ = {
@@ -310,6 +323,7 @@
 				ABD3CAA82CA1AC7200438747 /* SubViews */,
 				ABD3CAB12CA1BD7C00438747 /* My */,
 				ABD3CAB52CA1BF2100438747 /* Others */,
+				AB468D292CA94A1C00C1E430 /* Modify */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -453,6 +467,7 @@
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
 				AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */,
 				AB468D162CA9401600C1E430 /* TownPeepsStore.swift in Sources */,
+				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
@@ -469,6 +484,7 @@
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
+				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,

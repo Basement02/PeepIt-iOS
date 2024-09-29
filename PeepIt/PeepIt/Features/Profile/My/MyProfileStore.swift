@@ -27,6 +27,7 @@ struct MyProfileStore {
         case loadCommentPeeps
         case backButtonTapped
         case uploadButtonTapped
+        case modifyButtonTapped
     }
 
     var body: some Reducer<State, Action>  {
@@ -65,6 +66,9 @@ struct MyProfileStore {
                 return .none
 
             case .uploadButtonTapped:
+                return .none
+
+            case .modifyButtonTapped:
                 return .none
             }
         }
