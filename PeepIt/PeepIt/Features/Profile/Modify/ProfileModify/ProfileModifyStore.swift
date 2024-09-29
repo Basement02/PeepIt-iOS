@@ -16,20 +16,31 @@ struct ProfileModifyStore {
         var id = "id"
         var nickname = "nickname"
         var gender: GenderType = .man
+        var nicknameField = ""
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
+        case bind
         case nicknameButtonTapped
         case genderButtonTapped
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding(\.nicknameField):
+                print(state.nicknameField)
+                return .none
+
             case .nicknameButtonTapped:
                 return .none
 
             case .genderButtonTapped:
+                return .none
+
+            default:
                 return .none
             }
         }

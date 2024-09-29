@@ -13,10 +13,40 @@ struct NicknameModifyView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack {
-                Text("닉네임")
+            VStack(spacing: 0) {
+
+                HStack {
+                    Text("닉네임")
+                        .font(.system(size: 12))
+                    Spacer()
+                }
+                .padding(.top, 41)
+                .padding(.bottom, 15)
+
+                TextField("", text: $store.nicknameField)
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(lineWidth: 1)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 38)
+                    )
+
+                Spacer()
+
+                modifyButton
+                    .padding(.bottom, 17)
             }
+            .padding(.horizontal, 20)
         }
+    }
+
+    private var modifyButton: some View {
+        Button {
+
+        } label: {
+            Text("저장")
+        }
+        .peepItRectangleStyle()
     }
 }
 
