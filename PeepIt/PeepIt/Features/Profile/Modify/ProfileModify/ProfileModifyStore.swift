@@ -17,6 +17,7 @@ struct ProfileModifyStore {
         var nickname = "nickname"
         var gender: GenderType = .man
         var nicknameField = ""
+        var selectedGender: GenderType = .man
     }
 
     enum Action: BindableAction {
@@ -24,6 +25,7 @@ struct ProfileModifyStore {
         case bind
         case nicknameButtonTapped
         case genderButtonTapped
+        case selectGender(of: GenderType)
     }
 
     var body: some Reducer<State, Action> {
@@ -38,6 +40,10 @@ struct ProfileModifyStore {
                 return .none
 
             case .genderButtonTapped:
+                return .none
+
+            case let .selectGender(type):
+                state.selectedGender = type
                 return .none
 
             default:
