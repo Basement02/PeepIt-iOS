@@ -24,6 +24,7 @@ struct HomeStore {
         case goToPeepTapped
         case sideMenuButtonTapped
         case profileButtonTapped
+        case uploadButtonTapped
 
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
@@ -54,6 +55,9 @@ struct HomeStore {
                 return .none
 
             case .profileButtonTapped:
+                return .none
+
+            case .uploadButtonTapped:
                 return .none
 
             case .peepDetail(.closeView):

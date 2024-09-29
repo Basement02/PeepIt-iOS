@@ -16,6 +16,10 @@ struct RootStore {
         case home(HomeStore)
         case myProfile(MyProfileStore)
         case setting(SettingStore)
+        case townPeeps(TownPeepsStore)
+        case notificaiton(NotificationStore)
+        case announce(AnnounceStore)
+        case upload(UploadStore)
     }
 
     @ObservableState
@@ -53,10 +57,30 @@ struct RootStore {
                     state.path.pop(from: id)
                     return .none
 
+                case .element(id: _, action: .home(.uploadButtonTapped)):
+                    state.path.append(.upload(.init()))
+                    return .none
+
                 /// 사이드메뉴 - 설정 버튼
                 case .element(id: _, action: .home(.sideMenu(.settingButtonTapped))):
                     state.path.append(.setting(.init()))
                     return .none
+
+                /// 사이드메뉴 - 메뉴 버튼
+                case let .element(id: _, action: .home(.sideMenu(.menuTapped(type)))):
+                    switch type {
+                    case .notification:
+                        state.path.append(.notificaiton(.init()))
+                        return .none
+
+                    case .peepItNews:
+                        state.path.append(.announce(.init()))
+                        return .none
+
+                    case .townPeeps:
+                        state.path.append(.townPeeps(.init()))
+                        return .none
+                    }
 
                 default:
                     return .none

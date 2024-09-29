@@ -29,6 +29,9 @@ struct SideMenuView: View {
 
                     ForEach(SideMenuType.allCases, id: \.self) { menu in
                         MenuView(menuType: menu)
+                            .onTapGesture {
+                                store.send(.menuTapped(of: menu))
+                            }
                     }
 
                     divideView
@@ -125,34 +128,6 @@ fileprivate struct MenuView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 16)
-    }
-}
-
-enum SideMenuType: CaseIterable {
-    case townNews
-    case myNews
-    case serviceNews
-
-    var title: String {
-        switch self {
-        case .townNews:
-            return "동네 소식"
-        case .myNews:
-            return "내 소식"
-        case .serviceNews:
-            return "서비스 소식"
-        }
-    }
-
-    var iconImage: String {
-        switch self {
-        case .townNews:
-            return ""
-        case .myNews:
-            return ""
-        case .serviceNews:
-            return ""
-        }
     }
 }
 

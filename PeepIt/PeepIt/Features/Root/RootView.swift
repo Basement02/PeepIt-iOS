@@ -28,6 +28,18 @@ struct RootView: View {
 
                     case let .setting(store):
                         SettingView(store: store)
+
+                    case let .townPeeps(store):
+                        TownPeepsView(store: store)
+
+                    case let .notificaiton(store):
+                        NotificationView(store: store)
+
+                    case let .announce(store):
+                        AnnounceView(store: store)
+
+                    case let .upload(store):
+                        UploadView(store: store)
                     }
                 }
             }

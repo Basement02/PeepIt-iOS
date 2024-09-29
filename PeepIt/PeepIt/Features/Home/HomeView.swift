@@ -104,7 +104,7 @@ extension HomeView {
 
     private var uploadPeepButton: some View {
         Button {
-
+            store.send(.uploadButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
