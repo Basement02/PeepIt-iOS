@@ -139,7 +139,7 @@ struct MyProfileView: View {
                         .font(.system(size: 20))
 
                     Button {
-                        // TODO: 핍 업로드로 이동
+                        store.send(.uploadButtonTapped)
                     } label: {
                         Text("핍 업로드하러 가기")
                             .font(.system(size: 16))

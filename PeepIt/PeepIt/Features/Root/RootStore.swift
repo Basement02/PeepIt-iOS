@@ -47,27 +47,33 @@ struct RootStore {
             case let .path(action):
 
                 switch action {
-                /// 프로필로 이동
+                /// 프로필: 프로필로 이동
                 case .element(id: _, action: .home(.profileButtonTapped)):
                     state.path.append(.myProfile(.init()))
                     return .none
 
-                /// 프로필 뒤로가기 버튼
+                /// 프로필: 프로필 뒤로가기 버튼
                 case let .element(id, action: .myProfile(.backButtonTapped)):
                     state.path.pop(from: id)
                     return .none
 
+                /// 프로필: 핍 없을 시 핍 업로드 버튼
+                case .element(id: _, action: .myProfile(.uploadButtonTapped)):
+                    state.path.append(.upload(.init()))
+                    return .none
+
+                /// 홈: 핍 업로드 버튼
                 case .element(id: _, action: .home(.uploadButtonTapped)):
                     state.path.append(.upload(.init()))
                     return .none
 
-                /// 사이드메뉴 - 설정 버튼
+                /// 사이드메뉴: 설정 버튼
                 case .element(id: _, action: .home(.sideMenu(.settingButtonTapped))):
                     state.path.append(.setting(.init()))
                     return .none
 
-                /// 사이드메뉴 - 메뉴 버튼
-                case let .element(id: _, action: .home(.sideMenu(.menuTapped(type)))):
+                /// 사이드메뉴: 메뉴 버튼
+                case let .element(id, action: .home(.sideMenu(.menuTapped(type)))):
                     switch type {
                     case .notification:
                         state.path.append(.notificaiton(.init()))
