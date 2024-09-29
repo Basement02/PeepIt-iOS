@@ -13,7 +13,9 @@ struct ProfileModifyStore {
 
     @ObservableState
     struct State: Equatable {
-
+        var id = "id"
+        var nickname = "nickname"
+        var gender: GenderType = .man
     }
 
     enum Action {

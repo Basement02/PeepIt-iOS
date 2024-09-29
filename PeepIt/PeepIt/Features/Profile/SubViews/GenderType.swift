@@ -1,0 +1,25 @@
+//
+//  GenderType.swift
+//  PeepIt
+//
+//  Created by 김민 on 9/29/24.
+//
+
+import Foundation
+
+enum GenderType {
+    case woman
+    case man
+    case notSelected
+
+    var title: String {
+        switch self {
+        case .woman:
+            return "여성"
+        case .man:
+            return "남성"
+        case .notSelected:
+            return "공개하지 않음"
+        }
+    }
+}
