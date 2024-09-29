@@ -10,7 +10,9 @@ import ComposableArchitecture
 
 struct ModifyGenderView: View {
     @Perception.Bindable var store: StoreOf<ProfileModifyStore>
-    
+
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
@@ -45,7 +47,7 @@ struct ModifyGenderView: View {
 
     private var modifyButton: some View {
         Button {
-
+            presentationMode.wrappedValue.dismiss()
         } label: {
             Text("저장")
         }

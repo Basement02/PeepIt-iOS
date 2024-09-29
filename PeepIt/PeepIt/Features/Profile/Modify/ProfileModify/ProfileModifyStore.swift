@@ -26,6 +26,8 @@ struct ProfileModifyStore {
         case nicknameButtonTapped
         case genderButtonTapped
         case selectGender(of: GenderType)
+        case nicknameModifyButtonTapped
+        case genderModifyButtonTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -44,6 +46,12 @@ struct ProfileModifyStore {
 
             case let .selectGender(type):
                 state.selectedGender = type
+                return .none
+
+            case .nicknameModifyButtonTapped:
+                return .none
+
+            case .genderModifyButtonTapped:
                 return .none
 
             default:
