@@ -71,7 +71,7 @@ struct MyProfileView: View {
             Spacer()
 
             Button {
-
+                store.send(.modifyButtonTapped)
             } label: {
                 Text("수정")
             }

@@ -20,6 +20,9 @@ struct RootStore {
         case notificaiton(NotificationStore)
         case announce(AnnounceStore)
         case upload(UploadStore)
+        case profileModify(ProfileModifyStore)
+        case nicknameModify(ProfileModifyStore)
+        case genderModify(ProfileModifyStore)
     }
 
     @ObservableState
@@ -62,9 +65,14 @@ struct RootStore {
                     state.path.append(.upload(.init()))
                     return .none
 
-                /// 홈: 핍 업로드 버튼
-                case .element(id: _, action: .home(.uploadButtonTapped)):
-                    state.path.append(.upload(.init()))
+                /// 프로필: 수정 버튼
+                case .element(id: _, action: .myProfile(.modifyButtonTapped)):
+                    state.path.append(.profileModify(.init()))
+                    return .none
+
+                /// 프로필: 닉네임
+                case .element(id: _, action: .profileModify(.nicknameButtonTapped)):
+                    state.path.append(.nicknameModify(.init()))
                     return .none
 
                 /// 사이드메뉴: 설정 버튼
@@ -73,7 +81,7 @@ struct RootStore {
                     return .none
 
                 /// 사이드메뉴: 메뉴 버튼
-                case let .element(id, action: .home(.sideMenu(.menuTapped(type)))):
+                case let .element(_, action: .home(.sideMenu(.menuTapped(type)))):
                     switch type {
                     case .notification:
                         state.path.append(.notificaiton(.init()))
