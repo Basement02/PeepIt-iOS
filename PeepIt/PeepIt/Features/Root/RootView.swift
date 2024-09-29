@@ -1,0 +1,56 @@
+//
+//  RootView.swift
+//  PeepIt
+//
+//  Created by 김민 on 9/28/24.
+//
+
+import SwiftUI
+import ComposableArchitecture
+
+struct RootView: View {
+    @Perception.Bindable var store: StoreOf<RootStore>
+
+    var body: some View {
+        WithPerceptionTracking {
+            NavigationStack(
+                path: $store.scope(state: \.path, action: \.path),
+                root: { Color.clear }
+            ) { store in
+                WithPerceptionTracking {
+                    switch store.case {
+
+                    case let .home(store):
+                        HomeView(store: store)
+
+                    case let .myProfile(store):
+                        MyProfileView(store: store)
+
+                    case let .setting(store):
+                        SettingView(store: store)
+
+                    case let .townPeeps(store):
+                        TownPeepsView(store: store)
+
+                    case let .notificaiton(store):
+                        NotificationView(store: store)
+
+                    case let .announce(store):
+                        AnnounceView(store: store)
+
+                    case let .upload(store):
+                        UploadView(store: store)
+                    }
+                }
+            }
+        }
+    }
+}
+
+#Preview {
+    NavigationStack {
+        RootView(
+            store: .init(initialState: RootStore.State()) { RootStore() }
+        )
+    }
+}

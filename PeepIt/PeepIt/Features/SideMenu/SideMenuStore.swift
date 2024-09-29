@@ -19,6 +19,8 @@ struct SideMenuStore {
     enum Action {
         case dragSideMenu(dragWidth: CGFloat)
         case dragSideMenuEnded
+        case settingButtonTapped
+        case menuTapped(of: SideMenuType)
     }
 
     var body: some Reducer<State, Action> {
@@ -30,6 +32,12 @@ struct SideMenuStore {
 
             case .dragSideMenuEnded:
                 state.sideMenuOffset = -Constant.screenWidth
+                return .none
+
+            case .settingButtonTapped:
+                return .none
+
+            case let .menuTapped(type):
                 return .none
             }
         }

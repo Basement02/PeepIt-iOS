@@ -23,7 +23,9 @@ struct HomeStore {
     enum Action {
         case goToPeepTapped
         case sideMenuButtonTapped
-        
+        case profileButtonTapped
+        case uploadButtonTapped
+
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
@@ -48,15 +50,21 @@ struct HomeStore {
                 state.isPeepDetailShowed = true
                 return .none
 
-            case .peepDetail(.closeView):
-                state.isPeepDetailShowed = false
-                return .none
-
             case .sideMenuButtonTapped:
                 state.sideMenu.sideMenuOffset = 0
                 return .none
 
-            case .sideMenu:
+            case .profileButtonTapped:
+                return .none
+
+            case .uploadButtonTapped:
+                return .none
+
+            case .peepDetail(.closeView):
+                state.isPeepDetailShowed = false
+                return .none
+
+            case .sideMenu(.settingButtonTapped):
                 return .none
 
             case .peepPreviewModal(.peepCellTapped):

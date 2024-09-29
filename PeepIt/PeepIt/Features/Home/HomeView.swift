@@ -53,6 +53,7 @@ struct HomeView: View {
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }
@@ -83,7 +84,7 @@ extension HomeView {
 
     private var profileButton: some View {
         Button {
-
+            store.send(.profileButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
@@ -103,7 +104,7 @@ extension HomeView {
 
     private var uploadPeepButton: some View {
         Button {
-
+            store.send(.uploadButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 39, height: 39)
