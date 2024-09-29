@@ -17,12 +17,8 @@ struct MyProfileView: View {
                 topBar
                     .padding(.bottom, 29)
 
-<<<<<<< HEAD:PeepIt/PeepIt/Features/MyProfile/MyProfileView.swift
                 profileView
                     .padding(.bottom, 20)
-=======
-            profileView
->>>>>>> a284fab8a78030e0f461cd99c6617a734edc1fe6:PeepIt/PeepIt/Features/Profile/My/MyProfileView.swift
 
                 peepTabView
 
