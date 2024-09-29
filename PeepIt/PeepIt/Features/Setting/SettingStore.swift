@@ -19,12 +19,4 @@ struct SettingStore {
     enum Action {
 
     }
-
-    var body: some Reducer<State, Action> {
-        Reduce { state, action in
-            switch action {
-                
-            }
-        }
-    }
 }
