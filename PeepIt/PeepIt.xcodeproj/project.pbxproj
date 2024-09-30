@@ -25,6 +25,9 @@
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
 		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
 		AB5159762CA97A320043AA0A /* PeepItRectangleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159752CA97A320043AA0A /* PeepItRectangleStyle.swift */; };
+		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
+		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
+		AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159822CAAFCA40043AA0A /* LoginType.swift */; };
 		AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE502CA00FDC00D8DC1F /* Constant.swift */; };
 		AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE522CA0123D00D8DC1F /* PeepModalStore.swift */; };
 		AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE542CA0289A00D8DC1F /* Chat.swift */; };
@@ -78,6 +81,9 @@
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
 		AB5159752CA97A320043AA0A /* PeepItRectangleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItRectangleStyle.swift; sourceTree = "<group>"; };
+		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
+		AB5159822CAAFCA40043AA0A /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
 		AB53DE502CA00FDC00D8DC1F /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		AB53DE522CA0123D00D8DC1F /* PeepModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalStore.swift; sourceTree = "<group>"; };
 		AB53DE542CA0289A00D8DC1F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
@@ -206,6 +212,16 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
+		AB51597D2CAAFA5D0043AA0A /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				AB51597E2CAAFA670043AA0A /* LoginView.swift */,
+				AB5159802CAAFA730043AA0A /* LoginStore.swift */,
+				AB5159822CAAFCA40043AA0A /* LoginType.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		AB53DE4F2CA00FD100D8DC1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +288,7 @@
 		ABC305D72C9324CC003B00FE /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				AB51597D2CAAFA5D0043AA0A /* Login */,
 				ABB444972CA8451D00C1EE67 /* Root */,
 				ABC305D82C9324E2003B00FE /* Home */,
 				AB469C6F2C9FED5E00DC7B8A /* SideMenu */,
@@ -501,6 +518,7 @@
 				AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
+				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
@@ -524,8 +542,10 @@
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
+				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
+				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
