@@ -17,6 +17,15 @@ struct AuthenticationStore {
     }
 
     enum Action {
+        case nextButtonTapped
+    }
 
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .nextButtonTapped:
+                return .none
+            }
+        }
     }
 }

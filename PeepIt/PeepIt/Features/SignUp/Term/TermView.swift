@@ -12,7 +12,21 @@ struct TermView: View {
     let store: StoreOf<TermStore>
 
     var body: some View {
-        Text("약관 뷰")
+        VStack {
+            Spacer()
+
+            Text("약관 뷰")
+            
+            Spacer()
+
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
+                Text("다음")
+            }
+            .peepItRectangleStyle()
+            .padding(.bottom, 17)
+        }
     }
 }
 

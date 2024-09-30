@@ -22,7 +22,7 @@ struct LoginStore {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .loginButtonTapped(type):
+            case .loginButtonTapped:
                 return .none
             }
         }

@@ -12,7 +12,21 @@ struct WelcomeView: View {
     let store: StoreOf<WelcomeStore>
 
     var body: some View {
-        Text("Welcome")
+        VStack {
+            Spacer()
+
+            Text("본인인증 뷰")
+
+            Spacer()
+
+            Button {
+                store.send(.goToHomeButtonTapped)
+            } label: {
+                Text("서비스 홈으로 이동")
+            }
+            .peepItRectangleStyle()
+            .padding(.bottom, 17)
+        }
     }
 }
 

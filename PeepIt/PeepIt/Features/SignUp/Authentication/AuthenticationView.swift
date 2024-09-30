@@ -12,7 +12,21 @@ struct AuthenticationView: View {
     let store: StoreOf<AuthenticationStore>
 
     var body: some View {
-        Text("본인인증")
+        VStack {
+            Spacer()
+
+            Text("본인인증 뷰")
+
+            Spacer()
+
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
+                Text("다음")
+            }
+            .peepItRectangleStyle()
+            .padding(.bottom, 17)
+        }
     }
 }
 

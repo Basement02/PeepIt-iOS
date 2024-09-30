@@ -17,6 +17,15 @@ struct WelcomeStore {
     }
 
     enum Action {
+        case goToHomeButtonTapped
+    }
 
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .goToHomeButtonTapped:
+                return .none
+            }
+        }
     }
 }

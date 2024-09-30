@@ -12,7 +12,21 @@ struct InputProfileView: View {
     let store: StoreOf<InputProfileStore>
 
     var body: some View {
-        Text("정보 입력")
+        VStack {
+            Spacer()
+
+            Text("정보 입력")
+            
+            Spacer()
+
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
+                Text("다음")
+            }
+            .peepItRectangleStyle()
+            .padding(.bottom, 17)
+        }
     }
 }
 
