@@ -9,8 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 enum AuthState: Equatable {
-    case notRegistered
-    case registered
+    case unAuthorized
     case authorized
 }
 
@@ -36,14 +35,16 @@ struct RootStore {
     struct State {
         var path = StackState<Path.State>()
 
-        var authState = AuthState.registered
+        var authState = AuthState.unAuthorized
 
+        var login = LoginStore.State()
         var home = HomeStore.State()
     }
 
     enum Action {
         case path(StackActionOf<Path>)
 
+        case login(LoginStore.Action)
         case home(HomeStore.Action)
     }
 
@@ -51,6 +52,10 @@ struct RootStore {
 
         Scope(state: \.home, action: \.home) {
             HomeStore()
+        }
+
+        Scope(state: \.login, action: \.login) {
+            LoginStore()
         }
 
         Reduce { state, action in

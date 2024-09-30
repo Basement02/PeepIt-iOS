@@ -16,13 +16,17 @@ struct RootView: View {
             NavigationStack(
                 path: $store.scope(state: \.path, action: \.path),
                 root: {
-//                    Color.clear
                     Group {
                         switch store.authState {
+                        case .unAuthorized:
+                            LoginView(
+                                store: store.scope(
+                                    state: \.login,
+                                    action: \.login
+                                )
+                            )
+
                         case .authorized:
-                            Text("로그인")
-                            
-                        case .registered, .notRegistered:
                             HomeView(
                                 store: store.scope(
                                     state: \.home,
