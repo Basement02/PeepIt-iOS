@@ -66,7 +66,8 @@ struct RootStore {
             switch action {
 
             case .login(.loginButtonTapped):
-                state.authState = .authorized
+//                state.authState = .authorized
+                state.path.append(.term(.init()))
                 return .none
 
             case let .path(action):
