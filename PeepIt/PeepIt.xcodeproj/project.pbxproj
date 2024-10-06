@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8202CB2D3D4007D432E /* TermType.swift */; };
+		AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8222CB2DE59007D432E /* InputIdView.swift */; };
+		AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8242CB2DF26007D432E /* InputIdStore.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -73,6 +75,8 @@
 
 /* Begin PBXFileReference section */
 		AB26A8202CB2D3D4007D432E /* TermType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermType.swift; sourceTree = "<group>"; };
+		AB26A8222CB2DE59007D432E /* InputIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdView.swift; sourceTree = "<group>"; };
+		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 			children = (
 				ABC171F02CAB198100370901 /* InputProfileView.swift */,
 				ABC171F92CAB19FA00370901 /* InputProfileStore.swift */,
+				AB26A8222CB2DE59007D432E /* InputIdView.swift */,
+				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
 			);
 			path = InputProfile;
 			sourceTree = "<group>";
@@ -589,6 +595,7 @@
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
+				AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */,
 				ABC171F12CAB198100370901 /* InputProfileView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
@@ -610,6 +617,7 @@
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
+				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
 				ABC171FA2CAB19FA00370901 /* InputProfileStore.swift in Sources */,

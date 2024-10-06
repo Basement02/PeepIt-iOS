@@ -80,6 +80,9 @@ struct RootView: View {
                     case let .inputProfile(store):
                         InputProfileView(store: store)
 
+                    case let .inputId(store):
+                        InputIdView(store: store)
+
                     case let .authentication(store):
                         AuthenticationView(store: store)
 
