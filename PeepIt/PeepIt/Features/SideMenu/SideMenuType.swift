@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SideMenuType: CaseIterable {
+enum SideMenuType: CaseIterable, Hashable {
     case townPeeps
     case notification
     case peepItNews
