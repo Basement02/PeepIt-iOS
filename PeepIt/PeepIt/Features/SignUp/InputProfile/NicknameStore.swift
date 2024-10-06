@@ -1,40 +1,40 @@
 //
-//  InputIdStore.swift
+//  NicknameStore.swift
 //  PeepIt
 //
-//  Created by 김민 on 10/7/24.
+//  Created by 김민 on 10/1/24.
 //
 
 import Foundation
 import ComposableArchitecture
 
 @Reducer
-struct InputIdStore {
+struct NicknameStore {
 
     @ObservableState
     struct State: Equatable {
-        var id = ""
-        var idState = NicknameValidation.base
+        var nickname = ""
+        var validState = NicknameValidation.base
 
         enum NicknameValidation {
             case base
             case minCount
             case maxCount
-            case duplicated
             case validated
+            case wrongWord
 
             var message: String {
                 switch self {
                 case .base:
-                    return "영문, 숫자 특수문자(_,-, .)만 사용 가능합니다."
+                    return "기본"
                 case .minCount:
-                    return "아이디로 사용하기에 너무 짧아요 :("
+                    return "더 입력"
                 case .maxCount:
-                    return "아이디로 사용하기에 너무 길어요 :("
-                case .duplicated:
-                    return "이미 사용 중인 아이디입니다."
+                    return "덜 입력"
                 case .validated:
-                    return "사용 가능한 아이디입니다 :)"
+                    return "사용 가능"
+                case .wrongWord:
+                    return "사용 불가"
                 }
             }
         }
@@ -50,17 +50,14 @@ struct InputIdStore {
 
         Reduce { state, action in
             switch action {
-            case .binding(\.id):
-                if state.id.count < 10 {
-                    state.idState = .minCount
-                } else if state.id.count > 20 {
-                    state.idState = .maxCount
-                } else { // TODO: 중복 조건 추가
-                    state.idState = .validated
+            case .binding(\.nickname):
+                if state.nickname.count > 1 {
+                    state.validState = .validated
+                } else {
+                    state.validState = .base
                 }
-
                 return .none
-
+                
             case .nextButtonTapped:
                 return .none
 
@@ -70,4 +67,3 @@ struct InputIdStore {
         }
     }
 }
-

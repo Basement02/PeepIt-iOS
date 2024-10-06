@@ -31,7 +31,7 @@ struct RootStore {
         case genderModify(ProfileModifyStore)
         case term(TermStore)
         case inputId(InputIdStore)
-        case inputProfile(InputProfileStore)
+        case nickname(NicknameStore)
         case authentication(AuthenticationStore)
         case welcome(WelcomeStore)
     }
@@ -95,8 +95,14 @@ struct RootStore {
                     state.path.append(.nicknameModify(.init()))
                     return .none
 
+                    /// 약관 -> 아이디i
                 case .element(id: _, action: .term(.nextButtonTapped)):
                     state.path.append(.inputId(.init()))
+                    return .none
+
+                    /// 아이디 -> 닉네임
+                case .element(id: _, action: .inputId(.nextButtonTapped)):
+                    state.path.append(.nickname(.init()))
                     return .none
 
                 default:

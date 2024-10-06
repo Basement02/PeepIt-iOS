@@ -37,7 +37,7 @@ struct InputIdView: View {
                 Spacer()
 
                 Button {
-
+                    store.send(.nextButtonTapped)
                 } label: {
                     Text("다음")
                 }
