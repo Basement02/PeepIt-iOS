@@ -29,6 +29,10 @@ struct RootStore {
         case profileModify(ProfileModifyStore)
         case nicknameModify(ProfileModifyStore)
         case genderModify(ProfileModifyStore)
+        case term(TermStore)
+        case inputProfile(InputProfileStore)
+        case authentication(AuthenticationStore)
+        case welcome(WelcomeStore)
     }
 
     @ObservableState
@@ -60,6 +64,10 @@ struct RootStore {
 
         Reduce { state, action in
             switch action {
+
+            case .login(.loginButtonTapped):
+                state.authState = .authorized
+                return .none
 
             case let .path(action):
 

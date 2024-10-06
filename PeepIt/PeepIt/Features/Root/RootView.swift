@@ -40,6 +40,7 @@ struct RootView: View {
                 WithPerceptionTracking {
                     switch store.case {
 
+                        // TODO: 개선
                     case let .login(store):
                         LoginView(store: store)
 
@@ -72,6 +73,18 @@ struct RootView: View {
 
                     case let .genderModify(store):
                         ModifyGenderView(store: store)
+
+                    case let .term(store):
+                        TermView(store: store)
+
+                    case let .inputProfile(store):
+                        InputProfileView(store: store)
+
+                    case let .authentication(store):
+                        AuthenticationView(store: store)
+
+                    case let .welcome(store):
+                        WelcomeView(store: store)
                     }
                 }
             }
