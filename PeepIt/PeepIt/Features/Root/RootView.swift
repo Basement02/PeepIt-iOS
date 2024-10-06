@@ -62,8 +62,8 @@ struct RootView: View {
                     case let .announce(store):
                         AnnounceView(store: store)
 
-                    case let .upload(store):
-                        UploadView(store: store)
+                    case let .camera(store):
+                        CameraView(store: store)
 
                     case let .profileModify(store):
                         ProfileModifyView(store: store)

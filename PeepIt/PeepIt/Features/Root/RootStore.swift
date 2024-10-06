@@ -25,7 +25,7 @@ struct RootStore {
         case townPeeps(TownPeepsStore)
         case notificaiton(NotificationStore)
         case announce(AnnounceStore)
-        case upload(UploadStore)
+        case camera(CameraStore)
         case profileModify(ProfileModifyStore)
         case nicknameModify(ProfileModifyStore)
         case genderModify(ProfileModifyStore)
@@ -39,7 +39,7 @@ struct RootStore {
     struct State {
         var path = StackState<Path.State>()
 
-        var authState = AuthState.unAuthorized
+        var authState = AuthState.authorized
 
         var login = LoginStore.State()
         var home = HomeStore.State()
@@ -80,7 +80,7 @@ struct RootStore {
 
                     /// 프로필: 핍 없을 시 핍 업로드 버튼
                 case .element(id: _, action: .myProfile(.uploadButtonTapped)):
-                    state.path.append(.upload(.init()))
+                    state.path.append(.camera(.init()))
                     return .none
 
                     /// 프로필: 수정 버튼
@@ -122,6 +122,10 @@ struct RootStore {
                     state.path.append(.townPeeps(.init()))
                     return .none
                 }
+
+            case .home(.uploadButtonTapped):
+                state.path.append(.camera(.init()))
+                return .none
 
             default:
                 return .none

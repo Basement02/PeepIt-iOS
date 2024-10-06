@@ -16,8 +16,8 @@
 		AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D1C2CA9420800C1E430 /* NotificationView.swift */; };
 		AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D1F2CA9428700C1E430 /* AnnounceStore.swift */; };
 		AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D212CA9429600C1E430 /* AnnounceView.swift */; };
-		AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D242CA943CA00C1E430 /* UploadStore.swift */; };
-		AB468D272CA943E500C1E430 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D262CA943E500C1E430 /* UploadView.swift */; };
+		AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D242CA943CA00C1E430 /* CameraStore.swift */; };
+		AB468D272CA943E500C1E430 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D262CA943E500C1E430 /* CameraView.swift */; };
 		AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */; };
 		AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */; };
 		AB468D312CA954C700C1E430 /* GenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D302CA954C700C1E430 /* GenderType.swift */; };
@@ -80,8 +80,8 @@
 		AB468D1C2CA9420800C1E430 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		AB468D1F2CA9428700C1E430 /* AnnounceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceStore.swift; sourceTree = "<group>"; };
 		AB468D212CA9429600C1E430 /* AnnounceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceView.swift; sourceTree = "<group>"; };
-		AB468D242CA943CA00C1E430 /* UploadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStore.swift; sourceTree = "<group>"; };
-		AB468D262CA943E500C1E430 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		AB468D242CA943CA00C1E430 /* CameraStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStore.swift; sourceTree = "<group>"; };
+		AB468D262CA943E500C1E430 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyStore.swift; sourceTree = "<group>"; };
 		AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyView.swift; sourceTree = "<group>"; };
 		AB468D302CA954C700C1E430 /* GenderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderType.swift; sourceTree = "<group>"; };
@@ -185,8 +185,8 @@
 		AB468D232CA9438E00C1E430 /* PeepUpload */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D242CA943CA00C1E430 /* UploadStore.swift */,
-				AB468D262CA943E500C1E430 /* UploadView.swift */,
+				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
+				AB468D262CA943E500C1E430 /* CameraView.swift */,
 			);
 			path = PeepUpload;
 			sourceTree = "<group>";
@@ -598,11 +598,11 @@
 				AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */,
 				AB468D162CA9401600C1E430 /* TownPeepsStore.swift in Sources */,
 				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
-				AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */,
+				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
-				AB468D272CA943E500C1E430 /* UploadView.swift in Sources */,
+				AB468D272CA943E500C1E430 /* CameraView.swift in Sources */,
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,

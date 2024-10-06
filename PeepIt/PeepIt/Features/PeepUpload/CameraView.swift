@@ -1,5 +1,5 @@
 //
-//  UploadView.swift
+//  CameraView.swift
 //  PeepIt
 //
 //  Created by 김민 on 9/29/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct UploadView: View {
-    let store: StoreOf<UploadStore>
+struct CameraView: View {
+    let store: StoreOf<CameraStore>
 
     var body: some View {
         Text("핍 업로드")
@@ -17,7 +17,7 @@ struct UploadView: View {
 }
 
 #Preview {
-    UploadView(
-        store: .init(initialState: UploadStore.State()) { UploadStore() }
+    CameraView(
+        store: .init(initialState: CameraStore.State()) { CameraStore() }
     )
 }
