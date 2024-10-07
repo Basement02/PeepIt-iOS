@@ -95,7 +95,7 @@ struct RootStore {
                     state.path.append(.nicknameModify(.init()))
                     return .none
 
-                    /// 약관 -> 아이디i
+                    /// 약관 -> 아이디
                 case .element(id: _, action: .term(.nextButtonTapped)):
                     state.path.append(.inputId(.init()))
                     return .none
@@ -103,6 +103,11 @@ struct RootStore {
                     /// 아이디 -> 닉네임
                 case .element(id: _, action: .inputId(.nextButtonTapped)):
                     state.path.append(.nickname(.init()))
+                    return .none
+
+                    /// 닉네임  -> 본인인증
+                case .element(id: _, action: .nickname(.nextButtonTapped)):
+                    state.path.append(.authentication(.init()))
                     return .none
 
                 default:
