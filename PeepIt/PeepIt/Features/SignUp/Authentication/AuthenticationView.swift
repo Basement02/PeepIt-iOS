@@ -11,6 +11,8 @@ import ComposableArchitecture
 struct AuthenticationView: View {
     @Perception.Bindable var store: StoreOf<AuthenticationStore>
 
+    @FocusState var focused: AuthenticationStore.State.CodeField?
+
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
@@ -83,6 +85,10 @@ struct AuthenticationView: View {
             WithPerceptionTracking {
                 ForEach(0..<6) { idx in
                     NumberTextFieldView(number: $store.code[idx])
+                        .focused(
+                            $focused,
+                            equals: AuthenticationStore.State.CodeField(rawValue: idx)
+                        )
                 }
             }
         }
@@ -108,6 +114,7 @@ fileprivate struct NumberTextFieldView: View {
 
     var body: some View {
         TextField("", text: $number)
+            .keyboardType(.numberPad)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(.black, lineWidth: 1.0)

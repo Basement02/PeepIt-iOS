@@ -17,8 +17,9 @@ struct AuthenticationStore {
         var isAuthProcessReady = false
         var isSMSAuthProcess = false
         var code = Array(repeating: "", count: 6)
+        var focused: CodeField? = nil
 
-        enum CodeField: Int, CaseIterable {
+        enum CodeField: Int, Hashable {
             case first, second, third, fourth, fifth, sixth
         }
     }
@@ -40,7 +41,7 @@ struct AuthenticationStore {
                 return .none
                 
             case let .bottomButtonTapped(isStartAuthButton):
-                if isStartAuthButton { state.isSMSAuthProcess = true }
+            if state.isAuthProcessReady { state.isSMSAuthProcess = true }
                 return .none
 
             case .phoneNumberLabelTapped:
