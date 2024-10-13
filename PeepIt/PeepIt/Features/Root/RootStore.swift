@@ -30,7 +30,8 @@ struct RootStore {
         case nicknameModify(ProfileModifyStore)
         case genderModify(ProfileModifyStore)
         case term(TermStore)
-        case inputProfile(InputProfileStore)
+        case inputId(InputIdStore)
+        case nickname(NicknameStore)
         case authentication(AuthenticationStore)
         case welcome(WelcomeStore)
     }
@@ -66,7 +67,8 @@ struct RootStore {
             switch action {
 
             case .login(.loginButtonTapped):
-                state.authState = .authorized
+//                state.authState = .authorized
+                state.path.append(.term(.init()))
                 return .none
 
             case let .path(action):
@@ -91,6 +93,35 @@ struct RootStore {
                     /// 프로필: 닉네임
                 case .element(id: _, action: .profileModify(.nicknameButtonTapped)):
                     state.path.append(.nicknameModify(.init()))
+                    return .none
+
+                    /// 약관 -> 아이디
+                case .element(id: _, action: .term(.nextButtonTapped)):
+                    state.path.append(.inputId(.init()))
+                    return .none
+
+                    /// 아이디 -> 닉네임
+                case .element(id: _, action: .inputId(.nextButtonTapped)):
+                    state.path.append(.nickname(.init()))
+                    return .none
+
+                    /// 닉네임  -> 본인인증
+                case .element(id: _, action: .nickname(.nextButtonTapped)):
+                    state.path.append(.authentication(.init()))
+                    return .none
+
+                    /// 본인인증 -> 웰컴
+                case let .element(
+                    id: _,
+                    action: .authentication(.bottomButtonTapped(isStartAuthButton))
+                ):
+                    if !isStartAuthButton { state.path.append(.welcome(.init())) }
+                    return .none
+
+                    /// 웰컴 -> 홈
+                case .element(id: _, action: .welcome(.goToHomeButtonTapped)):
+                    state.path.removeAll()
+                    state.authState = .authorized
                     return .none
 
                 default:

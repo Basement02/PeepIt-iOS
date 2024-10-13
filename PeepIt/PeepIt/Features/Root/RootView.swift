@@ -77,8 +77,11 @@ struct RootView: View {
                     case let .term(store):
                         TermView(store: store)
 
-                    case let .inputProfile(store):
-                        InputProfileView(store: store)
+                    case let .nickname(store):
+                        NicknameView(store: store)
+
+                    case let .inputId(store):
+                        InputIdView(store: store)
 
                     case let .authentication(store):
                         AuthenticationView(store: store)

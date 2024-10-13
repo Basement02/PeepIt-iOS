@@ -22,4 +22,15 @@ enum GenderType: CaseIterable, Hashable {
             return "공개하지 않음"
         }
     }
+
+    var minTitle: String {
+        switch self {
+        case .woman:
+            return "여성"
+        case .man:
+            return "남성"
+        case .notSelected:
+            return "기타"
+        }
+    }
 }

@@ -13,7 +13,7 @@ struct WelcomeStore {
 
     @ObservableState
     struct State: Equatable {
-
+        var isAuthorized = true
     }
 
     enum Action {
