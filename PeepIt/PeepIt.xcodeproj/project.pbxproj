@@ -195,8 +195,7 @@
 		AB468D232CA9438E00C1E430 /* PeepUpload */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
-				AB468D262CA943E500C1E430 /* CameraView.swift */,
+				AB71E1C52CBC048500D2D3D9 /* Camera */,
 			);
 			path = PeepUpload;
 			sourceTree = "<group>";
@@ -263,6 +262,15 @@
 				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		AB71E1C52CBC048500D2D3D9 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
+				AB468D262CA943E500C1E430 /* CameraView.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		ABB444972CA8451D00C1EE67 /* Root */ = {
