@@ -144,6 +144,9 @@ struct RootStore {
                     return .none
 
                     /// 편집 -> 본문 작성
+                case .element(id: _, action: .edit(.uploadButtonTapped)):
+                    state.path.append(.write(.init()))
+                    return .none
 
 
                     /// 본문 작성 완료 -> 돌아가기
