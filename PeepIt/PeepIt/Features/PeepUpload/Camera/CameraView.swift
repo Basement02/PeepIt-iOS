@@ -12,7 +12,25 @@ struct CameraView: View {
     let store: StoreOf<CameraStore>
 
     var body: some View {
-        Text("핍 업로드")
+        WithPerceptionTracking {
+            ZStack {
+                Color.gray
+
+                VStack {
+                    Spacer()
+
+                    Button {
+                        store.send(.shootButtonTapped)
+                    } label: {
+                        Circle()
+                            .frame(width: 62, height: 62)
+                            .foregroundStyle(Color.white)
+                    }
+                    .padding(.bottom, 66)
+                }
+            }
+            .ignoresSafeArea()
+        }
     }
 }
 
