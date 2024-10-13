@@ -42,6 +42,8 @@
 		AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */; };
 		AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */; };
 		AB71E1CF2CBC06D800D2D3D9 /* WriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */; };
+		AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */; };
+		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
@@ -115,6 +117,8 @@
 		AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStore.swift; sourceTree = "<group>"; };
 		AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 		AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStore.swift; sourceTree = "<group>"; };
+		AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalStore.swift; sourceTree = "<group>"; };
+		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 			children = (
 				AB71E1C52CBC048500D2D3D9 /* Camera */,
 				AB71E1C62CBC062B00D2D3D9 /* Edit */,
+				AB71E1D02CBC244900D2D3D9 /* StickerModal */,
 				AB71E1CB2CBC06B700D2D3D9 /* Write */,
 			);
 			path = PeepUpload;
@@ -299,6 +304,15 @@
 				AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */,
 			);
 			path = Write;
+			sourceTree = "<group>";
+		};
+		AB71E1D02CBC244900D2D3D9 /* StickerModal */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */,
+				AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */,
+			);
+			path = StickerModal;
 			sourceTree = "<group>";
 		};
 		ABB444972CA8451D00C1EE67 /* Root */ = {
@@ -681,6 +695,7 @@
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
+				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
@@ -692,6 +707,7 @@
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
+				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 				ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */,

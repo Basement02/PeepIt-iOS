@@ -14,6 +14,7 @@ struct EditStore {
     @ObservableState
     struct State: Equatable {
 
+        @Presents var stickerModalState: StickerModalStore.State?
     }
 
     enum Action {
@@ -21,6 +22,7 @@ struct EditStore {
         case stickerButtonTapped
         case textButtonTapped
         case uploadButtonTapped
+        case stickerListAction(PresentationAction<StickerModalStore.Action>)
     }
 
     var body: some Reducer<State, Action> {
@@ -30,6 +32,7 @@ struct EditStore {
                 return .none
 
             case .stickerButtonTapped:
+                state.stickerModalState = .init()
                 return .none
 
             case .textButtonTapped:
@@ -37,7 +40,14 @@ struct EditStore {
 
             case .uploadButtonTapped:
                 return .none
+
+            case .stickerListAction:
+                state.stickerModalState = nil
+                return .none
             }
+        }
+        .ifLet(\.$stickerModalState, action: \.stickerListAction) {
+            StickerModalStore()
         }
     }
 }

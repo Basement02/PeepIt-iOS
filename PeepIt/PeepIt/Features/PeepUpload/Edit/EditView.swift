@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct EditView: View {
-    let store: StoreOf<EditStore>
+    @Perception.Bindable var store: StoreOf<EditStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -26,6 +26,15 @@ struct EditView: View {
                     uploadButton
                 }
                 .padding(.horizontal, 17)
+            }
+            .sheet(
+                item: $store.scope(
+                    state: \.stickerModalState,
+                    action: \.stickerListAction
+                )
+            ) { store in
+                StickerModalView(store: store)
+                    .presentationDetents([.height(600)])
             }
         }
     }
