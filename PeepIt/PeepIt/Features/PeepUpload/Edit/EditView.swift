@@ -12,19 +12,21 @@ struct EditView: View {
     let store: StoreOf<EditStore>
 
     var body: some View {
-        ZStack {
-            VStack(spacing: 25) {
-                Spacer()
+        WithPerceptionTracking {
+            ZStack {
+                VStack(spacing: 25) {
+                    Spacer()
 
-                soundButton
-                stickerButton
-                textButton
+                    soundButton
+                    stickerButton
+                    textButton
 
-                Spacer()
+                    Spacer()
 
-                uploadButton
+                    uploadButton
+                }
+                .padding(.horizontal, 17)
             }
-            .padding(.horizontal, 17)
         }
     }
 

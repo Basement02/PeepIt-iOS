@@ -150,7 +150,10 @@ struct RootStore {
 
 
                     /// 본문 작성 완료 -> 돌아가기
-                    ///
+                case .element(id: _, action: .write(.uploadButtonTapped)):
+                    state.path.removeAll()
+                    return .none
+
                 default:
                     return .none
                 }
