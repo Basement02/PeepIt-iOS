@@ -40,7 +40,7 @@ struct RootStore {
     struct State {
         var path = StackState<Path.State>()
 
-        var authState = AuthState.unAuthorized
+        var authState = AuthState.authorized
 
         var login = LoginStore.State()
         var home = HomeStore.State()
@@ -108,6 +108,20 @@ struct RootStore {
                     /// 닉네임  -> 본인인증
                 case .element(id: _, action: .nickname(.nextButtonTapped)):
                     state.path.append(.authentication(.init()))
+                    return .none
+
+                    /// 본인인증 -> 웰컴
+                case let .element(
+                    id: _,
+                    action: .authentication(.bottomButtonTapped(isStartAuthButton))
+                ):
+                    if !isStartAuthButton { state.path.append(.welcome(.init())) }
+                    return .none
+
+                    /// 웰컴 -> 홈
+                case .element(id: _, action: .welcome(.goToHomeButtonTapped)):
+                    state.path.removeAll()
+                    state.authState = .authorized
                     return .none
 
                 default:

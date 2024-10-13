@@ -40,9 +40,9 @@ struct AuthenticationStore {
                 state.isAuthProcessReady = state.phoneNumber.count == 11
                 return .none
                 
-            case let .bottomButtonTapped(isStartAuthButton):
+            case .bottomButtonTapped:
             if state.isAuthProcessReady { state.isSMSAuthProcess = true }
-                return .none
+            return .none
 
             case .phoneNumberLabelTapped:
                 state.isSMSAuthProcess = false
