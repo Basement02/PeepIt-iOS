@@ -13,12 +13,15 @@ struct StickerModalStore {
 
     @ObservableState
     struct State: Equatable {
-
+        let stickers = Sticker.allCases
     }
 
     enum Action {
-
+        case stickerSelected(selectedSticker: Sticker)
     }
 }
 
+enum Sticker: String, Hashable, CaseIterable {
+    case 😄
+}
 

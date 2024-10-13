@@ -11,8 +11,29 @@ import ComposableArchitecture
 struct StickerModalView: View {
     let store: StoreOf<StickerModalStore>
 
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        WithPerceptionTracking {
+            ZStack {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 13) {
+                        ForEach(store.stickers, id: \.self) { stckr in
+                            Image(stckr.rawValue)
+                                .frame(width: 40, height: 40)
+                                .onTapGesture {
+                                    store.send(.stickerSelected(selectedSticker: stckr))
+                                }
+                        }
+                    }
+                    .padding(.vertical, 58)
+                }
+            }
+        }
     }
 }
 

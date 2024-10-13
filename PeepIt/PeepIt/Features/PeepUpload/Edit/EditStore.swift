@@ -8,11 +8,19 @@
 import Foundation
 import ComposableArchitecture
 
+struct StickerItem: Identifiable, Equatable {
+    var id = UUID()
+    var stickerName = ""
+    var position: CGPoint = .zero
+}
+
 @Reducer
 struct EditStore {
 
     @ObservableState
     struct State: Equatable {
+
+        var stickers: [StickerItem] = .init()
 
         @Presents var stickerModalState: StickerModalStore.State?
     }
@@ -23,6 +31,7 @@ struct EditStore {
         case textButtonTapped
         case uploadButtonTapped
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
+        case updateStickerPosition(stickerId: UUID, position: CGPoint)
     }
 
     var body: some Reducer<State, Action> {
@@ -41,8 +50,15 @@ struct EditStore {
             case .uploadButtonTapped:
                 return .none
 
-            case .stickerListAction:
+            case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
+                state.stickers.append(StickerItem(stickerName: selectedSticker.rawValue))
                 state.stickerModalState = nil
+                return .none
+
+            case .updateStickerPosition:
+                return .none
+
+            default:
                 return .none
             }
         }
