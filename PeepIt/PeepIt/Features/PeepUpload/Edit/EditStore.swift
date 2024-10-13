@@ -17,6 +17,27 @@ struct EditStore {
     }
 
     enum Action {
-        
+        case soundOnOffButtonTapped
+        case stickerButtonTapped
+        case textButtonTapped
+        case uploadButtonTapped
+    }
+
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+            case .soundOnOffButtonTapped:
+                return .none
+
+            case .stickerButtonTapped:
+                return .none
+
+            case .textButtonTapped:
+                return .none
+
+            case .uploadButtonTapped:
+                return .none
+            }
+        }
     }
 }
