@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8202CB2D3D4007D432E /* TermType.swift */; };
+		AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8222CB2DE59007D432E /* InputIdView.swift */; };
+		AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8242CB2DF26007D432E /* InputIdStore.swift */; };
+		AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */; };
+		AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -36,11 +41,11 @@
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
-		ABC171F12CAB198100370901 /* InputProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F02CAB198100370901 /* InputProfileView.swift */; };
+		ABC171F12CAB198100370901 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F02CAB198100370901 /* NicknameView.swift */; };
 		ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F22CAB198C00370901 /* AuthenticationView.swift */; };
 		ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F42CAB199300370901 /* WelcomeView.swift */; };
 		ABC171F82CAB19E200370901 /* TermStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F72CAB19E200370901 /* TermStore.swift */; };
-		ABC171FA2CAB19FA00370901 /* InputProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F92CAB19FA00370901 /* InputProfileStore.swift */; };
+		ABC171FA2CAB19FA00370901 /* NicknameStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F92CAB19FA00370901 /* NicknameStore.swift */; };
 		ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171FB2CAB1A0800370901 /* AuthenticationStore.swift */; };
 		ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171FD2CAB1A2500370901 /* WelcomeStore.swift */; };
 		ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305C92C932341003B00FE /* PeepItApp.swift */; };
@@ -71,6 +76,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB26A8202CB2D3D4007D432E /* TermType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermType.swift; sourceTree = "<group>"; };
+		AB26A8222CB2DE59007D432E /* InputIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdView.swift; sourceTree = "<group>"; };
+		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
+		AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
+		AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoStore.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -100,11 +110,11 @@
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
-		ABC171F02CAB198100370901 /* InputProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputProfileView.swift; sourceTree = "<group>"; };
+		ABC171F02CAB198100370901 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		ABC171F22CAB198C00370901 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		ABC171F42CAB199300370901 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		ABC171F72CAB19E200370901 /* TermStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermStore.swift; sourceTree = "<group>"; };
-		ABC171F92CAB19FA00370901 /* InputProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputProfileStore.swift; sourceTree = "<group>"; };
+		ABC171F92CAB19FA00370901 /* NicknameStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameStore.swift; sourceTree = "<group>"; };
 		ABC171FB2CAB1A0800370901 /* AuthenticationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationStore.swift; sourceTree = "<group>"; };
 		ABC171FD2CAB1A2500370901 /* WelcomeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeStore.swift; sourceTree = "<group>"; };
 		ABC305C62C932341003B00FE /* PeepIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PeepIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,6 +290,7 @@
 			children = (
 				ABC171EE2CAB193F00370901 /* TermView.swift */,
 				ABC171F72CAB19E200370901 /* TermStore.swift */,
+				AB26A8202CB2D3D4007D432E /* TermType.swift */,
 			);
 			path = Term;
 			sourceTree = "<group>";
@@ -287,8 +298,12 @@
 		ABC171EA2CAB184D00370901 /* InputProfile */ = {
 			isa = PBXGroup;
 			children = (
-				ABC171F02CAB198100370901 /* InputProfileView.swift */,
-				ABC171F92CAB19FA00370901 /* InputProfileStore.swift */,
+				ABC171F02CAB198100370901 /* NicknameView.swift */,
+				ABC171F92CAB19FA00370901 /* NicknameStore.swift */,
+				AB26A8222CB2DE59007D432E /* InputIdView.swift */,
+				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
+				AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */,
+				AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */,
 			);
 			path = InputProfile;
 			sourceTree = "<group>";
@@ -586,7 +601,8 @@
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
-				ABC171F12CAB198100370901 /* InputProfileView.swift in Sources */,
+				AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */,
+				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
@@ -607,9 +623,11 @@
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
+				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
+				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
-				ABC171FA2CAB19FA00370901 /* InputProfileStore.swift in Sources */,
+				ABC171FA2CAB19FA00370901 /* NicknameStore.swift in Sources */,
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
@@ -617,6 +635,7 @@
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
+				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
@@ -625,6 +644,7 @@
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
+				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
