@@ -5,10 +5,11 @@
 //  Created by 김민 on 10/15/24.
 //
 
-import Foundation
+import SwiftUI
 
 struct StickerItem: Identifiable, Equatable {
     var id = UUID()
     var stickerName = ""
     var position: CGPoint = .zero
+    var scale: CGFloat = 1.0
 }

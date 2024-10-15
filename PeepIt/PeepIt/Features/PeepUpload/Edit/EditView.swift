@@ -29,6 +29,9 @@ struct EditView: View {
 
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
+                        .onTapGesture {
+                            print("tapped")
+                        }
                 }
             }
             .sheet(

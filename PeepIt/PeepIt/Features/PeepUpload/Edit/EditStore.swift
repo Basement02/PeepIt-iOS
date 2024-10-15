@@ -26,6 +26,7 @@ struct EditStore {
         case uploadButtonTapped
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         case updateStickerPosition(stickerId: UUID, position: CGPoint)
+        case updateStickerScale(stickerId: UUID, scale: CGFloat)
     }
 
     var body: some Reducer<State, Action> {
@@ -53,6 +54,11 @@ struct EditStore {
                 guard let index = state.stickers.firstIndex(where: { $0.id == stickerId }) else { return .none }
                 state.stickers[index].position = position
 
+                return .none
+
+            case let .updateStickerScale(stickerId, scale):
+                guard let index = state.stickers.firstIndex(where: { $0.id == stickerId }) else { return .none }
+                state.stickers[index].scale = scale
                 return .none
 
             default:

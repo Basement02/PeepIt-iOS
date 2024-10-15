@@ -13,39 +13,57 @@ struct DraggableSticker: View {
     let store: StoreOf<EditStore>
 
     @State private var offset: CGSize = .zero
+    @State private var currentScale: CGFloat = 1.0
+    @State private var finalScale: CGFloat = 1.0
 
     var body: some View {
         GeometryReader { geometry in
-            Image(sticker.stickerName)
-                .resizable()
-                .frame(width: 100, height: 100)
-                .position(
-                    x: sticker.position.x + offset.width,
-                    y: sticker.position.y + offset.height
-                )
-                .gesture(
-                    DragGesture()
-                        .onChanged { gesture in
-                            offset = gesture.translation
-                        }
-                        .onEnded { _ in
-                            let newPosition = CGPoint(
-                                x: sticker.position.x + offset.width,
-                                y: sticker.position.y + offset.height
-                            )
-                            store.send(.updateStickerPosition(stickerId: sticker.id, position: newPosition))
-                            offset = .zero
-                        }
-                )
-                .onAppear {
-                    let centerX = geometry.size.width / 2
-                    let centerY = geometry.size.height / 2
-                    store.send(
-                        .updateStickerPosition(
-                            stickerId: sticker.id,
-                            position: CGPoint(x: centerX, y: centerY))
+            WithPerceptionTracking {
+                Image(sticker.stickerName)
+                    .resizable()
+                    .frame(
+                        width: 100 * currentScale,
+                        height: 100 * currentScale
                     )
-                }
+                    .position(
+                        x: sticker.position.x + offset.width,
+                        y: sticker.position.y + offset.height
+                    )
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                offset = gesture.translation
+                            }
+                            .onEnded { _ in
+                                let newPosition = CGPoint(
+                                    x: sticker.position.x + offset.width,
+                                    y: sticker.position.y + offset.height
+                                )
+                                store.send(.updateStickerPosition(stickerId: sticker.id, position: newPosition))
+                                offset = .zero
+                            }
+                    )
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { scale in
+                                currentScale = finalScale * scale
+                            }
+                            .onEnded { scale in
+                                finalScale *= scale
+                                store.send(.updateStickerScale(stickerId: sticker.id, scale: finalScale))
+                            }
+                    )
+                    .onAppear {
+                        let centerX = geometry.size.width / 2
+                        let centerY = geometry.size.height / 2
+
+                        store.send(
+                            .updateStickerPosition(
+                                stickerId: sticker.id,
+                                position: CGPoint(x: centerX, y: centerY))
+                        )
+                    }
+            }
         }
     }
 }
