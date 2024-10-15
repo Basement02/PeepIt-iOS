@@ -26,6 +26,10 @@ struct EditView: View {
                     uploadButton
                 }
                 .padding(.horizontal, 17)
+
+                ForEach(store.stickers, id: \.id) { sticker in
+                    DraggableSticker(sticker: sticker, store: store)
+                }
             }
             .sheet(
                 item: $store.scope(

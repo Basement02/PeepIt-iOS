@@ -8,12 +8,6 @@
 import Foundation
 import ComposableArchitecture
 
-struct StickerItem: Identifiable, Equatable {
-    var id = UUID()
-    var stickerName = ""
-    var position: CGPoint = .zero
-}
-
 @Reducer
 struct EditStore {
 
@@ -55,7 +49,10 @@ struct EditStore {
                 state.stickerModalState = nil
                 return .none
 
-            case .updateStickerPosition:
+            case let .updateStickerPosition(stickerId, position):
+                guard let index = state.stickers.firstIndex(where: { $0.id == stickerId }) else { return .none }
+                state.stickers[index].position = position
+
                 return .none
 
             default:
