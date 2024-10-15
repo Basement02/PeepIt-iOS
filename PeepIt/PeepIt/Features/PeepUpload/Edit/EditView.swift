@@ -14,24 +14,43 @@ struct EditView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                VStack(spacing: 25) {
-                    Spacer()
+                switch store.editMode {
+                    
+                case .original:
+                    VStack(spacing: 25) {
+                        Spacer()
 
-                    soundButton
-                    stickerButton
-                    textButton
+                        soundButton
+                        stickerButton
+                        textButton
 
-                    Spacer()
+                        Spacer()
 
-                    uploadButton
+                        uploadButton
+                    }
+                    .padding(.horizontal, 17)
+
+                case .textInputMode:
+                    Color.black.opacity(0.3)
+                        .ignoresSafeArea()
+
+                    VStack {
+                        textInputCompleteButton
+
+                        Spacer()
+                    }
+                    .padding(.horizontal, 17)
+
+                case .editMode:
+                    VStack {
+                        Spacer()
+                        deleteButton
+                    }
+                    .padding(.horizontal, 17)
                 }
-                .padding(.horizontal, 17)
 
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
-                        .onTapGesture {
-                            print("tapped")
-                        }
                 }
             }
             .sheet(
@@ -79,14 +98,35 @@ struct EditView: View {
         }
     }
 
+    private var textInputCompleteButton: some View {
+        HStack {
+            Spacer()
+
+            Button {
+                store.send(.textInputCompleteButtonTapped)
+            } label: {
+                Text("완료")
+            }
+        }
+    }
+
     private var uploadButton: some View {
         HStack {
             Spacer()
+
             Button {
                 store.send(.uploadButtonTapped)
             } label: {
                 Text("게시")
             }
+        }
+    }
+
+    private var deleteButton: some View {
+        Button {
+
+        } label: {
+            Text("삭제")
         }
     }
 }

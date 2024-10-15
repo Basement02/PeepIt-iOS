@@ -32,6 +32,7 @@ struct DraggableSticker: View {
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
+                                store.send(.binding(.set(\.editMode, .editMode)))
                                 offset = gesture.translation
                             }
                             .onEnded { _ in
@@ -46,6 +47,7 @@ struct DraggableSticker: View {
                     .gesture(
                         MagnificationGesture()
                             .onChanged { scale in
+                                store.send(.binding(.set(\.editMode, .editMode)))
                                 currentScale = finalScale * scale
                             }
                             .onEnded { scale in
