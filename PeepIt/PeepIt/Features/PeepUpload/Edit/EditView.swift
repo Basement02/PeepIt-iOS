@@ -87,6 +87,10 @@ struct EditView: View {
                     .padding(.horizontal, 17)
                 }
             }
+            .toolbar(
+                store.editMode == .textInputMode ? .hidden : .visible,
+                for: .navigationBar
+            )
             .sheet(
                 item: $store.scope(
                     state: \.stickerModalState,
