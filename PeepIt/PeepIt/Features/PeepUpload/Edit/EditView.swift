@@ -47,8 +47,6 @@ struct EditView: View {
                         .ignoresSafeArea()
 
                     VStack {
-                        textInputCompleteButton
-
                         Spacer()
 
                         HStack {
@@ -89,13 +87,16 @@ struct EditView: View {
                     .padding(.horizontal, 17)
                 }
             }
-            .toolbar(
-                store.editMode == .textInputMode ? .hidden : .visible,
-                for: .navigationBar
-            )
             .toolbar {
                 ToolbarItem(placement: .keyboard) {
                     colorList
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    if store.editMode == .textInputMode {
+                        textInputCompleteButton
+                    }
                 }
             }
             .sheet(
