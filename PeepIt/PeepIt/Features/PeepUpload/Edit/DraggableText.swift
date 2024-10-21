@@ -16,16 +16,11 @@ struct DraggableText: View {
     @State private var currentScale: CGFloat = 1.0
     @State private var finalScale: CGFloat = 1.0
 
-
     var body: some View {
         GeometryReader { geometry in
             WithPerceptionTracking {
                 Text(textItem.text)
-//                    .frame(
-//                        width: 100 * currentScale,
-//                        height: 100 * currentScale
-//                    )
-                    .font(.system(size: 14 * currentScale))
+                    .font(.system(size: textItem.scale))
                     .position(
                         x: textItem.position.x + offset.width,
                         y: textItem.position.y + offset.height

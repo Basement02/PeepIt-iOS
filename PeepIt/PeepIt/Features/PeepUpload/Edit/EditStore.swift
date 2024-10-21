@@ -13,7 +13,7 @@ struct EditStore {
 
     @ObservableState
     struct State: Equatable {
-        
+
         /// 스티커 저장
         var stickers: [StickerItem] = .init()
         /// 텍스트 저장
@@ -23,7 +23,16 @@ struct EditStore {
         /// 뷰 편집 모드
         var editMode = ViewEditMode.original
         /// 선택된 텍스트 아이디(기존 텍스트를 수정할 때)
-        var selectedTextId: UUID?
+        //                var selectedTextId: UUID?
+        //
+        //                var selectedTextPosition: CGPoint?
+
+        var selectedText: TextItem?
+
+        /// slider state 관련
+        var sliderState = SliderStore.State()
+        /// 현재 입력 중인 text size
+        var inputTextSize: CGFloat = 24
 
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
@@ -63,11 +72,17 @@ struct EditStore {
         case textFieldTapped(textId: UUID)
         /// 텍스트 입력 나타날 때 새로운 텍스트 추가인지, 기존 텍스트인지 판단
         case inputTextFieldAppeared
+        /// Slider action 관련
+        case sliderAction(SliderStore.Action)
     }
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        
+
+        Scope(state: \.sliderState, action: \.sliderAction) {
+            SliderStore()
+        }
+
         Reduce { state, action in
 
             switch action {
@@ -114,17 +129,19 @@ struct EditStore {
                 return .none
 
             case .textInputCompleteButtonTapped:
-                if let selectedTextId = state.selectedTextId, 
-                    let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
+                if let selectedTextId = state.selectedText?.id,
+                   let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
                     state.texts[index].text = state.inputText
                 } else {
-                    let newText: TextItem = .init(text: state.inputText)
+                    let newText: TextItem = .init(text: state.inputText, scale: state.inputTextSize)
                     state.texts.append(newText)
                 }
 
                 state.inputText = ""
                 state.editMode = .original
-                state.selectedTextId = nil
+                state.selectedText = nil
+                state.inputTextSize = 24.0
+                state.sliderState.value = 24.0
 
                 return .none
 
@@ -145,17 +162,39 @@ struct EditStore {
 
                 state.texts[index].scale = scale
                 state.editMode = .original
+
                 return .none
 
             case let .textFieldTapped(textId):
-                state.selectedTextId = textId
+                guard let text = state.texts.first(
+                    where: { $0.id == textId }
+                ) else { return .none }
+
+                print(text.position)
+
+                state.selectedText = text
+                state.inputText = text.text
+                state.inputTextSize = text.scale
                 state.editMode = .textInputMode
+
                 return .none
 
             case .inputTextFieldAppeared:
-                if let selectedTextId = state.selectedTextId,
-                   let textItem = state.texts.first(where: { $0.id == selectedTextId }) {
-                    state.inputText = textItem.text
+                //                if let selectedTextId = state.selectedTextId,
+                //                   let textItem = state.texts.first(where: { $0.id == selectedTextId }) {
+                //                    state.inputText = textItem.text
+                //                }
+
+                return .none
+
+            case let .sliderAction(.setSliderValue(newValue, lowerBound, upperBound)):
+                let newTextSize = min(max(lowerBound + newValue * (upperBound - lowerBound), lowerBound), upperBound)
+
+                if let selectedTextId = state.selectedText?.id,
+                   let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
+                    state.texts[index].scale = newTextSize
+                } else {
+                    state.inputTextSize = newTextSize
                 }
 
                 return .none

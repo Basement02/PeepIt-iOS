@@ -11,5 +11,5 @@ struct TextItem: Identifiable, Equatable {
     var id = UUID()
     var text = ""
     var position: CGPoint = .zero
-    var scale: CGFloat = 1.0
+    var scale: CGFloat = 24.0
 }

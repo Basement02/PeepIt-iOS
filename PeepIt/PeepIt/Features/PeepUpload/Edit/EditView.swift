@@ -49,11 +49,29 @@ struct EditView: View {
                         textInputCompleteButton
 
                         Spacer()
-                        TextField("텍스트 입력...", text: $store.inputText)
-                            .onAppear {
-                                store.send(.inputTextFieldAppeared)
+
+                        HStack {
+                            if store.selectedText == nil {
+                                TextField("텍스트 입력...", text: $store.inputText)
+                                    .font(.system(size: store.inputTextSize))
+                                    .onAppear {
+                                        store.send(.inputTextFieldAppeared)
+                                    }
                             }
+
+                            Spacer()
+
+                            SliderView(
+                                store: store.scope(
+                                    state: \.sliderState,
+                                    action: \.sliderAction
+                                )
+                            )
+                            .frame(height: 250)
+                        }
+
                         Spacer()
+
                     }
                     .padding(.horizontal, 17)
 
@@ -63,6 +81,16 @@ struct EditView: View {
                         deleteButton
                     }
                     .padding(.horizontal, 17)
+                }
+
+                // TODO:  dynamic text field
+                if let selectedText = store.selectedText {
+                    TextField("", text: $store.inputText)
+                        .font(.system(size: selectedText.scale))
+                        .onAppear {
+                            store.send(.inputTextFieldAppeared)
+                        }
+                        .offset(x: 0, y: 0)
                 }
             }
             .sheet(
