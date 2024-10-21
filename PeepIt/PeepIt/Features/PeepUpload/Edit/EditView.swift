@@ -20,6 +20,7 @@ struct EditView: View {
 
                 ForEach(store.texts, id: \.id) { textItem in
                     DraggableText(textItem: textItem, store: store)
+                        .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
                         .onTapGesture {
                             store.send(.textFieldTapped(textId: textItem.id))
                         }
@@ -54,9 +55,6 @@ struct EditView: View {
                             if store.selectedText == nil {
                                 TextField("텍스트 입력...", text: $store.inputText)
                                     .font(.system(size: store.inputTextSize))
-                                    .onAppear {
-                                        store.send(.inputTextFieldAppeared)
-                                    }
                             }
 
                             Spacer()
@@ -75,22 +73,18 @@ struct EditView: View {
                     }
                     .padding(.horizontal, 17)
 
+                    // TODO:  dynamic text field
+                    if let _ = store.selectedText {
+                        TextField("", text: $store.inputText)
+                            .font(.system(size: store.inputTextSize))
+                    }
+
                 case .editMode:
                     VStack {
                         Spacer()
                         deleteButton
                     }
                     .padding(.horizontal, 17)
-                }
-
-                // TODO:  dynamic text field
-                if let selectedText = store.selectedText {
-                    TextField("", text: $store.inputText)
-                        .font(.system(size: selectedText.scale))
-                        .onAppear {
-                            store.send(.inputTextFieldAppeared)
-                        }
-                        .offset(x: 0, y: 0)
                 }
             }
             .sheet(
