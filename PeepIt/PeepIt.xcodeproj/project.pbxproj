@@ -81,6 +81,8 @@
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
+		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
+		ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB22CBE625400629E9C /* DraggableText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +160,8 @@
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
+		ABF72EB02CBE5FD500629E9C /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
+		ABF72EB22CBE625400629E9C /* DraggableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +302,7 @@
 				AB71E1C72CBC065600D2D3D9 /* EditView.swift */,
 				AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */,
 				AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */,
+				ABF72EB22CBE625400629E9C /* DraggableText.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -477,12 +482,12 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				ABF72EAF2CBE5FC100629E9C /* Edit */,
 				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
 				ABC305F22C95A567003B00FE /* UserProfile.swift */,
 				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
 				ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */,
 				ABD3CAAF2CA1B52000438747 /* Peep.swift */,
-				AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -572,6 +577,15 @@
 			path = Gender;
 			sourceTree = "<group>";
 		};
+		ABF72EAF2CBE5FC100629E9C /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */,
+				ABF72EB02CBE5FD500629E9C /* TextItem.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -649,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
+				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,
 				AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
@@ -685,6 +700,7 @@
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
+				ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
 				AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */,
 				ABC171FA2CAB19FA00370901 /* NicknameStore.swift in Sources */,

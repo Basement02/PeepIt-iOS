@@ -14,6 +14,17 @@ struct EditView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                ForEach(store.stickers, id: \.id) { sticker in
+                    DraggableSticker(sticker: sticker, store: store)
+                }
+
+                ForEach(store.texts, id: \.id) { textItem in
+                    DraggableText(textItem: textItem, store: store)
+                        .onTapGesture {
+                            store.send(.textFieldTapped(textId: textItem.id))
+                        }
+                }
+
                 switch store.editMode {
                     
                 case .original:
@@ -38,6 +49,11 @@ struct EditView: View {
                         textInputCompleteButton
 
                         Spacer()
+                        TextField("텍스트 입력...", text: $store.inputText)
+                            .onAppear {
+                                store.send(.inputTextFieldAppeared)
+                            }
+                        Spacer()
                     }
                     .padding(.horizontal, 17)
 
@@ -47,10 +63,6 @@ struct EditView: View {
                         deleteButton
                     }
                     .padding(.horizontal, 17)
-                }
-
-                ForEach(store.stickers, id: \.id) { sticker in
-                    DraggableSticker(sticker: sticker, store: store)
                 }
             }
             .sheet(
