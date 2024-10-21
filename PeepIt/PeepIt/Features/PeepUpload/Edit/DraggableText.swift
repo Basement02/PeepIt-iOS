@@ -21,6 +21,7 @@ struct DraggableText: View {
             WithPerceptionTracking {
                 Text(textItem.text)
                     .font(.system(size: textItem.scale))
+                    .foregroundStyle(textItem.color)
                     .position(
                         x: textItem.position.x + offset.width,
                         y: textItem.position.y + offset.height

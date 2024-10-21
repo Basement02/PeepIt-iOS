@@ -55,6 +55,7 @@ struct EditView: View {
                             if store.selectedText == nil {
                                 TextField("텍스트 입력...", text: $store.inputText)
                                     .font(.system(size: store.inputTextSize))
+                                    .foregroundStyle(store.inputTextColor)
                             }
 
                             Spacer()
@@ -77,6 +78,7 @@ struct EditView: View {
                     if let _ = store.selectedText {
                         TextField("", text: $store.inputText)
                             .font(.system(size: store.inputTextSize))
+                            .foregroundStyle(store.inputTextColor)
                     }
 
                 case .editMode:
@@ -91,6 +93,11 @@ struct EditView: View {
                 store.editMode == .textInputMode ? .hidden : .visible,
                 for: .navigationBar
             )
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    colorList
+                }
+            }
             .sheet(
                 item: $store.scope(
                     state: \.stickerModalState,
@@ -166,6 +173,27 @@ struct EditView: View {
         } label: {
             Text("삭제")
         }
+    }
+
+    private var colorList: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                ForEach(0..<13) { idx in
+                    Button {
+                        let randomColor = Color(
+                            red: Double.random(in: 0...1),
+                            green: Double.random(in: 0...1),
+                            blue: Double.random(in: 0...1)
+                        )
+                        
+                        store.send(.textColorTapped(newColor: randomColor))
+                    } label: {
+                        Text("색\(idx)")
+                    }
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
     }
 }
 

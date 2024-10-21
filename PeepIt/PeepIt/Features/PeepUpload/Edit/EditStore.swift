@@ -5,7 +5,7 @@
 //  Created by 김민 on 10/13/24.
 //
 
-import Foundation
+import SwiftUI
 import ComposableArchitecture
 
 @Reducer
@@ -26,6 +26,8 @@ struct EditStore {
         var inputTextSize: CGFloat = 24
         /// 현재 입력 테스트
         var inputText = ""
+        /// 현재 입력 테스트 색
+        var inputTextColor: Color = .black
 
         /// slider state 관련
         var sliderState = SliderStore.State()
@@ -66,6 +68,8 @@ struct EditStore {
         case updateTextScale(textId: UUID, scale: CGFloat)
         /// 텍스트 선택
         case textFieldTapped(textId: UUID)
+        /// 텍스트 색 선택
+        case textColorTapped(newColor: Color)
         /// Slider action 관련
         case sliderAction(SliderStore.Action)
     }
@@ -127,8 +131,13 @@ struct EditStore {
                    let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
                     state.texts[index].text = state.inputText
                     state.texts[index].scale = state.inputTextSize
+                    state.texts[index].color = state.inputTextColor
                 } else {
-                    let newText: TextItem = .init(text: state.inputText, scale: state.inputTextSize)
+                    let newText: TextItem = .init(
+                        text: state.inputText,
+                        scale: state.inputTextSize,
+                        color: state.inputTextColor
+                    )
                     state.texts.append(newText)
                 }
 
@@ -136,6 +145,7 @@ struct EditStore {
                 state.editMode = .original
                 state.selectedText = nil
                 state.inputTextSize = 24.0
+                state.inputTextColor = .black
                 state.sliderState.value = 24.0
 
                 return .none
@@ -169,6 +179,7 @@ struct EditStore {
                 state.inputText = text.text
                 state.inputTextSize = text.scale
 //                state.sliderState.value = text.scale
+                state.inputTextColor = text.color
                 state.editMode = .textInputMode
 
                 return .none
@@ -182,6 +193,10 @@ struct EditStore {
                 )
                 state.inputTextSize = newTextSize
 
+                return .none
+
+            case let .textColorTapped(newColor):
+                state.inputTextColor = newColor
                 return .none
 
             default:
