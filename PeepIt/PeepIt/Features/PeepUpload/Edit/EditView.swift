@@ -65,7 +65,7 @@ struct EditView: View {
                                     action: \.sliderAction
                                 )
                             )
-                            .frame(height: 250)
+                            .frame(width: 10, height: 250)
                         }
 
                         Spacer()
