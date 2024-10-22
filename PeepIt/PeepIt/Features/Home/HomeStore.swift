@@ -18,6 +18,7 @@ struct HomeStore {
         var peepPreviewModal = PeepModalStore.State()
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()
+        var camera = CameraStore.State()
     }
 
     enum Action {
@@ -29,6 +30,7 @@ struct HomeStore {
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
+        case camera(CameraStore.Action)
     }
 
     var body: some Reducer<State, Action> {
@@ -42,6 +44,10 @@ struct HomeStore {
 
         Scope(state: \.sideMenu, action: \.sideMenu) {
             SideMenuStore()
+        }
+
+        Scope(state: \.camera, action: \.camera) {
+            CameraStore()
         }
 
         Reduce { state, action in

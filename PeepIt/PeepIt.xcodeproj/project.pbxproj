@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE02CC6257A0091E9FB /* SliderView.swift */; };
+		AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE22CC6266C0091E9FB /* SliderStore.swift */; };
 		AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8202CB2D3D4007D432E /* TermType.swift */; };
 		AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8222CB2DE59007D432E /* InputIdView.swift */; };
 		AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8242CB2DF26007D432E /* InputIdStore.swift */; };
@@ -21,8 +23,8 @@
 		AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D1C2CA9420800C1E430 /* NotificationView.swift */; };
 		AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D1F2CA9428700C1E430 /* AnnounceStore.swift */; };
 		AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D212CA9429600C1E430 /* AnnounceView.swift */; };
-		AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D242CA943CA00C1E430 /* UploadStore.swift */; };
-		AB468D272CA943E500C1E430 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D262CA943E500C1E430 /* UploadView.swift */; };
+		AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D242CA943CA00C1E430 /* CameraStore.swift */; };
+		AB468D272CA943E500C1E430 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D262CA943E500C1E430 /* CameraView.swift */; };
 		AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */; };
 		AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */; };
 		AB468D312CA954C700C1E430 /* GenderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D302CA954C700C1E430 /* GenderType.swift */; };
@@ -38,6 +40,14 @@
 		AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE542CA0289A00D8DC1F /* Chat.swift */; };
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
+		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
+		AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */; };
+		AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */; };
+		AB71E1CF2CBC06D800D2D3D9 /* WriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */; };
+		AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */; };
+		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
+		AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */; };
+		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
@@ -73,9 +83,13 @@
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
+		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
+		ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB22CBE625400629E9C /* DraggableText.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB094DE02CC6257A0091E9FB /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		AB094DE22CC6266C0091E9FB /* SliderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderStore.swift; sourceTree = "<group>"; };
 		AB26A8202CB2D3D4007D432E /* TermType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermType.swift; sourceTree = "<group>"; };
 		AB26A8222CB2DE59007D432E /* InputIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdView.swift; sourceTree = "<group>"; };
 		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
@@ -90,8 +104,8 @@
 		AB468D1C2CA9420800C1E430 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		AB468D1F2CA9428700C1E430 /* AnnounceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceStore.swift; sourceTree = "<group>"; };
 		AB468D212CA9429600C1E430 /* AnnounceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceView.swift; sourceTree = "<group>"; };
-		AB468D242CA943CA00C1E430 /* UploadStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStore.swift; sourceTree = "<group>"; };
-		AB468D262CA943E500C1E430 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
+		AB468D242CA943CA00C1E430 /* CameraStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraStore.swift; sourceTree = "<group>"; };
+		AB468D262CA943E500C1E430 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 		AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyStore.swift; sourceTree = "<group>"; };
 		AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModifyView.swift; sourceTree = "<group>"; };
 		AB468D302CA954C700C1E430 /* GenderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderType.swift; sourceTree = "<group>"; };
@@ -107,6 +121,14 @@
 		AB53DE542CA0289A00D8DC1F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
+		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStore.swift; sourceTree = "<group>"; };
+		AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteStore.swift; sourceTree = "<group>"; };
+		AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalStore.swift; sourceTree = "<group>"; };
+		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
+		AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSticker.swift; sourceTree = "<group>"; };
+		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
@@ -142,6 +164,8 @@
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
+		ABF72EB02CBE5FD500629E9C /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
+		ABF72EB22CBE625400629E9C /* DraggableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableText.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +180,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB094DDF2CC6256F0091E9FB /* Slider */ = {
+			isa = PBXGroup;
+			children = (
+				AB094DE02CC6257A0091E9FB /* SliderView.swift */,
+				AB094DE22CC6266C0091E9FB /* SliderStore.swift */,
+			);
+			path = Slider;
+			sourceTree = "<group>";
+		};
 		AB468D092CA881FB00C1E430 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,8 +228,11 @@
 		AB468D232CA9438E00C1E430 /* PeepUpload */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D242CA943CA00C1E430 /* UploadStore.swift */,
-				AB468D262CA943E500C1E430 /* UploadView.swift */,
+				AB71E1C52CBC048500D2D3D9 /* Camera */,
+				AB71E1C62CBC062B00D2D3D9 /* Edit */,
+				AB71E1D02CBC244900D2D3D9 /* StickerModal */,
+				AB71E1CB2CBC06B700D2D3D9 /* Write */,
+				AB094DDF2CC6256F0091E9FB /* Slider */,
 			);
 			path = PeepUpload;
 			sourceTree = "<group>";
@@ -263,6 +299,44 @@
 				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		AB71E1C52CBC048500D2D3D9 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
+				AB468D262CA943E500C1E430 /* CameraView.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		AB71E1C62CBC062B00D2D3D9 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1C72CBC065600D2D3D9 /* EditView.swift */,
+				AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */,
+				AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */,
+				ABF72EB22CBE625400629E9C /* DraggableText.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
+		AB71E1CB2CBC06B700D2D3D9 /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */,
+				AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
+		AB71E1D02CBC244900D2D3D9 /* StickerModal */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */,
+				AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */,
+			);
+			path = StickerModal;
 			sourceTree = "<group>";
 		};
 		ABB444972CA8451D00C1EE67 /* Root */ = {
@@ -422,6 +496,7 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				ABF72EAF2CBE5FC100629E9C /* Edit */,
 				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
 				ABC305F22C95A567003B00FE /* UserProfile.swift */,
 				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
@@ -516,6 +591,15 @@
 			path = Gender;
 			sourceTree = "<group>";
 		};
+		ABF72EAF2CBE5FC100629E9C /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */,
+				ABF72EB02CBE5FD500629E9C /* TextItem.swift */,
+			);
+			path = Edit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -593,15 +677,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
+				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,
 				AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
+				AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
 				AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */,
+				AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */,
 				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
@@ -613,12 +700,14 @@
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
 				AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */,
 				AB468D162CA9401600C1E430 /* TownPeepsStore.swift in Sources */,
+				AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */,
 				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
-				AB468D252CA943CA00C1E430 /* UploadStore.swift in Sources */,
+				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
-				AB468D272CA943E500C1E430 /* UploadView.swift in Sources */,
+				AB468D272CA943E500C1E430 /* CameraView.swift in Sources */,
+				AB71E1CF2CBC06D800D2D3D9 /* WriteStore.swift in Sources */,
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
@@ -626,9 +715,13 @@
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
+				ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
+				AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */,
 				ABC171FA2CAB19FA00370901 /* NicknameStore.swift in Sources */,
+				AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */,
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
+				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
@@ -641,6 +734,7 @@
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
+				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
@@ -648,10 +742,12 @@
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
+				AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */,
 				ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
+				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 				ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */,

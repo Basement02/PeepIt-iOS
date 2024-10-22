@@ -18,22 +18,36 @@ struct RootStore {
 
     @Reducer(state: .equatable)
     enum Path {
+        /// 로그인
         case login(LoginStore)
+
+        /// 홈
         case home(HomeStore)
-        case myProfile(MyProfileStore)
+
+        /// 사이드메뉴
         case setting(SettingStore)
         case townPeeps(TownPeepsStore)
         case notificaiton(NotificationStore)
         case announce(AnnounceStore)
-        case upload(UploadStore)
+
+        /// 프로필
+        case myProfile(MyProfileStore)
         case profileModify(ProfileModifyStore)
         case nicknameModify(ProfileModifyStore)
         case genderModify(ProfileModifyStore)
+
+
+        /// 회원가입
         case term(TermStore)
         case inputId(InputIdStore)
         case nickname(NicknameStore)
         case authentication(AuthenticationStore)
         case welcome(WelcomeStore)
+
+        /// 업로드
+        case camera(CameraStore)
+        case edit(EditStore)
+        case write(WriteStore)
     }
 
     @ObservableState
@@ -82,7 +96,7 @@ struct RootStore {
 
                     /// 프로필: 핍 없을 시 핍 업로드 버튼
                 case .element(id: _, action: .myProfile(.uploadButtonTapped)):
-                    state.path.append(.upload(.init()))
+                    state.path.append(.camera(.init()))
                     return .none
 
                     /// 프로필: 수정 버튼
@@ -124,6 +138,22 @@ struct RootStore {
                     state.authState = .authorized
                     return .none
 
+                    /// 카메라 -> 편집
+                case .element(id: _, action: .camera(.shootButtonTapped)):
+                    state.path.append(.edit(.init()))
+                    return .none
+
+                    /// 편집 -> 본문 작성
+                case .element(id: _, action: .edit(.uploadButtonTapped)):
+                    state.path.append(.write(.init()))
+                    return .none
+
+
+                    /// 본문 작성 완료 -> 돌아가기
+                case .element(id: _, action: .write(.uploadButtonTapped)):
+                    state.path.removeAll()
+                    return .none
+
                 default:
                     return .none
                 }
@@ -153,6 +183,10 @@ struct RootStore {
                     state.path.append(.townPeeps(.init()))
                     return .none
                 }
+
+            case .home(.uploadButtonTapped):
+                state.path.append(.camera(.init()))
+                return .none
 
             default:
                 return .none
