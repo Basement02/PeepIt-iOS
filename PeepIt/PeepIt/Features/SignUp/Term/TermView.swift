@@ -15,30 +15,29 @@ struct TermView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                title
-                    .padding(.top, 23.adjustedH)
-                    .padding(.bottom, 50.adjustedH)
+                NavigationBar(leadingButton: backButton)
 
-                allAgreeButtton
-                    .padding(.bottom, 50.adjustedH)
+                Group {
+                    title
+                        .padding(.top, 23.adjustedH)
+                        .padding(.bottom, 50.adjustedH)
 
-                termList
+                    allAgreeButtton
+                        .padding(.bottom, 50.adjustedH)
 
-                Spacer()
+                    termList
 
-                nextButton
-                    .padding(.bottom, 84.adjustedH)
+                    Spacer()
+
+                    nextButton
+                        .padding(.bottom, 84.adjustedH)
+                }
+                .padding(.leading, 20.adjustedW)
             }
-            .padding(.leading, 20.adjustedW)
             .padding(.trailing, 15.6.adjustedW)
             .background(Color.base)
             .ignoresSafeArea(.all, edges: .bottom)
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    backButton
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
@@ -51,7 +50,7 @@ struct TermView: View {
     }
 
     private var title: some View {
-        Text("원활한 서비스 이용을 위해\n아래 약관에 동의해 주세요.")
+        Text("원활한 서비스 이용을 위해\n아래 약관에 동의해주세요.")
             .pretendard(.title02)
     }
 
