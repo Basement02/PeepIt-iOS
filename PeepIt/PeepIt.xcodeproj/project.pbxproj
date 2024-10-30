@@ -49,6 +49,7 @@
 		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */; };
 		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
+		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
@@ -142,6 +143,7 @@
 		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSticker.swift; sourceTree = "<group>"; };
 		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
+		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
@@ -185,7 +187,7 @@
 		ABE581B72CCA6F00003366DC /* Pretendard-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.ttf"; sourceTree = "<group>"; };
 		ABE581B82CCA6F00003366DC /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
 		ABE581B92CCA6F00003366DC /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
-		ABE581BA2CCA6F01003366DC /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		ABE581BA2CCA6F01003366DC /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
 		ABE581C42CCA6F20003366DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABE581C72CCA99FC003366DC /* FontModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontModifier.swift; sourceTree = "<group>"; };
 		ABE581C92CCA9A80003366DC /* FontSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSystem.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */,
+				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
