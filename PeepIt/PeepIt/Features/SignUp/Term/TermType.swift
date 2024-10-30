@@ -16,13 +16,13 @@ enum TermType: Hashable, CaseIterable {
     var title: String {
         switch self {
         case .service:
-            return "서비스 이용 약관"
+            return "서비스 이용약관"
         case .location:
             return "위치기반 서비스 이용약관"
         case .privateInfo:
             return "개인정보 수집/이용 동의"
         case .marcketing:
-            return "마케팅・홍보 목적의 수집・이용 동의"
+            return "마케팅∙홍보 목적의 수집∙이용 동의"
         }
     }
 

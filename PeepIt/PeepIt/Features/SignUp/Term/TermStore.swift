@@ -48,13 +48,18 @@ struct TermStore {
         var isNextButtonActivated: Bool {
             return serviceTermAgreed && locationTermAgreed && privacyTermAgreed
         }
+
+        var isAllAgreed = false
     }
 
     enum Action {
         case nextButtonTapped
         case allAgreeButtonTapped
         case termToggled(TermType)
+        case backButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
 
@@ -65,12 +70,18 @@ struct TermStore {
                 return .none
 
             case .allAgreeButtonTapped:
-                TermType.allCases.forEach { state[$0] = true }
+                TermType.allCases.forEach { state[$0] = !state.isAllAgreed }
+                state.isAllAgreed.toggle()
                 return .none
 
             case let .termToggled(term):
                 state[term].toggle()
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                     await self.dismiss()
+                 }
             }
         }
     }
