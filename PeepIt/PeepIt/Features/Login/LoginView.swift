@@ -9,41 +9,73 @@ import SwiftUI
 import ComposableArchitecture
 
 struct LoginView: View {
-    let store: StoreOf<LoginStore>
+    @Perception.Bindable var store: StoreOf<LoginStore>
 
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                TabView {
-                    Rectangle()
-                        .frame(width: 247, height: 375)
-                        .foregroundStyle(Color.init(uiColor: .lightGray))
-                        .tag(0)
 
-                    Rectangle()
-                        .frame(width: 247, height: 375)
-                        .foregroundStyle(Color.init(uiColor: .lightGray))
-                        .tag(1)
+                Spacer()
 
-                    Rectangle()
-                        .frame(width: 247, height: 375)
-                        .foregroundStyle(Color.init(uiColor: .lightGray))
-                        .tag(2)
-                }
-                .tabViewStyle(.page)
+                onboardingTab
+                    .padding(.bottom, 53.adjustedH)
 
-                // TODO: 로그인 이미지 수정
-                ForEach(LoginType.allCases, id: \.self) { type in
-                    Button {
-                        store.send(.loginButtonTapped(type: type))
-                    } label: {
-                        Text("\(type.description)로 계속")
-                    }
-                    .peepItRectangleStyle()
-                    .padding(.bottom, 15)
+                loginButtons
+                    .padding(.bottom, 106.3.adjustedH)
+            }
+            .ignoresSafeArea()
+            .background(Color.base)
+        }
+    }
+
+    private var onboardingTab: some View {
+        VStack(spacing: 27.adjustedH) {
+            Text("설레는 여행,\n함께 시작해요!")
+                .pretendard(.title02)
+                .multilineTextAlignment(.center)
+
+            TabView(selection: $store.currentTab) {
+                ForEach(0..<4) { idx in
+                    Rectangle()
+                        .frame(width: 264.adjustedW)
+                        .foregroundStyle(Color.gray900)
+                        .tag(idx)
                 }
             }
-            .padding(.horizontal, 22)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .frame(height: 399.adjustedH)
+
+            pageIndicator(store.currentTab)
+        }
+    }
+
+    private func pageIndicator(_ currentTab: Int) -> some View {
+        HStack(spacing: 3) {
+            ForEach(0..<4) { idx in
+                RoundedRectangle(cornerRadius: 60)
+                    .frame(
+                        width: (currentTab == idx ? 21.6 : 12.3).adjustedW,
+                        height: 2.7.adjustedH
+                    )
+                    .foregroundStyle(
+                        currentTab == idx
+                        ? Color.white : Color.nonOp
+                    )
+            }
+        }
+    }
+
+    private var loginButtons: some View {
+        HStack(spacing: 21.adjustedW) {
+            ForEach(LoginType.allCases, id: \.self) { type in
+                Button {
+                    store.send(.loginButtonTapped(type: type))
+                } label: {
+                    Circle()
+                        .frame(width: 74.adjustedH, height: 74.adjustedW)
+                        .foregroundStyle(Color.gray400)
+                }
+            }
         }
     }
 }
