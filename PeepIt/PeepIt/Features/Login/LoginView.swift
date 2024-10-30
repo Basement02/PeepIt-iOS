@@ -14,9 +14,11 @@ struct LoginView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                onboardingTab
 
                 Spacer()
+
+                onboardingTab
+                    .padding(.bottom, 53.adjustedH)
 
                 loginButtons
                     .padding(.bottom, 106.3.adjustedH)
@@ -27,7 +29,7 @@ struct LoginView: View {
     }
 
     private var onboardingTab: some View {
-        VStack(spacing: 29.adjustedH) {
+        VStack(spacing: 27.adjustedH) {
             Text("설레는 여행,\n함께 시작해요!")
                 .pretendard(.title02)
                 .multilineTextAlignment(.center)
@@ -64,7 +66,7 @@ struct LoginView: View {
     }
 
     private var loginButtons: some View {
-        HStack(spacing: 21) {
+        HStack(spacing: 21.adjustedW) {
             ForEach(LoginType.allCases, id: \.self) { type in
                 Button {
                     store.send(.loginButtonTapped(type: type))
