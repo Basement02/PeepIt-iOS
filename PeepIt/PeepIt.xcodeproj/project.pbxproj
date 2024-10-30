@@ -98,6 +98,7 @@
 		ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE581C92CCA9A80003366DC /* FontSystem.swift */; };
 		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
 		ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB22CBE625400629E9C /* DraggableText.swift */; };
+		ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,6 +194,7 @@
 		ABE581C92CCA9A80003366DC /* FontSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSystem.swift; sourceTree = "<group>"; };
 		ABF72EB02CBE5FD500629E9C /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
 		ABF72EB22CBE625400629E9C /* DraggableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableText.swift; sourceTree = "<group>"; };
+		ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +223,7 @@
 			children = (
 				AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
+				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -769,6 +772,7 @@
 				AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */,
 				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
+				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
