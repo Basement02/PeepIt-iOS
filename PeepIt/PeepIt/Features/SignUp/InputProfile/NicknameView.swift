@@ -34,9 +34,6 @@ struct NicknameView: View {
                 } label: {
                     Text("다음")
                 }
-                .peepItRectangleStyle(
-                    backgroundColor: store.validState == .validated ? .black : .gray
-                )
                 .padding(.bottom, 17)
             }
             .padding(.horizontal, 23)

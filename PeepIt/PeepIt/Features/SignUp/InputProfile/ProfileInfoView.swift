@@ -52,7 +52,6 @@ struct ProfileInfoView: View {
                 } label: {
                     Text("다음")
                 }
-                .peepItRectangleStyle()
             }
             .padding(.horizontal, 23)
         }

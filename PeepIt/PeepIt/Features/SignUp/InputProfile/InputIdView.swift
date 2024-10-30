@@ -41,10 +41,6 @@ struct InputIdView: View {
                 } label: {
                     Text("다음")
                 }
-                .peepItRectangleStyle(
-                    backgroundColor: store.idState == .validated
-                    ? .black : .gray
-                )
                 .padding(.bottom, 17)
             }
             .padding(.horizontal, 23)
