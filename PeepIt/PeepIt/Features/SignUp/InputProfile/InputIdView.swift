@@ -21,17 +21,27 @@ struct InputIdView: View {
                 Group {
                     title
 
-                    // TODO: enter field
-
-                    Spacer()
-
-                    nextButton
-                        .padding(.bottom, 84.adjustedH)
+                    CheckEnterField(
+                        store: store.scope(
+                            state: \.enterFieldState,
+                            action: \.enterFieldAction)
+                    )
+                    .padding(.top, 50.adjustedH)
+                    .padding(.trailing, 88.adjustedW)
                 }
                 .padding(.leading, 20.adjustedW)
+
+                Spacer()
+
+                nextButton
+                    .padding(.bottom, 84.adjustedH)
             }
             .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
+            .onAppear {
+                store.send(.onAppeared)
+            }
         }
     }
 
