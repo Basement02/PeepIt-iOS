@@ -15,6 +15,7 @@ struct InputIdStore {
     struct State: Equatable {
         var id = ""
         var idState = NicknameValidation.base
+        var nextButtonEnabled = false
 
         enum NicknameValidation {
             case base
@@ -43,8 +44,11 @@ struct InputIdStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case nextButtonTapped
+        case backButtonTapped
     }
 
+    @Dependency(\.dismiss) var dismiss
+    
     var body: some Reducer<State, Action> {
         BindingReducer()
 
@@ -63,6 +67,11 @@ struct InputIdStore {
 
             case .nextButtonTapped:
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                     await self.dismiss()
+                 }
 
             default:
                 return .none

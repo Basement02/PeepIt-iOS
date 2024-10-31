@@ -14,36 +14,53 @@ struct InputIdView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                Text("핍잇에 오신 걸 환영해요!\n회원님의 계정을 생성해 볼까요?")
-                    .font(.system(size: 18))
-                    .padding(.bottom, 10)
-                    .padding(.top, 48)
 
-                Text("회원님을 식별할 고유 아이디를 만들어 보세요")
-                    .font(.system(size: 14))
-                    .padding(.bottom, 27)
+                NavigationBar(leadingButton: backButton)
+                    .padding(.bottom, 23.adjustedH)
 
-                TextField("아이디를 입력해 주세요.", text: $store.id)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom, 10)
+                Group {
+                    title
 
-                Text(store.idState.message)
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundStyle(
-                        store.idState == .base ? .black :
-                        store.idState == .validated ? .green : .red
-                    )
+                    // TODO: enter field
 
-                Spacer()
+                    Spacer()
 
-                Button {
-                    store.send(.nextButtonTapped)
-                } label: {
-                    Text("다음")
+                    nextButton
+                        .padding(.bottom, 84.adjustedH)
                 }
-                .padding(.bottom, 17)
+                .padding(.leading, 20.adjustedW)
             }
-            .padding(.horizontal, 23)
+            .background(Color.base)
+            .ignoresSafeArea(.all, edges: .bottom)
+        }
+    }
+
+    private var backButton: some View {
+        Button {
+            store.send(.backButtonTapped)
+        } label: {
+            Image("backN")
+        }
+    }
+
+    private var title: some View {
+        Text("핍잇에 오신 걸 환영해요!\n회원님의 계정을 생성해볼까요?")
+            .pretendard(.title02)
+    }
+
+    private var nextButton: some View {
+        HStack {
+            Spacer()
+
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
+                Text("다음")
+            }
+            .mainbuttonStyle(store.nextButtonEnabled)
+            .disabled(!store.nextButtonEnabled)
+
+            Spacer()
         }
     }
 }
