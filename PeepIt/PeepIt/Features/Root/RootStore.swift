@@ -54,6 +54,7 @@ struct RootStore {
     struct State {
         var path = StackState<Path.State>()
 
+        var isLoading = true
         var authState = AuthState.unAuthorized
 
         var login = LoginStore.State()
@@ -62,6 +63,8 @@ struct RootStore {
 
     enum Action {
         case path(StackActionOf<Path>)
+
+        case finishLoading
 
         case login(LoginStore.Action)
         case home(HomeStore.Action)
@@ -79,6 +82,10 @@ struct RootStore {
 
         Reduce { state, action in
             switch action {
+
+            case .finishLoading:
+                state.isLoading = false
+                return .none
 
             case .login(.loginButtonTapped):
 //                state.authState = .authorized
