@@ -14,8 +14,10 @@ struct LoginView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
+
+                Spacer()
+
                 onboardingTab
-                    .padding(.top, 103.adjustedH)
 
                 loginButtons
                     .padding(.top, 53.adjustedH)
@@ -65,7 +67,7 @@ struct LoginView: View {
     }
 
     private var loginButtons: some View {
-        HStack(spacing: 21.adjustedW) {
+        HStack(spacing: 21) {
             ForEach(LoginType.allCases, id: \.self) { type in
                 Button {
                     store.send(.loginButtonTapped(type: type))
