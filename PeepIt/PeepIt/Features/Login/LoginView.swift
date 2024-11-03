@@ -14,14 +14,13 @@ struct LoginView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-
-                Spacer()
-
                 onboardingTab
-                    .padding(.bottom, 53.adjustedH)
+                    .padding(.top, 103.adjustedH)
 
                 loginButtons
-                    .padding(.bottom, 106.3.adjustedH)
+                    .padding(.top, 53.adjustedH)
+
+                Spacer()
             }
             .ignoresSafeArea()
             .background(Color.base)
@@ -37,13 +36,13 @@ struct LoginView: View {
             TabView(selection: $store.currentTab) {
                 ForEach(0..<4) { idx in
                     Rectangle()
-                        .frame(width: 264.adjustedW)
+                        .frame(width: 261)
                         .foregroundStyle(Color.gray900)
                         .tag(idx)
                 }
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .frame(height: 399.adjustedH)
+            .frame(height: 399)
 
             pageIndicator(store.currentTab)
         }
@@ -72,7 +71,7 @@ struct LoginView: View {
                     store.send(.loginButtonTapped(type: type))
                 } label: {
                     Circle()
-                        .frame(width: 74.adjustedH, height: 74.adjustedW)
+                        .frame(width: 74, height: 74)
                         .foregroundStyle(Color.gray400)
                 }
             }
