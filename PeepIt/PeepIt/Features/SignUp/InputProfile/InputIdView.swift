@@ -33,12 +33,13 @@ struct InputIdView: View {
 
                 Spacer()
 
-                nextButton
-                    .padding(.bottom, 84.adjustedH)
+                if store.idValidation == .validated {
+                    nextButton
+                        .padding(.bottom, 18.adjustedH)
+                }
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
-            .ignoresSafeArea(.all, edges: .bottom)
             .onAppear {
                 store.send(.onAppeared)
             }
@@ -67,8 +68,7 @@ struct InputIdView: View {
             } label: {
                 Text("다음")
             }
-            .mainbuttonStyle(store.nextButtonEnabled)
-            .disabled(!store.nextButtonEnabled)
+            .mainGrayButtonStyle()
 
             Spacer()
         }

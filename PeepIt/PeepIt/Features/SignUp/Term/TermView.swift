@@ -96,8 +96,7 @@ struct TermView: View {
             } label: {
                 Text("다음")
             }
-            .mainbuttonStyle(store.isNextButtonActivated)
-            .disabled(!store.isNextButtonActivated)
+            .mainGrayButtonStyle()
 
             Spacer()
         }

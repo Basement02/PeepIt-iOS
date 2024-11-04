@@ -11,6 +11,8 @@ import ComposableArchitecture
 struct CheckEnterField: View {
     @Perception.Bindable var store: StoreOf<CheckEnterFieldStore>
 
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
@@ -23,6 +25,7 @@ struct CheckEnterField: View {
                         "\(store.content)를 입력해주세요.",
                         text: $store.text
                     )
+                    .focused($isFocused)
                     .pretendard(.body02)
                     .tint(
                         store.enterState == .base ?
@@ -61,6 +64,9 @@ struct CheckEnterField: View {
                             store.enterState == .completed ? Color.coreLime :
                             Color.coreRed
                     )
+            }
+            .onAppear {
+                isFocused = true
             }
         }
     }

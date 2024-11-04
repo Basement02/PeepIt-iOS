@@ -50,6 +50,7 @@
 		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */; };
 		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
+		AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -148,6 +149,7 @@
 		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSticker.swift; sourceTree = "<group>"; };
 		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
+		AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 				AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
+				AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -826,6 +829,7 @@
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
 				ABE581C82CCA99FC003366DC /* FontModifier.swift in Sources */,
+				AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */,
 				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
