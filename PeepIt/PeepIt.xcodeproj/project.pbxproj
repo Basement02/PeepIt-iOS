@@ -41,8 +41,8 @@
 		AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE542CA0289A00D8DC1F /* Chat.swift */; };
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
-		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */; };
+		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
 		AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */; };
 		AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */; };
@@ -141,8 +141,8 @@
 		AB53DE542CA0289A00D8DC1F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
-		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterFieldStore.swift; sourceTree = "<group>"; };
+		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStore.swift; sourceTree = "<group>"; };
 		AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
@@ -434,12 +434,9 @@
 		ABC171EA2CAB184D00370901 /* InputProfile */ = {
 			isa = PBXGroup;
 			children = (
-				ABC171F02CAB198100370901 /* NicknameView.swift */,
-				ABC171F92CAB19FA00370901 /* NicknameStore.swift */,
-				AB26A8222CB2DE59007D432E /* InputIdView.swift */,
-				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
-				AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */,
-				AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */,
+				ABC7012E2CE34CB9004DCFF1 /* Nickname */,
+				ABC7012F2CE34CC3004DCFF1 /* Id */,
+				ABC701302CE34CCA004DCFF1 /* Profile */,
 			);
 			path = InputProfile;
 			sourceTree = "<group>";
@@ -579,6 +576,33 @@
 				ABE581C72CCA99FC003366DC /* FontModifier.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		ABC7012E2CE34CB9004DCFF1 /* Nickname */ = {
+			isa = PBXGroup;
+			children = (
+				ABC171F02CAB198100370901 /* NicknameView.swift */,
+				ABC171F92CAB19FA00370901 /* NicknameStore.swift */,
+			);
+			path = Nickname;
+			sourceTree = "<group>";
+		};
+		ABC7012F2CE34CC3004DCFF1 /* Id */ = {
+			isa = PBXGroup;
+			children = (
+				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
+				AB26A8222CB2DE59007D432E /* InputIdView.swift */,
+			);
+			path = Id;
+			sourceTree = "<group>";
+		};
+		ABC701302CE34CCA004DCFF1 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */,
+				AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		ABD3CAA12CA08D3F00438747 /* Profile */ = {
