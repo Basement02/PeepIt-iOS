@@ -51,7 +51,6 @@ struct ModifyGenderView: View {
         } label: {
             Text("저장")
         }
-        .peepItRectangleStyle()
     }
 }
 

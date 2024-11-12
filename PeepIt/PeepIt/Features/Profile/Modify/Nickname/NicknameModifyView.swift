@@ -48,7 +48,6 @@ struct NicknameModifyView: View {
         } label: {
             Text("저장")
         }
-        .peepItRectangleStyle()
     }
 }
 

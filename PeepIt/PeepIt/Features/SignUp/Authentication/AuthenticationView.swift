@@ -68,7 +68,6 @@ struct AuthenticationView: View {
         } label: {
             Text("건너뛰기")
         }
-        .peepItRectangleStyle()
     }
 
     private var bottomButton: some View {
@@ -77,7 +76,6 @@ struct AuthenticationView: View {
         } label: {
             Text(store.isAuthProcessReady ? "인증하기" : "건너뛰기")
         }
-        .peepItRectangleStyle()
     }
 
     private var codeTextField: some View {

@@ -14,40 +14,63 @@ struct InputIdView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                Text("핍잇에 오신 걸 환영해요!\n회원님의 계정을 생성해 볼까요?")
-                    .font(.system(size: 18))
-                    .padding(.bottom, 10)
-                    .padding(.top, 48)
 
-                Text("회원님을 식별할 고유 아이디를 만들어 보세요")
-                    .font(.system(size: 14))
-                    .padding(.bottom, 27)
+                NavigationBar(leadingButton: backButton)
+                    .padding(.bottom, 23.adjustedH)
 
-                TextField("아이디를 입력해 주세요.", text: $store.id)
-                    .textFieldStyle(.roundedBorder)
-                    .padding(.bottom, 10)
+                Group {
+                    title
 
-                Text(store.idState.message)
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundStyle(
-                        store.idState == .base ? .black :
-                        store.idState == .validated ? .green : .red
+                    CheckEnterField(
+                        store: store.scope(
+                            state: \.enterFieldState,
+                            action: \.enterFieldAction)
                     )
+                    .padding(.top, 50.adjustedH)
+                    .padding(.trailing, 88.adjustedW)
+                }
+                .padding(.leading, 20.adjustedW)
 
                 Spacer()
 
-                Button {
-                    store.send(.nextButtonTapped)
-                } label: {
-                    Text("다음")
+                if store.idValidation == .validated {
+                    nextButton
+                        .padding(.bottom, 18.adjustedH)
                 }
-                .peepItRectangleStyle(
-                    backgroundColor: store.idState == .validated
-                    ? .black : .gray
-                )
-                .padding(.bottom, 17)
             }
-            .padding(.horizontal, 23)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+            .onAppear {
+                store.send(.onAppeared)
+            }
+        }
+    }
+
+    private var backButton: some View {
+        Button {
+            store.send(.backButtonTapped)
+        } label: {
+            Image("backN")
+        }
+    }
+
+    private var title: some View {
+        Text("핍잇에 오신 걸 환영해요!\n회원님의 계정을 생성해볼까요?")
+            .pretendard(.title02)
+    }
+
+    private var nextButton: some View {
+        HStack {
+            Spacer()
+
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
+                Text("다음")
+            }
+            .mainGrayButtonStyle()
+
+            Spacer()
         }
     }
 }

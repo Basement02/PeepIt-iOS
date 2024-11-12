@@ -72,7 +72,6 @@ struct WriteView: View {
         } label: {
             Text("업로드")
         }
-        .peepItRectangleStyle()
     }
 }
 

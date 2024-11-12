@@ -61,7 +61,6 @@ struct WelcomeView: View {
         } label: {
             Text("서비스 홈으로 이동")
         }
-        .peepItRectangleStyle()
     }
 
     private var authLabel: some View {
