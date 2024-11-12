@@ -29,8 +29,10 @@ struct TermView: View {
 
                     Spacer()
 
-                    nextButton
-                        .padding(.bottom, 84.adjustedH)
+                    if store.isNextButtonActivated {
+                        nextButton
+                            .padding(.bottom, 84.adjustedH)
+                    }
                 }
                 .padding(.leading, 20.adjustedW)
             }

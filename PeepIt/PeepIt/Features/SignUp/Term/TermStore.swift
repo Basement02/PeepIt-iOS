@@ -72,6 +72,7 @@ struct TermStore {
             case .allAgreeButtonTapped:
                 TermType.allCases.forEach { state[$0] = !state.isAllAgreed }
                 state.isAllAgreed.toggle()
+                
                 return .none
 
             case let .termToggled(term):
