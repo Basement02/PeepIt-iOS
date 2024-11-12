@@ -41,6 +41,7 @@
 		AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE542CA0289A00D8DC1F /* Chat.swift */; };
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
+		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */; };
 		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
 		AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */; };
@@ -140,6 +141,7 @@
 		AB53DE542CA0289A00D8DC1F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
+		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterFieldStore.swift; sourceTree = "<group>"; };
 		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStore.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 			children = (
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
+				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -840,6 +843,7 @@
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 				AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */,
 				ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */,
+				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,

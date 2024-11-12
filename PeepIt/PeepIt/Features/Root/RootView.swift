@@ -17,22 +17,31 @@ struct RootView: View {
                 path: $store.scope(state: \.path, action: \.path),
                 root: {
                     Group {
-                        switch store.authState {
-                        case .unAuthorized:
-                            LoginView(
-                                store: store.scope(
-                                    state: \.login,
-                                    action: \.login
+                        if store.isLoading {
+                            LaunchScreen()
+                                .onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                        store.send(.finishLoading, animation: .easeInOut)
+                                    }
+                                }
+                        } else {
+                            switch store.authState {
+                            case .unAuthorized:
+                                LoginView(
+                                    store: store.scope(
+                                        state: \.login,
+                                        action: \.login
+                                    )
                                 )
-                            )
 
-                        case .authorized:
-                            HomeView(
-                                store: store.scope(
-                                    state: \.home,
-                                    action: \.home
+                            case .authorized:
+                                HomeView(
+                                    store: store.scope(
+                                        state: \.home,
+                                        action: \.home
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }
