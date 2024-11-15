@@ -21,7 +21,10 @@ struct ProfileInfoStore {
         case binding(BindingAction<State>)
         case selectedGender(GenderType)
         case nextButtonTapped
+        case backButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -37,6 +40,11 @@ struct ProfileInfoStore {
 
             case .nextButtonTapped:
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
 
             default:
                 return .none

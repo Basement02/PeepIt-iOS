@@ -593,8 +593,8 @@
 		ABC7012F2CE34CC3004DCFF1 /* Id */ = {
 			isa = PBXGroup;
 			children = (
-				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
 				AB26A8222CB2DE59007D432E /* InputIdView.swift */,
+				AB26A8242CB2DF26007D432E /* InputIdStore.swift */,
 			);
 			path = Id;
 			sourceTree = "<group>";

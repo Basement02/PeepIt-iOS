@@ -11,116 +11,122 @@ import ComposableArchitecture
 struct AuthenticationView: View {
     @Perception.Bindable var store: StoreOf<AuthenticationStore>
 
-    @FocusState var focused: AuthenticationStore.State.CodeField?
+    @FocusState var isFocused: Bool
 
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                Text("휴대폰 번호를 인증하고\n핍잇의 모든 기능을 사용해 보세요.")
-                    .font(.system(size: 18))
-                    .padding(.top, 48)
-                    .padding(.bottom, 54)
+                NavigationBar(leadingButton: backButton)
 
-                if store.isSMSAuthProcess {
-                    HStack {
-                        Text(store.phoneNumber)
-                            .background(Color.init(uiColor: .systemGray4))
-                            .onTapGesture {
-                                store.send(.phoneNumberLabelTapped)
-                            }
-                        Text("로 인증 코드를 전송했어요.")
-                    }
-                    .padding(.bottom, 25)
+                Group {
+                    title
+                        .padding(.top, 23.adjustedH)
 
-
-                    codeTextField
-                        .padding(.bottom, 15)
-
-                    Text("코드가 일치하지 않습니다.")
-                        .padding(.bottom, 27)
-
-                    resendButton
-
-                    Spacer()
-
-                    skipButton
-                        .padding(.bottom, 17)
-
-                } else {
-                    TextField("010-XXXX-XXXX", text: $store.phoneNumber)
-                        .textFieldStyle(.roundedBorder)
-                        .keyboardType(.phonePad)
-
-                    Spacer()
-
-                    bottomButton
-                        .padding(.bottom, 17)
+                    phoneNumberTextField
+                        .padding(.top, 50.adjustedH)
                 }
+                .padding(.leading, 20.adjustedW)
 
+                Spacer()
+
+                Group {
+                    if store.phoneNumberValid == .valid {
+                        HStack {
+                            Spacer()
+                            nextButton
+                            Spacer()
+                        }
+                    } else {
+                        HStack {
+                            Spacer()
+                            skipButton
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(.bottom, 36.adjustedH)
             }
-            .padding(.horizontal, 23)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+            .onAppear {
+                isFocused = true
+            }
         }
+    }
+
+    private var backButton: some View {
+        Button {
+            store.send(.backButtonTapped)
+        } label: {
+            Image("backN")
+        }
+    }
+
+    private var title: some View {
+        Text("휴대폰 번호를 인증하고\n모든 기능을 사용해보세요.")
+            .pretendard(.title02)
     }
 
     private var skipButton: some View {
         Button {
-            store.send(.bottomButtonTapped(isStartAuthButton: false))
+            store.send(.skipButtonTapped)
         } label: {
             Text("건너뛰기")
+                .mainGrayButtonStyle()
         }
     }
 
-    private var bottomButton: some View {
+    private var nextButton: some View {
         Button {
-            store.send(.bottomButtonTapped(isStartAuthButton: store.isAuthProcessReady))
+            store.send(.nextButtonTapped)
         } label: {
-            Text(store.isAuthProcessReady ? "인증하기" : "건너뛰기")
+            Text("인증하기")
+                .mainLimeButtonStyle()
         }
     }
 
-    private var codeTextField: some View {
-        HStack(spacing: 16) {
-            WithPerceptionTracking {
-                ForEach(0..<6) { idx in
-                    NumberTextFieldView(number: $store.code[idx])
-                        .focused(
-                            $focused,
-                            equals: AuthenticationStore.State.CodeField(rawValue: idx)
-                        )
-                }
-            }
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 53)
-    }
+    private var phoneNumberTextField: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 7) {
+                Text("휴대폰 번호")
+                    .pretendard(.caption01)
+                    .foregroundStyle(Color.white)
 
-    private var resendButton: some View {
-        HStack {
-            Spacer()
-            Button {
-                store.send(.resendCodeButtonTapped)
-            } label: {
-                Text("코드를 받지 못하였어요.")
+                Text("(선택사항)")
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.gray300)
             }
-            Spacer()
+            .padding(.bottom, 20)
+
+            Group {
+                TextField("010XXXXXXXX", text: $store.phoneNumber)
+                    .focused($isFocused)
+                    .pretendard(.body02)
+                    .keyboardType(.numberPad)
+                    .foregroundStyle(Color.white)
+                    .tint(Color.coreLime)
+                    .frame(height: 29.4)
+
+                Rectangle()
+                    .foregroundStyle(
+                        store.phoneNumberValid == .formatError
+                        ? Color.coreRed : Color.white
+                    )
+                    .frame(height: 1)
+                    .padding(.top, 10)
+            }
+            .frame(width: 285)
+
+            Text(store.phoneNumberValid.message)
+                .pretendard(.caption03)
+                .foregroundStyle(
+                    store.phoneNumberValid == .formatError
+                    ? Color.coreRed : Color.gray100
+                )
+                .padding(.top, 10)
         }
     }
 }
-
-fileprivate struct NumberTextFieldView: View {
-    @Binding var number: String
-
-    var body: some View {
-        TextField("", text: $number)
-            .keyboardType(.numberPad)
-            .background(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.black, lineWidth: 1.0)
-                    .frame(height: 53)
-            )
-    }
-}
-
 #Preview {
     AuthenticationView(
         store: .init(initialState: AuthenticationStore.State()) { AuthenticationStore() }
