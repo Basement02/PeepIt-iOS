@@ -14,36 +14,34 @@ struct WelcomeView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                Text("환영합니다!\n서비스 가입이 완료되었어요.")
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 48)
 
-                Spacer()
+                title
+                    .padding(.leading, 20.adjustedH)
+                    .padding(.top, 126.adjustedH)
+                    .padding(.bottom, 62.adjustedH)
 
-                Circle()
-                    .frame(width: 117, height: 117)
-                    .padding(.bottom, 37)
+                detailInfoView
 
-                Text("닉네임")
-                    .padding(.bottom, 8)
-
-                Text("아이디")
-                    .padding(.bottom, 18)
-
-                if store.isAuthorized { authLabel }
+                nicknameView
 
                 Spacer()
 
                 goHomeButton
-                    .padding(.bottom, 17)
+                    .padding(.bottom, 84.adjustedH)
             }
-            .padding(.horizontal, 23)
-            .navigationBarBackButtonHidden()
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    dismissButton
-                }
-            }
+            .toolbar(.hidden, for: .navigationBar)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .background(Color.base)
+        }
+    }
+
+    private var title: some View {
+        HStack {
+            Text("환영합니다!\n서비스 가입이 완료되었어요.")
+                .pretendard(.title02)
+                .multilineTextAlignment(.leading)
+
+            Spacer()
         }
     }
 
@@ -51,7 +49,35 @@ struct WelcomeView: View {
         Button {
             store.send(.goToHomeButtonTapped)
         } label: {
-            Text("닫기")
+            Image("CloseN")
+        }
+    }
+
+    private var detailInfoView: some View {
+        VStack(spacing: 0) {
+            Image("ProfileSample")
+
+            Button {
+                // TODO: 프로필 이미지
+            } label: {
+                Text("수정")
+                    .underline()
+                    .pretendard(.caption01)
+                    .frame(width: 43, height: 44)
+                    .foregroundStyle(Color.white)
+            }
+        }
+    }
+
+    private var nicknameView: some View {
+        VStack(spacing: 10) {
+            Text("${닉네임}")
+                .pretendard(.title02)
+
+            Text("@shinhr1115")
+                .pretendard(.body02)
+
+            if store.isAuthorized { authLabel }
         }
     }
 
@@ -59,19 +85,24 @@ struct WelcomeView: View {
         Button {
             store.send(.goToHomeButtonTapped)
         } label: {
-            Text("서비스 홈으로 이동")
+            Text("홈으로")
+                .mainLimeButtonStyle()
         }
     }
 
     private var authLabel: some View {
-        HStack {
-            Image(systemName: "checkmark.circle.fill")
-            Text("인증된 회원")
+        HStack(spacing: 0) {
+            Image("IconSafety")
+            Text("인증 완료")
+                .pretendard(.caption04)
+                .foregroundStyle(Color.coreLime)
         }
+        .padding(.leading, 8)
+        .padding(.trailing, 12)
+        .padding(.vertical, 3.2)
         .background(
-            RoundedRectangle(cornerRadius: 100)
-                .stroke(.black, lineWidth: 1.0)
-                .frame(width: 141, height: 30)
+            RoundedRectangle(cornerRadius: 80)
+                .stroke(Color.coreLime, lineWidth: 1.0)
                 .foregroundStyle(.clear)
         )
     }

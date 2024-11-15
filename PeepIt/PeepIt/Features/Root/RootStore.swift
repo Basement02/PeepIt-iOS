@@ -132,12 +132,12 @@ struct RootStore {
                     return .none
 
                     /// 본인인증 -> 웰컴
-                case let .element(
-                    id: _,
-                    action: .authentication(.bottomButtonTapped(isStartAuthButton))
-                ):
-                    if !isStartAuthButton { state.path.append(.welcome(.init())) }
-                    return .none
+//                case let .element(
+//                    id: _,
+//                    action: .authentication(.bottomButtonTapped(isStartAuthButton))
+//                ):
+//                    if !isStartAuthButton { state.path.append(.welcome(.init())) }
+//                    return .none
 
                     /// 웰컴 -> 홈
                 case .element(id: _, action: .welcome(.goToHomeButtonTapped)):

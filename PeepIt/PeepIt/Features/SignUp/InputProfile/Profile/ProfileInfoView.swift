@@ -56,6 +56,14 @@ struct ProfileInfoView: View {
             .padding(.horizontal, 23)
         }
     }
+
+    private var backButton: some View {
+        Button {
+            store.send(.backButtonTapped)
+        } label: {
+            Image("backN")
+        }
+    }
 }
 
 fileprivate struct GenderButton: View {

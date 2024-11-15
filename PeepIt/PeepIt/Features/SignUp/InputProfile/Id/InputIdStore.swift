@@ -96,8 +96,8 @@ struct InputIdStore {
 
             case .backButtonTapped:
                 return .run { _ in
-                     await self.dismiss()
-                 }
+                    await self.dismiss()
+                }
 
             case .enterFieldAction(.binding(\.text)):
                 let text = state.enterFieldState.text
