@@ -14,7 +14,7 @@ struct HomeView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color(UIColor.systemGray6)
+                Color.white
                     .ignoresSafeArea()
 
                 VStack {
@@ -151,9 +151,9 @@ enum SheetType: CaseIterable {
     var height: CGFloat {
         switch self {
         case .scrollDown:
-            return CGFloat(84)
+            return CGFloat(100)
         case .scrollUp:
-            return CGFloat(509)
+            return CGFloat(457)
         }
     }
 }
