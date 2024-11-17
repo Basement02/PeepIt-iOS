@@ -134,14 +134,9 @@ fileprivate struct PeepPreviewCell: View {
 }
 
 #Preview {
-//    PeepPreviewModalView(
-//        store: .init(initialState: PeepModalStore.State()) {
-//            PeepModalStore()
-//        }
-//    )
-    HomeView(
-        store: .init(initialState: HomeStore.State()) {
-            HomeStore()
+    PeepPreviewModalView(
+        store: .init(initialState: PeepModalStore.State()) {
+            PeepModalStore()
         }
     )
 }
