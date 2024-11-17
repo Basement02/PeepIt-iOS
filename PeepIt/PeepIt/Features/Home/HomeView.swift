@@ -30,7 +30,7 @@ struct HomeView: View {
                     }
                     .padding(.horizontal, 16.adjustedW)
                     .padding(
-                        .bottom, store.peepPreviewModal.sheetHeight + 17
+                        .bottom, store.peepPreviewModal.sheetHeight + 24
                     )
                 }
 
