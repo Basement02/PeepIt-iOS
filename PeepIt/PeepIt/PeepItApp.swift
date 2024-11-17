@@ -14,8 +14,9 @@ struct PeepItApp: App {
 //            RootView(
 //                store: .init(initialState: RootStore.State()) { RootStore() }
 //            )
-            EnterAuthCodeView(
-                store: .init(initialState: EnterAuthCodeStore.State()) { EnterAuthCodeStore()
+            HomeView(
+                store: .init(initialState: HomeStore.State()) {
+                    HomeStore()
                 }
             )
         }
