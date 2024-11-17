@@ -29,15 +29,18 @@ struct EnterAuthCodeView: View {
 
                 Spacer()
 
-                HStack {
-                    Spacer()
-                    skipButton
-                    Spacer()
+                if !store.isAuthSucceed {
+                    HStack {
+                        Spacer()
+                        skipButton
+                        Spacer()
+                    }
+                    .padding(.bottom, 36.adjustedH)
                 }
-                .padding(.bottom, 36.adjustedH)
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
+            .bind($store.focusField, to: self.$focusedField)
         }
     }
 
@@ -55,29 +58,51 @@ struct EnterAuthCodeView: View {
     }
 
     private var enterNumberField: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 13) {
             HStack(spacing: 7) {
                 Text("인증 번호")
                     .pretendard(.caption01)
                     .foregroundStyle(Color.white)
 
-                Text("선택사항")
+                Text("(선택사항)")
                     .pretendard(.caption03)
                     .foregroundStyle(Color.gray300)
             }
+            .padding(.bottom, 7)
 
             HStack(spacing: 6) {
                 ForEach(0..<6) { idx in
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
-                            .foregroundStyle(Color.gray500)
+                            .fill(Color.gray500)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .strokeBorder(
+                                        store.isAuthSucceed ? Color.coreLime : Color.clear,
+                                        lineWidth: 1
+                                    )
+                            )
 
                         TextField("", text: $store.fields[idx])
                             .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
                             .pretendard(.title03)
+                            .tint(.clear)
+                            .focused(
+                                $focusedField,
+                                equals: EnterAuthCodeStore.State.Field.allCases[idx]
+                            )
+                            .foregroundStyle(store.isAuthSucceed ? Color.coreLime : Color.white)
+
                     }
                     .frame(width: 40, height: 40)
                 }
+            }
+
+            if store.isAuthSucceed {
+                Text("인증이 완료되었습니다.")
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.coreLime)
             }
         }
     }
@@ -92,7 +117,7 @@ struct EnterAuthCodeView: View {
 
     private var skipButton: some View {
         Button {
-
+            // TODO: 건너뛰기 화면 전환
         } label: {
             Text("건너뛰기")
                 .mainGrayButtonStyle()
