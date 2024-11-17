@@ -13,67 +13,67 @@ struct SideMenuView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                Color.white
-                    .ignoresSafeArea()
+            VStack(alignment: .leading, spacing: 0) {
 
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack {
-                        Rectangle()
-                            .frame(width: 39, height: 39)
-                            .foregroundStyle(Color.gray)
-                        Spacer()
-                    }
-                    .padding(.top, 34)
-                    .padding(.bottom, 50)
+                NavigationBar(trailingButton: dismissButton)
+                    .padding(.bottom, 23.adjustedH)
 
+                HStack {
+                    Image("LogoIcon")
+                        .frame(width: 57, height: 57)
+                    Spacer()
+                }
+                .padding(.bottom, 70.adjustedH)
+
+                VStack(spacing: 32) {
                     ForEach(SideMenuType.allCases, id: \.self) { menu in
                         MenuView(menuType: menu)
                             .onTapGesture {
                                 store.send(.menuTapped(of: menu))
                             }
                     }
+                }
+                .padding(.bottom, 186.adjustedH)
+
+                Group {
+                    versionLabel
+                        .padding(.bottom, 12.adjustedH)
+
+                    goToAppStoreButton
+                        .padding(.bottom, 22.adjustedH)
 
                     divideView
-                        .padding(.top, 13)
+                        .padding(.bottom, 22.adjustedH)
 
                     HStack {
                         logoutButton
                         Spacer()
                         settingButton
                     }
-                    .padding(.top, 25)
-
-                    Spacer()
-
-                    goToAppStoreButton
-                        .padding(.bottom, 16)
-
-                    versionLabel
-                        .padding(.bottom, 24)
                 }
-                .padding(.horizontal, 17)
+                .padding(.trailing, 15.6.adjustedW)
+
+                Spacer()
             }
+            .padding(.leading, 16.adjustedW)
             .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
+            .background(Color.base)
             .offset(x: store.sideMenuOffset)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            if value.translation.width <= 0 {
-                                store.send(.dragSideMenu(dragWidth: value.translation.width))
-                            }
-                        }
-                        .onEnded { _ in
-                            store.send(.dragSideMenuEnded)
-                            store.send(.dragSideMenu(dragWidth: -Constant.screenWidth))
-                        }
-                )
+        }
+    }
+
+    private var dismissButton: some View {
+        Button {
+            store.send(.dismissSideMenu)
+        } label: {
+            Image("CloseN")
         }
     }
 
     private var divideView: some View {
         Rectangle()
-            .foregroundStyle(Color.gray)
+            .foregroundStyle(Color.op)
             .frame(maxWidth: .infinity)
             .frame(height: 1)
     }
@@ -82,9 +82,12 @@ struct SideMenuView: View {
         Button {
             // TODO: 로그아웃
         } label: {
-            RoundedRectangle(cornerRadius: 100)
-                .foregroundStyle(Color.gray)
-                .frame(width: 141, height: 40)
+            HStack(spacing: 3) {
+                Image("IconPower")
+                Text("로그아웃")
+                    .pretendard(.body02)
+                    .foregroundStyle(Color.white)
+            }
         }
     }
 
@@ -92,23 +95,24 @@ struct SideMenuView: View {
         Button {
             store.send(.settingButtonTapped)
         } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            Image("Setting")
         }
     }
 
     private var goToAppStoreButton: some View {
-        Text("[핍잇이 마음에 드시나요?](https://www.apple.com)") // TODO: 변경
-            .font(.system(size: 16))
-            .foregroundStyle(Color.gray)
-            .underline()
+        HStack(spacing: 2) {
+            Text("[핍잇이 마음에 드시나요?](https://www.apple.com)") // TODO: 변경
+                .pretendard(.caption02)
+                .tint(Color.coreLime)
+
+            Image("IconLink")
+        }
     }
 
     private var versionLabel: some View {
-        Text("v0.0.0")
-            .font(.system(size: 14))
-            .foregroundStyle(Color.gray)
+        Text("ver 0.0.0")
+            .pretendard(.caption01)
+            .foregroundStyle(Color.gray300)
     }
 }
 
@@ -116,18 +120,15 @@ fileprivate struct MenuView: View {
     let menuType: SideMenuType
 
     var body: some View {
-        HStack(spacing: 16) {
-            Image(menuType.iconImage)
-                .frame(width: 39, height: 39)
-                .background(Color.gray)
-
+        HStack {
             Text(menuType.title)
-                .font(.system(size: 16, weight: .semibold))
+                .pretendard(.title02)
+                .foregroundStyle(Color.white)
 
             Spacer()
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 16)
+        .contentShape(Rectangle())
     }
 }
 
