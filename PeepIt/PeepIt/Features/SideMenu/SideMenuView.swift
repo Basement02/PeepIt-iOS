@@ -65,7 +65,7 @@ struct SideMenuView: View {
 
     private var dismissButton: some View {
         Button {
-            store.send(.dismissSideMenu)
+            store.send(.dismissSideMenu, animation: .none)
         } label: {
             Image("CloseN")
         }

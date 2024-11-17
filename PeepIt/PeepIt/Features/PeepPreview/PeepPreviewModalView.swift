@@ -14,44 +14,58 @@ struct PeepPreviewModalView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
+                Color.blur1
 
-                VStack {
+                VStack(spacing: 0) {
+                    RoundedRectangle(cornerRadius: 100)
+                        .frame(width: 60, height: 5)
+                        .foregroundStyle(Color.gray400)
+                        .padding(.top, 10)
+
                     if store.isSheetScrolledDown {
                         scrollUpLabel
-                            .padding(.top, 33)
-                            .padding(.bottom, 16)
+                            .padding(.top, 15.21)
                     }
 
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack(spacing: 18){
-                            ForEach(1...5, id: \.self) { _ in
-                                PeepPreviewCell(peep: .stubPeep1)
-                                    .onTapGesture {
-                                        store.send(.peepCellTapped)
-                                    }
+                    if !store.isSheetScrolledDown {
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 10){
+                                ForEach(1...5, id: \.self) { _ in
+                                    PeepPreviewCell(peep: .stubPeep1)
+                                        .frame(width: 280, height: 384)
+                                        .onTapGesture {
+                                            store.send(.peepCellTapped)
+                                        }
+                                }
                             }
+                            .padding(.top, 24.21)
+                            .padding(.horizontal, 18)
                         }
-                        .padding(.top, 37)
-                        .padding(.horizontal, 18)
-                        .padding(.bottom, 24)
                     }
 
                     Spacer()
                 }
             }
             .ignoresSafeArea()
+            .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }
 
     private var scrollUpLabel: some View {
-        Text("↑nnn개의 핍 보기 👀")
-            .font(.system(size: 16, weight: .bold))
-            .background {
-                RoundedRectangle(cornerRadius: 100)
-                    .frame(width: 194, height: 35)
-                    .foregroundStyle(Color.gray)
-            }
+        HStack(spacing: 6) {
+            Image("IconUp")
+            Text("nnn개의 핍 보기")
+                .pretendard(.body04)
+
+            Image("IconEyes")
+        }
+        .padding(.leading, 20)
+        .padding(.trailing, 15)
+        .background(
+            RoundedRectangle(cornerRadius: 100)
+                .fill(Color.base)
+                .frame(height: 36)
+        )
     }
 }
 
@@ -64,50 +78,58 @@ fileprivate struct PeepPreviewCell: View {
                 .foregroundStyle(Color.init(uiColor: UIColor.systemGray5))
 
             VStack(alignment: .leading) {
-                HStack {
-                    Image(systemName: "paperplane")
+                HStack(spacing: 2) {
+                    Image("IconPeep")
                     Text("현재 위치에서 \(peep.distance)km")
                     Spacer()
+                    hotLabel
                 }
-                .font(.system(size: 18))
+                .pretendard(.caption03)
+                .foregroundStyle(Color.white)
 
-                hotLabel
 
                 Spacer()
 
                 profileView
             }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 22)
+            .padding(.top, 21.adjustedH)
+            .padding(.bottom, 19.85.adjustedH)
+            .padding(.horizontal, 18.adjustedW)
+
         }
-        .frame(width: 336, height: 448)
     }
 
     private var hotLabel: some View {
-        HStack(spacing: 6) {
-            Image(systemName: "circle.fill")
-                .font(.system(size: 8))
+        HStack(spacing: 0) {
+            Image("IconPopular")
             Text("인기")
-                .font(.system(size: 14))
+                .pretendard(.caption02)
+                .foregroundStyle((Color(hex: 0x202020)))
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 4)
-        .foregroundStyle(Color.white)
-        .background {
+        .padding(.leading, 6)
+        .padding(.trailing, 10)
+        .padding(.vertical, 3)
+        .background(
             RoundedRectangle(cornerRadius: 100)
-                .foregroundStyle(Color.black)
-        }
+                .fill(Color.coreLime)
+        )
     }
 
     private var profileView: some View {
-        HStack(spacing: 16) {
-            Circle()
-                .frame(width: 38, height: 38)
-                .foregroundStyle(Color.gray)
+        HStack {
+            Image("ProfileSample")
+                .resizable()
+                .frame(width: 30, height: 30)
 
-            Text("\(peep.profile.id) ∙ \(peep.uploadTime)")
-                .font(.system(size: 16))
+            Text("혜림")
+                .pretendard(.body02)
+
+            Spacer()
+
+            Text("3분 전")
+                .pretendard(.caption04)
         }
+        .foregroundStyle(Color.white)
     }
 }
 

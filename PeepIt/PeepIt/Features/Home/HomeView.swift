@@ -14,18 +14,12 @@ struct HomeView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color(UIColor.systemGray6)
+                Color.white
                     .ignoresSafeArea()
 
                 VStack {
-                    HStack {
-                        moreButton
-                        Spacer()
-                        setMyTownButton
-                        Spacer()
-                        profileButton
-                    }
-                    .padding(.horizontal, 17)
+                    topBar
+                        .padding(.horizontal, 16.adjustedW)
 
                     Spacer()
 
@@ -34,9 +28,9 @@ struct HomeView: View {
                         Spacer()
                         uploadPeepButton
                     }
-                    .padding(.horizontal, 17)
+                    .padding(.horizontal, 16.adjustedW)
                     .padding(
-                        .bottom, store.peepPreviewModal.sheetHeight + 17
+                        .bottom, store.peepPreviewModal.sheetHeight + 24
                     )
                 }
 
@@ -60,25 +54,61 @@ struct HomeView: View {
 
 extension HomeView {
 
+    private var topBar: some View {
+        HStack {
+            moreButton
+
+            Spacer()
+
+            setMyTownButton
+
+            Spacer()
+
+            profileButton
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 44)
+    }
+
     private var moreButton: some View {
         Button {
             store.send(
                 .sideMenuButtonTapped, animation: .easeIn(duration: 0.3)
             )
         } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            ZStack {
+                RoundedRectangle(cornerRadius: 13)
+                    .fill(Color.blur1)
+                    .frame(width: 45, height: 45)
+
+                Image("IconMenu")
+            }
         }
     }
 
     private var setMyTownButton: some View {
         Button {
-
+            // TODO: 모달 올리기
         } label: {
-            RoundedRectangle(cornerRadius: 100)
-                .frame(width: 156, height: 32)
-                .foregroundStyle(Color.gray)
+            HStack(spacing: 2) {
+                Image("IconLocation")
+
+                Text("지금")
+                    .pretendard(.body02)
+                    .foregroundStyle(Color.white)
+                    .padding(.trailing, 3)
+
+                Text("동이름")
+                    .pretendard(.foodnote)
+                    .foregroundStyle(Color.white)
+            }
+            .padding(.leading, 15)
+            .padding(.trailing, 23)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.blur1)
+                    .frame(height: 45)
+            )
         }
     }
 
@@ -86,9 +116,9 @@ extension HomeView {
         Button {
             store.send(.profileButtonTapped)
         } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            Image("ProfileSample")
+                .resizable()
+                .frame(width: 45, height: 45)
         }
     }
 
@@ -96,9 +126,13 @@ extension HomeView {
         Button {
 
         } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            ZStack {
+                Circle()
+                    .frame(width: 44, height: 44)
+                    .foregroundStyle(Color.base)
+
+                Image("IconCurrentLocation")
+            }
         }
     }
 
@@ -106,9 +140,12 @@ extension HomeView {
         Button {
             store.send(.uploadButtonTapped)
         } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+            ZStack {
+                Circle()
+                    .fill(Color.coreLime)
+                    .frame(width: 56, height: 56)
+                Image("IconSubtract")
+            }
         }
     }
 
@@ -151,9 +188,9 @@ enum SheetType: CaseIterable {
     var height: CGFloat {
         switch self {
         case .scrollDown:
-            return CGFloat(84)
+            return CGFloat(100)
         case .scrollUp:
-            return CGFloat(509)
+            return CGFloat(457)
         }
     }
 }
