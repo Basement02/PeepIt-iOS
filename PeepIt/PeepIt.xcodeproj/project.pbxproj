@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */; };
+		AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB07781F2CE730AA00E4F226 /* EnterAuthCodeView.swift */; };
 		AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE02CC6257A0091E9FB /* SliderView.swift */; };
 		AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE22CC6266C0091E9FB /* SliderStore.swift */; };
 		AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */; };
@@ -108,6 +110,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAuthCodeStore.swift; sourceTree = "<group>"; };
+		AB07781F2CE730AA00E4F226 /* EnterAuthCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAuthCodeView.swift; sourceTree = "<group>"; };
 		AB094DE02CC6257A0091E9FB /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		AB094DE22CC6266C0091E9FB /* SliderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderStore.swift; sourceTree = "<group>"; };
 		AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
@@ -221,6 +225,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AB07781B2CE7306500E4F226 /* EnterPhoneNumber */ = {
+			isa = PBXGroup;
+			children = (
+				ABC171F22CAB198C00370901 /* AuthenticationView.swift */,
+				ABC171FB2CAB1A0800370901 /* AuthenticationStore.swift */,
+			);
+			path = EnterPhoneNumber;
+			sourceTree = "<group>";
+		};
+		AB07781C2CE7307100E4F226 /* EnterAuthCode */ = {
+			isa = PBXGroup;
+			children = (
+				AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */,
+				AB07781F2CE730AA00E4F226 /* EnterAuthCodeView.swift */,
+			);
+			path = EnterAuthCode;
+			sourceTree = "<group>";
+		};
 		AB094DDF2CC6256F0091E9FB /* Slider */ = {
 			isa = PBXGroup;
 			children = (
@@ -446,8 +468,8 @@
 		ABC171EC2CAB191900370901 /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
-				ABC171F22CAB198C00370901 /* AuthenticationView.swift */,
-				ABC171FB2CAB1A0800370901 /* AuthenticationStore.swift */,
+				AB07781B2CE7306500E4F226 /* EnterPhoneNumber */,
+				AB07781C2CE7307100E4F226 /* EnterAuthCode */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -867,6 +889,7 @@
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
+				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 				AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */,
@@ -874,6 +897,7 @@
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
+				AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */,
 				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
 				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
