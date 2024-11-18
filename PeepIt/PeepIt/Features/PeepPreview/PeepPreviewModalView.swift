@@ -75,7 +75,13 @@ fileprivate struct PeepPreviewCell: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Color.init(uiColor: UIColor.systemGray5))
+                .foregroundStyle(Color.white)
+
+            ThumbnailLayers.primary()
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+
+            ThumbnailLayers.secondary()
+                .clipShape(RoundedRectangle(cornerRadius: 20))
 
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
@@ -86,7 +92,6 @@ fileprivate struct PeepPreviewCell: View {
                 }
                 .pretendard(.caption03)
                 .foregroundStyle(Color.white)
-
 
                 Spacer()
 
