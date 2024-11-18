@@ -58,6 +58,7 @@
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABB4A9782CEACE2300F6B565 /* DropShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4A9772CEACE2000F6B565 /* DropShadowModifier.swift */; };
+		ABB4A97F2CEADFA100F6B565 /* ThumbnailLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */; };
 		ABB96D232CD25188003C6742 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D222CD25188003C6742 /* NavigationBar.swift */; };
 		ABB96D252CD344D2003C6742 /* CheckEnterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D242CD344D2003C6742 /* CheckEnterField.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
@@ -162,6 +163,7 @@
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABB4A9772CEACE2000F6B565 /* DropShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowModifier.swift; sourceTree = "<group>"; };
+		ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailLayers.swift; sourceTree = "<group>"; };
 		ABB96D222CD25188003C6742 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		ABB96D242CD344D2003C6742 /* CheckEnterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterField.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
@@ -602,6 +604,7 @@
 				AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */,
 				ABE581C72CCA99FC003366DC /* FontModifier.swift */,
 				ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */,
+				ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -884,6 +887,7 @@
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
+				ABB4A97F2CEADFA100F6B565 /* ThumbnailLayers.swift in Sources */,
 				ABE581C82CCA99FC003366DC /* FontModifier.swift in Sources */,
 				AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */,
 				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
