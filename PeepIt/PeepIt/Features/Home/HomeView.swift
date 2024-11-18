@@ -14,8 +14,12 @@ struct HomeView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
-                    .ignoresSafeArea()
+                Group {
+                    Color.white
+                    BackMapLayer.teriary()
+                    BackMapLayer.secondary()
+                }
+                .ignoresSafeArea()
 
                 VStack {
                     topBar
