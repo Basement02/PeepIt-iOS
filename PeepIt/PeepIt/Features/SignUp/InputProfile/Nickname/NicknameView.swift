@@ -65,12 +65,12 @@ struct NicknameView: View {
         HStack {
             Spacer()
 
-            Button {
-                store.send(.nextButtonTapped)
-            } label: {
+            NavigationLink(
+                state: RootStore.Path.State.inputProfle(ProfileInfoStore.State())
+            ) {
                 Text("다음")
+                    .mainGrayButtonStyle()
             }
-            .mainGrayButtonStyle()
             
             Spacer()
         }

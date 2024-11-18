@@ -60,37 +60,59 @@ struct ProfileModifyView: View {
     }
 
     private var nicknameLabel: some View {
-        NavigationLink(state: RootStore.Path.State.nicknameModify(store.state)) {
-            HStack(spacing: 32) {
-                Text("닉네임")
-                Text(store.nickname)
+//        NavigationLink(state: RootStore.Path.State.nicknameModify(store.state)) {
+//            HStack(spacing: 32) {
+//                Text("닉네임")
+//                Text(store.nickname)
+//
+//                Spacer()
+//
+//                Image(systemName: "chevron.right")
+//            }
+//            .padding(.vertical, 22)
+//            .contentShape(Rectangle())
+//            .font(.system(size: 12))
+//        }
+//        .buttonStyle(PlainButtonStyle())
+        HStack(spacing: 32) {
+            Text("닉네임")
+            Text(store.nickname)
 
-                Spacer()
+            Spacer()
 
-                Image(systemName: "chevron.right")
-            }
-            .padding(.vertical, 22)
-            .contentShape(Rectangle())
-            .font(.system(size: 12))
+            Image(systemName: "chevron.right")
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding(.vertical, 22)
+        .contentShape(Rectangle())
+        .font(.system(size: 12))
     }
 
     private var genderLabel: some View {
-        NavigationLink(state: RootStore.Path.State.genderModify(store.state)) {
-            HStack(spacing: 43) {
-                Text("성별")
-                Text(store.gender.title)
+//        NavigationLink(state: RootStore.Path.State.genderModify(store.state)) {
+//            HStack(spacing: 43) {
+//                Text("성별")
+//                Text(store.gender.title)
+//
+//                Spacer()
+//
+//                Image(systemName: "chevron.right")
+//            }
+//            .padding(.vertical, 22)
+//            .contentShape(Rectangle())
+//            .font(.system(size: 12))
+//        }
+//        .buttonStyle(PlainButtonStyle())
+        HStack(spacing: 43) {
+            Text("성별")
+            Text(store.gender.title)
 
-                Spacer()
+            Spacer()
 
-                Image(systemName: "chevron.right")
-            }
-            .padding(.vertical, 22)
-            .contentShape(Rectangle())
-            .font(.system(size: 12))
+            Image(systemName: "chevron.right")
         }
-        .buttonStyle(PlainButtonStyle())
+        .padding(.vertical, 22)
+        .contentShape(Rectangle())
+        .font(.system(size: 12))
     }
 }
 

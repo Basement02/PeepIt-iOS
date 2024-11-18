@@ -66,12 +66,12 @@ struct InputIdView: View {
         HStack {
             Spacer()
 
-            Button {
-                store.send(.nextButtonTapped)
-            } label: {
+            NavigationLink(
+                state: RootStore.Path.State.nickname(NicknameStore.State())
+            ) {
                 Text("다음")
+                    .mainGrayButtonStyle()
             }
-            .mainGrayButtonStyle()
 
             Spacer()
         }

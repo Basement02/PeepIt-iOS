@@ -18,36 +18,14 @@ struct RootStore {
 
     @Reducer(state: .equatable)
     enum Path {
-        /// 로그인
-        case login(LoginStore)
-
-        /// 홈
-        case home(HomeStore)
-
-        /// 사이드메뉴
-        case setting(SettingStore)
-        case townPeeps(TownPeepsStore)
-        case notificaiton(NotificationStore)
-        case announce(AnnounceStore)
-
-        /// 프로필
-        case myProfile(MyProfileStore)
-        case profileModify(ProfileModifyStore)
-        case nicknameModify(ProfileModifyStore)
-        case genderModify(ProfileModifyStore)
-
-
         /// 회원가입
         case term(TermStore)
         case inputId(InputIdStore)
         case nickname(NicknameStore)
-        case authentication(AuthenticationStore)
+        case inputProfle(ProfileInfoStore)
+        case inputPhoneNumber(AuthenticationStore)
+        case inputAuthCode(EnterAuthCodeStore)
         case welcome(WelcomeStore)
-
-        /// 업로드
-        case camera(CameraStore)
-        case edit(EditStore)
-        case write(WriteStore)
     }
 
     @ObservableState
@@ -88,12 +66,20 @@ struct RootStore {
                 return .none
 
             case .login(.loginButtonTapped):
-//                state.authState = .authorized
                 state.path.append(.term(.init()))
                 return .none
 
             case let .path(action):
-                return .none
+                switch action {
+
+                case .element(_, action: .welcome(.goToHomeButtonTapped)):
+                    state.authState = .authorized
+                    state.path.removeAll()
+                    return .none
+
+                default:
+                    return .none
+                }
 
             default:
                 return .none
