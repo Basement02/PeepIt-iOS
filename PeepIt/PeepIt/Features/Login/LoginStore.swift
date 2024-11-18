@@ -23,7 +23,7 @@ struct LoginStore {
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        
+
         Reduce { state, action in
             switch action {
             case .binding(\.currentTab):

@@ -40,8 +40,11 @@ struct EnterAuthCodeStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case checkAuthCode(code: String)
+        case backButtonTapped
     }
-    
+
+    @Dependency(\.dismiss) var dismiss
+
     var body: some Reducer<State, Action> {
         BindingReducer()
 
@@ -67,6 +70,11 @@ struct EnterAuthCodeStore {
                 }
 
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
 
             case .checkAuthCode:
                 // TODO: 인증 API

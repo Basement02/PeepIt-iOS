@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct TermView: View {
-    let store: StoreOf<TermStore>
+    @Perception.Bindable var store: StoreOf<TermStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -96,12 +96,12 @@ struct TermView: View {
         HStack {
             Spacer()
 
-            Button {
-                store.send(.nextButtonTapped)
-            } label: {
+            NavigationLink(
+                state: RootStore.Path.State.inputId(InputIdStore.State())
+            ) {
                 Text("다음")
+                    .mainGrayButtonStyle()
             }
-            .mainGrayButtonStyle()
 
             Spacer()
         }

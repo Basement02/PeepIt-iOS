@@ -46,7 +46,7 @@ struct EnterAuthCodeView: View {
 
     private var backButton: some View {
         Button {
-     
+            store.send(.backButtonTapped)
         } label: {
             Rectangle()
                 .fill(Color.clear)
@@ -119,9 +119,9 @@ struct EnterAuthCodeView: View {
     }
 
     private var skipButton: some View {
-        Button {
-            // TODO: 건너뛰기 화면 전환
-        } label: {
+        NavigationLink(
+            state: RootStore.Path.State.welcome(WelcomeStore.State())
+        ) {
             Text("건너뛰기")
                 .mainGrayButtonStyle()
         }

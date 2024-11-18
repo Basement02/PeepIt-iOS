@@ -50,6 +50,8 @@ struct TermStore {
         }
 
         var isAllAgreed = false
+
+        @Presents var idState: InputIdStore.State?
     }
 
     enum Action {
@@ -57,6 +59,7 @@ struct TermStore {
         case allAgreeButtonTapped
         case termToggled(TermType)
         case backButtonTapped
+        case idAction(PresentationAction<InputIdStore.Action>)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -67,6 +70,7 @@ struct TermStore {
             switch action {
 
             case .nextButtonTapped:
+                state.idState = InputIdStore.State()
                 return .none
 
             case .allAgreeButtonTapped:
@@ -83,7 +87,13 @@ struct TermStore {
                 return .run { _ in
                      await self.dismiss()
                  }
+
+            default:
+                return .none
             }
+        }
+        .ifLet(\.$idState, action: \.idAction) {
+            InputIdStore()
         }
     }
 }

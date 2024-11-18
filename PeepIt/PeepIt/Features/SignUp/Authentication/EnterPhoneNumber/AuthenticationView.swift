@@ -71,18 +71,18 @@ struct AuthenticationView: View {
     }
 
     private var skipButton: some View {
-        Button {
-            store.send(.skipButtonTapped)
-        } label: {
+        NavigationLink(
+            state: RootStore.Path.State.welcome(WelcomeStore.State())
+        ) {
             Text("건너뛰기")
                 .mainGrayButtonStyle()
         }
     }
 
     private var nextButton: some View {
-        Button {
-            store.send(.nextButtonTapped)
-        } label: {
+        NavigationLink(
+            state: RootStore.Path.State.inputAuthCode(EnterAuthCodeStore.State())
+        ) {
             Text("인증하기")
                 .mainLimeButtonStyle()
         }

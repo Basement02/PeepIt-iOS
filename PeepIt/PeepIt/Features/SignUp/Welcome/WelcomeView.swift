@@ -30,7 +30,7 @@ struct WelcomeView: View {
                     .padding(.bottom, 84.adjustedH)
             }
             .toolbar(.hidden, for: .navigationBar)
-            .ignoresSafeArea(.all, edges: .bottom)
+            .ignoresSafeArea()
             .background(Color.base)
         }
     }

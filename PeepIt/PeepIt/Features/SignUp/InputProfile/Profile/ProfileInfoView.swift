@@ -47,10 +47,11 @@ struct ProfileInfoView: View {
 
                 Spacer()
 
-                Button {
-                    store.send(.nextButtonTapped)
-                } label: {
+                NavigationLink(
+                    state: RootStore.Path.State.inputPhoneNumber(AuthenticationStore.State())
+                ) {
                     Text("다음")
+                        .mainGrayButtonStyle()
                 }
             }
             .padding(.horizontal, 23)

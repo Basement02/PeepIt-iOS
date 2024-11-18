@@ -13,32 +13,60 @@ struct RootView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            Group {
-                if store.isLoading {
-                    LaunchScreen()
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                                store.send(.finishLoading, animation: .easeInOut)
+            NavigationStack(
+                path: $store.scope(state: \.path, action: \.path)
+            ) {
+                Group {
+                    if store.isLoading {
+                        LaunchScreen()
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                                    store.send(.finishLoading, animation: .easeInOut)
+                                }
                             }
-                        }
-                } else {
-                    switch store.authState {
-                    case .unAuthorized:
-                        LoginView(
-                            store: store.scope(
-                                state: \.login,
-                                action: \.login
+                    } else {
+                        switch store.authState {
+                        case .unAuthorized:
+                            LoginView(
+                                store: store.scope(
+                                    state: \.login,
+                                    action: \.login
+                                )
                             )
-                        )
 
-                    case .authorized:
-                        HomeView(
-                            store: store.scope(
-                                state: \.home,
-                                action: \.home
+                        case .authorized:
+                            HomeView(
+                                store: store.scope(
+                                    state: \.home,
+                                    action: \.home
+                                )
                             )
-                        )
+                        }
                     }
+                }
+            } destination: { store in
+                switch store.case {
+
+                case let .term(store):
+                    TermView(store: store)
+
+                case let .inputId(store):
+                    InputIdView(store: store)
+
+                case let .nickname(store):
+                    NicknameView(store: store)
+
+                case let .inputProfle(store):
+                    ProfileInfoView(store: store)
+
+                case let .inputPhoneNumber(store):
+                    AuthenticationView(store: store)
+
+                case let .inputAuthCode(store):
+                    EnterAuthCodeView(store: store)
+
+                case let .welcome(store):
+                    WelcomeView(store: store)
                 }
             }
         }
