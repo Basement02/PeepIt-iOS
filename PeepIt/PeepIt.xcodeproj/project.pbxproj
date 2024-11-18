@@ -57,8 +57,6 @@
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
-		ABB4A9782CEACE2300F6B565 /* DropShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4A9772CEACE2000F6B565 /* DropShadowModifier.swift */; };
-		ABB4A97F2CEADFA100F6B565 /* ThumbnailLayers.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */; };
 		ABB96D232CD25188003C6742 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D222CD25188003C6742 /* NavigationBar.swift */; };
 		ABB96D252CD344D2003C6742 /* CheckEnterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D242CD344D2003C6742 /* CheckEnterField.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
@@ -106,6 +104,10 @@
 		ABE581C32CCA6F01003366DC /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581BA2CCA6F01003366DC /* Pretendard-Thin.ttf */; };
 		ABE581C82CCA99FC003366DC /* FontModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE581C72CCA99FC003366DC /* FontModifier.swift */; };
 		ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE581C92CCA9A80003366DC /* FontSystem.swift */; };
+		ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */; };
+		ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */; };
+		ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */; };
+		ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */; };
 		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
 		ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB22CBE625400629E9C /* DraggableText.swift */; };
 		ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */; };
@@ -162,8 +164,6 @@
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
-		ABB4A9772CEACE2000F6B565 /* DropShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowModifier.swift; sourceTree = "<group>"; };
-		ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailLayers.swift; sourceTree = "<group>"; };
 		ABB96D222CD25188003C6742 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		ABB96D242CD344D2003C6742 /* CheckEnterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterField.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
@@ -212,6 +212,10 @@
 		ABE581C42CCA6F20003366DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ABE581C72CCA99FC003366DC /* FontModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontModifier.swift; sourceTree = "<group>"; };
 		ABE581C92CCA9A80003366DC /* FontSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontSystem.swift; sourceTree = "<group>"; };
+		ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropShadowModifier.swift; sourceTree = "<group>"; };
+		ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailLayer.swift; sourceTree = "<group>"; };
+		ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMapLayer.swift; sourceTree = "<group>"; };
+		ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressableButtonStyle.swift; sourceTree = "<group>"; };
 		ABF72EB02CBE5FD500629E9C /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
 		ABF72EB22CBE625400629E9C /* DraggableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableText.swift; sourceTree = "<group>"; };
 		ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
@@ -241,8 +245,8 @@
 		AB07781C2CE7307100E4F226 /* EnterAuthCode */ = {
 			isa = PBXGroup;
 			children = (
-				AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */,
 				AB07781F2CE730AA00E4F226 /* EnterAuthCodeView.swift */,
+				AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */,
 			);
 			path = EnterAuthCode;
 			sourceTree = "<group>";
@@ -259,7 +263,6 @@
 		AB094DE62CC76EB10091E9FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
 				AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */,
@@ -365,6 +368,7 @@
 		AB53DE4F2CA00FD100D8DC1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				ABE8A0C62CEAE62800AFBEAE /* CoreSystem */,
 				AB5159772CA97C9C0043AA0A /* Constant */,
 				AB094DE62CC76EB10091E9FB /* Extension */,
 			);
@@ -462,8 +466,8 @@
 		ABC171EA2CAB184D00370901 /* InputProfile */ = {
 			isa = PBXGroup;
 			children = (
-				ABC7012E2CE34CB9004DCFF1 /* Nickname */,
 				ABC7012F2CE34CC3004DCFF1 /* Id */,
+				ABC7012E2CE34CB9004DCFF1 /* Nickname */,
 				ABC701302CE34CCA004DCFF1 /* Profile */,
 			);
 			path = InputProfile;
@@ -599,12 +603,11 @@
 		ABC305F62C95C8D7003B00FE /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
-				ABB4A9772CEACE2000F6B565 /* DropShadowModifier.swift */,
 				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
 				AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */,
-				ABE581C72CCA99FC003366DC /* FontModifier.swift */,
 				ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */,
-				ABB4A97E2CEADFA100F6B565 /* ThumbnailLayers.swift */,
+				ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */,
+				ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -727,6 +730,41 @@
 				ABE581BA2CCA6F01003366DC /* Pretendard-Thin.ttf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		ABE8A0C62CEAE62800AFBEAE /* CoreSystem */ = {
+			isa = PBXGroup;
+			children = (
+				ABE8A0C72CEAE62D00AFBEAE /* Typography */,
+				ABE8A0C82CEAE63400AFBEAE /* Colors */,
+				ABE8A0C92CEAE63900AFBEAE /* Overlay */,
+			);
+			path = CoreSystem;
+			sourceTree = "<group>";
+		};
+		ABE8A0C72CEAE62D00AFBEAE /* Typography */ = {
+			isa = PBXGroup;
+			children = (
+				ABE581C72CCA99FC003366DC /* FontModifier.swift */,
+			);
+			path = Typography;
+			sourceTree = "<group>";
+		};
+		ABE8A0C82CEAE63400AFBEAE /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */,
+			);
+			path = Colors;
+			sourceTree = "<group>";
+		};
+		ABE8A0C92CEAE63900AFBEAE /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */,
+				ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */,
+			);
+			path = Overlay;
 			sourceTree = "<group>";
 		};
 		ABF72EAF2CBE5FC100629E9C /* Edit */ = {
@@ -880,19 +918,21 @@
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
+				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
+				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
+				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
+				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
-				ABB4A97F2CEADFA100F6B565 /* ThumbnailLayers.swift in Sources */,
 				ABE581C82CCA99FC003366DC /* FontModifier.swift in Sources */,
 				AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */,
 				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
-				ABB4A9782CEACE2300F6B565 /* DropShadowModifier.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,

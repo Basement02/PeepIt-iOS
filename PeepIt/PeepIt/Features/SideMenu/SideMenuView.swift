@@ -67,8 +67,13 @@ struct SideMenuView: View {
         Button {
             store.send(.dismissSideMenu, animation: .none)
         } label: {
-            Image("CloseN")
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 33.6, height: 33.6)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "CloseN", pressedImg: "CloseY")
+        )
     }
 
     private var divideView: some View {
@@ -95,8 +100,11 @@ struct SideMenuView: View {
         Button {
             store.send(.settingButtonTapped)
         } label: {
-            Image("Setting")
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 29.4, height: 29.4)
         }
+        .buttonStyle(PressableButtonStyle(originImg: "SettingN", pressedImg: "SettingY"))
     }
 
     private var goToAppStoreButton: some View {

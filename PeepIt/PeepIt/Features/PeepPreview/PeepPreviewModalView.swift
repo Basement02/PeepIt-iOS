@@ -77,10 +77,10 @@ fileprivate struct PeepPreviewCell: View {
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(Color.white)
 
-            ThumbnailLayers.primary()
+            ThumbnailLayer.primary()
                 .clipShape(RoundedRectangle(cornerRadius: 20))
 
-            ThumbnailLayers.secondary()
+            ThumbnailLayer.secondary()
                 .clipShape(RoundedRectangle(cornerRadius: 20))
 
             VStack(alignment: .leading) {
