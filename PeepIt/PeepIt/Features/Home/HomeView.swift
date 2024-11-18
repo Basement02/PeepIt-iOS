@@ -130,6 +130,7 @@ extension HomeView {
                 Circle()
                     .frame(width: 44, height: 44)
                     .foregroundStyle(Color.base)
+                    .shadowElement()
 
                 Image("IconCurrentLocation")
             }
@@ -144,6 +145,8 @@ extension HomeView {
                 Circle()
                     .fill(Color.coreLime)
                     .frame(width: 56, height: 56)
+                    .shadowPoint()
+                
                 Image("IconSubtract")
             }
         }
