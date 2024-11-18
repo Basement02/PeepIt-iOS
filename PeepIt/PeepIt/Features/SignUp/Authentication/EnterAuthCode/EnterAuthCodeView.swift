@@ -46,10 +46,13 @@ struct EnterAuthCodeView: View {
 
     private var backButton: some View {
         Button {
-
+     
         } label: {
-            Image("backN")
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 33.6, height: 33.6)
         }
+        .buttonStyle(PressableButtonStyle(originImg: "backN", pressedImg: "backY"))
     }
 
     private var title: some View {

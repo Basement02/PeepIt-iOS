@@ -27,7 +27,7 @@ struct HomeView: View {
 
                     Spacer()
 
-                    HStack {
+                    HStack(alignment: .bottom) {
                         currentLocationButton
                         Spacer()
                         uploadPeepButton
@@ -128,32 +128,38 @@ extension HomeView {
 
     private var currentLocationButton: some View {
         Button {
-
+            // TODO:
         } label: {
             ZStack {
                 Circle()
+                    .fill(.clear)
                     .frame(width: 44, height: 44)
-                    .foregroundStyle(Color.base)
-                    .shadowElement()
-
-                Image("IconCurrentLocation")
             }
         }
+        .buttonStyle(
+            PressableButtonStyle(
+                originImg: "AlignBtnN",
+                pressedImg: "AlignBtnY"
+            )
+        )
+        .shadowElement()
     }
 
     private var uploadPeepButton: some View {
         Button {
             store.send(.uploadButtonTapped)
         } label: {
-            ZStack {
-                Circle()
-                    .fill(Color.coreLime)
-                    .frame(width: 56, height: 56)
-                    .shadowPoint()
-                
-                Image("IconSubtract")
-            }
+            Circle()
+                .fill(.clear)
+                .frame(width: 56, height: 56)
         }
+        .buttonStyle(
+            PressableButtonStyle(
+                originImg: "PeepBtnN",
+                pressedImg: "PeepBtnY"
+            )
+        )
+        .shadowPoint()
     }
 
     private var peepPreviewView: some View {
