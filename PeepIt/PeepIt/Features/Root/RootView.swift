@@ -46,7 +46,7 @@ struct RootView: View {
                 }
             } destination: { store in
                 switch store.case {
-
+                /// 회원가입
                 case let .term(store):
                     TermView(store: store)
 
@@ -67,6 +67,10 @@ struct RootView: View {
 
                 case let .welcome(store):
                     WelcomeView(store: store)
+
+                /// 더보기
+                case let .announce(store):
+                    AnnounceView(store: store)
                 }
             }
         }

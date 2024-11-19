@@ -9,10 +9,91 @@ import SwiftUI
 import ComposableArchitecture
 
 struct AnnounceView: View {
-    let store: StoreOf<AnnounceStore>
+    @Perception.Bindable var store: StoreOf<AnnounceStore>
 
     var body: some View {
-        Text("서비스 소식")
+        WithPerceptionTracking {
+            VStack(spacing: 0) {
+                NavigationBar(
+                    leadingButton: backButton,
+                    title: "서비스 소식"
+                )
+
+                announceList
+                    .padding(.top, 23.adjustedH)
+            }
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+            .fullScreenCover(isPresented: $store.isSheetVisible) {
+                AnnounceModalView(store: self.store)
+            }
+        }
+    }
+
+    private var backButton: some View {
+        Button {
+            store.send(.backButtonTapped)
+        } label: {
+            Image("backN")
+                .opacity(0)
+        }
+        .buttonStyle(
+            PressableButtonStyle(
+                originImg: "backN",
+                pressedImg: "backY"
+            )
+        )
+    }
+
+    private var announceList: some View {
+        List(store.announces) { item in
+            AnnounceCell(announce: item)
+                .listRowInsets(EdgeInsets())
+                .background(Color.base)
+                .onTapGesture {
+                    store.send(.announceTapped(announce: item))
+                }
+        }
+        .listRowSpacing(15)
+        .listRowSeparator(.hidden)
+        .listStyle(.plain)
+    }
+}
+
+fileprivate struct AnnounceCell: View {
+    let announce: Announce
+
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.gray500)
+
+            HStack {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(announce.category)
+                        .pretendard(.caption01)
+                        .foregroundStyle(Color.coreLime)
+
+                    Text(announce.title)
+                        .pretendard(.subhead)
+
+                    Text(announce.content)
+                        .pretendard(.body04)
+                        .lineLimit(5)
+                        .truncationMode(.tail)
+                        .multilineTextAlignment(.leading)
+
+                    Text(announce.date)
+                        .pretendard(.caption02)
+                        .foregroundStyle(Color.nonOp)
+                }
+
+                Spacer()
+            }
+            .padding(.vertical, 22)
+            .frame(width: 318)
+        }
+        .padding(.horizontal, 16)
     }
 }
 

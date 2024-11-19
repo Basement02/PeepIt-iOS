@@ -39,7 +39,6 @@ struct TermView: View {
             .padding(.trailing, 15.6.adjustedW)
             .background(Color.base)
             .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
@@ -134,9 +133,7 @@ fileprivate struct termLabel: View {
 }
 
 #Preview {
-    NavigationStack {
-        TermView(
-            store: .init(initialState: TermStore.State()) { TermStore() }
-        )
-    }
+    TermView(
+        store: .init(initialState: TermStore.State()) { TermStore() }
+    )
 }

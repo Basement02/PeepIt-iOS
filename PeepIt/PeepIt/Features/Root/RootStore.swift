@@ -26,6 +26,9 @@ struct RootStore {
         case inputPhoneNumber(AuthenticationStore)
         case inputAuthCode(EnterAuthCodeStore)
         case welcome(WelcomeStore)
+
+        /// 더보기
+        case announce(AnnounceStore)
     }
 
     @ObservableState

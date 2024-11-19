@@ -34,7 +34,6 @@ struct SideMenuStore {
                 return .none
 
             case let .menuTapped(type):
-                print(type)
                 return .none
             }
         }

@@ -23,25 +23,25 @@ struct NavigationBar<Button: View>: View {
     }
 
     var body: some View {
-        HStack {
-            if let leadingButton = leadingButton {
-                leadingButton
-            }
+        ZStack {
+            HStack(spacing: 0) {
+                if let leadingButton = leadingButton {
+                    leadingButton
+                }
 
-            Spacer()
+                Spacer()
+
+                if let trailingButton = trailingButton {
+                    trailingButton
+                }
+            }
+            .padding(.horizontal, 16)
 
             if let title = title {
                 Text(title)
                     .pretendard(.subhead)
             }
-
-            Spacer()
-
-            if let trailingButton = trailingButton {
-                trailingButton
-            }
         }
-        .padding(.horizontal, 16.adjustedW)
         .frame(maxWidth: .infinity)
         .frame(height: 44)
         .background(Color.base)
