@@ -70,7 +70,7 @@ fileprivate struct AnnounceCell: View {
 
                 Text(announce.content)
                     .pretendard(.body04)
-                    .lineLimit(2)
+                    .lineLimit(5)
                     .truncationMode(.tail)
 
                 Text(announce.date)
