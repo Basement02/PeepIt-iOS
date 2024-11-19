@@ -11,12 +11,8 @@ import SwiftUI
 struct PeepItApp: App {
     var body: some Scene {
         WindowGroup {
-//            RootView(
-//                store: .init(initialState: RootStore.State()) { RootStore() }
-//            )
-
-            AnnounceView(
-                store: .init(initialState: AnnounceStore.State()) { AnnounceStore() }
+            RootView(
+                store: .init(initialState: RootStore.State()) { RootStore() }
             )
         }
     }

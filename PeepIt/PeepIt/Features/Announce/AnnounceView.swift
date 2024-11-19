@@ -23,12 +23,13 @@ struct AnnounceView: View {
                     .padding(.top, 23.adjustedH)
             }
             .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
     private var backButton: some View {
         Button {
-            // TODO:
+            store.send(.backButtonTapped)
         } label: {
             Image("backN")
                 .opacity(0)

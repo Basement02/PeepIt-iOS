@@ -27,10 +27,11 @@ struct SideMenuView: View {
 
                 VStack(spacing: 32) {
                     ForEach(SideMenuType.allCases, id: \.self) { menu in
-                        MenuView(menuType: menu)
-                            .onTapGesture {
-                                store.send(.menuTapped(of: menu))
-                            }
+                        NavigationLink(
+                            state: menu.destinationState()
+                        ) {
+                            MenuView(menuType: menu)
+                        }
                     }
                 }
                 .padding(.bottom, 186.adjustedH)

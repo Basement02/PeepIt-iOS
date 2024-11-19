@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 
 enum SideMenuType: CaseIterable, Hashable {
     case townPeeps
@@ -23,14 +24,14 @@ enum SideMenuType: CaseIterable, Hashable {
         }
     }
 
-    var iconImage: String {
+    func destinationState() -> RootStore.Path.State {
         switch self {
         case .townPeeps:
-            return ""
+            return .announce(AnnounceStore.State())
         case .notification:
-            return ""
+            return .announce(AnnounceStore.State())
         case .peepItNews:
-            return ""
+            return .announce(AnnounceStore.State())
         }
     }
 }
