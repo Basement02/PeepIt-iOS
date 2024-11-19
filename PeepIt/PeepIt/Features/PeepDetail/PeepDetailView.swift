@@ -25,13 +25,6 @@ struct PeepDetailView: View {
 
                     Spacer()
 
-                    if store.state.showReactionList {
-                        HStack {
-                            Spacer()
-                            reactionListView
-                        }
-                    }
-
                     detailView
                         .padding(.bottom, 84.adjustedH)
                 }
@@ -193,7 +186,11 @@ extension PeepDetailView {
             }
 
             VStack(spacing: 15) {
-                reactionButton
+                if store.state.showReactionList {
+                    reactionListView
+                } else {
+                    reactionButton
+                }
 
                 chattingButton
             }
@@ -265,15 +262,13 @@ extension PeepDetailView {
 
     private var reactionListView: some View {
         VStack(spacing: 0) {
-            ForEach(0..<store.reactionList.count) { idx in
-                Group {
+            ForEach(
+                0..<store.reactionList.count
+            ) { idx in
+                VStack(spacing: 0) {
                     Rectangle()
                         .fill(Color.blur2)
                         .frame(width: 50, height: 50)
-
-                    Rectangle()
-                        .fill(Color.op)
-                        .frame(width: 34, height: 0.42)
                 }
                 .onTapGesture {
                     store.send(.selectReaction(idx: idx))
