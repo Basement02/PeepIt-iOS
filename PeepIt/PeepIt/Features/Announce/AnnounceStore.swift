@@ -13,10 +13,11 @@ struct AnnounceStore {
 
     @ObservableState
     struct State: Equatable {
-
+        /// 공지 목록
+        var announces: [Announce] = [.announce1, .announce2]
     }
 
     enum Action {
-
+    
     }
 }
