@@ -18,3 +18,20 @@ struct PressableButtonStyle: ButtonStyle {
             }
     }
 }
+
+struct PressableViewButtonStyle<NormalView: View, PressedView: View>: ButtonStyle {
+    let normalView: NormalView
+    let pressedView: PressedView
+
+    func makeBody(configuration: Configuration) -> some View {
+        ZStack {
+            if configuration.isPressed {
+                pressedView
+            } else {
+                normalView
+            }
+
+            configuration.label
+        }
+    }
+}

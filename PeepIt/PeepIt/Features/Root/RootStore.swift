@@ -33,7 +33,7 @@ struct RootStore {
         var path = StackState<Path.State>()
 
         var isLoading = true
-        var authState = AuthState.unAuthorized
+        var authState = AuthState.authorized
 
         var login = LoginStore.State()
         var home = HomeStore.State()

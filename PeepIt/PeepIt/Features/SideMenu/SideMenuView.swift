@@ -88,12 +88,29 @@ struct SideMenuView: View {
             // TODO: 로그아웃
         } label: {
             HStack(spacing: 3) {
-                Image("IconPower")
+                Image("LogoutN")
                 Text("로그아웃")
                     .pretendard(.body02)
-                    .foregroundStyle(Color.white)
             }
+            .opacity(0)
         }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView:
+                    HStack(spacing: 3) {
+                        Image("LogoutN")
+                        Text("로그아웃")
+                            .pretendard(.body02)
+                    },
+                pressedView:
+                    HStack(spacing: 3) {
+                        Image("LogoutY")
+                        Text("로그아웃")
+                            .pretendard(.body05)
+                            .foregroundStyle(Color.gray300)
+                }
+            )
+        )
     }
 
     private var settingButton: some View {
