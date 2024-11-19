@@ -92,6 +92,7 @@
 		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
+		ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
 		ABE581BB2CCA6F01003366DC /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */; };
 		ABE581BC2CCA6F01003366DC /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581B32CCA6F00003366DC /* Pretendard-SemiBold.ttf */; };
@@ -199,6 +200,7 @@
 		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
+		ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackImageLayer.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
 		ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		ABE581B32CCA6F00003366DC /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -763,6 +765,7 @@
 			children = (
 				ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */,
 				ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */,
+				ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -875,6 +878,7 @@
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
 				AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */,
 				AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */,
+				ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */,
 				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
