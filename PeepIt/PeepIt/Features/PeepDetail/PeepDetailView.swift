@@ -57,16 +57,9 @@ extension PeepDetailView {
     }
 
     private var backButton: some View {
-        Button {
+        BackButton {
             store.send(.closeView)
-        } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "BackN", pressedImg: "BackY")
-        )
     }
 
     private var moreButton: some View {

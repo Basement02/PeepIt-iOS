@@ -52,16 +52,9 @@ struct SettingView: View {
     }
 
     private var backButton: some View {
-        Button {
-
-        } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 33.6, height: 33.6)
+        BackButton {
+            // TODO: 
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "backN", pressedImg: "backY")
-        )
     }
 
     private func header(title: String) -> some View {
