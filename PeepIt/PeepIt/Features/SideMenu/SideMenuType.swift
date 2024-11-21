@@ -27,7 +27,7 @@ enum SideMenuType: CaseIterable, Hashable {
     func destinationState() -> RootStore.Path.State {
         switch self {
         case .townPeeps:
-            return .announce(AnnounceStore.State())
+            return .townPeeps(TownPeepsStore.State())
         case .notification:
             return .announce(AnnounceStore.State())
         case .peepItNews:

@@ -111,6 +111,7 @@
 		ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */; };
 		ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */; };
 		ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */; };
+		ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBFD832CEF550C00E392F3 /* HotLabel.swift */; };
 		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
 		ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB22CBE625400629E9C /* DraggableText.swift */; };
 		ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */; };
@@ -222,6 +223,7 @@
 		ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailLayer.swift; sourceTree = "<group>"; };
 		ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMapLayer.swift; sourceTree = "<group>"; };
 		ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressableButtonStyle.swift; sourceTree = "<group>"; };
+		ABEBFD832CEF550C00E392F3 /* HotLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotLabel.swift; sourceTree = "<group>"; };
 		ABF72EB02CBE5FD500629E9C /* TextItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextItem.swift; sourceTree = "<group>"; };
 		ABF72EB22CBE625400629E9C /* DraggableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableText.swift; sourceTree = "<group>"; };
 		ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
@@ -445,6 +447,7 @@
 				ABB96D222CD25188003C6742 /* NavigationBar.swift */,
 				ABB96D242CD344D2003C6742 /* CheckEnterField.swift */,
 				AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */,
+				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -922,6 +925,7 @@
 				AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */,
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
+				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,

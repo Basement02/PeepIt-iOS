@@ -71,6 +71,9 @@ struct RootView: View {
                 /// 더보기
                 case let .announce(store):
                     AnnounceView(store: store)
+
+                case let .townPeeps(store):
+                    TownPeepsView(store: store)
                 }
             }
         }
