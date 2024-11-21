@@ -70,7 +70,7 @@ struct TownPeepsView: View {
 
     private var backButton: some View {
         Button {
-            // TODO:
+            store.send(.backButtonTapped)
         } label: {
             Rectangle()
                 .fill(Color.clear)

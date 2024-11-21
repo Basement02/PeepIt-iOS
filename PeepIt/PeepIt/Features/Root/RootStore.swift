@@ -29,6 +29,7 @@ struct RootStore {
 
         /// 더보기
         case announce(AnnounceStore)
+        case townPeeps(TownPeepsStore)
     }
 
     @ObservableState
