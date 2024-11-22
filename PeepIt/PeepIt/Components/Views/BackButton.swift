@@ -20,8 +20,8 @@ struct BackButton: View {
         }
         .buttonStyle(
             PressableButtonStyle(
-                originImg: "backN",
-                pressedImg: "backY"
+                originImg: "BackN",
+                pressedImg: "BackY"
             )
         )
     }

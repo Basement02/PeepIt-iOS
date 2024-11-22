@@ -40,7 +40,7 @@ struct PeepDetailStore {
                 state.showReactionList = newState
                 return .none
 
-            case let .setShowChat(newState):
+            case .setShowChat:
                 return .none
 
             case .closeView:
