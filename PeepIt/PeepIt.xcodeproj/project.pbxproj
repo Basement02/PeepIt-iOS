@@ -82,6 +82,7 @@
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
 		ABCC50E92CF03081004AD297 /* Announce.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E82CF03081004AD297 /* Announce.swift */; };
+		ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */; };
 		ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */; };
 		ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */; };
 		ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */; };
@@ -195,6 +196,7 @@
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
 		ABCC50E82CF03081004AD297 /* Announce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announce.swift; sourceTree = "<group>"; };
+		ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItNavigationBar.swift; sourceTree = "<group>"; };
 		ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileStore.swift; sourceTree = "<group>"; };
 		ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityPeep.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */,
 				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
 				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
+				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -987,6 +990,7 @@
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */,
 				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,
+				ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
 				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
 				ABB96D232CD25188003C6742 /* NavigationBar.swift in Sources */,
