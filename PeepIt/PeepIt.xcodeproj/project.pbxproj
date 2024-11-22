@@ -80,6 +80,9 @@
 		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
 		ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserProfile.swift */; };
 		ABC701322CE6E069004DCFF1 /* MainLimeButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */; };
+		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
+		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
+		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
 		ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */; };
 		ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */; };
 		ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */; };
@@ -191,6 +194,9 @@
 		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
 		ABC305F22C95A567003B00FE /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLimeButtonStyle.swift; sourceTree = "<group>"; };
+		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
+		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
 		ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileStore.swift; sourceTree = "<group>"; };
 		ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityPeep.swift; sourceTree = "<group>"; };
@@ -281,8 +287,8 @@
 		AB468D092CA881FB00C1E430 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D0A2CA8820A00C1E430 /* SettingView.swift */,
-				AB468D0C2CA8821600C1E430 /* SettingStore.swift */,
+				ABCC50E22CEF90E7004AD297 /* Setting */,
+				ABCC50E32CEF90F1004AD297 /* Guide */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 				ABB96D242CD344D2003C6742 /* CheckEnterField.swift */,
 				AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */,
 				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
+				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -648,6 +655,24 @@
 				AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		ABCC50E22CEF90E7004AD297 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				AB468D0A2CA8820A00C1E430 /* SettingView.swift */,
+				AB468D0C2CA8821600C1E430 /* SettingStore.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		ABCC50E32CEF90F1004AD297 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				ABCC50E42CEF90FF004AD297 /* GuideView.swift */,
+				ABCC50E62CEF9105004AD297 /* GuideStore.swift */,
+			);
+			path = Guide;
 			sourceTree = "<group>";
 		};
 		ABD3CAA12CA08D3F00438747 /* Profile */ = {
@@ -896,6 +921,7 @@
 				AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */,
 				ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */,
 				ABC701322CE6E069004DCFF1 /* MainLimeButtonStyle.swift in Sources */,
+				ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */,
 				AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */,
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
 				AB53DE512CA00FDC00D8DC1F /* Constant.swift in Sources */,
@@ -932,6 +958,7 @@
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
+				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
@@ -939,6 +966,7 @@
 				ABB9218F2CEC661D00AD0C81 /* Announce.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
+				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,

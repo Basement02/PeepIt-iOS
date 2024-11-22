@@ -31,18 +31,9 @@ struct AnnounceView: View {
     }
 
     private var backButton: some View {
-        Button {
+        BackButton {
             store.send(.backButtonTapped)
-        } label: {
-            Image("backN")
-                .opacity(0)
         }
-        .buttonStyle(
-            PressableButtonStyle(
-                originImg: "backN",
-                pressedImg: "backY"
-            )
-        )
     }
 
     private var announceList: some View {

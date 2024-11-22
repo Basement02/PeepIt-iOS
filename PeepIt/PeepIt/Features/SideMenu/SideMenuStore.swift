@@ -14,12 +14,16 @@ struct SideMenuStore {
     @ObservableState
     struct State: Equatable {
         var sideMenuOffset = -Constant.screenWidth
+
+        var isSettingHold = false
     }
 
     enum Action {
         case dismissSideMenu
-        case settingButtonTapped
         case menuTapped(of: SideMenuType)
+
+        case settingHoldStart
+        case settingHoldStop
     }
 
     var body: some Reducer<State, Action> {
@@ -30,10 +34,15 @@ struct SideMenuStore {
                 state.sideMenuOffset = -Constant.screenWidth
                 return .none
 
-            case .settingButtonTapped:
+            case .menuTapped:
                 return .none
 
-            case let .menuTapped(type):
+            case .settingHoldStart:
+                state.isSettingHold = true
+                return .none
+
+            case .settingHoldStop:
+                state.isSettingHold = false
                 return .none
             }
         }

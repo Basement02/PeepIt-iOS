@@ -51,6 +51,7 @@ struct SideMenuView: View {
                         Spacer()
                         settingButton
                     }
+                    .frame(height: 29.4)
                 }
                 .padding(.trailing, 15.6.adjustedW)
 
@@ -115,14 +116,11 @@ struct SideMenuView: View {
     }
 
     private var settingButton: some View {
-        Button {
-            store.send(.settingButtonTapped)
-        } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 29.4, height: 29.4)
+        NavigationLink(
+            state: RootStore.Path.State.setting(SettingStore.State())
+        ) {
+            Image("SettingN")
         }
-        .buttonStyle(PressableButtonStyle(originImg: "SettingN", pressedImg: "SettingY"))
     }
 
     private var goToAppStoreButton: some View {
