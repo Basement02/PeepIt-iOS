@@ -25,7 +25,7 @@ struct AnnounceView: View {
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .fullScreenCover(isPresented: $store.isSheetVisible) {
-                Text("hi")
+                AnnounceModal(store: self.store)
             }
         }
     }
