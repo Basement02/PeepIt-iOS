@@ -16,11 +16,11 @@ struct AuthenticationView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                NavigationBar(leadingButton: backButton)
+                PeepItNavigationBar(leading: backButton)
+                    .padding(.bottom, 23.adjustedH)
 
                 Group {
                     title
-                        .padding(.top, 23.adjustedH)
 
                     phoneNumberTextField
                         .padding(.top, 50.adjustedH)

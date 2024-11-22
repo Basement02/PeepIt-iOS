@@ -15,7 +15,7 @@ struct SideMenuView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                NavigationBar(trailingButton: dismissButton)
+                PeepItNavigationBar(trailing: dismissButton)
                     .padding(.bottom, 23.adjustedH)
 
                 HStack {

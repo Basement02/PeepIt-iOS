@@ -15,7 +15,7 @@ struct InputIdView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                NavigationBar(leadingButton: backButton)
+                PeepItNavigationBar(leading: backButton)
                     .padding(.bottom, 23.adjustedH)
 
                 Group {

@@ -17,8 +17,8 @@ struct SettingView: View {
                 .ignoresSafeArea()
 
             VStack(spacing: 0) {
-                NavigationBar(
-                    leadingButton: backButton,
+                PeepItNavigationBar(
+                    leading: backButton,
                     title: "설정"
                 )
                 .padding(.bottom, 39.adjustedH)

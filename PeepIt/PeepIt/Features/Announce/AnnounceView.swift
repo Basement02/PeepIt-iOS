@@ -14,8 +14,8 @@ struct AnnounceView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                NavigationBar(
-                    leadingButton: backButton,
+                PeepItNavigationBar(
+                    leading: backButton,
                     title: "서비스 소식"
                 )
 
