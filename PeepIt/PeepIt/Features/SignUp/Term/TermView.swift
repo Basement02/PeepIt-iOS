@@ -15,11 +15,11 @@ struct TermView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                NavigationBar(leadingButton: backButton)
+                PeepItNavigationBar(leading: backButton)
+                    .padding(.bottom, 23.adjustedH)
 
                 Group {
                     title
-                        .padding(.top, 23.adjustedH)
                         .padding(.bottom, 50.adjustedH)
 
                     allAgreeButtton

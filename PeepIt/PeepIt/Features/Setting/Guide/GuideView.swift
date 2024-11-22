@@ -13,8 +13,8 @@ struct GuideView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            NavigationBar(
-                leadingButton: backButton,
+            PeepItNavigationBar(
+                leading: backButton,
                 title: "이용 안내"
             )
             .padding(.bottom, 39.adjustedH)
