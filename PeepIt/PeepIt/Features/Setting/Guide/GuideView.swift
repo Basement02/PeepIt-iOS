@@ -36,7 +36,7 @@ struct GuideView: View {
 
     private var backButton: some View {
         BackButton {
-            // TODO:
+            store.send(.backButtonTapped)
         }
     }
 

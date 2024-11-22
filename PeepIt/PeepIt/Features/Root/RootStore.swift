@@ -30,6 +30,10 @@ struct RootStore {
         /// 더보기
         case announce(AnnounceStore)
         case townPeeps(TownPeepsStore)
+
+        /// 설정
+        case setting(SettingStore)
+        case guide(GuideStore)
     }
 
     @ObservableState

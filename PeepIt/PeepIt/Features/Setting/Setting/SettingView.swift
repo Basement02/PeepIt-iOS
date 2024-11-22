@@ -26,17 +26,10 @@ struct SettingView: View {
                 Group {
                     header(title: "서비스")
 
-                    ForEach(
-                        Array(zip(SettingStore.State.ServiceTermType.allCases.indices,
-                                  SettingStore.State.ServiceTermType.allCases)
-                        ), id: \.0
-                    ) { idx, item in
-                        menuView(title: item.rawValue)
-                            .padding(.bottom, idx == SettingStore.State.ServiceTermType.allCases.count-1 ? 0 : 32)
-                    }
+                    serviceList
 
                     Spacer()
-                        .frame(height: 50)
+                        .frame(height: 50.adjustedH)
 
                     header(title: "계정")
 
@@ -53,7 +46,7 @@ struct SettingView: View {
 
     private var backButton: some View {
         BackButton {
-            // TODO: 
+            store.send(.backButtonTapped)
         }
     }
 
@@ -86,6 +79,35 @@ struct SettingView: View {
         .background(Color.base)
     }
 
+    private var serviceList: some View {
+        ForEach(
+            Array(zip(SettingStore.State.ServiceTermType.allCases.indices,
+                      SettingStore.State.ServiceTermType.allCases)
+            ), id: \.0
+        ) { idx, item in
+            switch item {
+
+            case .mail:
+                menuView(title: item.rawValue)
+
+            default:
+                if let dest = item.destinationState() {
+                    NavigationLink(state: dest) {
+                        menuView(title: item.rawValue)
+                            .padding(
+                                .bottom,
+                                idx == SettingStore.State.ServiceTermType.allCases.count - 1 ?
+                                0 : 32
+                            )
+                    }
+                    .foregroundStyle(Color.white)
+                } else {
+                    EmptyView()
+                }
+            }
+        }
+    }
+
     private var accountView: some View {
         HStack(spacing: 10) {
             RoundedRectangle(cornerRadius: 17.6)
@@ -111,7 +133,9 @@ struct SettingView: View {
 }
 
 #Preview {
-    SettingView(
-        store: .init(initialState: SettingStore.State()) { SettingStore() }
-    )
+    NavigationStack {
+        SettingView(
+            store: .init(initialState: SettingStore.State()) { SettingStore() }
+        )
+    }
 }
