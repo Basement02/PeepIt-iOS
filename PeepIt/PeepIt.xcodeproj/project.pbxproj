@@ -82,6 +82,8 @@
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
 		ABCC50E92CF03081004AD297 /* Announce.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E82CF03081004AD297 /* Announce.swift */; };
 		ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */; };
+		ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50EE2CF03D15004AD297 /* AnnounceModal.swift */; };
+		ABCC50F12CF03D62004AD297 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50F02CF03D62004AD297 /* DismissButton.swift */; };
 		ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */; };
 		ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */; };
 		ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */; };
@@ -195,6 +197,8 @@
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
 		ABCC50E82CF03081004AD297 /* Announce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Announce.swift; sourceTree = "<group>"; };
 		ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepItNavigationBar.swift; sourceTree = "<group>"; };
+		ABCC50EE2CF03D15004AD297 /* AnnounceModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnounceModal.swift; sourceTree = "<group>"; };
+		ABCC50F02CF03D62004AD297 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileStore.swift; sourceTree = "<group>"; };
 		ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityPeep.swift; sourceTree = "<group>"; };
@@ -314,6 +318,7 @@
 			children = (
 				AB468D1F2CA9428700C1E430 /* AnnounceStore.swift */,
 				AB468D212CA9429600C1E430 /* AnnounceView.swift */,
+				ABCC50EE2CF03D15004AD297 /* AnnounceModal.swift */,
 			);
 			path = Announce;
 			sourceTree = "<group>";
@@ -452,6 +457,7 @@
 				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
 				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
+				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -895,6 +901,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,
@@ -952,6 +959,7 @@
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
+				ABCC50F12CF03D62004AD297 /* DismissButton.swift in Sources */,
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
