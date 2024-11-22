@@ -24,9 +24,7 @@ struct AnnounceModal: View {
                         .padding(.top, 39.adjustedH)
                         .padding(.bottom, 30.adjustedH)
 
-                    Text(store.selectedAnnounce?.content ?? "")
-                        .pretendard(.body05)
-                        .padding(.bottom, 30.adjustedH)
+                    content
 
                     if let _ = store.selectedAnnounce?.image {
                         image
@@ -63,6 +61,19 @@ struct AnnounceModal: View {
             Rectangle()
                 .fill(Color.op)
                 .frame(height: 0.5)
+        }
+    }
+
+    private var content: some View {
+        HStack {
+            Text(
+                store.selectedAnnounce?.content.forceCharWrapping ?? ""
+            )
+            .pretendard(.body05)
+            .multilineTextAlignment(.leading)
+            .padding(.bottom, 30.adjustedH)
+
+            Spacer()
         }
     }
 

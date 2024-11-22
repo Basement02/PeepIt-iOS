@@ -13,4 +13,8 @@ extension String {
         let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.")
         return self.rangeOfCharacter(from: allowedCharacters.inverted) == nil
     }
+
+    var forceCharWrapping: Self {
+        self.map({ String($0) }).joined(separator: "\u{200B}")
+    }
 }
