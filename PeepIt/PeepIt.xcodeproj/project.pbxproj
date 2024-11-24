@@ -24,6 +24,7 @@
 		AB416D1F2CF329590065BD09 /* MiniBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D1E2CF329590065BD09 /* MiniBtn.swift */; };
 		AB416D222CF34B880065BD09 /* NotificationSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D212CF34B880065BD09 /* NotificationSettingView.swift */; };
 		AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D232CF34B920065BD09 /* NotificationSettingStore.swift */; };
+		AB416D262CF371110065BD09 /* ThumbnailAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D252CF371110065BD09 /* ThumbnailAlarm.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -146,6 +147,7 @@
 		AB416D1E2CF329590065BD09 /* MiniBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBtn.swift; sourceTree = "<group>"; };
 		AB416D212CF34B880065BD09 /* NotificationSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingView.swift; sourceTree = "<group>"; };
 		AB416D232CF34B920065BD09 /* NotificationSettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingStore.swift; sourceTree = "<group>"; };
+		AB416D252CF371110065BD09 /* ThumbnailAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailAlarm.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */,
+				AB416D252CF371110065BD09 /* ThumbnailAlarm.swift */,
 			);
 			path = Video;
 			sourceTree = "<group>";
@@ -364,8 +367,8 @@
 		AB468D192CA941E900C1E430 /* Notification */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D1A2CA941F600C1E430 /* NotificationStore.swift */,
 				AB468D1C2CA9420800C1E430 /* NotificationView.swift */,
+				AB468D1A2CA941F600C1E430 /* NotificationStore.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -986,6 +989,7 @@
 				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
+				AB416D262CF371110065BD09 /* ThumbnailAlarm.swift in Sources */,
 				AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */,
 				ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */,
 				ABC701322CE6E069004DCFF1 /* MainLimeButtonStyle.swift in Sources */,
