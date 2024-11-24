@@ -26,10 +26,10 @@ struct NotificationView: View {
 
                     divider
                         .padding(.bottom, 25.adjustedH)
-
-                    notificationList
                 }
                 .frame(width: 337)
+
+                notificationList
 
                 Spacer()
             }
@@ -40,20 +40,26 @@ struct NotificationView: View {
     }
 
     private var backButton: some View {
-        BackButton {
-            // TODO:
-        }
+        BackButton { store.send(.backButtonTapped) }
     }
 
+    @ViewBuilder
     private var myActivePeepList: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(0..<5) { _ in
-                    ThumbnailAlarm()
+        if store.activePeeps.count > 0 {
+            ScrollView(.horizontal) {
+                HStack {
+                    ForEach(store.activePeeps) { peep in
+                        ThumbnailAlarm(peep: peep)
+                    }
                 }
             }
+            .scrollIndicators(.hidden)
+        } else {
+            HStack {
+                uploadButton
+                Spacer()
+            }
         }
-        .scrollIndicators(.hidden)
     }
 
     private var divider: some View {
@@ -62,60 +68,100 @@ struct NotificationView: View {
             .frame(height: 1)
     }
 
+    @ViewBuilder
     private var notificationList: some View {
-        List(0..<10) { _ in
-            NotificationCell()
+        if store.notiList.count > 0 {
+            List(store.notiList, id: \.id) { noti in
+                HStack {
+                    Spacer()
+
+                    NotificationCell(notification: noti)
+
+                    Spacer()
+                }
                 .listRowInsets(EdgeInsets())
                 .background(Color.base)
+                .swipeActions(
+                    allowsFullSwipe: false
+                ) {
+                    Button {
+                        store.send(.removeNoti(item: noti))
+                    } label: {
+                        Label("Delete", image: "IconTrash")
+                            .tint(Color.coreRed)
+                    }
+                }
+            }
+            .listRowSpacing(15)
+            .listStyle(.plain)
+            .scrollIndicators(.hidden)
+        } else {
+            VStack {
+                Spacer()
+
+                Text("새로운 소식이 없어요.")
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.nonOp)
+
+                Spacer()
+            }
+            .frame(height: 468)
         }
-        .listRowSpacing(15)
-        .listStyle(.plain)
-        .scrollIndicators(.hidden)
+    }
+
+    private var uploadButton: some View {
+        Button {
+            store.send(.uploadButtonTapped)
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.gray900)
+                    .frame(width: 92, height: 126)
+
+                Image("Subtract")
+                    .resizable()
+                    .frame(width: 27.31, height: 27.31)
+            }
+        }
     }
 }
 
 fileprivate struct NotificationCell: View {
+    let notification: Notification
 
     var body: some View {
-        HStack {
-            Spacer()
-
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color.gray900)
-
-                HStack(spacing: 14) {
-                    RoundedRectangle(cornerRadius: 3)
-                        .frame(width: 44, height: 60)
-                        .overlay {
-                            ThumbnailLayer.primary()
-                            ThumbnailLayer.secondary()
-                        }
-
-                    VStack(alignment: .leading, spacing: 2.5) {
-                        Text("{아이디}님의 핍이 인기를 얻고 있어요!")
-                            .pretendard(.body04)
-                            .foregroundStyle(Color.gray100)
-    
-                        Text("")
-                            .pretendard(.caption03)
-                            .foregroundStyle(Color.nonOp)
-    
-                        Text("3분 전")
-                            .pretendard(.caption01)
-                            .foregroundStyle(Color.nonOp)
-                    }
-                    .lineLimit(1)
-
-                    Spacer()
+        HStack(spacing: 14) {
+            RoundedRectangle(cornerRadius: 3)
+                .frame(width: 44, height: 60)
+                .overlay {
+                    ThumbnailLayer.primary()
+                    ThumbnailLayer.secondary()
                 }
-                .frame(width: 317, height: 60)
-                .padding(.vertical, 9)
-                .padding(.horizontal, 10)
+
+            VStack(alignment: .leading, spacing: 2.5) {
+                Text(notification.title)
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.gray100)
+
+                Text(notification.content)
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.nonOp)
+
+                Text(notification.date)
+                    .pretendard(.caption01)
+                    .foregroundStyle(Color.nonOp)
             }
+            .lineLimit(1)
 
             Spacer()
         }
+        .frame(width: 317, height: 60)
+        .padding(.vertical, 9)
+        .padding(.horizontal, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.gray900)
+        )
     }
 }
 

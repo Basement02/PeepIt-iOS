@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ThumbnailAlarm: View {
+    let peep: Peep
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -37,5 +38,5 @@ struct ThumbnailAlarm: View {
 }
 
 #Preview {
-    ThumbnailAlarm()
+    ThumbnailAlarm(peep: .stubPeep0)
 }
