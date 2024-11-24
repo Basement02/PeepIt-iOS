@@ -30,6 +30,7 @@ struct RootStore {
         /// 더보기
         case announce(AnnounceStore)
         case townPeeps(TownPeepsStore)
+        case notification(NotificationStore)
 
         /// 설정
         case setting(SettingStore)
@@ -89,6 +90,10 @@ struct RootStore {
                 state.path.append(.myProfile(.init()))
                 return .none
 
+            case .home(.sideMenu(.notificationMenuTapped)):
+                state.path.append(.notification(.init()))
+                return .none
+
             case let .path(action):
                 switch action {
 
@@ -98,6 +103,10 @@ struct RootStore {
                     return .none
 
                 case .element(_, action: .myProfile(.uploadButtonTapped)):
+                    state.path.append(.camera(.init()))
+                    return .none
+
+                case .element(_, action: .notification(.uploadButtonTapped)):
                     state.path.append(.camera(.init()))
                     return .none
 

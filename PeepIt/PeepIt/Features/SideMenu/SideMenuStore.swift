@@ -20,8 +20,7 @@ struct SideMenuStore {
 
     enum Action {
         case dismissSideMenu
-        case menuTapped(of: SideMenuType)
-
+        case notificationMenuTapped
         case settingHoldStart
         case settingHoldStop
     }
@@ -34,7 +33,7 @@ struct SideMenuStore {
                 state.sideMenuOffset = -Constant.screenWidth
                 return .none
 
-            case .menuTapped:
+            case .notificationMenuTapped:
                 return .none
 
             case .settingHoldStart:
