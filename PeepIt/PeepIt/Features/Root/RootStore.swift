@@ -37,6 +37,7 @@ struct RootStore {
 
         /// 프로필
         case otherProfile(OtherProfileStore)
+        case myProfile(MyProfileStore)
     }
 
     @ObservableState
