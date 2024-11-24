@@ -12,74 +12,159 @@ struct OtherProfileView: View {
     let store: StoreOf<OtherProfileStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            topBar
-                .padding(.bottom, 29)
+        WithPerceptionTracking {
+            ZStack(alignment: .topTrailing) {
+                Color.base
+                    .ignoresSafeArea()
 
-            UserProfileView(profile: .stubUser2)
-                .padding(.bottom, 56)
+                VStack(spacing: 0) {
 
-            uploadPeepListView
+                    PeepItNavigationBar(
+                        leading: backButton,
+                        title: "@아이디",
+                        trailing: elseButton
+                    )
+                    .padding(.bottom, 43.adjustedH)
 
-            Spacer()
+                    UserProfileView(profile: .stubUser2)
+                        .padding(.bottom, 68.adjustedH)
+
+                    Rectangle()
+                        .fill(Color.op)
+                        .frame(width: 361, height: 1)
+
+                    uploadPeepListView
+
+                    Spacer()
+                }
+
+                if store.isElseButtonTapped {
+                    ElseMenuView(
+                        firstButton: shareButton,
+                        secondButton: blockButton,
+                        bgColor: .gray800
+                    )
+                    .padding(.top, 59)
+                    .padding(.trailing, 36.adjustedW)
+                }
+            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .padding(.horizontal, 22)
     }
 
-    private var topBar: some View {
-        HStack {
-            Button {
-
-            } label: {
-                Text("뒤로")
-            }
-
-            Spacer()
-
-            Text("아이디")
-
-            Spacer()
-
-            Button {
-
-            } label: {
-                Text("더보기")
-            }
+    private var backButton: some View {
+        BackButton {
+            store.send(.backButtonTapped)
         }
+    }
+
+    private var elseButton: some View {
+        Button {
+            store.send(.elseButtonTapped(!store.isElseButtonTapped))
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 33.6, height: 33.6)
+        }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
+        )
     }
 
     private var uploadPeepListView: some View {
         let columns = [
-            GridItem(.flexible(), spacing: 13),
-            GridItem(.flexible(), spacing: 13),
+            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: 11),
             GridItem(.flexible())
         ]
 
         return Group {
             if store.uploadedPeeps.count > 0 {
-                HStack {
-                    Text("업로드한 핍")
-                    Spacer()
-                    Text("\(store.uploadedPeeps.count)")
-                }
-                .padding(.vertical, 17)
+                HStack(spacing: 5) {
+                    TagTab(title: "전체 00", isSelected: true)
+                    TagTab(title: "동이름 00", isSelected: false)
+                    TagTab(title: "동이름 00", isSelected: false)
 
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 13) {
-                        ForEach(0..<17) { _ in
-                            RoundedRectangle(cornerRadius: 10)
-                                .aspectRatio(9/16, contentMode: .fit)
-                                .foregroundStyle(Color(uiColor: .lightGray))
+                    Spacer()
+                }
+                .padding(.top, 18.4.adjustedH)
+                .padding(.bottom, 21.adjustedH)
+
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: columns, spacing: 11) {
+                        ForEach(
+                            store.uploadedPeeps
+                        ) { peep in
+                            ThumbnailProfile(peep: peep)
                         }
                     }
                 }
             } else {
-                Text("아직 등록된 핍이 없어요")
-                    .font(.system(size: 16))
-                    .padding(.top, 100)
+                Text("아직 등록된 핍이 없어요.")
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.nonOp)
+                    .padding(.top, 161.adjustedH)
             }
         }
+        .frame(width: 361)
+    }
+
+    private var shareButton: some View {
+        Button {
+            // TODO: 공유하기
+        } label: {
+            HStack(spacing: 3) {
+                Image("CombiShareBtnN")
+                Text("공유하기")
+            }
+            .opacity(0)
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView:
+                    HStack(spacing: 3) {
+                        Image("CombiShareBtnN")
+                        Text("공유하기")
+                    },
+                pressedView:
+                    HStack(spacing: 3) {
+                        Image("CombiShareBtnY")
+                        Text("공유하기")
+                            .pretendard(.body04)
+                    }
+                    .foregroundStyle(Color.gray300)
+            )
+        )
+    }
+
+    private var blockButton: some View {
+        Button {
+            // TODO: 차단하기
+        } label: {
+            HStack(spacing: 3) {
+                Image("CombiReportBtnN")
+                Text("차단하기")
+            }
+            .opacity(0)
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView:
+                    HStack(spacing: 3) {
+                        Image("CombiReportBtnN")
+                        Text("차단하기")
+                    }
+                    .foregroundStyle(Color.coreRed),
+                pressedView:
+                    HStack(spacing: 3) {
+                        Image("CombiReportBtnY")
+                        Text("차단하기")
+                            .pretendard(.body04)
+                    }
+                    .foregroundStyle(Color.gray300)
+            )
+        )
     }
 }
 

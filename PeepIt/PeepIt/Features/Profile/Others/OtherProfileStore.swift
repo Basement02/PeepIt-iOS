@@ -13,10 +13,33 @@ struct OtherProfileStore {
 
     @ObservableState
     struct State: Equatable {
-        var uploadedPeeps = [Peep]()
+        /// 핍 리스트
+        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        /// 상단 우측 더보기 버튼 탭 여부
+        var isElseButtonTapped = false
     }
 
     enum Action {
+        case elseButtonTapped(_ newState: Bool)
+        case backButtonTapped
+    }
 
+    @Dependency(\.dismiss) var dismiss
+
+    var body: some Reducer<State, Action> {
+        Reduce { state, action in
+            switch action {
+                
+            case let .elseButtonTapped(newState):
+                state.isElseButtonTapped = newState
+
+                return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
+            }
+        }
     }
 }
