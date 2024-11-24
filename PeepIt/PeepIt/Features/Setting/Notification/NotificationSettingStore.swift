@@ -73,10 +73,14 @@ struct NotificationSettingStore {
 
             case let .peepNotiSettingTapped(type):
                 state.peepNotiSettings[type]?.toggle()
+                updateAllAlarmToggleButton(&state)
+
                 return .none
 
             case let .serviceNotiSettingTapeed(type):
                 state.serviceNotiSettings[type]?.toggle()
+                updateAllAlarmToggleButton(&state)
+
                 return .none
 
             case .backButtonTapped:
@@ -88,5 +92,10 @@ struct NotificationSettingStore {
                 return .none
             }
         }
+    }
+
+    private func updateAllAlarmToggleButton(_ state: inout State) {
+        state.alarmIsOn = state.peepNotiSettings.values.contains(true) ||
+                          state.serviceNotiSettings.values.contains(true)
     }
 }
