@@ -27,10 +27,17 @@ struct SideMenuView: View {
 
                 VStack(spacing: 32) {
                     ForEach(SideMenuType.allCases, id: \.self) { menu in
-                        NavigationLink(
-                            state: menu.destinationState()
-                        ) {
+                        if menu == .notification {
                             MenuView(menuType: menu)
+                                .onTapGesture {
+                                    store.send(.notificationMenuTapped)
+                                }
+                        } else {
+                            NavigationLink(
+                                state: menu.destinationState()
+                            ) {
+                                MenuView(menuType: menu)
+                            }
                         }
                     }
                 }

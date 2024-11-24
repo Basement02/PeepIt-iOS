@@ -75,6 +75,9 @@ struct RootView: View {
                 case let .townPeeps(store):
                     TownPeepsView(store: store)
 
+                case let .notification(store):
+                    NotificationView(store: store)
+
                 /// 설정
                 case let .setting(store):
                     SettingView(store: store)
