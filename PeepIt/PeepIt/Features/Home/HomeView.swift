@@ -117,9 +117,9 @@ extension HomeView {
     }
 
     private var profileButton: some View {
-        NavigationLink(
-            state: RootStore.Path.State.myProfile(MyProfileStore.State())
-        ) {
+        Button {
+            store.send(.profileButtonTapped)
+        } label: {
             Image("ProfileSample")
                 .resizable()
                 .frame(width: 45, height: 45)

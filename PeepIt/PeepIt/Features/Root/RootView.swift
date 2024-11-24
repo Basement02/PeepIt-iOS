@@ -88,6 +88,10 @@ struct RootView: View {
 
                 case let .myProfile(store):
                     MyProfileView(store: store)
+
+                /// 업로드
+                case let .camera(store):
+                    CameraView(store: store)
                 }
             }
         }

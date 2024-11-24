@@ -39,6 +39,7 @@ struct MyProfileStore {
         case peepTabTapped(selection: PeepTabType)
         case myTabTapped(selection: MyProfileStore.State.MyActivityType)
         case loadUploadedPeeps
+        case uploadButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -77,6 +78,9 @@ struct MyProfileStore {
 
             case .loadUploadedPeeps:
                 // TODO: 나의 핍 API
+                return .none
+
+            case .uploadButtonTapped:
                 return .none
             }
         }

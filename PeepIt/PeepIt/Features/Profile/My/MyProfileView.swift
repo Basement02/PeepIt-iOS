@@ -143,7 +143,7 @@ struct MyProfileView: View {
 
     private var uploadButton: some View {
         Button {
-            // TODO:
+            store.send(.uploadButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 140, height: 38)
@@ -289,7 +289,7 @@ struct MyProfileView: View {
 
     private var uploadButtonThumbnail: some View {
         Button {
-            // TODO: 화면 전환
+            store.send(.uploadButtonTapped)
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: 8)
