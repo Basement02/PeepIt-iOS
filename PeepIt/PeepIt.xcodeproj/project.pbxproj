@@ -20,6 +20,8 @@
 		AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D132CF2EF040065BD09 /* TagTab.swift */; };
 		AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */; };
 		AB416D1A2CF309750065BD09 /* ElseMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D192CF309750065BD09 /* ElseMenuView.swift */; };
+		AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D1B2CF319980065BD09 /* TitleTab.swift */; };
+		AB416D1F2CF329590065BD09 /* MiniBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D1E2CF329590065BD09 /* MiniBtn.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -138,6 +140,8 @@
 		AB416D132CF2EF040065BD09 /* TagTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTab.swift; sourceTree = "<group>"; };
 		AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProfile.swift; sourceTree = "<group>"; };
 		AB416D192CF309750065BD09 /* ElseMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElseMenuView.swift; sourceTree = "<group>"; };
+		AB416D1B2CF319980065BD09 /* TitleTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleTab.swift; sourceTree = "<group>"; };
+		AB416D1E2CF329590065BD09 /* MiniBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBtn.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -296,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				AB416D132CF2EF040065BD09 /* TagTab.swift */,
+				AB416D1B2CF319980065BD09 /* TitleTab.swift */,
 			);
 			path = Toggle;
 			sourceTree = "<group>";
@@ -314,6 +319,14 @@
 				AB416D192CF309750065BD09 /* ElseMenuView.swift */,
 			);
 			path = Interface;
+			sourceTree = "<group>";
+		};
+		AB416D1D2CF329490065BD09 /* Text */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D1E2CF329590065BD09 /* MiniBtn.swift */,
+			);
+			path = Text;
 			sourceTree = "<group>";
 		};
 		AB468D092CA881FB00C1E430 /* Setting */ = {
@@ -636,6 +649,7 @@
 				AB416D122CF2EEF20065BD09 /* Toggle */,
 				AB416D152CF2F7AF0065BD09 /* Video */,
 				AB416D182CF309620065BD09 /* Interface */,
+				AB416D1D2CF329490065BD09 /* Text */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -968,6 +982,7 @@
 				AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */,
 				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
+				AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */,
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
@@ -975,6 +990,7 @@
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
 				AB468D272CA943E500C1E430 /* CameraView.swift in Sources */,
 				AB71E1CF2CBC06D800D2D3D9 /* WriteStore.swift in Sources */,
+				AB416D1F2CF329590065BD09 /* MiniBtn.swift in Sources */,
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,

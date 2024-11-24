@@ -14,7 +14,8 @@ struct MyProfileStore {
     @ObservableState
     struct State: Equatable {
         var peepTabSelection = PeepTabType.uploaded
-        var uploadedPeeps = [Peep]()
+        var uploadedPeeps = [Peep.stubPeep0]
+        var activityPeeps = [Peep.stubPeep0]
         var reactedPeeps = [ReactedPeep]()
         var commentedPeeps = [CommentedPeep]()
     }

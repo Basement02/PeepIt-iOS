@@ -14,9 +14,27 @@ enum PeepTabType: Equatable, CaseIterable {
     var title: String {
         switch self {
         case .uploaded:
-            return "업로드한 핍"
+            return "나의 핍"
         case .myActivity:
-            return "내 활동"
+            return "나의 활동"
+        }
+    }
+
+    var selectedIcn: String {
+        switch self {
+        case .uploaded:
+            return "IconPeepSelected"
+        case .myActivity:
+            return "IconStarSelected"
+        }
+    }
+
+    var notSelectedIcn: String {
+        switch self {
+        case .uploaded:
+            return "IconPeepNotSelected"
+        case .myActivity:
+            return "IconStarNotSelected"
         }
     }
 }
