@@ -13,40 +13,46 @@ struct OtherProfileView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            topBar
-                .padding(.bottom, 29)
+
+            PeepItNavigationBar(
+                leading: backButton,
+                title: "@아이디",
+                trailing: elseButton
+            )
+            .padding(.bottom, 49.adjustedH)
 
             UserProfileView(profile: .stubUser2)
-                .padding(.bottom, 56)
+                .padding(.bottom, 68.adjustedH)
+
+            Rectangle()
+                .fill(Color.op)
+                .frame(width: 361, height: 1)
 
             uploadPeepListView
 
             Spacer()
         }
         .ignoresSafeArea(.all, edges: .bottom)
-        .padding(.horizontal, 22)
+        .background(Color.base)
     }
 
-    private var topBar: some View {
-        HStack {
-            Button {
-
-            } label: {
-                Text("뒤로")
-            }
-
-            Spacer()
-
-            Text("아이디")
-
-            Spacer()
-
-            Button {
-
-            } label: {
-                Text("더보기")
-            }
+    private var backButton: some View {
+        BackButton {
+            // TODO:
         }
+    }
+
+    private var elseButton: some View {
+        Button {
+            // TODO:
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 33.6, height: 33.6)
+        }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
+        )
     }
 
     private var uploadPeepListView: some View {
@@ -75,9 +81,10 @@ struct OtherProfileView: View {
                     }
                 }
             } else {
-                Text("아직 등록된 핍이 없어요")
-                    .font(.system(size: 16))
-                    .padding(.top, 100)
+                Text("아직 등록된 핍이 없어요.")
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.nonOp)
+                    .padding(.top, 161.adjustedH)
             }
         }
     }

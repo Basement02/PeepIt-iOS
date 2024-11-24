@@ -11,16 +11,23 @@ struct UserProfileView: View {
     let profile: UserProfile
 
     var body: some View {
-        HStack(spacing: 20) {
-            Circle()
-                .frame(width: 97, height: 97)
+        VStack(spacing: 0) {
+            Image("ProfileSample")
+                .frame(width: 91.2, height: 91.2)
+                .padding(.bottom, 33.adjustedH)
 
-            VStack(alignment: .leading, spacing: 17) {
-                Text("\(profile.nickname)")
-                Text("\(profile.town)")
+            Text(profile.nickname)
+                .pretendard(.title02)
+                .padding(.bottom, 11.adjustedH)
+
+            HStack(spacing: 2) {
+                Image("IconLocation")
+                    .resizable()
+                    .frame(width: 22.4, height: 22.4)
+
+                Text("동이름")
+                    .pretendard(.body02)
             }
-
-            Spacer()
         }
     }
 }
