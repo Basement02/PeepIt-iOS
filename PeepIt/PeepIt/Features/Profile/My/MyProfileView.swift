@@ -193,10 +193,14 @@ struct MyProfileView: View {
                 ) {
                     Section(header: header) {
                         ForEach(
-                            0..<10,
+                            0..<store.uploadedPeeps.count+1,
                             id: \.self
-                        ) { peep in
-                            ThumbnailProfile(peep: .stubPeep0)
+                        ) { idx in
+                            if idx == 0 {
+                                uploadButtonThumbnail
+                            } else {
+                                ThumbnailProfile(peep: store.uploadedPeeps[idx-1])
+                            }
                         }
                         .padding(.bottom, 11)
                     }
@@ -270,6 +274,20 @@ struct MyProfileView: View {
                     Spacer()
                 }
             }
+        }
+    }
+
+    private var uploadButtonThumbnail: some View {
+        Button {
+            // TODO: 화면 전환
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.gray900)
+
+                Image("Subtract")
+            }
+            .frame(width: 113, height: 155)
         }
     }
 }
