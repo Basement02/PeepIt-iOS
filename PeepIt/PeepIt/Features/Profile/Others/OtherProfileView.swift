@@ -13,29 +13,43 @@ struct OtherProfileView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
+            ZStack(alignment: .topTrailing) {
+                Color.base
+                    .ignoresSafeArea()
 
-                PeepItNavigationBar(
-                    leading: backButton,
-                    title: "@아이디",
-                    trailing: elseButton
-                )
-                .padding(.bottom, 43.adjustedH)
+                VStack(spacing: 0) {
 
-                UserProfileView(profile: .stubUser2)
-                    .padding(.bottom, 68.adjustedH)
+                    PeepItNavigationBar(
+                        leading: backButton,
+                        title: "@아이디",
+                        trailing: elseButton
+                    )
+                    .padding(.bottom, 43.adjustedH)
 
-                Rectangle()
-                    .fill(Color.op)
-                    .frame(width: 361, height: 1)
+                    UserProfileView(profile: .stubUser2)
+                        .padding(.bottom, 68.adjustedH)
 
-                uploadPeepListView
+                    Rectangle()
+                        .fill(Color.op)
+                        .frame(width: 361, height: 1)
 
-                Spacer()
+                    uploadPeepListView
+
+                    Spacer()
+                }
+
+                if store.isElseButtonTapped {
+                    ElseMenuView(
+                        firstButton: shareButton,
+                        secondButton: blockButton,
+                        bgColor: .gray800
+                    )
+                    .padding(.top, 59)
+                    .padding(.trailing, 36.adjustedW)
+                }
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
-            .background(Color.base)
         }
     }
 
@@ -47,7 +61,7 @@ struct OtherProfileView: View {
 
     private var elseButton: some View {
         Button {
-            // TODO:
+            store.send(.elseButtonTapped(!store.isElseButtonTapped))
         } label: {
             Rectangle()
                 .fill(Color.clear)
@@ -94,6 +108,63 @@ struct OtherProfileView: View {
             }
         }
         .frame(width: 361)
+    }
+
+    private var shareButton: some View {
+        Button {
+            // TODO: 공유하기
+        } label: {
+            HStack(spacing: 3) {
+                Image("CombiShareBtnN")
+                Text("공유하기")
+            }
+            .opacity(0)
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView:
+                    HStack(spacing: 3) {
+                        Image("CombiShareBtnN")
+                        Text("공유하기")
+                    },
+                pressedView:
+                    HStack(spacing: 3) {
+                        Image("CombiShareBtnY")
+                        Text("공유하기")
+                            .pretendard(.body04)
+                    }
+                    .foregroundStyle(Color.gray300)
+            )
+        )
+    }
+
+    private var blockButton: some View {
+        Button {
+            // TODO: 차단하기
+        } label: {
+            HStack(spacing: 3) {
+                Image("CombiReportBtnN")
+                Text("차단하기")
+            }
+            .opacity(0)
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView:
+                    HStack(spacing: 3) {
+                        Image("CombiReportBtnN")
+                        Text("차단하기")
+                    }
+                    .foregroundStyle(Color.coreRed),
+                pressedView:
+                    HStack(spacing: 3) {
+                        Image("CombiReportBtnY")
+                        Text("차단하기")
+                            .pretendard(.body04)
+                    }
+                    .foregroundStyle(Color.gray300)
+            )
+        )
     }
 }
 

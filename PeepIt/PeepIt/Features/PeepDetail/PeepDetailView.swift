@@ -31,9 +31,13 @@ struct PeepDetailView: View {
                 .padding(.horizontal, 16.adjustedW)
 
                 if store.state.showElseMenu {
-                    menuView
-                        .padding(.top, 59)
-                        .padding(.trailing, 36.adjustedW)
+                    ElseMenuView(
+                        firstButton: shareButton,
+                        secondButton: reportButton,
+                        bgColor: Color.blur2
+                    )
+                    .padding(.top, 59)
+                    .padding(.trailing, 36.adjustedW)
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
