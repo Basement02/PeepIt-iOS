@@ -13,7 +13,8 @@ struct OtherProfileStore {
 
     @ObservableState
     struct State: Equatable {
-        var uploadedPeeps = [Peep]()
+//        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var uploadedPeeps: [Peep] = []
     }
 
     enum Action {

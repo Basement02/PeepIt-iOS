@@ -12,28 +12,31 @@ struct OtherProfileView: View {
     let store: StoreOf<OtherProfileStore>
 
     var body: some View {
-        VStack(spacing: 0) {
+        WithPerceptionTracking {
+            VStack(spacing: 0) {
 
-            PeepItNavigationBar(
-                leading: backButton,
-                title: "@아이디",
-                trailing: elseButton
-            )
-            .padding(.bottom, 49.adjustedH)
+                PeepItNavigationBar(
+                    leading: backButton,
+                    title: "@아이디",
+                    trailing: elseButton
+                )
+                .padding(.bottom, 43.adjustedH)
 
-            UserProfileView(profile: .stubUser2)
-                .padding(.bottom, 68.adjustedH)
+                UserProfileView(profile: .stubUser2)
+                    .padding(.bottom, 68.adjustedH)
 
-            Rectangle()
-                .fill(Color.op)
-                .frame(width: 361, height: 1)
+                Rectangle()
+                    .fill(Color.op)
+                    .frame(width: 361, height: 1)
 
-            uploadPeepListView
+                uploadPeepListView
 
-            Spacer()
+                Spacer()
+            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
+            .background(Color.base)
         }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .background(Color.base)
     }
 
     private var backButton: some View {
@@ -57,26 +60,29 @@ struct OtherProfileView: View {
 
     private var uploadPeepListView: some View {
         let columns = [
-            GridItem(.flexible(), spacing: 13),
-            GridItem(.flexible(), spacing: 13),
+            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: 11),
             GridItem(.flexible())
         ]
 
         return Group {
             if store.uploadedPeeps.count > 0 {
-                HStack {
-                    Text("업로드한 핍")
-                    Spacer()
-                    Text("\(store.uploadedPeeps.count)")
-                }
-                .padding(.vertical, 17)
+                HStack(spacing: 5) {
+                    TagTab(title: "전체 00", isSelected: true)
+                    TagTab(title: "동이름 00", isSelected: false)
+                    TagTab(title: "동이름 00", isSelected: false)
 
-                ScrollView {
-                    LazyVGrid(columns: columns, spacing: 13) {
-                        ForEach(0..<17) { _ in
-                            RoundedRectangle(cornerRadius: 10)
-                                .aspectRatio(9/16, contentMode: .fit)
-                                .foregroundStyle(Color(uiColor: .lightGray))
+                    Spacer()
+                }
+                .padding(.top, 18.4.adjustedH)
+                .padding(.bottom, 21.adjustedH)
+
+                ScrollView(showsIndicators: false) {
+                    LazyVGrid(columns: columns, spacing: 11) {
+                        ForEach(
+                            store.uploadedPeeps
+                        ) { peep in
+                            ThumbnailProfile(peep: peep)
                         }
                     }
                 }
@@ -87,6 +93,7 @@ struct OtherProfileView: View {
                     .padding(.top, 161.adjustedH)
             }
         }
+        .frame(width: 361)
     }
 }
 

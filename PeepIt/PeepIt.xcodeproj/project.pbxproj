@@ -17,6 +17,8 @@
 		AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8242CB2DF26007D432E /* InputIdStore.swift */; };
 		AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */; };
 		AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */; };
+		AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D132CF2EF040065BD09 /* TagTab.swift */; };
+		AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -132,6 +134,8 @@
 		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
 		AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoStore.swift; sourceTree = "<group>"; };
+		AB416D132CF2EF040065BD09 /* TagTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTab.swift; sourceTree = "<group>"; };
+		AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProfile.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -284,6 +288,22 @@
 				AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		AB416D122CF2EEF20065BD09 /* Toggle */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D132CF2EF040065BD09 /* TagTab.swift */,
+			);
+			path = Toggle;
+			sourceTree = "<group>";
+		};
+		AB416D152CF2F7AF0065BD09 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		AB468D092CA881FB00C1E430 /* Setting */ = {
@@ -603,6 +623,8 @@
 			children = (
 				ABC305F62C95C8D7003B00FE /* Modifiers */,
 				ABB96D212CD25145003C6742 /* Views */,
+				AB416D122CF2EEF20065BD09 /* Toggle */,
+				AB416D152CF2F7AF0065BD09 /* Video */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -920,6 +942,7 @@
 				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
+				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
 				AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */,
@@ -968,6 +991,7 @@
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
+				AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
