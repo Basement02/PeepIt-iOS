@@ -110,7 +110,7 @@ fileprivate struct termLabel: View {
         HStack {
             Image(
                 isAgreed ?
-                "ClickY" : "ClickN"
+                "CheckY" : "CheckN"
             )
 
             Group {

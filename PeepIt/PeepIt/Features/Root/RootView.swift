@@ -82,6 +82,9 @@ struct RootView: View {
                 case let .guide(store):
                     GuideView(store: store)
 
+                case let .notificationSetting(store):
+                    NotificationSettingView(store: store)
+
                 /// 프로필
                 case let .otherProfile(store):
                     OtherProfileView(store: store)
