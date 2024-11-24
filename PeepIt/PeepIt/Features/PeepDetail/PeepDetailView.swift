@@ -197,16 +197,21 @@ extension PeepDetailView {
     }
 
     private var nameView: some View {
-        HStack {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 37.62, height: 37.62)
-            Text("hyerim")
-                .pretendard(.headline)
-            Text("3분 전")
-                .pretendard(.caption04)
+        NavigationLink(
+            state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
+        ) {
+            HStack {
+                Image("ProfileSample")
+                    .resizable()
+                    .frame(width: 37.62, height: 37.62)
+                Text("hyerim")
+                    .pretendard(.headline)
+                Text("3분 전")
+                    .pretendard(.caption04)
 
-            Spacer()
+                Spacer()
+            }
+            .foregroundStyle(Color.white)
         }
     }
 
@@ -279,7 +284,11 @@ extension PeepDetailView {
 }
 
 #Preview {
-    PeepDetailView(
-        store: .init(initialState: PeepDetailStore.State()) { PeepDetailStore() }
-    )
+    NavigationStack {
+        PeepDetailView(
+            store: .init(initialState: PeepDetailStore.State()) {
+                PeepDetailStore()
+            }
+        )
+    }
 }

@@ -21,7 +21,10 @@ struct OtherProfileStore {
 
     enum Action {
         case elseButtonTapped(_ newState: Bool)
+        case backButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -31,6 +34,11 @@ struct OtherProfileStore {
                 state.isElseButtonTapped = newState
 
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
             }
         }
     }
