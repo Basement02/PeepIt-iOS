@@ -85,6 +85,13 @@ struct RootView: View {
                 /// 프로필
                 case let .otherProfile(store):
                     OtherProfileView(store: store)
+
+                case let .myProfile(store):
+                    MyProfileView(store: store)
+
+                /// 업로드
+                case let .camera(store):
+                    CameraView(store: store)
                 }
             }
         }

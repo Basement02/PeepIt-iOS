@@ -13,62 +13,74 @@ struct MyProfileStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 나의 핍, 나의 활동 탭 선택
         var peepTabSelection = PeepTabType.uploaded
-        var uploadedPeeps = [Peep]()
-        var reactedPeeps = [ReactedPeep]()
-        var commentedPeeps = [CommentedPeep]()
+
+        /// 업로드한 핍들
+        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+
+        /// 나의 활동 핍들
+        var activityPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+
+        /// 나의 활동 필터 탭
+        var myTabFilter = MyActivityType.all
+
+        enum MyActivityType: String, CaseIterable {
+            case all = "전체"
+            case chat = "참여한 핍"
+            case react = "반응한 핍"
+        }
     }
 
     enum Action {
         case onAppear
-        case peepTabTapped(selection: PeepTabType)
-        case loadUploadedPeeps
-        case loadReactedPeeps
-        case loadCommentPeeps
         case backButtonTapped
-        case uploadButtonTapped
         case modifyButtonTapped
+        case peepTabTapped(selection: PeepTabType)
+        case myTabTapped(selection: MyProfileStore.State.MyActivityType)
+        case loadUploadedPeeps
+        case uploadButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action>  {
         Reduce { state, action in
             switch action {
 
             case .onAppear:
-                return .merge(
-                    .send(.loadUploadedPeeps)
-                )
+                return .send(.loadUploadedPeeps)
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
+
+            case .modifyButtonTapped:
+                return .none
 
             case let .peepTabTapped(selection):
                 state.peepTabSelection = selection
 
-                if selection == .myActivity {
-                    return .merge(
-                        .send(.loadReactedPeeps),
-                        .send(.loadCommentPeeps)
-                    )
-                }
+//                if selection == .myActivity {
+//                    return .merge(
+//                        .send(.loadReactedPeeps),
+//                        .send(.loadCommentPeeps)
+//                    )
+//                }
+
+                return .none
+
+            case let .myTabTapped(selection):
+                state.myTabFilter = selection
 
                 return .none
 
             case .loadUploadedPeeps:
-                return .none
-
-            case .loadReactedPeeps:
-                state.reactedPeeps = [.reactPeepStub]
-                return .none
-
-            case .loadCommentPeeps:
-                state.commentedPeeps = [.commentPeepStub]
-                return .none
-
-            case .backButtonTapped:
+                // TODO: 나의 핍 API
                 return .none
 
             case .uploadButtonTapped:
-                return .none
-
-            case .modifyButtonTapped:
                 return .none
             }
         }

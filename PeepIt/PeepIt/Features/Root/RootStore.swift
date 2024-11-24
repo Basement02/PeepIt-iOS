@@ -37,6 +37,10 @@ struct RootStore {
 
         /// 프로필
         case otherProfile(OtherProfileStore)
+        case myProfile(MyProfileStore)
+
+        // 업로드
+        case camera(CameraStore)
     }
 
     @ObservableState
@@ -80,12 +84,20 @@ struct RootStore {
                 state.path.append(.term(.init()))
                 return .none
 
+            case .home(.profileButtonTapped):
+                state.path.append(.myProfile(.init()))
+                return .none
+
             case let .path(action):
                 switch action {
 
                 case .element(_, action: .welcome(.goToHomeButtonTapped)):
                     state.authState = .authorized
                     state.path.removeAll()
+                    return .none
+
+                case .element(_, action: .myProfile(.uploadButtonTapped)):
+                    state.path.append(.camera(.init()))
                     return .none
 
                 default:
