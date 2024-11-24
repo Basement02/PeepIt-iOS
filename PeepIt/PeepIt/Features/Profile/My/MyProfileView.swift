@@ -51,7 +51,7 @@ struct MyProfileView: View {
 
     private var backButton: some View {
         BackButton {
-            // TODO:
+            store.send(.backButtonTapped)
         }
     }
 
@@ -106,6 +106,7 @@ struct MyProfileView: View {
         }
     }
 
+    @ViewBuilder
     private var filters: some View {
         switch store.peepTabSelection {
 
@@ -121,9 +122,18 @@ struct MyProfileView: View {
 
         case .myActivity:
             HStack(spacing: 5) {
-                TagTab(title: "전체 000", isSelected: true)
-                TagTab(title: "참여한 핍 00", isSelected: false)
-                TagTab(title: "반응한 핍 00", isSelected: false)
+                ForEach(
+                    MyProfileStore.State.MyActivityType.allCases,
+                    id: \.self
+                ) { tab in
+                    TagTab(
+                        title: "\(tab.rawValue) \(store.activityPeeps.count)",
+                        isSelected: tab == store.myTabFilter
+                    )
+                    .onTapGesture {
+                        store.send(.myTabTapped(selection: tab))
+                    }
+                }
 
                 Spacer()
             }
@@ -241,10 +251,10 @@ struct MyProfileView: View {
                 ) {
                     Section(header: header) {
                         ForEach(
-                            0..<30,
+                            store.activityPeeps,
                             id: \.self
                         ) { peep in
-                            ThumbnailProfile(peep: .stubPeep0)
+                            ThumbnailProfile(peep: peep)
                         }
                         .padding(.bottom, 11)
                     }
