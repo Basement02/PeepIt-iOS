@@ -22,7 +22,7 @@ struct SettingStore {
             func destinationState() -> RootStore.Path.State? {
                 switch self {
                 case .alarm:
-                    return .guide(GuideStore.State())
+                    return .notificationSetting(NotificationSettingStore.State())
                 case .guide:
                     return .guide(GuideStore.State())
                 case .mail:

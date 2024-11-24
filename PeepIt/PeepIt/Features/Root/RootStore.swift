@@ -34,6 +34,7 @@ struct RootStore {
         /// 설정
         case setting(SettingStore)
         case guide(GuideStore)
+        case notificationSetting(NotificationSettingStore)
 
         /// 프로필
         case otherProfile(OtherProfileStore)

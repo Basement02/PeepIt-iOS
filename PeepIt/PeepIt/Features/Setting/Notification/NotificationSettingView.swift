@@ -12,31 +12,34 @@ struct NotificationSettingView: View {
     @Perception.Bindable var store: StoreOf<NotificationSettingStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            PeepItNavigationBar(
-                leading: backButton,
-                title: "알림 설정"
-            )
-            .padding(.bottom, 39.adjustedH)
+        WithPerceptionTracking {
+            VStack(spacing: 0) {
+                PeepItNavigationBar(
+                    leading: backButton,
+                    title: "알림 설정"
+                )
+                .padding(.bottom, 39.adjustedH)
 
-            VStack(spacing: 37.adjustedH) {
-                topButton
+                VStack(spacing: 37.adjustedH) {
+                    topButton
 
-                peepNotiSettingList
+                    peepNotiSettingList
 
-                serviceNotiSettingList
+                    serviceNotiSettingList
+                }
+                .padding(.horizontal, 29)
+
+                Spacer()
             }
-            .padding(.horizontal, 29)
-
-            Spacer()
+            .background(Color.base)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .background(Color.base)
-        .ignoresSafeArea(.all, edges: .bottom)
     }
 
     private var backButton: some View {
         BackButton {
-            // TODO:
+            store.send(.backButtonTapped)
         }
     }
 

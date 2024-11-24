@@ -52,7 +52,10 @@ struct NotificationSettingStore {
         case binding(BindingAction<State>)
         case peepNotiSettingTapped(type: State.PeepNotiType)
         case serviceNotiSettingTapeed(type: State.ServiceNotiType)
+        case backButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -75,6 +78,11 @@ struct NotificationSettingStore {
             case let .serviceNotiSettingTapeed(type):
                 state.serviceNotiSettings[type]?.toggle()
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await self.dismiss()
+                }
 
             default:
                 return .none
