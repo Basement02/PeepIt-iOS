@@ -14,10 +14,22 @@ struct SettingStore {
     @ObservableState
     struct State: Equatable {
 
+        /// 탈퇴 모달 보여주기 여부
         var isWithdrawSheetVisible = false
 
+        /// 모달 offset 관련
         var modalOffset = Constant.screenHeight
 
+        /// 탈퇴 사유
+        var selectedWithdrawType: WithdrawType? = nil
+
+        /// 탈퇴 메세지
+        var withdrawMessage = ""
+
+        /// 탈퇴 버튼 보여주기 여부
+        var isWithdrawActivated = false
+
+        /// 설정 종류
         enum ServiceTermType: String, CaseIterable {
             case alarm = "알림 설정"
             case guide = "이용 안내"
@@ -34,6 +46,16 @@ struct SettingStore {
                 }
             }
         }
+
+        /// 탈퇴 사유 종류
+        enum WithdrawType: String, CaseIterable {
+            case notUser = "자주 사용하지 않아요"
+            case privacy = "개인 정보가 걱정돼요"
+            case bug = "앱 오류가 있어요"
+            case duplicated = "중복 계정이 있어요"
+            case wantToDelete = "삭제하고 싶은 내용이 있어요"
+            case write = "직접 입력할게요"
+        }
     }
 
     enum Action: BindableAction {
@@ -41,6 +63,8 @@ struct SettingStore {
         case backButtonTapped
         case openSheet
         case closeSheet
+        case withdraw
+        case selectWithdrawType(type: State.WithdrawType)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -50,6 +74,10 @@ struct SettingStore {
         
         Reduce { state, action in
             switch action {
+
+            case .binding(\.withdrawMessage):
+                state.isWithdrawActivated = state.withdrawMessage == "서비스 탈퇴에 동의합니다."
+                return .none
 
             case .backButtonTapped:
                 return .run { _ in
@@ -64,6 +92,14 @@ struct SettingStore {
             case .closeSheet:
                 state.isWithdrawSheetVisible = false
                 state.modalOffset = Constant.screenHeight
+                return .none
+
+            case .withdraw:
+                // TODO: 탈퇴 API 
+                return .none
+
+            case let .selectWithdrawType(type):
+                state.selectedWithdrawType = type
                 return .none
 
             default:

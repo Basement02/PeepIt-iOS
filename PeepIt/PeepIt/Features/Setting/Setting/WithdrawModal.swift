@@ -9,24 +9,176 @@ import SwiftUI
 import ComposableArchitecture
 
 struct WithdrawModal: View {
-    let store: StoreOf<SettingStore>
+    @Perception.Bindable var store: StoreOf<SettingStore>
 
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
+                Color.base
+                    .ignoresSafeArea()
 
-                Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-                    .foregroundStyle(Color.red)
-                    .onTapGesture {
-                        store.send(
-                            .closeSheet,
-                            animation: .easeInOut(duration: 0.3)
-                        )
+                VStack {
+                    slideBar
+                        .padding(.top, 10)
+                        .padding(.bottom, 50)
+
+                    ScrollView {
+                        VStack(spacing: 50) {
+
+                            title
+
+                            withdrawOptionList
+
+                            description
+
+                            enterField
+                                .padding(.bottom, 21)
+
+                            bottom
+                                .padding(.bottom, 21.6.adjustedH)
+                        }
+                        .frame(width: 317)
                     }
+                    .scrollIndicators(.hidden)
+                }
             }
-            .ignoresSafeArea()
-            .background(Color.blue)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+        }
+    }
+
+    private var slideBar: some View {
+        RoundedRectangle(cornerRadius: 100)
+            .fill(Color.gray600)
+            .frame(width: 60, height: 5)
+    }
+
+    private var title: some View {
+        HStack {
+            Text(
+                """
+                어떤 점에서
+                서비스가 더 이상
+                필요 없다고 느끼셨나요?
+                """
+            )
+            .pretendard(.title02)
+
+            Spacer()
+        }
+    }
+
+    private var description: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("탈퇴 시 유의사항")
+                    .pretendard(.caption02)
+                    .padding(.bottom, 10)
+
+                Group {
+                    Text("· 회원 탈퇴 요청 후 7일 이내에 재로그인 시 탈퇴 요청이 철회됩니다")
+                    Text("· 회원 탈퇴 요청 후 7일 이후 회원 탈퇴가 이루어지며, 이때 회원 계정")
+                    Text("  과 모든 기록은 요청 날짜로부터 3개월 간 보관 후 영구적으로 삭제\n  됩니다.")
+                    Text("· 삭제된 데이터는 다시 복구가 불가능합니다.")
+                    Text("· 탈퇴 후 동일 아이디로 7일간 가입이 불가능합니다.")
+                }
+                .pretendard(.caption04)
+            }
+            .foregroundStyle(Color.gray400)
+
+            Spacer()
+        }
+    }
+
+    private var enterField: some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("유의사항에 모두 동의한다면, 다음 문구를 따라 입력해주세요.")
+                    .pretendard(.caption02)
+                    .padding(.bottom, 10)
+
+                ZStack(alignment: .leading) {
+                    Text("서비스 탈퇴에 동의합니다.")
+                        .foregroundStyle(Color.gray400)
+                    TextField("", text: $store.withdrawMessage)
+                        .tint(Color.coreLime)
+                }
+                .pretendard(.body02)
+                .frame(height: 29)
+
+                Rectangle()
+                    .frame(height: 1)
+            }
+            .frame(width: 285)
+
+            Spacer()
+        }
+    }
+
+    private var bottom: some View {
+        VStack(spacing: 16) {
+            Button {
+                // TODO:
+            } label: {
+                Text("탈퇴하기")
+            }
+            .mainGrayButtonStyle()
+            .opacity(store.isWithdrawActivated ? 1 : 0)
+
+            Button {
+                store.send(.closeSheet)
+            } label: {
+                Rectangle()
+                    .frame(width: 250, height: 20)
+                    .opacity(0)
+            }
+            .buttonStyle(
+                PressableViewButtonStyle(
+                    normalView: Text("취소"),
+                    pressedView: Text("취소").foregroundStyle(Color.gray300)
+                )
+            )
+            .pretendard(.body04 )
+        }
+        .frame(height: 91)
+    }
+
+    private var withdrawOptionList: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            ForEach(
+                SettingStore.State.WithdrawType.allCases,
+                id: \.self
+            ) { type in
+                withdrawOption(
+                    of: type,
+                    isSelected: type == store.selectedWithdrawType
+                )
+                .onTapGesture {
+                    store.send(.selectWithdrawType(type: type))
+                }
+            }
+        }
+    }
+
+    private func withdrawOption(
+        of type: SettingStore.State.WithdrawType,
+        isSelected: Bool?
+    ) -> some View {
+        HStack(spacing: 9) {
+            ZStack {
+                Circle()
+                    .strokeBorder(Color.white, lineWidth: 0.84)
+                    .frame(width: 14.28, height: 14.28)
+
+                if let isSelected = isSelected, isSelected {
+                    Circle()
+                        .fill(Color.coreLime)
+                        .frame(width: 9, height: 9)
+                }
+            }
+
+            Text(type.rawValue)
+                .pretendard(.body04)
+            Spacer()
         }
     }
 }
