@@ -14,6 +14,10 @@ struct SettingStore {
     @ObservableState
     struct State: Equatable {
 
+        var isWithdrawSheetVisible = false
+
+        var modalOffset = Constant.screenHeight
+
         enum ServiceTermType: String, CaseIterable {
             case alarm = "알림 설정"
             case guide = "이용 안내"
@@ -32,13 +36,18 @@ struct SettingStore {
         }
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case backButtonTapped
+        case openSheet
+        case closeSheet
     }
 
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Reduce { state, action in
             switch action {
 
@@ -46,6 +55,19 @@ struct SettingStore {
                 return .run { _ in
                      await self.dismiss()
                 }
+
+            case .openSheet:
+                state.isWithdrawSheetVisible = true
+                state.modalOffset = 0
+                return .none
+
+            case .closeSheet:
+                state.isWithdrawSheetVisible = false
+                state.modalOffset = Constant.screenHeight
+                return .none
+
+            default:
+                return .none
             }
         }
     }

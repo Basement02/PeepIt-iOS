@@ -9,39 +9,48 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SettingView: View {
-    let store: StoreOf<SettingStore>
+    @Perception.Bindable var store: StoreOf<SettingStore>
 
     var body: some View {
-        ZStack {
-            Color.base
-                .ignoresSafeArea()
+        WithPerceptionTracking {
+            ZStack(alignment: .bottom) {
+                Color.base
+                    .ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                PeepItNavigationBar(
-                    leading: backButton,
-                    title: "설정"
-                )
-                .padding(.bottom, 39.adjustedH)
+                VStack(spacing: 0) {
+                    PeepItNavigationBar(
+                        leading: backButton,
+                        title: "설정"
+                    )
+                    .padding(.bottom, 39.adjustedH)
 
-                Group {
-                    header(title: "서비스")
+                    Group {
+                        header(title: "서비스")
+                        serviceList
 
-                    serviceList
+                        Spacer()
+                            .frame(height: 50.adjustedH)
+
+                        header(title: "계정")
+                        accountView
+                    }
+                    .padding(.horizontal, 29)
 
                     Spacer()
-                        .frame(height: 50.adjustedH)
-
-                    header(title: "계정")
-
-                    accountView
                 }
-                .padding(.horizontal, 29)
 
-                Spacer()
+                if store.isWithdrawSheetVisible {
+                    Color.op
+                        .ignoresSafeArea()
+                }
+
+                WithdrawModal(store: self.store)
+                    .frame(height: 775)
+                    .offset(y: store.modalOffset)
             }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     private var backButton: some View {
@@ -125,9 +134,18 @@ struct SettingView: View {
             }
 
             Spacer()
-            Text("탈퇴하기")
-                .pretendard(.caption02)
-                .underline()
+
+            Button {
+                store.send(
+                    .openSheet,
+                    animation: .easeInOut(duration: 0.3)
+                )
+            } label: {
+                Text("탈퇴하기")
+                    .pretendard(.caption02)
+                    .underline()
+                    .foregroundStyle(Color.white)
+            }
         }
     }
 }

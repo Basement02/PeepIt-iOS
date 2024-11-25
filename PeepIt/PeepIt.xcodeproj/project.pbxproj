@@ -26,6 +26,7 @@
 		AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D232CF34B920065BD09 /* NotificationSettingStore.swift */; };
 		AB416D262CF371110065BD09 /* ThumbnailAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D252CF371110065BD09 /* ThumbnailAlarm.swift */; };
 		AB416D282CF37A950065BD09 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D272CF37A950065BD09 /* Notification.swift */; };
+		AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -150,6 +151,7 @@
 		AB416D232CF34B920065BD09 /* NotificationSettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingStore.swift; sourceTree = "<group>"; };
 		AB416D252CF371110065BD09 /* ThumbnailAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailAlarm.swift; sourceTree = "<group>"; };
 		AB416D272CF37A950065BD09 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawModal.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -732,6 +734,7 @@
 			children = (
 				AB468D0A2CA8820A00C1E430 /* SettingView.swift */,
 				AB468D0C2CA8821600C1E430 /* SettingStore.swift */,
+				AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -990,6 +993,7 @@
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
 				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
+				AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
 				AB416D262CF371110065BD09 /* ThumbnailAlarm.swift in Sources */,
