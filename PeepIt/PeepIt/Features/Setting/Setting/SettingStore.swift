@@ -23,6 +23,12 @@ struct SettingStore {
         /// 탈퇴 사유
         var selectedWithdrawType: WithdrawType? = nil
 
+        /// 탈퇴 사유 메세지
+        var withdrawReason = ""
+
+        /// 탈퇴 사유 입력 focus
+        var isTextEditorFocused = false
+
         /// 탈퇴 메세지
         var withdrawMessage = ""
 
@@ -65,6 +71,7 @@ struct SettingStore {
         case closeSheet
         case withdraw
         case selectWithdrawType(type: State.WithdrawType)
+        case textEditorTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -100,6 +107,10 @@ struct SettingStore {
 
             case let .selectWithdrawType(type):
                 state.selectedWithdrawType = type
+                return .none
+
+            case .textEditorTapped:
+                state.isTextEditorFocused = true
                 return .none
 
             default:

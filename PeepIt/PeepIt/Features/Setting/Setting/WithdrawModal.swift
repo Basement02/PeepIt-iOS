@@ -43,6 +43,10 @@ struct WithdrawModal: View {
                 }
             }
             .clipShape(RoundedRectangle(cornerRadius: 20))
+            .onAppear {
+                UITextView.appearance().textContainerInset = .init()
+                UITextView.appearance().contentInset = .init()
+            }
         }
     }
 
@@ -154,6 +158,32 @@ struct WithdrawModal: View {
                 )
                 .onTapGesture {
                     store.send(.selectWithdrawType(type: type))
+                }
+            }
+
+            if store.selectedWithdrawType == .write {
+                ZStack(alignment: .topLeading) {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color.gray600)
+
+                    if store.withdrawReason.isEmpty
+                        && !store.isTextEditorFocused {
+                        Text("예시 문구를 입력해주세요.")
+                            .pretendard(.body05)
+                            .foregroundStyle(Color.gray300)
+                            .padding(.top, 18)
+                            .padding(.horizontal, 18)
+                    }
+
+                    TextEditor(text: $store.withdrawReason)
+                        .pretendard(.body05)
+                        .tint(Color.coreLime)
+                        .scrollContentBackground(.hidden)
+                        .padding(.all, 18)
+                }
+                .frame(width: 301, height: 142)
+                .onTapGesture {
+                    store.send(.textEditorTapped)
                 }
             }
         }
