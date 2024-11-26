@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct SettingStore {
@@ -74,6 +75,7 @@ struct SettingStore {
         case textEditorTapped
         case modalDragChanged(offset: CGFloat)
         case modalDragEnded
+        case onTapGesture
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -126,6 +128,15 @@ struct SettingStore {
                     state.modalOffset = 0
                     return .none
                 }
+
+            case .onTapGesture:
+                UIApplication.shared.sendAction(
+                    #selector(UIResponder.resignFirstResponder),
+                    to: nil,
+                    from: nil,
+                    for: nil
+                )
+                return .none
 
             default:
                 return .none

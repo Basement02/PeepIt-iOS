@@ -28,6 +28,7 @@
 		AB416D282CF37A950065BD09 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D272CF37A950065BD09 /* Notification.swift */; };
 		AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */; };
 		AB416D2F2CF5B6610065BD09 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */; };
+		AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D302CF5C0320065BD09 /* View+Extension.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -154,6 +155,7 @@
 		AB416D272CF37A950065BD09 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawModal.swift; sourceTree = "<group>"; };
 		AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		AB416D302CF5C0320065BD09 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
 				AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */,
+				AB416D302CF5C0320065BD09 /* View+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1056,6 +1059,7 @@
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
+				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,

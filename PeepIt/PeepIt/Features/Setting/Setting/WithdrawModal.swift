@@ -15,30 +15,9 @@ struct WithdrawModal: View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
                 slideBar
-
-                Rectangle()
-                    .fill(Color.base)
-                    .background(Color.base)
-                    .overlay {
-                        ScrollView {
-                            VStack(spacing: 50) {
-                                title
-
-                                withdrawOptionList
-
-                                description
-
-                                enterField
-                                    .padding(.bottom, 21)
-
-                                bottom
-                                    .padding(.bottom, 21.6.adjustedH)
-                            }
-                            .frame(width: 317)
-                        }
-                        .scrollIndicators(.hidden)
-                    }
+                content
             }
+            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 
@@ -64,6 +43,34 @@ struct WithdrawModal: View {
                         store.send(.modalDragEnded)
                     }
             )
+    }
+
+    private var content: some View {
+        Rectangle()
+            .fill(Color.base)
+            .background(Color.base)
+            .overlay {
+                ScrollView {
+                    VStack(spacing: 50) {
+                        title
+
+                        withdrawOptionList
+
+                        description
+
+                        enterField
+                            .padding(.bottom, 21)
+
+                        bottom
+                            .padding(.bottom, 21.6.adjustedH)
+                    }
+                    .frame(width: 317)
+                }
+                .scrollIndicators(.hidden)
+            }
+            .onTapGesture {
+                store.send(.onTapGesture)
+            }
     }
 
     private var title: some View {
