@@ -12,27 +12,29 @@ struct BlockListView: View {
     let store: StoreOf<BlockListStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            PeepItNavigationBar(
-                title: "차단한 계정",
-                trailing: dismissButton
-            )
-            .padding(.bottom, 39.adjustedH)
+        WithPerceptionTracking {
+            VStack(spacing: 0) {
+                PeepItNavigationBar(
+                    title: "차단한 계정",
+                    trailing: dismissButton
+                )
+                .padding(.bottom, 39.adjustedH)
 
-            Group {
-                header
-                    .padding(.bottom, 24 )
+                Group {
+                    header
+                        .padding(.bottom, 24)
 
-                blockList
+                    blockList
 
+                }
+                .padding(.horizontal, 29)
+
+                Spacer()
             }
-            .padding(.horizontal, 29)
-
-            Spacer()
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+            .ignoresSafeArea(.all, edges: .bottom)
         }
-        .background(Color.base)
-        .toolbar(.hidden, for: .navigationBar)
-        .ignoresSafeArea(.all, edges: .bottom)
     }
 
     private var dismissButton: some View {

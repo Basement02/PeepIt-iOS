@@ -104,7 +104,14 @@ struct SettingView: View {
     private var accountSettingList: some View {
         VStack(spacing: 32) {
             accountView
-            menuView(title: "차단한 계정")
+
+            NavigationLink(
+                state: RootStore.Path.State.blockList(BlockListStore.State())
+            ) {
+                menuView(title: "차단한 계정")
+            }
+            .foregroundStyle(Color.white)
+
             menuView(title: "탈퇴하기")
                 .onTapGesture {
                     store.send(.openWithdrawSheet)

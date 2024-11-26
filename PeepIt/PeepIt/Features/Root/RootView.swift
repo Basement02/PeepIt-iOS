@@ -78,6 +78,9 @@ struct RootView: View {
                 case let .notification(store):
                     NotificationView(store: store)
 
+                case let .blockList(store):
+                    BlockListView(store: store)
+
                 /// 설정
                 case let .setting(store):
                     SettingView(store: store)
