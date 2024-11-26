@@ -22,14 +22,17 @@ struct SettingView: View {
                                 title: "설정"
                             )
 
-                            Button {
-                                store.send(.openSheet)
-                            } label: {
-                                Text("탈퇴하기")
-                                    .pretendard(.caption02)
-                                    .underline()
-                                    .foregroundStyle(Color.white)
+                            Group {
+                                header(title: "서비스")
+                                serviceList
+
+                                Spacer()
+                                    .frame(height: 50.adjustedH)
+
+                                header(title: "계정")
+                                accountView
                             }
+                            .padding(.horizontal, 29)
 
                             Spacer()
                         }
