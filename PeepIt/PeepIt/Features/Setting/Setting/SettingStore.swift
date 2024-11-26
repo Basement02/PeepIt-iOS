@@ -68,7 +68,7 @@ struct SettingStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case backButtonTapped
-        case openSheet
+        case openWithdrawSheet
         case closeSheet
         case withdraw
         case selectWithdrawType(type: State.WithdrawType)
@@ -95,7 +95,7 @@ struct SettingStore {
                      await self.dismiss()
                 }
 
-            case .openSheet:
+            case .openWithdrawSheet:
                 state.isWithdrawSheetVisible = true
                 state.modalOffset = 0
                 return .none

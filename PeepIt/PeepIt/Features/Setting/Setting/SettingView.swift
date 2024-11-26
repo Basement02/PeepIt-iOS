@@ -21,16 +21,17 @@ struct SettingView: View {
                                 leading: backButton,
                                 title: "설정"
                             )
+                            .padding(.bottom, 39.adjustedH)
 
                             Group {
-                                header(title: "서비스")
-                                serviceList
+                                header(title: "계정")
+                                accountSettingList
 
                                 Spacer()
                                     .frame(height: 50.adjustedH)
 
-                                header(title: "계정")
-                                accountView
+                                header(title: "서비스")
+                                serviceSettingList
                             }
                             .padding(.horizontal, 29)
 
@@ -100,7 +101,18 @@ struct SettingView: View {
         .background(Color.base)
     }
 
-    private var serviceList: some View {
+    private var accountSettingList: some View {
+        VStack(spacing: 32) {
+            accountView
+            menuView(title: "차단한 계정")
+            menuView(title: "탈퇴하기")
+                .onTapGesture {
+                    store.send(.openWithdrawSheet)
+                }
+        }
+    }
+
+    private var serviceSettingList: some View {
         ForEach(
             Array(zip(SettingStore.State.ServiceTermType.allCases.indices,
                       SettingStore.State.ServiceTermType.allCases)
@@ -132,7 +144,7 @@ struct SettingView: View {
     private var accountView: some View {
         HStack(spacing: 10) {
             RoundedRectangle(cornerRadius: 17.6)
-                .fill(Color.gray900)
+                .fill(Color.gray400)
                 .frame(width: 46, height: 46)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -146,16 +158,15 @@ struct SettingView: View {
             }
 
             Spacer()
-
-            Button {
-                store.send(.openSheet)
-            } label: {
-                Text("탈퇴하기")
-                    .pretendard(.caption02)
-                    .underline()
-                    .foregroundStyle(Color.white)
-            }
         }
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.gray900)
+                .frame(height: 71)
+        )
+        .frame(height: 71)
+        .padding(.leading, 11)
     }
 }
 
