@@ -9,39 +9,61 @@ import SwiftUI
 import ComposableArchitecture
 
 struct SettingView: View {
-    let store: StoreOf<SettingStore>
+    @Perception.Bindable var store: StoreOf<SettingStore>
 
     var body: some View {
-        ZStack {
-            Color.base
-                .ignoresSafeArea()
+        WithPerceptionTracking {
+            GeometryReader { proxy in
+                WithPerceptionTracking {
+                    ZStack(alignment: .bottom) {
+                        VStack(spacing: 0) {
+                            PeepItNavigationBar(
+                                leading: backButton,
+                                title: "설정"
+                            )
+                            .padding(.bottom, 39.adjustedH)
 
-            VStack(spacing: 0) {
-                PeepItNavigationBar(
-                    leading: backButton,
-                    title: "설정"
-                )
-                .padding(.bottom, 39.adjustedH)
+                            Group {
+                                header(title: "계정")
+                                accountSettingList
 
-                Group {
-                    header(title: "서비스")
+                                Spacer()
+                                    .frame(height: 50.adjustedH)
 
-                    serviceList
+                                header(title: "서비스")
+                                serviceSettingList
+                            }
+                            .padding(.horizontal, 29)
 
-                    Spacer()
-                        .frame(height: 50.adjustedH)
+                            Spacer()
+                        }
+                        .ignoresSafeArea(.all, edges: .bottom)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.base)
+                        .toolbar(.hidden, for: .navigationBar)
 
-                    header(title: "계정")
+                        if store.isWithdrawSheetVisible {
+                            Color.op
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    store.send(.closeSheet)
+                                }
+                        }
 
-                    accountView
+                        WithdrawModal(store: self.store)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 775 - proxy.safeAreaInsets.bottom)
+                            .background(Color.clear)
+                            .offset(y: store.modalOffset)
+                            .animation(
+                                .easeInOut(duration: 0.3),
+                                value: store.isWithdrawSheetVisible
+                            )
+
+                    }
                 }
-                .padding(.horizontal, 29)
-
-                Spacer()
             }
         }
-        .ignoresSafeArea(.all, edges: .bottom)
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     private var backButton: some View {
@@ -79,7 +101,18 @@ struct SettingView: View {
         .background(Color.base)
     }
 
-    private var serviceList: some View {
+    private var accountSettingList: some View {
+        VStack(spacing: 32) {
+            accountView
+            menuView(title: "차단한 계정")
+            menuView(title: "탈퇴하기")
+                .onTapGesture {
+                    store.send(.openWithdrawSheet)
+                }
+        }
+    }
+
+    private var serviceSettingList: some View {
         ForEach(
             Array(zip(SettingStore.State.ServiceTermType.allCases.indices,
                       SettingStore.State.ServiceTermType.allCases)
@@ -111,7 +144,7 @@ struct SettingView: View {
     private var accountView: some View {
         HStack(spacing: 10) {
             RoundedRectangle(cornerRadius: 17.6)
-                .fill(Color.gray900)
+                .fill(Color.gray400)
                 .frame(width: 46, height: 46)
 
             VStack(alignment: .leading, spacing: 5) {
@@ -125,10 +158,15 @@ struct SettingView: View {
             }
 
             Spacer()
-            Text("탈퇴하기")
-                .pretendard(.caption02)
-                .underline()
         }
+        .padding(.horizontal, 16)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color.gray900)
+                .frame(height: 71)
+        )
+        .frame(height: 71)
+        .padding(.leading, 11)
     }
 }
 

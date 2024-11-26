@@ -148,7 +148,7 @@ fileprivate struct NotificationCell: View {
                     .foregroundStyle(Color.nonOp)
 
                 Text(notification.date)
-                    .pretendard(.caption01)
+                    .pretendard(.caption04)
                     .foregroundStyle(Color.nonOp)
             }
             .lineLimit(1)
