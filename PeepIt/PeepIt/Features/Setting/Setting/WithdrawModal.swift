@@ -17,7 +17,6 @@ struct WithdrawModal: View {
                 slideBar
                 content
             }
-            .ignoresSafeArea(.keyboard, edges: .bottom)
         }
     }
 
