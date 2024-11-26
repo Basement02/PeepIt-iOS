@@ -13,43 +13,48 @@ struct SettingView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack(alignment: .bottom) {
-                Color.base
-                    .ignoresSafeArea()
+            GeometryReader { proxy in
+                WithPerceptionTracking {
+                    ZStack(alignment: .bottom) {
+                        VStack(spacing: 0) {
+                            PeepItNavigationBar(
+                                leading: backButton,
+                                title: "설정"
+                            )
 
-                VStack(spacing: 0) {
-                    PeepItNavigationBar(
-                        leading: backButton,
-                        title: "설정"
-                    )
-                    .padding(.bottom, 39.adjustedH)
+                            Button {
+                                store.send(.openSheet)
+                            } label: {
+                                Text("탈퇴하기")
+                                    .pretendard(.caption02)
+                                    .underline()
+                                    .foregroundStyle(Color.white)
+                            }
 
-                    Group {
-                        header(title: "서비스")
-                        serviceList
+                            Spacer()
+                        }
+                        .ignoresSafeArea(.all, edges: .bottom)
+                        .frame(maxWidth: .infinity)
+                        .background(Color.base)
+                        .toolbar(.hidden, for: .navigationBar)
 
-                        Spacer()
-                            .frame(height: 50.adjustedH)
+                        if store.isWithdrawSheetVisible {
+                            Color.op
+                                .ignoresSafeArea()
+                        }
 
-                        header(title: "계정")
-                        accountView
+                        WithdrawModal(store: self.store)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 775 - proxy.safeAreaInsets.bottom)
+                            .background(Color.red)
+                            .offset(y: store.modalOffset)
+                            .animation(
+                                .easeInOut(duration: 0.3),
+                                value: store.isWithdrawSheetVisible
+                            )
                     }
-                    .padding(.horizontal, 29)
-
-                    Spacer()
                 }
-
-                if store.isWithdrawSheetVisible {
-                    Color.op
-                        .ignoresSafeArea()
-                }
-
-                WithdrawModal(store: self.store)
-                    .frame(height: 775)
-                    .offset(y: store.modalOffset)
             }
-            .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
@@ -136,10 +141,7 @@ struct SettingView: View {
             Spacer()
 
             Button {
-                store.send(
-                    .openSheet,
-                    animation: .easeInOut(duration: 0.3)
-                )
+                store.send(.openSheet)
             } label: {
                 Text("탈퇴하기")
                     .pretendard(.caption02)

@@ -14,38 +14,10 @@ struct WithdrawModal: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.base
-                    .ignoresSafeArea()
-
-                VStack {
-                    slideBar
-                        .padding(.top, 10)
-                        .padding(.bottom, 50)
-
-                    ScrollView {
-                        VStack(spacing: 50) {
-
-                            title
-
-                            withdrawOptionList
-
-                            description
-
-                            enterField
-                                .padding(.bottom, 21)
-
-                            bottom
-                                .padding(.bottom, 21.6.adjustedH)
-                        }
-                        .frame(width: 317)
-                    }
-                    .scrollIndicators(.hidden)
-                }
+                Text("hi")
             }
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .onAppear {
-                UITextView.appearance().textContainerInset = .init()
-                UITextView.appearance().contentInset = .init()
+            .onTapGesture {
+                store.send(.closeSheet)
             }
         }
     }
@@ -79,11 +51,11 @@ struct WithdrawModal: View {
                     .padding(.bottom, 10)
 
                 Group {
-                    Text("· 회원 탈퇴 요청 후 7일 이내에 재로그인 시 탈퇴 요청이 철회됩니다")
-                    Text("· 회원 탈퇴 요청 후 7일 이후 회원 탈퇴가 이루어지며, 이때 회원 계정")
-                    Text("  과 모든 기록은 요청 날짜로부터 3개월 간 보관 후 영구적으로 삭제\n  됩니다.")
-                    Text("· 삭제된 데이터는 다시 복구가 불가능합니다.")
-                    Text("· 탈퇴 후 동일 아이디로 7일간 가입이 불가능합니다.")
+                    Text(" · 회원 탈퇴 요청 후 7일 이내에 재로그인 시 탈퇴 요청이 철회됩니다")
+                    Text(" · 회원 탈퇴 요청 후 7일 이후 회원 탈퇴가 이루어지며, 이때 회원 계정")
+                    Text("   과 모든 기록은 요청 날짜로부터 3개월 간 보관 후 영구적으로 삭제\n  됩니다.")
+                    Text(" · 삭제된 데이터는 다시 복구가 불가능합니다.")
+                    Text(" · 탈퇴 후 동일 아이디로 3개월간 가입이 불가능합니다.")
                 }
                 .pretendard(.caption04)
             }
@@ -210,13 +182,14 @@ struct WithdrawModal: View {
                 .pretendard(.body04)
             Spacer()
         }
+        .frame(height: 20)
     }
 }
 
 #Preview {
-    WithdrawModal(
-        store: .init(initialState: SettingStore.State()) {
-            SettingStore()
-        }
-    )
+    NavigationStack {
+        SettingView(
+            store: .init(initialState: SettingStore.State()) { SettingStore() }
+        )
+    }
 }
