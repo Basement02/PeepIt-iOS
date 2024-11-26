@@ -13,11 +13,38 @@ struct WithdrawModal: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                Text("hi")
-            }
-            .onTapGesture {
-                store.send(.closeSheet)
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Color.base)
+                    .frame(height: 64)
+                    .roundedCorner(20, corners: [.topLeft, .topRight])
+                    .overlay(alignment: .top) {
+                        slideBar
+                            .padding(.top, 10)
+                    }
+
+                Rectangle()
+                    .fill(Color.base)
+                    .background(Color.base)
+                    .overlay {
+                        ScrollView {
+                            VStack(spacing: 50) {
+                                title
+
+                                withdrawOptionList
+
+                                description
+
+                                enterField
+                                    .padding(.bottom, 21)
+
+                                bottom
+                                    .padding(.bottom, 21.6.adjustedH)
+                            }
+                            .frame(width: 317)
+                        }
+                        .scrollIndicators(.hidden)
+                    }
             }
         }
     }
