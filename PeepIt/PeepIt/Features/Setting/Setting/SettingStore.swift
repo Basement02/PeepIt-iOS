@@ -72,6 +72,8 @@ struct SettingStore {
         case withdraw
         case selectWithdrawType(type: State.WithdrawType)
         case textEditorTapped
+        case modalDragChanged(offset: CGFloat)
+        case modalDragEnded
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -112,6 +114,18 @@ struct SettingStore {
             case .textEditorTapped:
                 state.isTextEditorFocused = true
                 return .none
+
+            case let .modalDragChanged(offset):
+                state.modalOffset = max(offset, 0)
+                return .none
+
+            case .modalDragEnded:
+                if state.modalOffset > 100 {
+                    return .send(.closeSheet)
+                } else {
+                    state.modalOffset = 0
+                    return .none
+                }
 
             default:
                 return .none

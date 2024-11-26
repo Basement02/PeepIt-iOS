@@ -14,14 +14,7 @@ struct WithdrawModal: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                Rectangle()
-                    .fill(Color.base)
-                    .frame(height: 64)
-                    .roundedCorner(20, corners: [.topLeft, .topRight])
-                    .overlay(alignment: .top) {
-                        slideBar
-                            .padding(.top, 10)
-                    }
+                slideBar
 
                 Rectangle()
                     .fill(Color.base)
@@ -50,9 +43,27 @@ struct WithdrawModal: View {
     }
 
     private var slideBar: some View {
-        RoundedRectangle(cornerRadius: 100)
-            .fill(Color.gray600)
-            .frame(width: 60, height: 5)
+        Rectangle()
+            .fill(Color.base)
+            .frame(height: 64)
+            .roundedCorner(20, corners: [.topLeft, .topRight])
+            .overlay(alignment: .top) {
+                RoundedRectangle(cornerRadius: 100)
+                    .fill(Color.gray600)
+                    .frame(width: 60, height: 5)
+                    .padding(.top, 10)
+            }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        store.send(
+                            .modalDragChanged(offset: value.translation.height)
+                        )
+                    }
+                    .onEnded { _ in
+                        store.send(.modalDragEnded)
+                    }
+            )
     }
 
     private var title: some View {
