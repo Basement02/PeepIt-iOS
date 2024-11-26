@@ -29,6 +29,8 @@
 		AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */; };
 		AB416D2F2CF5B6610065BD09 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */; };
 		AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D302CF5C0320065BD09 /* View+Extension.swift */; };
+		AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D332CF5F3890065BD09 /* BlockListStore.swift */; };
+		AB416D362CF5F4D20065BD09 /* BlockListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D352CF5F4D20065BD09 /* BlockListView.swift */; };
 		AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0A2CA8820A00C1E430 /* SettingView.swift */; };
 		AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D0C2CA8821600C1E430 /* SettingStore.swift */; };
 		AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D122CA93F7D00C1E430 /* SideMenuType.swift */; };
@@ -156,6 +158,8 @@
 		AB416D2A2CF4572E0065BD09 /* WithdrawModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawModal.swift; sourceTree = "<group>"; };
 		AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		AB416D302CF5C0320065BD09 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		AB416D332CF5F3890065BD09 /* BlockListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListStore.swift; sourceTree = "<group>"; };
+		AB416D352CF5F4D20065BD09 /* BlockListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockListView.swift; sourceTree = "<group>"; };
 		AB468D0A2CA8820A00C1E430 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AB468D0C2CA8821600C1E430 /* SettingStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStore.swift; sourceTree = "<group>"; };
 		AB468D122CA93F7D00C1E430 /* SideMenuType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuType.swift; sourceTree = "<group>"; };
@@ -354,12 +358,22 @@
 			path = Notification;
 			sourceTree = "<group>";
 		};
+		AB416D322CF5F3730065BD09 /* Block */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D332CF5F3890065BD09 /* BlockListStore.swift */,
+				AB416D352CF5F4D20065BD09 /* BlockListView.swift */,
+			);
+			path = Block;
+			sourceTree = "<group>";
+		};
 		AB468D092CA881FB00C1E430 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 				ABCC50E22CEF90E7004AD297 /* Setting */,
 				AB416D202CF34B720065BD09 /* Notification */,
 				ABCC50E32CEF90F1004AD297 /* Guide */,
+				AB416D322CF5F3730065BD09 /* Block */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -989,6 +1003,7 @@
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
 				AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
+				AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */,
 				AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
@@ -1054,6 +1069,7 @@
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
 				AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */,
+				AB416D362CF5F4D20065BD09 /* BlockListView.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
