@@ -13,34 +13,66 @@ struct PeepDetailView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack(alignment: .topTrailing) {
-                Color.white
-                    .ignoresSafeArea()
+            GeometryReader { proxy in
+                ZStack {
+                    Color.white
+                        .ignoresSafeArea()
 
-                BackImageLayer.secondary()
-                    .ignoresSafeArea()
+                    BackImageLayer.secondary()
+                        .ignoresSafeArea()
 
-                VStack(spacing: 0) {
-                    topBar
+                    VStack(spacing: 0) {
+                        topBar
 
-                    Spacer()
+                        Spacer()
 
-                    detailView
-                        .padding(.bottom, 84.adjustedH)
-                }
-                .padding(.horizontal, 16.adjustedW)
+                        detailView
+                            .padding(.bottom, 84.adjustedH)
+                    }
+                    .padding(.horizontal, 16)
+                    .ignoresSafeArea(.all, edges: .bottom)
 
-                if store.state.showElseMenu {
-                    ElseMenuView(
-                        firstButton: shareButton,
-                        secondButton: reportButton,
-                        bgColor: Color.blur2
+                    /// 상단 우측 더보기 메뉴
+                    if store.state.showElseMenu {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                ElseMenuView(
+                                    firstButton: shareButton,
+                                    secondButton: reportButton,
+                                    bgColor: Color.blur2
+                                )
+                                .padding(.top, 59)
+                                .padding(.trailing, 36.adjustedW)
+                            }
+                            Spacer()
+                        }
+                    }
+
+                    /// 신고 모달 오픈 시 bg
+                    if store.isReportSheetVisible {
+                        Color.op
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                store.send(.closeReportSheet)
+                            }
+                    }
+
+                    /// 신고 모달
+                    ReportModal(
+                        store: store.scope(
+                            state: \.report,
+                            action: \.report
+                        )
                     )
-                    .padding(.top, 59)
-                    .padding(.trailing, 36.adjustedW)
+                    .frame(maxWidth: .infinity)
+                    .offset(y: store.modalOffset)
+                    .animation(
+                        .easeInOut(duration: 0.3),
+                        value: store.isReportSheetVisible
+                    )
                 }
             }
-            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 }
@@ -82,6 +114,7 @@ extension PeepDetailView {
     private var locationButton: some View {
         HStack(spacing: 2) {
             Image("IconLocation")
+                .resizable()
                 .frame(width: 22.4, height: 22.4)
 
             Text("동이름, 건물 이름")
@@ -145,7 +178,7 @@ extension PeepDetailView {
 
     private var reportButton: some View {
         Button {
-            // TODO: 신고하기
+            store.send(.reportButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiReportBtnN")
