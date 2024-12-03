@@ -104,6 +104,12 @@ struct PeepDetailStore {
                     .send(.setShowingElseMenu(false)),
                     .send(.openReportSheet)
                 )
+
+            case .report(.closeModal):
+                return .send(.closeReportSheet)
+
+            default:
+                return .none
             }
         }
     }

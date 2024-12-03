@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct ReportModal: View {
-    let store: StoreOf<ReportStore>
+    @Perception.Bindable var store: StoreOf<ReportStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -23,6 +23,7 @@ struct ReportModal: View {
                 .frame(height: 775)
             }
             .ignoresSafeArea()
+            .ignoresSafeArea(.keyboard)
         }
     }
 
@@ -43,50 +44,67 @@ struct ReportModal: View {
         ZStack {
             Color.base
 
-            VStack(spacing: 35) {
+            VStack(spacing: 0) {
+                VStack(spacing: 35) {
+                    HStack {
+                        Text("어떤 문제가 있나요?")
+                            .pretendard(.title02)
 
-                HStack {
-                    Text("어떤 문제가 있나요?")
-                        .pretendard(.title02)
+                        Spacer()
+                    }
 
-                    Spacer()
+                    HStack {
+                        Text("더욱 건전하고 활발한 핍잇의 커뮤니티 문화를\n만들어나갈 수 있도록 솔직한 의견을 공유해주세요")
+                            .pretendard(.body04)
+
+                        Spacer()
+                    }
+
+                    HStack {
+                        Image("ProfileSample")
+                            .resizable()
+                            .frame(width: 25, height: 25)
+
+                        Text("닉네임")
+                            .pretendard(.caption01)
+
+                        Spacer()
+                    }
+
+                    VStack(spacing: 0) {
+                        reportSelectButton
+
+                        if store.isReasonListShowed {
+                            reportReasonList
+                        }
+
+                        if store.selectedReportReason
+                            == ReportStore.State.ReportReasonType.other
+                            && !store.isReasonListShowed
+                        {
+                            reasonWriteTextView
+                                .padding(.top, 18)
+                        }
+                    }
                 }
-
-                HStack {
-                    Text("더욱 건전하고 활발한 핍잇의 커뮤니티 문화를\n만들어나갈 수 있도록 솔직한 의견을 공유해주세요")
-                        .pretendard(.body04)
-
-                    Spacer()
-                }
-
-                HStack {
-                    Image("ProfileSample")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-
-                    Text("닉네임")
-                        .pretendard(.caption01)
-
-                    Spacer()
-                }
-
-    //            reportSelectButton
-
-                reportReasonList
 
                 Spacer()
 
+                if store.selectedReportReason != nil && !store.isReasonListShowed {
+                    shareButton
+                }
+
                 cancelButton
-                    .padding(.bottom, 40)
             }
             .frame(width: 335)
+            .padding(.bottom, 40)
         }
         .frame(height: 711)
     }
 
     private var cancelButton: some View {
         Button {
-            // TODO:
+            store.send(.closeModal)
         } label: {
             Text("취소")
                 .pretendard(.caption02)
@@ -96,70 +114,119 @@ struct ReportModal: View {
     }
 
     private var reportSelectButton: some View {
-        HStack {
-            Text("신고 사유를 선택해주세요.")
-                .pretendard(.body04)
-            Spacer()
-
-            Image("IconDrop")
-                .resizable()
-                .frame(width: 25.2, height: 25.2)
-        }
-        .padding(.horizontal, 20)
-        .background {
-            RoundedRectangle(cornerRadius: 10)
+        ZStack {
+            Rectangle()
                 .fill(Color.gray700)
                 .frame(height: 53)
+                .roundedCorner(
+                    10,
+                    corners: store.isReasonListShowed ?
+                    [.topLeft, .topRight]: .allCorners
+                )
+
+
+            HStack {
+                Text(store.selectedReportReason?.rawValue ?? "신고 사유를 선택해주세요.")
+                    .pretendard(.body04)
+                    .foregroundStyle(
+                        store.isReasonListShowed ?
+                        Color.gray300 : Color.white
+                    )
+                    .onTapGesture {
+                        store.send(.reasonSelectButtonTapped)
+                    }
+
+                Spacer()
+
+                Image(store.isReasonListShowed ? "IconDropUp" : "IconDrop")
+                    .resizable()
+                    .frame(width: 25.2, height: 25.2)
+            }
+            .padding(.horizontal, 20)
+        }
+        .onTapGesture {
+            store.send(.reasonSelectButtonTapped)
         }
     }
 
     private var reportReasonList: some View {
-        VStack(spacing: 33) {
-            HStack {
-                Text("신고 사유를 선택해주세요.")
-                    .pretendard(.body04)
-                    .foregroundStyle(Color.gray300)
-                Spacer()
-
-                Image("IconDropUp")
-            }
-            .padding(.top, 14)
+        ZStack {
+            Rectangle()
+                .fill(Color.gray700)
+                .roundedCorner(10, corners: [.bottomLeft, .bottomRight])
+                .frame(height: 288)
 
             VStack(spacing: 0) {
-                ForEach(0..<5) { idx in
-
+                ForEach(
+                    Array(
+                        zip(ReportStore.State.ReportReasonType.allCases.indices,
+                            ReportStore.State.ReportReasonType.allCases)
+                    ),
+                    id: \.0
+                ) { idx, item in
                     if idx > 0 {
                         Rectangle()
                             .fill(Color.op)
                             .frame(height: 0.5)
-                            .padding(.bottom, 18)
                     }
 
-                    HStack {
-                        Text("부적절한 내용을 업로드해요")
-                            .pretendard(.caption03)
-                        Spacer()
+                    reportReasonCell(
+                        isSelected: store.selectedReportReason == item,
+                        type: item
+                    )
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        store.send(.reasonSelected(type: item))
                     }
+                    .padding(.vertical, 18)
 
-                    if idx < 4 {
+                    if idx < ReportStore.State.ReportReasonType.allCases.count - 1 {
                         Rectangle()
                             .fill(Color.op)
                             .frame(height: 0.5)
-                            .padding(.top, 18)
                     }
                 }
             }
-
-            Spacer()
+            .padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray700)
-                .frame(height: 341)
-        )
     }
 
+    private func reportReasonCell(
+        isSelected: Bool,
+        type: ReportStore.State.ReportReasonType
+    ) -> some View {
+        HStack(spacing: 5) {
+            Image(
+                isSelected ?
+                "CheckY" : "CheckN"
+            )
+
+            Text(type.rawValue)
+                .pretendard(.caption03)
+                .foregroundStyle(
+                    store.selectedReportReason == nil ? Color.white :
+                    isSelected ? Color.white : Color.gray300
+                )
+            Spacer()
+        }
+    }
+
+    private var reasonWriteTextView: some View {
+        CustomTextEditor(
+            placeholder: "문제 상황을 인지하고 대처할 수 있도록 신고 사유에 대해 자세히 설명해주세요.".forceCharWrapping,
+            text: $store.reportReason
+        )
+        .frame(height: 268)
+    }
+
+    private var shareButton: some View {
+        Button {
+            // TODO:
+        } label: {
+            Text("공유하기")
+        }
+        .mainGrayButtonStyle()
+    }
 }
 
 #Preview {

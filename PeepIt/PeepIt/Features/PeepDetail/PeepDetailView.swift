@@ -14,63 +14,65 @@ struct PeepDetailView: View {
     var body: some View {
         WithPerceptionTracking {
             GeometryReader { proxy in
-                ZStack {
-                    Color.white
-                        .ignoresSafeArea()
-
-                    BackImageLayer.secondary()
-                        .ignoresSafeArea()
-
-                    VStack(spacing: 0) {
-                        topBar
-
-                        Spacer()
-
-                        detailView
-                            .padding(.bottom, 84.adjustedH)
-                    }
-                    .padding(.horizontal, 16)
-                    .ignoresSafeArea(.all, edges: .bottom)
-
-                    /// 상단 우측 더보기 메뉴
-                    if store.state.showElseMenu {
-                        VStack {
-                            HStack {
-                                Spacer()
-                                ElseMenuView(
-                                    firstButton: shareButton,
-                                    secondButton: reportButton,
-                                    bgColor: Color.blur2
-                                )
-                                .padding(.top, 59)
-                                .padding(.trailing, 36.adjustedW)
-                            }
-                            Spacer()
-                        }
-                    }
-
-                    /// 신고 모달 오픈 시 bg
-                    if store.isReportSheetVisible {
-                        Color.op
+                WithPerceptionTracking {
+                    ZStack {
+                        Color.white
                             .ignoresSafeArea()
-                            .onTapGesture {
-                                store.send(.closeReportSheet)
-                            }
-                    }
 
-                    /// 신고 모달
-                    ReportModal(
-                        store: store.scope(
-                            state: \.report,
-                            action: \.report
+                        BackImageLayer.secondary()
+                            .ignoresSafeArea()
+
+                        VStack(spacing: 0) {
+                            topBar
+
+                            Spacer()
+
+                            detailView
+                                .padding(.bottom, 84)
+                        }
+                        .padding(.horizontal, 16)
+                        .ignoresSafeArea(.all, edges: .bottom)
+
+                        /// 상단 우측 더보기 메뉴
+                        if store.state.showElseMenu {
+                            VStack {
+                                HStack {
+                                    Spacer()
+                                    ElseMenuView(
+                                        firstButton: shareButton,
+                                        secondButton: reportButton,
+                                        bgColor: Color.blur2
+                                    )
+                                    .padding(.top, 59)
+                                    .padding(.trailing, 36.adjustedW)
+                                }
+                                Spacer()
+                            }
+                        }
+
+                        /// 신고 모달 오픈 시 bg
+                        if store.isReportSheetVisible {
+                            Color.op
+                                .ignoresSafeArea()
+                                .onTapGesture {
+                                    store.send(.closeReportSheet)
+                                }
+                        }
+
+                        /// 신고 모달
+                        ReportModal(
+                            store: store.scope(
+                                state: \.report,
+                                action: \.report
+                            )
                         )
-                    )
-                    .frame(maxWidth: .infinity)
-                    .offset(y: store.modalOffset)
-                    .animation(
-                        .easeInOut(duration: 0.3),
-                        value: store.isReportSheetVisible
-                    )
+                        .frame(maxWidth: .infinity)
+                        .offset(y: store.modalOffset)
+                        .animation(
+                            .easeInOut(duration: 0.3),
+                            value: store.isReportSheetVisible
+                        )
+                    }
                 }
             }
         }
