@@ -12,6 +12,8 @@
 		AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE02CC6257A0091E9FB /* SliderView.swift */; };
 		AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE22CC6266C0091E9FB /* SliderStore.swift */; };
 		AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */; };
+		AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCC2CF77EA10095B818 /* ReportModal.swift */; };
+		AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */; };
 		AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8202CB2D3D4007D432E /* TermType.swift */; };
 		AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8222CB2DE59007D432E /* InputIdView.swift */; };
 		AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8242CB2DF26007D432E /* InputIdStore.swift */; };
@@ -67,6 +69,7 @@
 		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		AB71E1D62CBE3AD000D2D3D9 /* DraggableSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */; };
 		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
+		AB7786DB2CFF1AD700DB48D5 /* CustomTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */; };
 		AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
@@ -141,6 +144,8 @@
 		AB094DE02CC6257A0091E9FB /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		AB094DE22CC6266C0091E9FB /* SliderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderStore.swift; sourceTree = "<group>"; };
 		AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		AB11FFCC2CF77EA10095B818 /* ReportModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModal.swift; sourceTree = "<group>"; };
+		AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStore.swift; sourceTree = "<group>"; };
 		AB26A8202CB2D3D4007D432E /* TermType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermType.swift; sourceTree = "<group>"; };
 		AB26A8222CB2DE59007D432E /* InputIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdView.swift; sourceTree = "<group>"; };
 		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
@@ -196,6 +201,7 @@
 		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableSticker.swift; sourceTree = "<group>"; };
 		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
+		AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextEditor.swift; sourceTree = "<group>"; };
 		AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -313,6 +319,15 @@
 				AB416D302CF5C0320065BD09 /* View+Extension.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		AB11FFCB2CF77E930095B818 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				AB11FFCC2CF77EA10095B818 /* ReportModal.swift */,
+				AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */,
+			);
+			path = Report;
 			sourceTree = "<group>";
 		};
 		AB416D122CF2EEF20065BD09 /* Toggle */ = {
@@ -541,6 +556,7 @@
 				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
 				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
+				AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -649,6 +665,7 @@
 				AB468D142CA9400800C1E430 /* TownPeeps */,
 				AB468D192CA941E900C1E430 /* Notification */,
 				AB468D1E2CA9425D00C1E430 /* Announce */,
+				AB11FFCB2CF77E930095B818 /* Report */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -1075,6 +1092,7 @@
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
+				AB7786DB2CFF1AD700DB48D5 /* CustomTextEditor.swift in Sources */,
 				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
@@ -1100,11 +1118,13 @@
 				AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */,
 				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,
 				ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */,
+				AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
 				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 				ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */,
+				AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
