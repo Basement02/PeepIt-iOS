@@ -33,7 +33,12 @@ struct OtherProfileView: View {
                         .fill(Color.op)
                         .frame(width: 361, height: 1)
 
-                    uploadPeepListView
+                    if store.isUserBlocked {
+                        blockedView
+                            .padding(.top, 26.adjustedH)
+                    } else {
+                        uploadPeepListView
+                    }
 
                     Spacer()
                 }
@@ -50,6 +55,9 @@ struct OtherProfileView: View {
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
+            .onAppear {
+                store.send(.onAppear)
+            }
         }
     }
 
@@ -140,7 +148,7 @@ struct OtherProfileView: View {
 
     private var blockButton: some View {
         Button {
-            // TODO: 차단하기
+            store.send(.blockButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiReportBtnN")
@@ -152,19 +160,38 @@ struct OtherProfileView: View {
             PressableViewButtonStyle(
                 normalView:
                     HStack(spacing: 3) {
-                        Image("CombiReportBtnN")
-                        Text("차단하기")
+                        Image("CombiBlockBtnN")
+                        Text(store.isUserBlocked ? "차단해제" : "차단하기")
                     }
                     .foregroundStyle(Color.coreRed),
                 pressedView:
                     HStack(spacing: 3) {
-                        Image("CombiReportBtnY")
-                        Text("차단하기")
+                        Image("CombiBlockBtnY")
+                        Text(store.isUserBlocked ? "차단해제" : "차단하기")
                             .pretendard(.body04)
                     }
                     .foregroundStyle(Color.gray300)
             )
         )
+    }
+
+    private var blockedView: some View {
+        HStack(spacing: 2) {
+            Image("IconBlocked")
+
+            Text("해당 계정은 회원님에 의해 차단된 계정입니다.")
+                .foregroundStyle(Color.white)
+                .pretendard(.body04)
+
+            Spacer()
+        }
+        .padding(.leading, 15)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundStyle(Color.coreRed)
+        )
+        .frame(width: 349)
     }
 }
 
