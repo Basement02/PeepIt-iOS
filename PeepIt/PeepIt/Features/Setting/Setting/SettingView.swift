@@ -59,7 +59,6 @@ struct SettingView: View {
                                 .easeInOut(duration: 0.3),
                                 value: store.isWithdrawSheetVisible
                             )
-
                     }
                 }
             }
