@@ -43,6 +43,7 @@ struct OtherProfileView: View {
                     Spacer()
                 }
 
+                /// 더보기 버튼
                 if store.isElseButtonTapped {
                     ElseMenuView(
                         firstButton: shareButton,
@@ -51,6 +52,27 @@ struct OtherProfileView: View {
                     )
                     .padding(.top, 59)
                     .padding(.trailing, 36.adjustedW)
+                }
+
+                /// 차단 안내문 모달 배경
+                if store.isModalVisible {
+                    Color.op
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            store.send(.closeModal)
+                        }
+                }
+
+                /// 차단 안내문 모달
+                VStack {
+                    Spacer()
+                    BlockDescriptionModal(store: self.store)
+                        .frame(height: 670)
+                        .offset(y: store.modalOffset)
+                        .animation(
+                            .easeInOut(duration: 0.3),
+                            value: store.isModalVisible
+                        )
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
@@ -148,7 +170,7 @@ struct OtherProfileView: View {
 
     private var blockButton: some View {
         Button {
-            store.send(.blockButtonTapped)
+            store.send(.elseBlockButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiReportBtnN")

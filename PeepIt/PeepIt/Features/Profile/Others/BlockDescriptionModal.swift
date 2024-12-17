@@ -6,26 +6,32 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct BlockDescriptionModal: View {
+    let store: StoreOf<OtherProfileStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            slider
-                .padding(.top, 10)
-                .padding(.bottom, 50.21.adjustedH)
+        ZStack {
+            Rectangle()
+                .foregroundStyle(Color.base)
+                .roundedCorner(20, corners: [.topLeft, .topRight])
 
-            mainView
-                .padding(.leading, 28)
-                .padding(.trailing, 30)
+            VStack(spacing: 0) {
+                slider
+                    .padding(.top, 10)
+                    .padding(.bottom, 50.21.adjustedH)
 
-            Spacer()
+                mainView
 
-            bottomView
-                .padding(.bottom, 38.adjustedH)
+                Spacer()
+
+                bottomView
+                    .padding(.bottom, 38.adjustedH)
+            }
         }
         .frame(maxWidth: .infinity)
-        .background(Color.base)
+        .background(Color.clear)
         .ignoresSafeArea()
     }
 
@@ -49,6 +55,7 @@ struct BlockDescriptionModal: View {
 
             infoView
         }
+        .frame(width: 335)
     }
 
     private var infoView: some View {
@@ -70,10 +77,10 @@ struct BlockDescriptionModal: View {
         .foregroundStyle(Color.init(hex: 0xCFCFCF))
         .padding(.vertical, 22)
         .padding(.leading, 16)
-        .padding(.trailing, 21)
         .background(
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(Color.gray900)
+                .frame(width: 335)
         )
     }
 
@@ -90,7 +97,7 @@ struct BlockDescriptionModal: View {
 
     private var blockButton: some View {
         Button {
-            // TODO: 차단하기
+            store.send(.blockUser)
         } label: {
             Text("차단하기")
         }
@@ -98,12 +105,19 @@ struct BlockDescriptionModal: View {
     }
 
     private var cancelButton: some View {
-        Text("취소")
-            .pretendard(.caption02)
-            .frame(width: 44, height: 44)
+        Button {
+            store.send(.closeModal)
+        } label: {
+            Text("취소")
+                .pretendard(.caption02)
+                .foregroundStyle(Color.white)
+                .frame(width: 44, height: 44)
+        }
     }
 }
 
 #Preview {
-    BlockDescriptionModal()
+    BlockDescriptionModal(
+        store: .init(initialState: OtherProfileStore.State()) { OtherProfileStore() }
+    )
 }

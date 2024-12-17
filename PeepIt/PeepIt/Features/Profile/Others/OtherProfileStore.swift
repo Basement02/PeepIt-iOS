@@ -19,6 +19,10 @@ struct OtherProfileStore {
         var isElseButtonTapped = false
         /// 유저 차단 여부
         var isUserBlocked = false
+        /// 모달 offset 관련
+        var modalOffset = Constant.screenHeight
+        /// 모달 보여주기 여부
+        var isModalVisible = false
     }
 
     enum Action {
@@ -28,12 +32,16 @@ struct OtherProfileStore {
         case elseButtonTapped(_ newState: Bool)
         /// 뒤로가기 버튼 탭했을 때
         case backButtonTapped
-        /// 차단 관련 버튼 탭했을 때
-        case blockButtonTapped
+        /// 더보기 - 차단 관련(차단하기/차단해제) 버튼 탭했을 때
+        case elseBlockButtonTapped
         /// 현재 유저 차단하기
         case blockUser
         /// 현재 유저 차단 해제하기
         case unblockUser
+        /// 취소하기
+        case closeModal
+        /// 모달 열기
+        case openModal
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -54,23 +62,33 @@ struct OtherProfileStore {
                     await self.dismiss()
                 }
 
-            case .blockButtonTapped:
+            case .elseBlockButtonTapped:
                 if state.isUserBlocked {
                     return .send(.unblockUser)
                 } else {
-                    return .send(.blockUser)
+                    return .send(.openModal)
                 }
 
             case .blockUser:
                 // TODO: 차단 api 호출
                 state.isUserBlocked = true
-                state.isElseButtonTapped = false
-                return .none
+                return .send(.closeModal)
 
             case .unblockUser:
                 // TODO: 차단 해제 api 호출
                 state.isUserBlocked = false
                 state.isElseButtonTapped = false
+                return .none
+
+            case .openModal:
+                state.modalOffset = 0
+                state.isModalVisible = true
+                state.isElseButtonTapped = false
+                return .none
+
+            case .closeModal:
+                state.modalOffset = Constant.screenHeight
+                state.isModalVisible = false
                 return .none
             }
         }
