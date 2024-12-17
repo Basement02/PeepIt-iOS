@@ -14,23 +14,44 @@ struct CameraView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.gray
+                Group {
+                    Color.white // TODO: 이미지로 변경
+
+                    BackImageLayer.primary()
+
+                    BackImageLayer.secondary()
+                }
+                .ignoresSafeArea()
 
                 VStack {
+                    topBar
+
                     Spacer()
 
                     Button {
-                        store.send(.shootButtonTapped)
+
                     } label: {
-                        Circle()
-                            .frame(width: 62, height: 62)
-                            .foregroundStyle(Color.white)
+                        Image("BtnShot")
                     }
-                    .padding(.bottom, 66)
+                    .padding(.bottom, 34.adjustedH)
                 }
             }
-            .ignoresSafeArea()
+            .ignoresSafeArea(.all, edges: .bottom)
         }
+    }
+
+    private var topBar: some View {
+        ZStack {
+            HStack {
+                BackButton {
+                    // TODO:
+                }
+                Spacer()
+            }
+
+            Image("FlashOnN")
+        }
+        .padding(.horizontal, 16)
     }
 }
 
