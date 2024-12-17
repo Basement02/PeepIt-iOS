@@ -73,6 +73,14 @@ struct OtherProfileView: View {
                             .easeInOut(duration: 0.3),
                             value: store.isModalVisible
                         )
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    let newOffset = value.translation.height
+                                    store.send(.modalDragChanged(offset: newOffset))
+                                }
+                                .onEnded { _ in store.send(.modalDragEnded) }
+                        )
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)

@@ -42,6 +42,10 @@ struct OtherProfileStore {
         case closeModal
         /// 모달 열기
         case openModal
+        /// 모달 드래그 변화
+        case modalDragChanged(offset: CGFloat)
+        /// 모달 드래그 끝남
+        case modalDragEnded
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -90,6 +94,18 @@ struct OtherProfileStore {
                 state.modalOffset = Constant.screenHeight
                 state.isModalVisible = false
                 return .none
+
+            case let .modalDragChanged(offset):
+                state.modalOffset = max(offset, 0)
+                return .none
+
+            case .modalDragEnded:
+                if state.modalOffset > 100 {
+                    return .send(.closeModal)
+                } else {
+                    state.modalOffset = 0
+                    return .none
+                }
             }
         }
     }
