@@ -9,27 +9,38 @@ import SwiftUI
 
 struct LaunchScreen: View {
 
-    @State private var isShowingFirstImage: Bool = true
+    @State private var showPeepItCameraOn: Bool = false
 
     var body: some View {
 
         Group {
-            if isShowingFirstImage {
-                Image("splash01")
-                    .transition(.opacity)
-                    .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                isShowingFirstImage = false
-                            }
-                        }
+            ZStack(alignment: .top) {
+                Color.base
+                    .ignoresSafeArea()
+
+                ZStack(alignment: .topLeading) {
+                    Image("LogoBase")
+
+                    if showPeepItCameraOn {
+                        Image("PeepItCameraOn")
+                            .transition(.opacity)
+                            .animation(
+                                .easeIn(duration: 0.5),
+                                value: showPeepItCameraOn
+                            )
                     }
-            } else {
-                Image("splash02")
+                }
+                .padding(.top, 184.adjustedH)
             }
         }
         .ignoresSafeArea()
-        .background(Color.base)
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                withAnimation {
+                    showPeepItCameraOn = true
+                }
+            }
+        }
     }
 }
 
