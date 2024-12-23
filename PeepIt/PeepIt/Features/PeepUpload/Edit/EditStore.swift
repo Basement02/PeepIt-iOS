@@ -42,6 +42,9 @@ struct EditStore {
 
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
+
+        /// 우측 상단 done 버튼 보여주기 여부
+        var isDoneButtonShowed = false
     }
 
     enum Action: BindableAction {
@@ -75,6 +78,8 @@ struct EditStore {
         case textColorTapped(newColor: Color)
         /// Slider action 관련
         case sliderAction(SliderStore.Action)
+        /// 작업 완료
+        case doneButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -102,6 +107,7 @@ struct EditStore {
 
             case .stickerButtonTapped:
                 state.stickerModalState = .init()
+                state.isDoneButtonShowed = true
                 return .none
 
             case .textButtonTapped:
@@ -112,9 +118,12 @@ struct EditStore {
                 return .none
 
             case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
-                state.stickers.append(StickerItem(stickerName: selectedSticker.rawValue))
+                state.stickers.append(StickerItem(stickerName: selectedSticker))
                 state.stickerModalState = nil
-                return .none
+                return .send(.doneButtonTapped)
+
+            case .stickerListAction(.dismiss):
+                return .send(.doneButtonTapped)
 
             case let .updateStickerPosition(stickerId, position):
                 guard let index = state.stickers.firstIndex(
@@ -207,6 +216,10 @@ struct EditStore {
 
             case let .textColorTapped(newColor):
                 state.inputTextColor = newColor
+                return .none
+
+            case .doneButtonTapped:
+                state.isDoneButtonShowed = false
                 return .none
 
             default:

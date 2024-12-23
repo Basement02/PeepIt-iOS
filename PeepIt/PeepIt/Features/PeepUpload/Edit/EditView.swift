@@ -47,11 +47,18 @@ struct EditView: View {
                     ZStack {
                         VStack {
                             HStack {
-                                BackButton { store.send(.backButtonTapped) }
-                                    .padding(.leading, 16)
+                                if !store.isDoneButtonShowed {
+                                    BackButton { store.send(.backButtonTapped) }
+                                }
 
                                 Spacer()
+
+                                if store.isDoneButtonShowed {
+                                    completeButton
+                                }
+
                             }
+                            .padding(.horizontal, 16)
 
                             Spacer()
 
@@ -121,7 +128,8 @@ struct EditView: View {
                 )
             ) { store in
                 StickerModalView(store: store)
-                    .presentationDetents([.height(600)])
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.height(675)])
             }
         }
     }
@@ -169,15 +177,20 @@ struct EditView: View {
         }
     }
 
-    private var textInputCompleteButton: some View {
+    private var completeButton: some View {
         HStack {
             Spacer()
 
             Button {
-                store.send(.textInputCompleteButtonTapped)
+
             } label: {
-                Text("완료")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 38, height: 38)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "DoneN", pressedImg: "DoneY")
+            )
         }
     }
 
