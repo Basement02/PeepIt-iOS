@@ -39,6 +39,7 @@ struct CameraView: View {
                     }
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
             .onAppear {
                 store.send(.onAppear)
             }

@@ -101,6 +101,9 @@ struct RootView: View {
                 /// 업로드
                 case let .camera(store):
                     CameraView(store: store)
+
+                case let .edit(store):
+                    EditView(store: store)
                 }
             }
         }

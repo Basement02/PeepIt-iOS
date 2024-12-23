@@ -92,13 +92,6 @@ struct EditView: View {
                     colorList
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    if store.editMode == .textInputMode {
-                        textInputCompleteButton
-                    }
-                }
-            }
             .sheet(
                 item: $store.scope(
                     state: \.stickerModalState,

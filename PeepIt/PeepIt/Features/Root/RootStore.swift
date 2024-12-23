@@ -44,6 +44,7 @@ struct RootStore {
 
         // 업로드
         case camera(CameraStore)
+        case edit(EditStore)
     }
 
     @ObservableState
@@ -95,6 +96,10 @@ struct RootStore {
                 state.path.append(.notification(.init()))
                 return .none
 
+            case .home(.uploadButtonTapped):
+                state.path.append(.camera(.init()))
+                return .none
+
             case let .path(action):
                 switch action {
 
@@ -107,8 +112,8 @@ struct RootStore {
                     state.path.append(.camera(.init()))
                     return .none
 
-                case .element(_, action: .notification(.uploadButtonTapped)):
-                    state.path.append(.camera(.init()))
+                case .element(_, action: .camera(.pushToEdit)):
+                    state.path.append(.edit(.init()))
                     return .none
 
                 default:

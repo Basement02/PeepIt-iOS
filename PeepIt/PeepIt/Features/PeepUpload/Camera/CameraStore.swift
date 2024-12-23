@@ -28,6 +28,7 @@ struct CameraStore {
         case shootButtonLongerTapEnded
         case photoCaptured(image: UIImage?)
         case videoRecorded(video: URL?)
+        case pushToEdit
     }
 
     @Dependency(\.cameraService) var cameraService
@@ -80,10 +81,13 @@ struct CameraStore {
 
             case let .photoCaptured(image):
                 state.capturedPhoto = image
-                return .none
+                return .send(.pushToEdit)
 
             case let .videoRecorded(video):
                 state.recordedVideo = video
+                return .none
+
+            case .pushToEdit:
                 return .none
             }
         }
