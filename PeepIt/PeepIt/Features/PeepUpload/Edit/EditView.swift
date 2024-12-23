@@ -115,8 +115,8 @@ struct EditView: View {
                     VStack {
                         Spacer()
                         deleteButton
+                            .padding(.bottom, 84.adjustedH)
                     }
-                    .padding(.horizontal, 17)
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
@@ -213,8 +213,13 @@ struct EditView: View {
         Button {
 
         } label: {
-            Text("삭제")
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
+        )
     }
 
     private var colorList: some View {

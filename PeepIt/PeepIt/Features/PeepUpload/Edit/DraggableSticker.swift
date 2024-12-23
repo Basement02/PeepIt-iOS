@@ -29,6 +29,7 @@ struct DraggableSticker: View {
                         x: sticker.position.x + offset.width,
                         y: sticker.position.y + offset.height
                     )
+                    /// 스티커 드래그 제스처
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
@@ -44,6 +45,7 @@ struct DraggableSticker: View {
                                 offset = .zero
                             }
                     )
+                    /// 스티커 확대/축소 제스처
                     .gesture(
                         MagnificationGesture()
                             .onChanged { scale in
@@ -54,6 +56,18 @@ struct DraggableSticker: View {
                                 finalScale *= scale
                                 store.send(.updateStickerScale(stickerId: sticker.id, scale: finalScale))
                             }
+                    )
+                    /// 스티커 롱탭 제스처 
+                    .onLongPressGesture(
+                        minimumDuration: 0.5,
+                        perform: { },
+                        onPressingChanged: { isPressing in
+                            if isPressing {
+                                store.send(.binding(.set(\.editMode, .editMode)))
+                            } else {
+                                store.send(.stickerLongerTapEnded)
+                            }
+                        }
                     )
                     .onAppear {
                         let centerX = geometry.size.width / 2

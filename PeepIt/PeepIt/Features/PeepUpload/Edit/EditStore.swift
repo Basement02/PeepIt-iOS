@@ -80,6 +80,8 @@ struct EditStore {
         case sliderAction(SliderStore.Action)
         /// 작업 완료
         case doneButtonTapped
+        /// 스티커 롱탭 제스처 끝
+        case stickerLongerTapEnded
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -220,6 +222,10 @@ struct EditStore {
 
             case .doneButtonTapped:
                 state.isDoneButtonShowed = false
+                return .none
+
+            case .stickerLongerTapEnded:
+                state.editMode = .original
                 return .none
 
             default:
