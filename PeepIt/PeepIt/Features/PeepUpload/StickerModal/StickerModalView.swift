@@ -12,26 +12,31 @@ struct StickerModalView: View {
     let store: StoreOf<StickerModalStore>
 
     let columns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.fixed(80), spacing: 36),
+        GridItem(.fixed(80), spacing: 36),
+        GridItem(.fixed(80)),
     ]
 
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                Color.blur1
+                    .ignoresSafeArea()
+
                 ScrollView {
-                    LazyVGrid(columns: columns, spacing: 13) {
-                        ForEach(store.stickers, id: \.self) { stckr in
-                            Image(stckr.rawValue)
-                                .frame(width: 40, height: 40)
+                    LazyVGrid(columns: columns, spacing: 25) {
+                        ForEach(0..<50) { _ in
+                            Image("😄")
+                                .frame(width: 80, height: 80)
                                 .onTapGesture {
-                                    store.send(.stickerSelected(selectedSticker: stckr))
+                                    // TODO: 이모티콘 수정
+                                    store.send(.stickerSelected(selectedSticker: "😄"))
                                 }
                         }
                     }
-                    .padding(.vertical, 58)
                 }
+                .scrollIndicators(.hidden)
+                .padding(.top, 70)
             }
         }
     }

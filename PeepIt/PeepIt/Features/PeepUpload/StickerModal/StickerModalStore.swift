@@ -17,7 +17,7 @@ struct StickerModalStore {
     }
 
     enum Action {
-        case stickerSelected(selectedSticker: Sticker)
+        case stickerSelected(selectedSticker: String)
     }
 }
 

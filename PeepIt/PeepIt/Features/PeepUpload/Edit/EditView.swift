@@ -14,6 +14,21 @@ struct EditView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                Color.white
+                    .ignoresSafeArea()
+
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                }
+
+                Group {
+                    BackImageLayer.primary()
+                    BackImageLayer.secondary()
+                }
+                .ignoresSafeArea()
+
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
                 }
@@ -27,20 +42,37 @@ struct EditView: View {
                 }
 
                 switch store.editMode {
-                    
+
                 case .original:
-                    VStack(spacing: 25) {
-                        Spacer()
+                    ZStack {
+                        VStack {
+                            HStack {
+                                if !store.isDoneButtonShowed {
+                                    BackButton { store.send(.backButtonTapped) }
+                                }
 
-                        soundButton
-                        stickerButton
-                        textButton
+                                Spacer()
 
-                        Spacer()
+                                if store.isDoneButtonShowed {
+                                    completeButton
+                                }
 
-                        uploadButton
+                            }
+                            .padding(.horizontal, 16)
+
+                            Spacer()
+
+                            uploadButton
+                                .padding(.bottom, 71.adjustedH)
+                                .padding(.trailing, 4)
+                        }
+
+                        VStack(spacing: 25) {
+                            stickerButton
+                            textButton
+                        }
+                        .padding(.leading, 16)
                     }
-                    .padding(.horizontal, 17)
 
                 case .textInputMode:
                     Color.black.opacity(0.3)
@@ -87,18 +119,8 @@ struct EditView: View {
                     .padding(.horizontal, 17)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    colorList
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    if store.editMode == .textInputMode {
-                        textInputCompleteButton
-                    }
-                }
-            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
             .sheet(
                 item: $store.scope(
                     state: \.stickerModalState,
@@ -106,7 +128,8 @@ struct EditView: View {
                 )
             ) { store in
                 StickerModalView(store: store)
-                    .presentationDetents([.height(600)])
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.height(675)])
             }
         }
     }
@@ -127,8 +150,13 @@ struct EditView: View {
             Button {
                 store.send(.stickerButtonTapped)
             } label: {
-                Text("스티커")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 42, height: 42)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
+            )
             Spacer()
         }
     }
@@ -138,21 +166,31 @@ struct EditView: View {
             Button {
                 store.send(.textButtonTapped)
             } label: {
-                Text("텍스트")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 42, height: 42)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
+            )
             Spacer()
         }
     }
 
-    private var textInputCompleteButton: some View {
+    private var completeButton: some View {
         HStack {
             Spacer()
 
             Button {
-                store.send(.textInputCompleteButtonTapped)
+
             } label: {
-                Text("완료")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 38, height: 38)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "DoneN", pressedImg: "DoneY")
+            )
         }
     }
 
@@ -163,8 +201,11 @@ struct EditView: View {
             Button {
                 store.send(.uploadButtonTapped)
             } label: {
-                Text("게시")
+                Image("UploadBtnN")
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "UploadBtnN", pressedImg: "UploadBtnY")
+            )
         }
     }
 

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AVFoundation
 
 struct CameraView: View {
     let store: StoreOf<CameraStore>
@@ -14,23 +15,49 @@ struct CameraView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.gray
+                Group {
+                    if let session = store.cameraSession {
+                        CameraPreview(session: session)
+                    }
+
+                    BackImageLayer.primary()
+
+                    BackImageLayer.secondary()
+                }
+                .ignoresSafeArea()
 
                 VStack {
+                    topBar
+
                     Spacer()
 
-                    Button {
-                        store.send(.shootButtonTapped)
-                    } label: {
-                        Circle()
-                            .frame(width: 62, height: 62)
-                            .foregroundStyle(Color.white)
+                    Image(store.isRecording ? "BtnShotIng" : "BtnShot")
+                        .padding(.bottom, 34.adjustedH)
+                        .onTapGesture {
+                            var transaction = Transaction(animation: nil)
+                            transaction.disablesAnimations = true
+                            store.send(.shootButtonTapped, transaction: transaction)
+                        }
                     }
-                    .padding(.bottom, 66)
-                }
             }
-            .ignoresSafeArea()
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
+            .onAppear {
+                store.send(.onAppear)
+            }
         }
+    }
+
+    private var topBar: some View {
+        ZStack {
+            HStack {
+                BackButton { store.send(.backButtonTapped) }
+                Spacer()
+            }
+
+            Image("FlashOnN")
+        }
+        .padding(.horizontal, 16)
     }
 }
 

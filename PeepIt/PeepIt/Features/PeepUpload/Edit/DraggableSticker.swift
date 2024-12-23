@@ -22,8 +22,8 @@ struct DraggableSticker: View {
                 Image(sticker.stickerName)
                     .resizable()
                     .frame(
-                        width: 100 * currentScale,
-                        height: 100 * currentScale
+                        width: 120 * currentScale,
+                        height: 120 * currentScale
                     )
                     .position(
                         x: sticker.position.x + offset.width,

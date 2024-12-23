@@ -13,7 +13,8 @@ struct EditStore {
 
     @ObservableState
     struct State: Equatable {
-
+        /// 찍은 이미지
+        var image: UIImage? = nil
         /// 스티커 저장
         var stickers: [StickerItem] = .init()
         /// 텍스트 저장
@@ -41,11 +42,16 @@ struct EditStore {
 
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
+
+        /// 우측 상단 done 버튼 보여주기 여부
+        var isDoneButtonShowed = false
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
+        /// 뒤로가기
+        case backButtonTapped
         /// 사운드 on/off 버튼 탭
         case soundOnOffButtonTapped
         /// 스티커 추가 버튼 탭
@@ -72,7 +78,11 @@ struct EditStore {
         case textColorTapped(newColor: Color)
         /// Slider action 관련
         case sliderAction(SliderStore.Action)
+        /// 작업 완료
+        case doneButtonTapped
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -87,11 +97,17 @@ struct EditStore {
             case .binding(\.inputText):
                 return .none
 
+            case .backButtonTapped:
+                return .run { _ in
+                    await dismiss()
+                }
+
             case .soundOnOffButtonTapped:
                 return .none
 
             case .stickerButtonTapped:
                 state.stickerModalState = .init()
+                state.isDoneButtonShowed = true
                 return .none
 
             case .textButtonTapped:
@@ -102,9 +118,12 @@ struct EditStore {
                 return .none
 
             case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
-                state.stickers.append(StickerItem(stickerName: selectedSticker.rawValue))
+                state.stickers.append(StickerItem(stickerName: selectedSticker))
                 state.stickerModalState = nil
-                return .none
+                return .send(.doneButtonTapped)
+
+            case .stickerListAction(.dismiss):
+                return .send(.doneButtonTapped)
 
             case let .updateStickerPosition(stickerId, position):
                 guard let index = state.stickers.firstIndex(
@@ -197,6 +216,10 @@ struct EditStore {
 
             case let .textColorTapped(newColor):
                 state.inputTextColor = newColor
+                return .none
+
+            case .doneButtonTapped:
+                state.isDoneButtonShowed = false
                 return .none
 
             default:
