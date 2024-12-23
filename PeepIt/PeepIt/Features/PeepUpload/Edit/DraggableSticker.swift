@@ -59,13 +59,13 @@ struct DraggableSticker: View {
                     )
                     /// 스티커 롱탭 제스처 
                     .onLongPressGesture(
-                        minimumDuration: 0.5,
+                        minimumDuration: 1,
                         perform: { },
                         onPressingChanged: { isPressing in
                             if isPressing {
                                 store.send(.binding(.set(\.editMode, .editMode)))
                             } else {
-                                store.send(.stickerLongerTapEnded)
+                                store.send(.objectLongerTapEnded)
                             }
                         }
                     )

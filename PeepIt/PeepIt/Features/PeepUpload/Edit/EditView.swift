@@ -52,11 +52,6 @@ struct EditView: View {
                                 }
 
                                 Spacer()
-
-                                if store.isDoneButtonShowed {
-                                    completeButton
-                                }
-
                             }
                             .padding(.horizontal, 16)
 
@@ -79,6 +74,12 @@ struct EditView: View {
                         .ignoresSafeArea()
 
                     VStack {
+                        HStack {
+                            Spacer()
+                            completeButton
+                        }
+                        .padding(.horizontal, 16)
+
                         Spacer()
 
                         HStack {
@@ -102,7 +103,6 @@ struct EditView: View {
                         Spacer()
 
                     }
-                    .padding(.horizontal, 17)
 
                     // TODO:  dynamic text field
                     if let _ = store.selectedText {
@@ -182,7 +182,7 @@ struct EditView: View {
             Spacer()
 
             Button {
-
+                store.send(.textInputCompleteButtonTapped)
             } label: {
                 Rectangle()
                     .fill(Color.clear)
