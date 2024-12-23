@@ -11,6 +11,8 @@ import ComposableArchitecture
 struct EditView: View {
     @Perception.Bindable var store: StoreOf<EditStore>
 
+    @FocusState var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
@@ -70,7 +72,8 @@ struct EditView: View {
                     }
 
                 case .textInputMode:
-                    Color.black.opacity(0.3)
+                    // TODO: Map Pointer 깔기
+                    Color.black.opacity(0.8)
                         .ignoresSafeArea()
 
                     VStack {
@@ -82,33 +85,36 @@ struct EditView: View {
 
                         Spacer()
 
-                        HStack {
-                            if store.selectedText == nil {
-                                TextField("텍스트 입력...", text: $store.inputText)
-                                    .font(.system(size: store.inputTextSize))
-                                    .foregroundStyle(store.inputTextColor)
-                            }
-
-                            Spacer()
-
-                            SliderView(
-                                store: store.scope(
-                                    state: \.sliderState,
-                                    action: \.sliderAction
-                                )
-                            )
-                            .frame(width: 10, height: 250)
-                        }
-
-                        Spacer()
+//                        HStack {
+//                            SliderView(
+//                                store: store.scope(
+//                                    state: \.sliderState,
+//                                    action: \.sliderAction
+//                                )
+//                            )
+//                            .frame(width: 10, height: 250)
+//
+//                            Spacer()
+//                        }
+//                        .padding(.leading, 9)
 
                     }
 
-                    // TODO:  dynamic text field
-                    if let _ = store.selectedText {
-                        TextField("", text: $store.inputText)
-                            .font(.system(size: store.inputTextSize))
-                            .foregroundStyle(store.inputTextColor)
+                    if store.selectedText == nil {
+                        VStack {
+                            TextEditor(text: $store.inputText)
+                                .focused($isFocused)
+                                .frame(minHeight: 34)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .scrollContentBackground(.hidden)
+                                .multilineTextAlignment(.center)
+                                .scrollDisabled(true)
+                                .tint(Color.coreLime)
+                                .font(.system(size: store.inputTextSize, weight: .bold))
+                                .padding(.top, 271.adjustedH)
+
+                            Spacer()
+                        }
                     }
 
                 case .editMode:
@@ -130,6 +136,9 @@ struct EditView: View {
                 StickerModalView(store: store)
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.height(675)])
+            }
+            .onAppear {
+                isFocused = true
             }
         }
     }
@@ -165,6 +174,7 @@ struct EditView: View {
         HStack {
             Button {
                 store.send(.textButtonTapped)
+                isFocused = true
             } label: {
                 Rectangle()
                     .fill(Color.clear)
