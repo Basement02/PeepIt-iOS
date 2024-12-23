@@ -14,6 +14,20 @@ struct EditView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                Color.white
+
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                }
+
+                Group {
+                    BackImageLayer.primary()
+                    BackImageLayer.secondary()
+                }
+                .ignoresSafeArea()
+
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
                 }
@@ -32,13 +46,18 @@ struct EditView: View {
                     VStack(spacing: 25) {
                         Spacer()
 
-                        soundButton
-                        stickerButton
-                        textButton
+                        Group {
+                            soundButton
+                            stickerButton
+                            textButton
+                        }
+                        .padding(.leading, 16)
 
                         Spacer()
 
                         uploadButton
+                            .padding(.bottom, 71.adjustedH)
+                            .padding(.trailing, 4)
                     }
                     .padding(.horizontal, 17)
 
@@ -87,11 +106,8 @@ struct EditView: View {
                     .padding(.horizontal, 17)
                 }
             }
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    colorList
-                }
-            }
+            .ignoresSafeArea()
+            .toolbar(.hidden, for: .navigationBar)
             .sheet(
                 item: $store.scope(
                     state: \.stickerModalState,

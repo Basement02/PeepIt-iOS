@@ -13,7 +13,8 @@ struct EditStore {
 
     @ObservableState
     struct State: Equatable {
-
+        /// 찍은 이미지
+        var image: UIImage? = nil
         /// 스티커 저장
         var stickers: [StickerItem] = .init()
         /// 텍스트 저장

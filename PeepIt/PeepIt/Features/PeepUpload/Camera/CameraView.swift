@@ -34,7 +34,7 @@ struct CameraView: View {
                     Image(store.isRecording ? "BtnShotIng" : "BtnShot")
                         .padding(.bottom, 34.adjustedH)
                         .onTapGesture {
-                            store.send(.shootButtonTapped)
+                            store.send(.shootButtonTapped, animation: nil)
                         }
                     }
             }
