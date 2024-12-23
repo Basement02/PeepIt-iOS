@@ -29,8 +29,10 @@ struct CameraStore {
         case photoCaptured(image: UIImage?)
         case videoRecorded(video: URL?)
         case pushToEdit(image: UIImage?)
+        case backButtonTapped
     }
 
+    @Dependency(\.dismiss) var dismiss
     @Dependency(\.cameraService) var cameraService
 
     var body: some Reducer<State, Action> {
@@ -89,6 +91,11 @@ struct CameraStore {
 
             case .pushToEdit:
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await dismiss()
+                }
             }
         }
     }

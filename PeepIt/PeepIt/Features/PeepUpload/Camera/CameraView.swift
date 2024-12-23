@@ -34,7 +34,9 @@ struct CameraView: View {
                     Image(store.isRecording ? "BtnShotIng" : "BtnShot")
                         .padding(.bottom, 34.adjustedH)
                         .onTapGesture {
-                            store.send(.shootButtonTapped, animation: nil)
+                            var transaction = Transaction(animation: nil)
+                            transaction.disablesAnimations = true
+                            store.send(.shootButtonTapped, transaction: transaction)
                         }
                     }
             }
@@ -49,9 +51,7 @@ struct CameraView: View {
     private var topBar: some View {
         ZStack {
             HStack {
-                BackButton {
-                    // TODO:
-                }
+                BackButton { store.send(.backButtonTapped) }
                 Spacer()
             }
 

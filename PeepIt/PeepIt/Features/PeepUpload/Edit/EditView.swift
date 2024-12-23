@@ -15,6 +15,7 @@ struct EditView: View {
         WithPerceptionTracking {
             ZStack {
                 Color.white
+                    .ignoresSafeArea()
 
                 if let image = store.image {
                     Image(uiImage: image)
@@ -41,25 +42,30 @@ struct EditView: View {
                 }
 
                 switch store.editMode {
-                    
-                case .original:
-                    VStack(spacing: 25) {
-                        Spacer()
 
-                        Group {
-                            soundButton
+                case .original:
+                    ZStack {
+                        VStack {
+                            HStack {
+                                BackButton { store.send(.backButtonTapped) }
+                                    .padding(.leading, 16)
+
+                                Spacer()
+                            }
+
+                            Spacer()
+
+                            uploadButton
+                                .padding(.bottom, 71.adjustedH)
+                                .padding(.trailing, 4)
+                        }
+
+                        VStack(spacing: 25) {
                             stickerButton
                             textButton
                         }
                         .padding(.leading, 16)
-
-                        Spacer()
-
-                        uploadButton
-                            .padding(.bottom, 71.adjustedH)
-                            .padding(.trailing, 4)
                     }
-                    .padding(.horizontal, 17)
 
                 case .textInputMode:
                     Color.black.opacity(0.3)
@@ -106,7 +112,7 @@ struct EditView: View {
                     .padding(.horizontal, 17)
                 }
             }
-            .ignoresSafeArea()
+            .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
             .sheet(
                 item: $store.scope(
@@ -136,8 +142,13 @@ struct EditView: View {
             Button {
                 store.send(.stickerButtonTapped)
             } label: {
-                Text("스티커")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 42, height: 42)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
+            )
             Spacer()
         }
     }
@@ -147,8 +158,13 @@ struct EditView: View {
             Button {
                 store.send(.textButtonTapped)
             } label: {
-                Text("텍스트")
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: 42, height: 42)
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
+            )
             Spacer()
         }
     }
@@ -172,8 +188,11 @@ struct EditView: View {
             Button {
                 store.send(.uploadButtonTapped)
             } label: {
-                Text("게시")
+                Image("UploadBtnN")
             }
+            .buttonStyle(
+                PressableButtonStyle(originImg: "UploadBtnN", pressedImg: "UploadBtnY")
+            )
         }
     }
 

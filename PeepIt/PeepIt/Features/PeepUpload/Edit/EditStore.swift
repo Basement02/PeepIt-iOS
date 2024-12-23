@@ -47,6 +47,8 @@ struct EditStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
+        /// 뒤로가기
+        case backButtonTapped
         /// 사운드 on/off 버튼 탭
         case soundOnOffButtonTapped
         /// 스티커 추가 버튼 탭
@@ -75,6 +77,8 @@ struct EditStore {
         case sliderAction(SliderStore.Action)
     }
 
+    @Dependency(\.dismiss) var dismiss
+
     var body: some Reducer<State, Action> {
         BindingReducer()
 
@@ -87,6 +91,11 @@ struct EditStore {
             switch action {
             case .binding(\.inputText):
                 return .none
+
+            case .backButtonTapped:
+                return .run { _ in
+                    await dismiss()
+                }
 
             case .soundOnOffButtonTapped:
                 return .none
