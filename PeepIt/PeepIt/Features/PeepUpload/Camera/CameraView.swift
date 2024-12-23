@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AVFoundation
 
 struct CameraView: View {
     let store: StoreOf<CameraStore>
@@ -15,7 +16,9 @@ struct CameraView: View {
         WithPerceptionTracking {
             ZStack {
                 Group {
-                    Color.white // TODO: 이미지로 변경
+                    if let session = store.cameraSession {
+                        CameraPreview(session: session)
+                    }
 
                     BackImageLayer.primary()
 
@@ -28,15 +31,17 @@ struct CameraView: View {
 
                     Spacer()
 
-                    Button {
-
-                    } label: {
-                        Image("BtnShot")
+                    Image(store.isRecording ? "BtnShotIng" : "BtnShot")
+                        .padding(.bottom, 34.adjustedH)
+                        .onTapGesture {
+                            store.send(.shootButtonTapped)
+                        }
                     }
-                    .padding(.bottom, 34.adjustedH)
-                }
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .onAppear {
+                store.send(.onAppear)
+            }
         }
     }
 
