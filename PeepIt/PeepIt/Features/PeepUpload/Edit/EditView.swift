@@ -16,13 +16,16 @@ struct EditView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
+                Color.black
                     .ignoresSafeArea()
 
                 if let image = store.image {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 24)
+                        )
                 }
 
                 Group {
@@ -60,7 +63,7 @@ struct EditView: View {
                             Spacer()
 
                             uploadButton
-                                .padding(.bottom, 71.adjustedH)
+                                .padding(.bottom, 61.adjustedH)
                                 .padding(.trailing, 4)
                         }
 
@@ -84,20 +87,6 @@ struct EditView: View {
                         .padding(.horizontal, 16)
 
                         Spacer()
-
-//                        HStack {
-//                            SliderView(
-//                                store: store.scope(
-//                                    state: \.sliderState,
-//                                    action: \.sliderAction
-//                                )
-//                            )
-//                            .frame(width: 10, height: 250)
-//
-//                            Spacer()
-//                        }
-//                        .padding(.leading, 9)
-
                     }
 
                     if store.selectedText == nil {
