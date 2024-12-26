@@ -13,6 +13,8 @@ struct SliderStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 슬라이더 바 최대 값
+        let maxHeight: CGFloat = 210
         /// 드래그 가능 범위
         var range: ClosedRange<CGFloat> = 4...100
         /// 슬라이더 값(폰트 값)
@@ -35,7 +37,7 @@ struct SliderStore {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
 
-            let maxHeight: CGFloat = 210
+            let maxHeight = state.maxHeight
             let (maxValue, minValue) = (state.range.upperBound, state.range.lowerBound)
 
             switch action {

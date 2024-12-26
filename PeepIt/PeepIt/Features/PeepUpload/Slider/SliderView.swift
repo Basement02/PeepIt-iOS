@@ -17,7 +17,7 @@ struct SliderView: View {
                 Image("ScrollBar")
 
                 Image("ScrollIndicator")
-                    .offset(y: store.dragOffset - 210)
+                    .offset(y: store.dragOffset - store.maxHeight)
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
