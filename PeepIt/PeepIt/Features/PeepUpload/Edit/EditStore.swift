@@ -167,7 +167,7 @@ struct EditStore {
                 state.editMode = .original
                 state.selectedText = nil
                 state.inputTextSize = 24.0
-                state.inputTextColor = .black
+                state.inputTextColor = .white
                 state.sliderState.sliderValue = 24.0
 
                 return .none
