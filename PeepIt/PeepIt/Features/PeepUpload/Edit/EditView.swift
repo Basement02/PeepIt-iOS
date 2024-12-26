@@ -19,6 +19,7 @@ struct EditView: View {
                 Color.black
                     .ignoresSafeArea()
 
+                /// 이미지
                 if let image = store.image {
                     Image(uiImage: image)
                         .resizable()
@@ -34,10 +35,12 @@ struct EditView: View {
                 }
                 .ignoresSafeArea()
 
+                /// 스티커들
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
                 }
 
+                /// 텍스트들
                 ForEach(store.texts, id: \.id) { textItem in
                     DraggableText(textItem: textItem, store: store)
                         .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
@@ -48,6 +51,7 @@ struct EditView: View {
 
                 switch store.editMode {
 
+                /// 기본
                 case .original:
                     ZStack {
                         VStack {
@@ -74,54 +78,23 @@ struct EditView: View {
                         .padding(.leading, 16)
                     }
 
+                /// 텍스트 입력창 (추가 및 편집)
                 case .textInputMode:
                     // TODO: Map Pointer 깔기
                     Color.black.opacity(0.8)
                         .ignoresSafeArea()
 
-                    VStack {
-                        HStack {
-                            Spacer()
-                            completeButton
-                        }
+                    textInputTopBar
                         .padding(.horizontal, 16)
 
-                        Spacer()
-                    }
-
-                    VStack {
-                        HStack {
-                            SliderView(
-                                store: store.scope(
-                                    state: \.sliderState,
-                                    action: \.sliderAction
-                                )
-                            )
-                            Spacer()
-                        }
+                    fontSlider
                         .padding(.top, 175.adjustedH)
+                        .padding(.leading, 12)
 
-                        Spacer()
-                    }
-                    .padding(.leading, 12)
+                    textEditor
+                     .padding(.top, 281.adjustedH)
 
-                    if store.selectedText == nil {
-                        VStack {
-                            TextEditor(text: $store.inputText)
-                                .focused($isFocused)
-                                .frame(minHeight: 34)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .scrollContentBackground(.hidden)
-                                .multilineTextAlignment(.center)
-                                .scrollDisabled(true)
-                                .tint(Color.coreLime)
-                                .font(.system(size: store.inputTextSize, weight: .bold))
-                                .padding(.top, 281.adjustedH)
-
-                            Spacer()
-                        }
-                    }
-
+                /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                 case .editMode:
                     VStack {
                         Spacer()
@@ -142,9 +115,52 @@ struct EditView: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.height(675)])
             }
-            .onAppear {
-                isFocused = true
+        }
+    }
+
+    private var textInputTopBar: some View {
+        VStack {
+            HStack {
+                Spacer()
+                completeButton
             }
+
+            Spacer()
+        }
+    }
+
+    private var fontSlider: some View {
+        VStack {
+            HStack {
+                SliderView(
+                    store: store.scope(
+                        state: \.sliderState,
+                        action: \.sliderAction
+                    )
+                )
+                Spacer()
+            }
+
+            Spacer()
+        }
+    }
+
+    private var textEditor: some View {
+        VStack {
+            TextEditor(text: $store.inputText)
+                .focused($isFocused)
+                .frame(minHeight: 34)
+                .fixedSize(horizontal: false, vertical: true)
+                .scrollContentBackground(.hidden)
+                .multilineTextAlignment(.center)
+                .scrollDisabled(true)
+                .tint(Color.coreLime)
+                .font(.system(size: store.inputTextSize, weight: .bold))
+                .onAppear {
+                    isFocused = true
+                }
+
+            Spacer()
         }
     }
 
