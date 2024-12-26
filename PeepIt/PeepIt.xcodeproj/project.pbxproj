@@ -77,6 +77,7 @@
 		AB97881D2D192FAF007E73B6 /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB97881C2D192FAF007E73B6 /* CameraServiceKey.swift */; };
 		ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E882D1D36B200C181DC /* BackMapPointer.swift */; };
 		ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */; };
+		ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8D2D1D439400C181DC /* ColorChip.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -215,6 +216,7 @@
 		AB97881C2D192FAF007E73B6 /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
 		ABA11E882D1D36B200C181DC /* BackMapPointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMapPointer.swift; sourceTree = "<group>"; };
 		ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbarView.swift; sourceTree = "<group>"; };
+		ABA11E8D2D1D439400C181DC /* ColorChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChip.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
 				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
 				AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */,
+				ABA11E8D2D1D439400C181DC /* ColorChip.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1043,6 +1046,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB97881A2D192F25007E73B6 /* CameraService.swift in Sources */,
+				ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,

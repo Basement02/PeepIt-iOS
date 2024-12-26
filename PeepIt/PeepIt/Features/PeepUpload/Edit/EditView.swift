@@ -114,7 +114,28 @@ struct EditView: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.height(675)])
             }
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    colorChips
+                        .frame(width: Constant.screenWidth)
+                        .background(Color.clear)
+                        .padding(.leading, 9)
+                        .padding(.bottom, 8)
+                }
+            }
+            .background(KeyboardToolbarView())
         }
+    }
+
+    private var colorChips: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 3) {
+                ForEach(0..<10) { _ in
+                    ColorChip(color: .coreLime)
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
     }
 
     private var textInputTopBar: some View {
