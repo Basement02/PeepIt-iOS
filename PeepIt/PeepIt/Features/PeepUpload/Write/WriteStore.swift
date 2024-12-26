@@ -7,12 +7,14 @@
 
 import Foundation
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct WriteStore {
 
     @ObservableState
     struct State: Equatable {
+        var image: UIImage? = nil
         var textView = ""
     }
 

@@ -23,11 +23,18 @@ struct WriteView: View {
                 VStack {
                     Spacer()
 
-                    RoundedRectangle(cornerRadius: 10)
-                        .aspectRatio(3/4, contentMode: .fit)
-                        .padding(.horizontal, 68) // TODO: 수정
-                        .foregroundStyle(Color.gray)
-
+                    if let image = store.image {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(
+                                RoundedRectangle(cornerRadius: 24)
+                            )
+                    } else {
+                        Text("안됨")
+                            .foregroundStyle(.white)
+                    }
+                    
                     Spacer()
 
                     textView

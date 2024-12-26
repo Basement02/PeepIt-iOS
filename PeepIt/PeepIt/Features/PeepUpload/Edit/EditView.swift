@@ -20,34 +20,7 @@ struct EditView: View {
                     .ignoresSafeArea()
 
                 /// 이미지
-                if let image = store.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 24)
-                        )
-                }
-
-                Group {
-                    BackImageLayer.primary()
-                    BackImageLayer.secondary()
-                }
-                .ignoresSafeArea()
-
-                /// 스티커들
-                ForEach(store.stickers, id: \.id) { sticker in
-                    DraggableSticker(sticker: sticker, store: store)
-                }
-
-                /// 텍스트들
-                ForEach(store.texts, id: \.id) { textItem in
-                    DraggableText(textItem: textItem, store: store)
-                        .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                        .onTapGesture {
-                            store.send(.textFieldTapped(textId: textItem.id))
-                        }
-                }
+                imageView
 
                 switch store.editMode {
 
@@ -124,6 +97,42 @@ struct EditView: View {
                 }
             }
             .background(KeyboardToolbarView())
+            .onDisappear {
+                store.send(.onDisappear)
+            }
+        }
+    }
+
+    private var imageView: some View {
+        ZStack {
+            /// 이미지 + 스티커 + 텍스트 저장
+            /// 이미지
+            if let image = store.image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            }
+
+            Group {
+                BackImageLayer.primary()
+                BackImageLayer.secondary()
+            }
+            .ignoresSafeArea()
+            .opacity(store.isCapturing ? 0 : 1)
+
+            /// 스티커들
+            ForEach(store.stickers, id: \.id) { sticker in
+                DraggableSticker(sticker: sticker, store: store)
+            }
+
+            /// 텍스트들
+            ForEach(store.texts, id: \.id) { textItem in
+                DraggableText(textItem: textItem, store: store)
+                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+                    .onTapGesture {
+                        store.send(.textFieldTapped(textId: textItem.id))
+                    }
+            }
         }
     }
 
@@ -254,7 +263,9 @@ struct EditView: View {
             Spacer()
 
             Button {
-                store.send(.uploadButtonTapped)
+                store.send(.uploadButtonTapped(
+                    image: imageView.captureAsImage())
+                )
             } label: {
                 Image("UploadBtnN")
             }

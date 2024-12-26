@@ -15,6 +15,8 @@ struct EditStore {
     struct State: Equatable {
         /// 찍은 이미지
         var image: UIImage? = nil
+        /// 편집이 포함된 최종 이미지
+        var renderedImage: UIImage? = nil
         /// 스티커 저장
         var stickers: [StickerItem] = .init()
         /// 텍스트 저장
@@ -29,7 +31,8 @@ struct EditStore {
         var inputText = ""
         /// 현재 입력 테스트 색
         var inputTextColor: Color = .white
-
+        /// 캡처 시 back image layer 숨기기 여부
+        var isCapturing = false
         /// slider state 관련
         var sliderState = SliderStore.State()
 
@@ -59,7 +62,7 @@ struct EditStore {
         /// 텍스트 추가 버튼 탭
         case textButtonTapped
         /// 게시 버튼 탭
-        case uploadButtonTapped
+        case uploadButtonTapped(image: UIImage?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         /// 드래그한 스티커 위치 업데이트
@@ -82,6 +85,8 @@ struct EditStore {
         case doneButtonTapped
         /// 오브젝트 롱탭 제스처 끝
         case objectLongerTapEnded
+        /// 뷰  사라질 때
+        case onDisappear
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -118,6 +123,7 @@ struct EditStore {
                 return .none
 
             case .uploadButtonTapped:
+                state.isCapturing = true
                 return .none
 
             case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
@@ -221,6 +227,10 @@ struct EditStore {
 
             case .sliderAction(.dragSlider):
                 state.inputTextSize = state.sliderState.sliderValue
+                return .none
+
+            case .onDisappear:
+                state.isCapturing = false
                 return .none
 
             default:
