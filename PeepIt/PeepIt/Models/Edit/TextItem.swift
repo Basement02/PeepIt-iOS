@@ -12,5 +12,5 @@ struct TextItem: Identifiable, Equatable {
     var text = ""
     var position: CGPoint = .zero
     var scale: CGFloat = 24.0
-    var color: Color = .black
+    var color: Color = .white
 }

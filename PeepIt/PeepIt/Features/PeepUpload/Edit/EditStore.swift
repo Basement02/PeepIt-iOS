@@ -28,7 +28,7 @@ struct EditStore {
         /// 현재 입력 테스트
         var inputText = ""
         /// 현재 입력 테스트 색
-        var inputTextColor: Color = .black
+        var inputTextColor: Color = .white
 
         /// slider state 관련
         var sliderState = SliderStore.State()
@@ -80,6 +80,8 @@ struct EditStore {
         case sliderAction(SliderStore.Action)
         /// 작업 완료
         case doneButtonTapped
+        /// 오브젝트 롱탭 제스처 끝
+        case objectLongerTapEnded
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -94,6 +96,7 @@ struct EditStore {
         Reduce { state, action in
 
             switch action {
+
             case .binding(\.inputText):
                 return .none
 
@@ -164,8 +167,8 @@ struct EditStore {
                 state.editMode = .original
                 state.selectedText = nil
                 state.inputTextSize = 24.0
-                state.inputTextColor = .black
-                state.sliderState.value = 24.0
+                state.inputTextColor = .white
+                state.sliderState.sliderValue = 24.0
 
                 return .none
 
@@ -197,20 +200,9 @@ struct EditStore {
                 state.selectedText = text
                 state.inputText = text.text
                 state.inputTextSize = text.scale
-//                state.sliderState.value = text.scale
+                state.sliderState.sliderValue = text.scale
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
-
-                return .none
-
-            case let .sliderAction(.setSliderValue(newValue, lowerBound, upperBound)):
-                let newTextSize = min(
-                    max(
-                        lowerBound + newValue * (upperBound - lowerBound), lowerBound
-                    ),
-                    upperBound
-                )
-                state.inputTextSize = newTextSize
 
                 return .none
 
@@ -220,6 +212,15 @@ struct EditStore {
 
             case .doneButtonTapped:
                 state.isDoneButtonShowed = false
+                state.editMode = .original
+                return .none
+
+            case .objectLongerTapEnded:
+                state.editMode = .original
+                return .none
+
+            case .sliderAction(.dragSlider):
+                state.inputTextSize = state.sliderState.sliderValue
                 return .none
 
             default:

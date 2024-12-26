@@ -11,16 +11,22 @@ import ComposableArchitecture
 struct EditView: View {
     @Perception.Bindable var store: StoreOf<EditStore>
 
+    @FocusState var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
+                Color.black
                     .ignoresSafeArea()
 
+                /// 이미지
                 if let image = store.image {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 24)
+                        )
                 }
 
                 Group {
@@ -29,10 +35,12 @@ struct EditView: View {
                 }
                 .ignoresSafeArea()
 
+                /// 스티커들
                 ForEach(store.stickers, id: \.id) { sticker in
                     DraggableSticker(sticker: sticker, store: store)
                 }
 
+                /// 텍스트들
                 ForEach(store.texts, id: \.id) { textItem in
                     DraggableText(textItem: textItem, store: store)
                         .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
@@ -43,6 +51,7 @@ struct EditView: View {
 
                 switch store.editMode {
 
+                /// 기본
                 case .original:
                     ZStack {
                         VStack {
@@ -52,18 +61,13 @@ struct EditView: View {
                                 }
 
                                 Spacer()
-
-                                if store.isDoneButtonShowed {
-                                    completeButton
-                                }
-
                             }
                             .padding(.horizontal, 16)
 
                             Spacer()
 
                             uploadButton
-                                .padding(.bottom, 71.adjustedH)
+                                .padding(.bottom, 61.adjustedH)
                                 .padding(.trailing, 4)
                         }
 
@@ -74,49 +78,28 @@ struct EditView: View {
                         .padding(.leading, 16)
                     }
 
+                /// 텍스트 입력창 (추가 및 편집)
                 case .textInputMode:
-                    Color.black.opacity(0.3)
+                    BackMapPointer.secondary
                         .ignoresSafeArea()
 
-                    VStack {
-                        Spacer()
+                    textInputTopBar
+                        .padding(.horizontal, 16)
 
-                        HStack {
-                            if store.selectedText == nil {
-                                TextField("텍스트 입력...", text: $store.inputText)
-                                    .font(.system(size: store.inputTextSize))
-                                    .foregroundStyle(store.inputTextColor)
-                            }
+                    fontSlider
+                        .padding(.top, 175.adjustedH)
+                        .padding(.leading, 12)
 
-                            Spacer()
+                    textEditor
+                     .padding(.top, 281.adjustedH)
 
-                            SliderView(
-                                store: store.scope(
-                                    state: \.sliderState,
-                                    action: \.sliderAction
-                                )
-                            )
-                            .frame(width: 10, height: 250)
-                        }
-
-                        Spacer()
-
-                    }
-                    .padding(.horizontal, 17)
-
-                    // TODO:  dynamic text field
-                    if let _ = store.selectedText {
-                        TextField("", text: $store.inputText)
-                            .font(.system(size: store.inputTextSize))
-                            .foregroundStyle(store.inputTextColor)
-                    }
-
+                /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                 case .editMode:
                     VStack {
                         Spacer()
                         deleteButton
+                            .padding(.bottom, 84.adjustedH)
                     }
-                    .padding(.horizontal, 17)
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
@@ -131,6 +114,77 @@ struct EditView: View {
                     .presentationDragIndicator(.visible)
                     .presentationDetents([.height(675)])
             }
+            .toolbar {
+                ToolbarItem(placement: .keyboard) {
+                    colorChips
+                        .frame(width: Constant.screenWidth)
+                        .background(Color.clear)
+                        .padding(.leading, 9)
+                        .padding(.bottom, 8)
+                }
+            }
+            .background(KeyboardToolbarView())
+        }
+    }
+
+    private var colorChips: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: 3) {
+                ForEach(ChipColors.allCases, id: \.self) { chip in
+                    ColorChip(color: chip.color)
+                        .onTapGesture {
+                            store.send(.textColorTapped(newColor: chip.color))
+                        }
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+    }
+
+    private var textInputTopBar: some View {
+        VStack {
+            HStack {
+                Spacer()
+                completeButton
+            }
+
+            Spacer()
+        }
+    }
+
+    private var fontSlider: some View {
+        VStack {
+            HStack {
+                SliderView(
+                    store: store.scope(
+                        state: \.sliderState,
+                        action: \.sliderAction
+                    )
+                )
+                Spacer()
+            }
+
+            Spacer()
+        }
+    }
+
+    private var textEditor: some View {
+        VStack {
+            TextEditor(text: $store.inputText)
+                .focused($isFocused)
+                .frame(minHeight: 34)
+                .fixedSize(horizontal: false, vertical: true)
+                .font(.system(size: store.inputTextSize, weight: .bold))
+                .foregroundStyle(store.inputTextColor)
+                .tint(Color.coreLime)
+                .scrollDisabled(true)
+                .scrollContentBackground(.hidden)
+                .multilineTextAlignment(.center)
+                .onAppear {
+                    isFocused = true
+                }
+
+            Spacer()
         }
     }
 
@@ -165,6 +219,7 @@ struct EditView: View {
         HStack {
             Button {
                 store.send(.textButtonTapped)
+                isFocused = true
             } label: {
                 Rectangle()
                     .fill(Color.clear)
@@ -182,7 +237,7 @@ struct EditView: View {
             Spacer()
 
             Button {
-
+                store.send(.textInputCompleteButtonTapped)
             } label: {
                 Rectangle()
                     .fill(Color.clear)
@@ -213,8 +268,13 @@ struct EditView: View {
         Button {
 
         } label: {
-            Text("삭제")
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
+        )
     }
 
     private var colorList: some View {

@@ -75,6 +75,10 @@
 		AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9788172D192DF9007E73B6 /* CameraPreview.swift */; };
 		AB97881A2D192F25007E73B6 /* CameraService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9788192D192F25007E73B6 /* CameraService.swift */; };
 		AB97881D2D192FAF007E73B6 /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB97881C2D192FAF007E73B6 /* CameraServiceKey.swift */; };
+		ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E882D1D36B200C181DC /* BackMapPointer.swift */; };
+		ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */; };
+		ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8D2D1D439400C181DC /* ColorChip.swift */; };
+		ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8F2D1D45F200C181DC /* ChipColors.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -211,6 +215,10 @@
 		AB9788172D192DF9007E73B6 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		AB9788192D192F25007E73B6 /* CameraService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraService.swift; sourceTree = "<group>"; };
 		AB97881C2D192FAF007E73B6 /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
+		ABA11E882D1D36B200C181DC /* BackMapPointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMapPointer.swift; sourceTree = "<group>"; };
+		ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbarView.swift; sourceTree = "<group>"; };
+		ABA11E8D2D1D439400C181DC /* ColorChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChip.swift; sourceTree = "<group>"; };
+		ABA11E8F2D1D45F200C181DC /* ChipColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipColors.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -491,6 +499,7 @@
 		AB53DE4F2CA00FD100D8DC1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				ABA11E8A2D1D3F8600C181DC /* UIKit */,
 				ABE8A0C62CEAE62800AFBEAE /* CoreSystem */,
 				AB5159772CA97C9C0043AA0A /* Constant */,
 				AB094DE62CC76EB10091E9FB /* Extension */,
@@ -521,6 +530,7 @@
 		AB71E1C62CBC062B00D2D3D9 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				ABA11E8F2D1D45F200C181DC /* ChipColors.swift */,
 				AB71E1C72CBC065600D2D3D9 /* EditView.swift */,
 				AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */,
 				AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */,
@@ -555,6 +565,14 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
+		ABA11E8A2D1D3F8600C181DC /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 		ABB444972CA8451D00C1EE67 /* Root */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +593,7 @@
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
 				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
 				AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */,
+				ABA11E8D2D1D439400C181DC /* ColorChip.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -930,6 +949,7 @@
 				ABE8A0C42CEAE61800AFBEAE /* ThumbnailLayer.swift */,
 				ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */,
 				ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */,
+				ABA11E882D1D36B200C181DC /* BackMapPointer.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -1029,6 +1049,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB97881A2D192F25007E73B6 /* CameraService.swift in Sources */,
+				ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,
@@ -1095,11 +1116,14 @@
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
+				ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */,
+				ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
 				ABCC50F12CF03D62004AD297 /* DismissButton.swift in Sources */,
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
+				ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
@@ -1282,10 +1306,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = BTX96P3YD4;
+				DEVELOPMENT_TEAM = B2X97RHADA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PeepIt/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1297,11 +1323,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.PeepIt;
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Basement02.PeepIt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1313,10 +1343,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = BTX96P3YD4;
+				DEVELOPMENT_TEAM = B2X97RHADA;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PeepIt/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1328,11 +1360,15 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = min.PeepIt;
+				PRODUCT_BUNDLE_IDENTIFIER = "Team-Basement02.PeepIt";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

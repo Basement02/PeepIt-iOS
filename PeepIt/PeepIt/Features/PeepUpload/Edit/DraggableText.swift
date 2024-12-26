@@ -21,11 +21,13 @@ struct DraggableText: View {
             WithPerceptionTracking {
                 Text(textItem.text)
                     .font(.system(size: textItem.scale))
+                    .fontWeight(.bold)
                     .foregroundStyle(textItem.color)
                     .position(
                         x: textItem.position.x + offset.width,
                         y: textItem.position.y + offset.height
                     )
+                    /// 드래그 제스처
                     .gesture(
                         DragGesture()
                             .onChanged { gesture in
@@ -47,6 +49,7 @@ struct DraggableText: View {
                                 offset = .zero
                             }
                     )
+                    /// 확대/축소 제스처
                     .gesture(
                         MagnificationGesture()
                             .onChanged { scale in
@@ -58,6 +61,18 @@ struct DraggableText: View {
                                 // TODO: 글씨 크기 고민
                                 store.send(.updateTextScale(textId: textItem.id, scale: finalScale))
                             }
+                    )
+                    /// 스티커 롱탭 제스처
+                    .onLongPressGesture(
+                        minimumDuration: 1,
+                        perform: { },
+                        onPressingChanged: { isPressing in
+                            if isPressing {
+                                store.send(.binding(.set(\.editMode, .editMode)))
+                            } else {
+                                store.send(.objectLongerTapEnded)
+                            }
+                        }
                     )
                     .onAppear {
                         let centerX = geometry.size.width / 2
