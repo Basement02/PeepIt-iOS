@@ -104,6 +104,9 @@ struct RootView: View {
 
                 case let .edit(store):
                     EditView(store: store)
+
+                case let .write(store):
+                    WriteView(store: store)
                 }
             }
         }

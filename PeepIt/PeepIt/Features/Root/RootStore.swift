@@ -45,6 +45,7 @@ struct RootStore {
         // 업로드
         case camera(CameraStore)
         case edit(EditStore)
+        case write(WriteStore)
     }
 
     @ObservableState
@@ -114,6 +115,10 @@ struct RootStore {
 
                 case let .element(_, action: .camera(.pushToEdit(image))):
                     state.path.append(.edit(EditStore.State(image: image))) 
+                    return .none
+
+                case .element(_, action: .edit(.uploadButtonTapped)):
+                    state.path.append(.write(.init()))
                     return .none
 
                 default:
