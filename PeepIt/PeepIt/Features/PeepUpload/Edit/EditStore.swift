@@ -96,6 +96,7 @@ struct EditStore {
         Reduce { state, action in
 
             switch action {
+
             case .binding(\.inputText):
                 return .none
 
@@ -199,7 +200,7 @@ struct EditStore {
                 state.selectedText = text
                 state.inputText = text.text
                 state.inputTextSize = text.scale
-//                state.sliderState.value = text.scale
+//                state.sliderState.sliderValue = text.scale
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
 
@@ -216,6 +217,10 @@ struct EditStore {
 
             case .objectLongerTapEnded:
                 state.editMode = .original
+                return .none
+
+            case .sliderAction(.dragSlider):
+                state.inputTextSize = state.sliderState.sliderValue
                 return .none
 
             default:

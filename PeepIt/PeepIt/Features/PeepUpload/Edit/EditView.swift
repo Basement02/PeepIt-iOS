@@ -103,6 +103,7 @@ struct EditView: View {
 
                         Spacer()
                     }
+                    .padding(.leading, 12)
 
                     if store.selectedText == nil {
                         VStack {
