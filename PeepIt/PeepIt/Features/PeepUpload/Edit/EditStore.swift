@@ -200,7 +200,7 @@ struct EditStore {
                 state.selectedText = text
                 state.inputText = text.text
                 state.inputTextSize = text.scale
-//                state.sliderState.sliderValue = text.scale
+                state.sliderState.sliderValue = text.scale
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
 
