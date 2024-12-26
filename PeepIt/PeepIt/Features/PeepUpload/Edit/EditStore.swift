@@ -28,7 +28,7 @@ struct EditStore {
         /// 현재 입력 테스트
         var inputText = ""
         /// 현재 입력 테스트 색
-        var inputTextColor: Color = .black
+        var inputTextColor: Color = .white
 
         /// slider state 관련
         var sliderState = SliderStore.State()

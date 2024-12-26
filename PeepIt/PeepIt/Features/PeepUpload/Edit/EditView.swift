@@ -130,8 +130,11 @@ struct EditView: View {
     private var colorChips: some View {
         ScrollView(.horizontal) {
             HStack(spacing: 3) {
-                ForEach(0..<10) { _ in
-                    ColorChip(color: .coreLime)
+                ForEach(ChipColors.allCases, id: \.self) { chip in
+                    ColorChip(color: chip.color)
+                        .onTapGesture {
+                            store.send(.textColorTapped(newColor: chip.color))
+                        }
                 }
             }
         }
@@ -171,11 +174,12 @@ struct EditView: View {
                 .focused($isFocused)
                 .frame(minHeight: 34)
                 .fixedSize(horizontal: false, vertical: true)
+                .font(.system(size: store.inputTextSize, weight: .bold))
+                .foregroundStyle(store.inputTextColor)
+                .tint(Color.coreLime)
+                .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 .multilineTextAlignment(.center)
-                .scrollDisabled(true)
-                .tint(Color.coreLime)
-                .font(.system(size: store.inputTextSize, weight: .bold))
                 .onAppear {
                     isFocused = true
                 }

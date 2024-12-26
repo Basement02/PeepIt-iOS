@@ -78,6 +78,7 @@
 		ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E882D1D36B200C181DC /* BackMapPointer.swift */; };
 		ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */; };
 		ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8D2D1D439400C181DC /* ColorChip.swift */; };
+		ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8F2D1D45F200C181DC /* ChipColors.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -217,6 +218,7 @@
 		ABA11E882D1D36B200C181DC /* BackMapPointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackMapPointer.swift; sourceTree = "<group>"; };
 		ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbarView.swift; sourceTree = "<group>"; };
 		ABA11E8D2D1D439400C181DC /* ColorChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChip.swift; sourceTree = "<group>"; };
+		ABA11E8F2D1D45F200C181DC /* ChipColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipColors.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -528,6 +530,7 @@
 		AB71E1C62CBC062B00D2D3D9 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				ABA11E8F2D1D45F200C181DC /* ChipColors.swift */,
 				AB71E1C72CBC065600D2D3D9 /* EditView.swift */,
 				AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */,
 				AB71E1D52CBE3AD000D2D3D9 /* DraggableSticker.swift */,
@@ -1116,6 +1119,7 @@
 				ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */,
+				ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */,
 				AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */,
 				ABCC50F12CF03D62004AD297 /* DismissButton.swift in Sources */,
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
