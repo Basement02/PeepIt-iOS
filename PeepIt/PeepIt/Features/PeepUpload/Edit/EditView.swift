@@ -80,8 +80,7 @@ struct EditView: View {
 
                 /// 텍스트 입력창 (추가 및 편집)
                 case .textInputMode:
-                    // TODO: Map Pointer 깔기
-                    Color.black.opacity(0.8)
+                    BackMapPointer.secondary
                         .ignoresSafeArea()
 
                     textInputTopBar
