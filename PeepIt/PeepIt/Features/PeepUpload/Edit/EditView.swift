@@ -19,9 +19,10 @@ struct EditView: View {
                 Color.black
                     .ignoresSafeArea()
 
-                /// 이미지
-                imageView
+                /// 보여주는 이미지
+                displayView
 
+                /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
                 switch store.editMode {
 
                 /// 기본
@@ -103,29 +104,28 @@ struct EditView: View {
         }
     }
 
+    /// 이미지 뷰에 corner radius 추가
+    private var displayView: some View {
+        imageView
+            .mask(
+                RoundedRectangle(cornerRadius: 24)
+                    .aspectRatio(9 / 16, contentMode: .fit)
+                    .frame(width: Constant.screenWidth)
+            )
+    }
+
+    /// 이미지 + 스티커 + 텍스트 저장
     private var imageView: some View {
         ZStack {
-            /// 이미지 + 스티커 + 텍스트 저장
             /// 이미지
-            Group {
-                if let image = store.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(9/16, contentMode: .fit)
-                        .frame(width: Constant.screenWidth)
-                } else {
-                    Rectangle()
-                        .aspectRatio(9/16, contentMode: .fit)
-                        .frame(width: Constant.screenWidth)
-                }
-            }
-            .mask {
-                RoundedRectangle(cornerRadius: 24)
-                    .aspectRatio(9/16, contentMode: .fit)
-                    .frame(width: Constant.screenWidth)
+            if let image = store.image {
+                Image(uiImage: image)
+                    .resizable()
+            } else {
+                Rectangle()
             }
 
-            /// 레이어 - 
+            /// 레이어
             Group {
                 BackImageLayer.primary()
                 BackImageLayer.secondary()
@@ -133,27 +133,35 @@ struct EditView: View {
             .ignoresSafeArea()
             .opacity(store.isCapturing ? 0 : 1)
 
-            Group {
-                /// 스티커들
-                ForEach(store.stickers, id: \.id) { sticker in
-                    DraggableSticker(sticker: sticker, store: store)
-                }
+            /// 스티커들
+            ForEach(store.stickers, id: \.id) { sticker in
+                DraggableSticker(sticker: sticker, store: store)
+            }
 
-                /// 텍스트들
-                ForEach(store.texts, id: \.id) { textItem in
-                    DraggableText(textItem: textItem, store: store)
-                        .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                        .onTapGesture {
-                            store.send(.textFieldTapped(textId: textItem.id))
+            /// 텍스트들
+            ForEach(store.texts, id: \.id) { textItem in
+                DraggableText(textItem: textItem, store: store)
+                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+                    .onTapGesture {
+                        store.send(.textFieldTapped(textId: textItem.id))
+                    }
+            }
+        }
+        .background(
+            GeometryReader { geo in
+                WithPerceptionTracking {
+                    Color.clear
+                        .onAppear {
+                            store.imageSize = geo.size
                         }
                 }
             }
-            .mask {
-                RoundedRectangle(cornerRadius: 24)
-                    .aspectRatio(9/16, contentMode: .fit)
-                    .frame(width: Constant.screenWidth)
-            }
-        }
+        )
+        .mask(
+            Rectangle()
+                .aspectRatio(9 / 16, contentMode: .fit)
+                .frame(width: Constant.screenWidth)
+        )
     }
 
     private var colorChips: some View {
@@ -283,8 +291,9 @@ struct EditView: View {
             Spacer()
 
             Button {
-                store.send(.uploadButtonTapped(
-                    image: imageView.captureAsImage())
+                store.send(.uploadButtonTapped)
+                store.send(
+                    .captureImage(image: imageView.captureAsImage(size: store.imageSize))
                 )
             } label: {
                 Image("UploadBtnN")
@@ -306,27 +315,6 @@ struct EditView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
         )
-    }
-
-    private var colorList: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(0..<13) { idx in
-                    Button {
-                        let randomColor = Color(
-                            red: Double.random(in: 0...1),
-                            green: Double.random(in: 0...1),
-                            blue: Double.random(in: 0...1)
-                        )
-                        
-                        store.send(.textColorTapped(newColor: randomColor))
-                    } label: {
-                        Text("색\(idx)")
-                    }
-                }
-            }
-        }
-        .scrollIndicators(.hidden)
     }
 }
 

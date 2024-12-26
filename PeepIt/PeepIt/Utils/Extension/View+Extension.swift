@@ -18,18 +18,17 @@ extension View {
         )
     }
 
-    func captureAsImage() -> UIImage? {
+    func captureAsImage(size: CGSize) -> UIImage? {
         // SwiftUI 뷰를 UIHostingController로 감싸서 UIView로 변환
         let hostingController = UIHostingController(rootView: self)
         let view = hostingController.view
 
-        // 원하는 크기로 뷰 설정
-        view?.bounds = CGRect(origin: .zero, size: .init(width: 301, height: 600))
+        // 뷰의 크기를 설정
+        view?.bounds = CGRect(origin: .zero, size: size)
         view?.backgroundColor = .clear
 
         // 렌더링하여 UIImage로 변환
-        let renderer = UIGraphicsImageRenderer(size: .init(width: 301, height: 600))
-
+        let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { _ in
             view?.drawHierarchy(in: view!.bounds, afterScreenUpdates: true)
         }

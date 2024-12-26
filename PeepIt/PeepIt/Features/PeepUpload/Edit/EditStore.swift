@@ -17,6 +17,8 @@ struct EditStore {
         var image: UIImage? = nil
         /// 편집이 포함된 최종 이미지
         var renderedImage: UIImage? = nil
+        /// 캡처 위한 이미지 사이즈
+        var imageSize: CGSize = .zero
         /// 스티커 저장
         var stickers: [StickerItem] = .init()
         /// 텍스트 저장
@@ -62,7 +64,9 @@ struct EditStore {
         /// 텍스트 추가 버튼 탭
         case textButtonTapped
         /// 게시 버튼 탭
-        case uploadButtonTapped(image: UIImage?)
+        case uploadButtonTapped
+        /// 현재 편집 중 이미지/캡처
+        case captureImage(image: UIImage?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         /// 드래그한 스티커 위치 업데이트
@@ -231,6 +235,9 @@ struct EditStore {
 
             case .onDisappear:
                 state.isCapturing = false
+                return .none
+
+            case .captureImage:
                 return .none
 
             default:

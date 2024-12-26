@@ -117,7 +117,7 @@ struct RootStore {
                     state.path.append(.edit(EditStore.State(image: image))) 
                     return .none
 
-                case let .element(_, action: .edit(.uploadButtonTapped(image))):
+                case let .element(_, action: .edit(.captureImage(image))):
                     state.path.append(.write(WriteStore.State(image: image)))
                     return .none
 

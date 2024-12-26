@@ -27,9 +27,6 @@ struct WriteView: View {
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                            .clipShape(
-                                RoundedRectangle(cornerRadius: 24)
-                            )
                     } else {
                         Text("안됨")
                             .foregroundStyle(.white)
