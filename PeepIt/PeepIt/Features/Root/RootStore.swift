@@ -121,6 +121,10 @@ struct RootStore {
                     state.path.append(.write(.init()))
                     return .none
 
+                case .element(_, action: .write(.uploadButtonTapped)):
+                    state.path.removeAll()
+                    return .none
+
                 default:
                     return .none
                 }
