@@ -167,7 +167,7 @@ struct EditStore {
                 state.selectedText = nil
                 state.inputTextSize = 24.0
                 state.inputTextColor = .black
-                state.sliderState.value = 24.0
+                state.sliderState.sliderValue = 24.0
 
                 return .none
 
@@ -202,17 +202,6 @@ struct EditStore {
 //                state.sliderState.value = text.scale
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
-
-                return .none
-
-            case let .sliderAction(.setSliderValue(newValue, lowerBound, upperBound)):
-                let newTextSize = min(
-                    max(
-                        lowerBound + newValue * (upperBound - lowerBound), lowerBound
-                    ),
-                    upperBound
-                )
-                state.inputTextSize = newTextSize
 
                 return .none
 

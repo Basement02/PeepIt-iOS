@@ -89,6 +89,21 @@ struct EditView: View {
                         Spacer()
                     }
 
+                    VStack {
+                        HStack {
+                            SliderView(
+                                store: store.scope(
+                                    state: \.sliderState,
+                                    action: \.sliderAction
+                                )
+                            )
+                            Spacer()
+                        }
+                        .padding(.top, 175.adjustedH)
+
+                        Spacer()
+                    }
+
                     if store.selectedText == nil {
                         VStack {
                             TextEditor(text: $store.inputText)
@@ -100,7 +115,7 @@ struct EditView: View {
                                 .scrollDisabled(true)
                                 .tint(Color.coreLime)
                                 .font(.system(size: store.inputTextSize, weight: .bold))
-                                .padding(.top, 271.adjustedH)
+                                .padding(.top, 281.adjustedH)
 
                             Spacer()
                         }
