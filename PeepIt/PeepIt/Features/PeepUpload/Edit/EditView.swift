@@ -107,12 +107,25 @@ struct EditView: View {
         ZStack {
             /// 이미지 + 스티커 + 텍스트 저장
             /// 이미지
-            if let image = store.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
+            Group {
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .aspectRatio(9/16, contentMode: .fit)
+                        .frame(width: Constant.screenWidth)
+                } else {
+                    Rectangle()
+                        .aspectRatio(9/16, contentMode: .fit)
+                        .frame(width: Constant.screenWidth)
+                }
+            }
+            .mask {
+                RoundedRectangle(cornerRadius: 24)
+                    .aspectRatio(9/16, contentMode: .fit)
+                    .frame(width: Constant.screenWidth)
             }
 
+            /// 레이어 - 
             Group {
                 BackImageLayer.primary()
                 BackImageLayer.secondary()
@@ -120,18 +133,25 @@ struct EditView: View {
             .ignoresSafeArea()
             .opacity(store.isCapturing ? 0 : 1)
 
-            /// 스티커들
-            ForEach(store.stickers, id: \.id) { sticker in
-                DraggableSticker(sticker: sticker, store: store)
-            }
+            Group {
+                /// 스티커들
+                ForEach(store.stickers, id: \.id) { sticker in
+                    DraggableSticker(sticker: sticker, store: store)
+                }
 
-            /// 텍스트들
-            ForEach(store.texts, id: \.id) { textItem in
-                DraggableText(textItem: textItem, store: store)
-                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                    .onTapGesture {
-                        store.send(.textFieldTapped(textId: textItem.id))
-                    }
+                /// 텍스트들
+                ForEach(store.texts, id: \.id) { textItem in
+                    DraggableText(textItem: textItem, store: store)
+                        .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+                        .onTapGesture {
+                            store.send(.textFieldTapped(textId: textItem.id))
+                        }
+                }
+            }
+            .mask {
+                RoundedRectangle(cornerRadius: 24)
+                    .aspectRatio(9/16, contentMode: .fit)
+                    .frame(width: Constant.screenWidth)
             }
         }
     }
