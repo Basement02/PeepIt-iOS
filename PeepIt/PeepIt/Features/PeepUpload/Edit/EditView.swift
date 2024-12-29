@@ -15,12 +15,15 @@ struct EditView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                Color.black
+            ZStack(alignment: .top) {
+                Color.base
                     .ignoresSafeArea()
 
-                /// 보여주는 이미지
-                displayView
+                /// 보여주는 이미지에는 corner radius 처리
+                imageView
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .padding(.top, 44)
+                    .padding(.top, 11.adjustedH)
 
                 /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
                 switch store.editMode {
@@ -28,28 +31,39 @@ struct EditView: View {
                 /// 기본
                 case .original:
                     ZStack {
-                        VStack {
+                        VStack(spacing: 0) {
                             HStack {
-                                if !store.isDoneButtonShowed {
-                                    BackButton { store.send(.backButtonTapped) }
-                                }
+                                BackButton { store.send(.backButtonTapped) }
 
                                 Spacer()
                             }
+                            .frame(height: 44)
                             .padding(.horizontal, 16)
 
                             Spacer()
-
-                            uploadButton
-                                .padding(.bottom, 61.adjustedH)
-                                .padding(.trailing, 4)
                         }
 
-                        VStack(spacing: 25) {
-                            stickerButton
-                            textButton
+                        HStack {
+                            VStack(spacing: 25) {
+                                stickerButton
+                                textButton
+                            }
+                            .fixedSize()
+
+                            Spacer()
                         }
                         .padding(.leading, 16)
+
+                        VStack {
+                            Spacer()
+
+                            HStack {
+                                Spacer()
+                                uploadButton
+                                    .padding(.bottom, 61.adjustedH)
+                                    .padding(.trailing, 4)
+                            }
+                        }
                     }
 
                 /// 텍스트 입력창 (추가 및 편집)
@@ -57,8 +71,12 @@ struct EditView: View {
                     BackMapPointer.secondary
                         .ignoresSafeArea()
 
-                    textInputTopBar
-                        .padding(.horizontal, 16)
+                    VStack {
+                        textInputTopBar
+                            .padding(.horizontal, 16)
+
+                        Spacer()
+                    }
 
                     fontSlider
                         .padding(.top, 175.adjustedH)
@@ -71,6 +89,7 @@ struct EditView: View {
                 case .editMode:
                     VStack {
                         Spacer()
+
                         deleteButton
                             .padding(.bottom, 84.adjustedH)
                     }
@@ -104,25 +123,14 @@ struct EditView: View {
         }
     }
 
-    /// 이미지 뷰에 corner radius 추가
-    private var displayView: some View {
-        imageView
-            .mask(
-                RoundedRectangle(cornerRadius: 24)
-                    .aspectRatio(9 / 16, contentMode: .fit)
-                    .frame(width: Constant.screenWidth)
-            )
-    }
-
-    /// 이미지 + 스티커 + 텍스트 저장
-    @ViewBuilder
+    /// 이미지 + 스티커 + 텍스트 -> 최종 저장할 이미지
     private var imageView: some View {
         ZStack {
             if let image = store.image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(9/16, contentMode: .fit)
-                    .frame(width: Constant.screenWidth)
+            } else {
+                Rectangle()
             }
 
             Group {
@@ -133,25 +141,22 @@ struct EditView: View {
             .opacity(store.isCapturing ? 0 : 1)
 
             /// 스티커들
-//            ForEach(store.stickers, id: \.id) { sticker in
-//                DraggableSticker(sticker: sticker, store: store)
-//            }
+            ForEach(store.stickers, id: \.id) { sticker in
+                DraggableSticker(sticker: sticker, store: store)
+            }
 
             /// 텍스트들
-//            ForEach(store.texts, id: \.id) { textItem in
-//                Text(textItem.text)
-//                DraggableText(textItem: textItem, store: store)
-//                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-//                    .onTapGesture {
-//                        store.send(.textFieldTapped(textId: textItem.id))
-//                    }
-//            }
+            ForEach(store.texts, id: \.id) { textItem in
+                DraggableText(textItem: textItem, store: store)
+                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+                    .onTapGesture {
+                        store.send(.textFieldTapped(textId: textItem.id))
+                    }
+            }
         }
-        .mask(
-            Rectangle()
-                .aspectRatio(9 / 16, contentMode: .fit)
-                .frame(width: Constant.screenWidth)
-        )
+        .aspectRatio(9/16, contentMode: .fit)
+        .frame(width: Constant.screenWidth)
+        .clipShape(Rectangle())
     }
 
     private var colorChips: some View {

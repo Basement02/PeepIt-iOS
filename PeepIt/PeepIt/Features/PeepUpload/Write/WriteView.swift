@@ -25,11 +25,15 @@ struct WriteView: View {
 
                 if let image = store.image {
                     Image(uiImage: image)
-                        .mask(
-                            RoundedRectangle(cornerRadius: 24)
-                                .aspectRatio(9 / 16, contentMode: .fit)
-                                .frame(width: Constant.screenWidth)
-                        )
+//                        .mask(
+//                            RoundedRectangle(cornerRadius: 24)
+//                                .aspectRatio(9 / 16, contentMode: .fit)
+//                                .frame(width: Constant.screenWidth)
+//                        )
+                } else {
+                    Rectangle()
+                        .aspectRatio(9 / 16, contentMode: .fit)
+                        .frame(width: Constant.screenWidth)
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
