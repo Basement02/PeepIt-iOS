@@ -79,6 +79,7 @@
 		ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */; };
 		ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8D2D1D439400C181DC /* ColorChip.swift */; };
 		ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8F2D1D45F200C181DC /* ChipColors.swift */; };
+		ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E9B2D21766300C181DC /* TownTitleView.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -219,6 +220,7 @@
 		ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbarView.swift; sourceTree = "<group>"; };
 		ABA11E8D2D1D439400C181DC /* ColorChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorChip.swift; sourceTree = "<group>"; };
 		ABA11E8F2D1D45F200C181DC /* ChipColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipColors.swift; sourceTree = "<group>"; };
+		ABA11E9B2D21766300C181DC /* TownTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownTitleView.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
 				AB7786DA2CFF1AD700DB48D5 /* CustomTextEditor.swift */,
 				ABA11E8D2D1D439400C181DC /* ColorChip.swift */,
+				ABA11E9B2D21766300C181DC /* TownTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1103,6 +1106,7 @@
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
@@ -1312,6 +1316,7 @@
 				INFOPLIST_FILE = PeepIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1349,6 +1354,7 @@
 				INFOPLIST_FILE = PeepIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

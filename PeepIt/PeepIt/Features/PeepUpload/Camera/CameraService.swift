@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import UIKit
 
 protocol CameraServiceProtocol {
     func startSession() -> AVCaptureSession
@@ -81,6 +82,27 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         }
     }
 
+//    func photoOutput(
+//        _ output: AVCapturePhotoOutput,
+//        didFinishProcessingPhoto photo: AVCapturePhoto,
+//        error: Error?
+//    ) {
+//        if let error = error {
+//            continuation?.resume(throwing: error)
+//        } else if let data = photo.fileDataRepresentation() {
+//            continuation?.resume(returning: data)
+//        } else {
+//            continuation?.resume(
+//                throwing: NSError(
+//                    domain: "CameraService",
+//                    code: -1,
+//                    userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
+//                )
+//            )
+//        }
+//        continuation = nil
+//    }
+
     func photoOutput(
         _ output: AVCapturePhotoOutput,
         didFinishProcessingPhoto photo: AVCapturePhoto,
@@ -99,6 +121,7 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
                 )
             )
         }
+        
         continuation = nil
     }
 
@@ -114,5 +137,22 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             videoContinuation?.resume(returning: outputFileURL)
         }
         videoContinuation = nil
+    }
+
+
+    func cropTo9x16(image: UIImage) -> UIImage? {
+        let width = image.size.width
+        let height = image.size.height
+        let targetWidth = min(width, height * 9 / 16)
+        let targetHeight = targetWidth * 16 / 9
+        let cropRect = CGRect(
+            x: (width - targetWidth) / 2,
+            y: (height - targetHeight) / 2,
+            width: targetWidth,
+            height: targetHeight
+        )
+
+        guard let cgImage = image.cgImage?.cropping(to: cropRect) else { return nil }
+        return UIImage(cgImage: cgImage)
     }
 }

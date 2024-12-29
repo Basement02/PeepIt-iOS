@@ -15,67 +15,55 @@ struct EditView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                Color.black
+            ZStack(alignment: .top) {
+                Color.base
                     .ignoresSafeArea()
 
-                /// 이미지
-                if let image = store.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(
-                            RoundedRectangle(cornerRadius: 24)
-                        )
-                }
+                /// 보여주는 이미지에는 corner radius 처리
+                imageView
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .padding(.top, 44)
+                    .padding(.top, 11.adjustedH)
 
-                Group {
-                    BackImageLayer.primary()
-                    BackImageLayer.secondary()
-                }
-                .ignoresSafeArea()
-
-                /// 스티커들
-                ForEach(store.stickers, id: \.id) { sticker in
-                    DraggableSticker(sticker: sticker, store: store)
-                }
-
-                /// 텍스트들
-                ForEach(store.texts, id: \.id) { textItem in
-                    DraggableText(textItem: textItem, store: store)
-                        .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                        .onTapGesture {
-                            store.send(.textFieldTapped(textId: textItem.id))
-                        }
-                }
-
+                /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
                 switch store.editMode {
 
                 /// 기본
                 case .original:
                     ZStack {
-                        VStack {
+                        VStack(spacing: 0) {
                             HStack {
-                                if !store.isDoneButtonShowed {
-                                    BackButton { store.send(.backButtonTapped) }
-                                }
+                                BackButton { store.send(.backButtonTapped) }
 
                                 Spacer()
                             }
+                            .frame(height: 44)
                             .padding(.horizontal, 16)
 
                             Spacer()
-
-                            uploadButton
-                                .padding(.bottom, 61.adjustedH)
-                                .padding(.trailing, 4)
                         }
 
-                        VStack(spacing: 25) {
-                            stickerButton
-                            textButton
+                        HStack {
+                            VStack(spacing: 25) {
+                                stickerButton
+                                textButton
+                            }
+                            .fixedSize()
+
+                            Spacer()
                         }
                         .padding(.leading, 16)
+
+                        VStack {
+                            Spacer()
+
+                            HStack {
+                                Spacer()
+                                uploadButton
+                                    .padding(.bottom, 61.adjustedH)
+                                    .padding(.trailing, 4)
+                            }
+                        }
                     }
 
                 /// 텍스트 입력창 (추가 및 편집)
@@ -83,8 +71,12 @@ struct EditView: View {
                     BackMapPointer.secondary
                         .ignoresSafeArea()
 
-                    textInputTopBar
-                        .padding(.horizontal, 16)
+                    VStack {
+                        textInputTopBar
+                            .padding(.horizontal, 16)
+
+                        Spacer()
+                    }
 
                     fontSlider
                         .padding(.top, 175.adjustedH)
@@ -97,6 +89,7 @@ struct EditView: View {
                 case .editMode:
                     VStack {
                         Spacer()
+
                         deleteButton
                             .padding(.bottom, 84.adjustedH)
                     }
@@ -124,7 +117,46 @@ struct EditView: View {
                 }
             }
             .background(KeyboardToolbarView())
+            .onDisappear {
+                store.send(.onDisappear)
+            }
         }
+    }
+
+    /// 이미지 + 스티커 + 텍스트 -> 최종 저장할 이미지
+    private var imageView: some View {
+        ZStack {
+            if let image = store.image {
+                Image(uiImage: image)
+                    .resizable()
+            } else {
+                Rectangle()
+            }
+
+            Group {
+                BackImageLayer.primary()
+                BackImageLayer.secondary()
+            }
+            .ignoresSafeArea()
+            .opacity(store.isCapturing ? 0 : 1)
+
+            /// 스티커들
+            ForEach(store.stickers, id: \.id) { sticker in
+                DraggableSticker(sticker: sticker, store: store)
+            }
+
+            /// 텍스트들
+            ForEach(store.texts, id: \.id) { textItem in
+                DraggableText(textItem: textItem, store: store)
+                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+                    .onTapGesture {
+                        store.send(.textFieldTapped(textId: textItem.id))
+                    }
+            }
+        }
+        .aspectRatio(9/16, contentMode: .fit)
+        .frame(width: Constant.screenWidth)
+        .clipShape(Rectangle())
     }
 
     private var colorChips: some View {
@@ -173,6 +205,7 @@ struct EditView: View {
             TextEditor(text: $store.inputText)
                 .focused($isFocused)
                 .frame(minHeight: 34)
+                .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: store.inputTextSize, weight: .bold))
                 .foregroundStyle(store.inputTextColor)
@@ -249,12 +282,21 @@ struct EditView: View {
         }
     }
 
+
     private var uploadButton: some View {
         HStack {
             Spacer()
 
             Button {
                 store.send(.uploadButtonTapped)
+
+                let renderer = ImageRenderer(content: imageView)
+                renderer.scale = UIScreen.main.scale 
+
+                if let uiimage = renderer.uiImage {
+//                    UIImageWriteToSavedPhotosAlbum(uiimage, nil, nil, nil)
+                    store.send(.captureImage(image: uiimage))
+                }
             } label: {
                 Image("UploadBtnN")
             }
@@ -275,27 +317,6 @@ struct EditView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
         )
-    }
-
-    private var colorList: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                ForEach(0..<13) { idx in
-                    Button {
-                        let randomColor = Color(
-                            red: Double.random(in: 0...1),
-                            green: Double.random(in: 0...1),
-                            blue: Double.random(in: 0...1)
-                        )
-                        
-                        store.send(.textColorTapped(newColor: randomColor))
-                    } label: {
-                        Text("색\(idx)")
-                    }
-                }
-            }
-        }
-        .scrollIndicators(.hidden)
     }
 }
 

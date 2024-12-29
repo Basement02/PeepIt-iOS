@@ -58,8 +58,10 @@ struct DraggableText: View {
                             }
                             .onEnded { scale in
                                 finalScale *= scale
-                                // TODO: 글씨 크기 고민
-                                store.send(.updateTextScale(textId: textItem.id, scale: finalScale))
+
+                                store.send(
+                                    .updateTextScale(textId: textItem.id, scale: finalScale)
+                                )
                             }
                     )
                     /// 스티커 롱탭 제스처
@@ -75,14 +77,16 @@ struct DraggableText: View {
                         }
                     )
                     .onAppear {
-                        let centerX = geometry.size.width / 2
-                        let centerY = geometry.size.height / 2
+                        if textItem.position == .zero {
+                            let centerX = geometry.size.width / 2
+                            let centerY = geometry.size.height / 2
 
-                        store.send(
-                            .updateTextPosition(
-                                textId: textItem.id,
-                                position: CGPoint(x: centerX, y: centerY))
-                        )
+                            store.send(
+                                .updateTextPosition(
+                                    textId: textItem.id,
+                                    position: CGPoint(x: centerX, y: centerY))
+                            )
+                        }
                     }
             }
         }

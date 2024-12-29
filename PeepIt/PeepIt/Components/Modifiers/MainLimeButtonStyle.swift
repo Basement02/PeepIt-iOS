@@ -24,7 +24,7 @@ struct MainLimeButtonStyle: ViewModifier {
 
 extension View {
 
-    func mainLimeButtonStyle(_ width: CGFloat = 250) -> some View {
+    func mainLimeButtonStyle(width: CGFloat = 250) -> some View {
         self.modifier(
             MainLimeButtonStyle(width: width)
         )
