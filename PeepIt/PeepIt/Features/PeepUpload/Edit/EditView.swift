@@ -115,17 +115,16 @@ struct EditView: View {
     }
 
     /// 이미지 + 스티커 + 텍스트 저장
+    @ViewBuilder
     private var imageView: some View {
         ZStack {
-            /// 이미지
             if let image = store.image {
                 Image(uiImage: image)
                     .resizable()
-            } else {
-                Rectangle()
+                    .aspectRatio(9/16, contentMode: .fit)
+                    .frame(width: Constant.screenWidth)
             }
 
-            /// 레이어
             Group {
                 BackImageLayer.primary()
                 BackImageLayer.secondary()
@@ -134,29 +133,20 @@ struct EditView: View {
             .opacity(store.isCapturing ? 0 : 1)
 
             /// 스티커들
-            ForEach(store.stickers, id: \.id) { sticker in
-                DraggableSticker(sticker: sticker, store: store)
-            }
+//            ForEach(store.stickers, id: \.id) { sticker in
+//                DraggableSticker(sticker: sticker, store: store)
+//            }
 
             /// 텍스트들
-            ForEach(store.texts, id: \.id) { textItem in
-                DraggableText(textItem: textItem, store: store)
-                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                    .onTapGesture {
-                        store.send(.textFieldTapped(textId: textItem.id))
-                    }
-            }
+//            ForEach(store.texts, id: \.id) { textItem in
+//                Text(textItem.text)
+//                DraggableText(textItem: textItem, store: store)
+//                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
+//                    .onTapGesture {
+//                        store.send(.textFieldTapped(textId: textItem.id))
+//                    }
+//            }
         }
-        .background(
-            GeometryReader { geo in
-                WithPerceptionTracking {
-                    Color.clear
-                        .onAppear {
-                            store.imageSize = geo.size
-                        }
-                }
-            }
-        )
         .mask(
             Rectangle()
                 .aspectRatio(9 / 16, contentMode: .fit)
@@ -286,15 +276,21 @@ struct EditView: View {
         }
     }
 
+
     private var uploadButton: some View {
         HStack {
             Spacer()
 
             Button {
                 store.send(.uploadButtonTapped)
-                store.send(
-                    .captureImage(image: imageView.captureAsImage(size: store.imageSize))
-                )
+
+                let renderer = ImageRenderer(content: imageView)
+                renderer.scale = UIScreen.main.scale 
+
+                if let uiimage = renderer.uiImage {
+//                    UIImageWriteToSavedPhotosAlbum(uiimage, nil, nil, nil)
+                    store.send(.captureImage(image: uiimage))
+                }
             } label: {
                 Image("UploadBtnN")
             }

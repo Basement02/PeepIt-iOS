@@ -170,6 +170,7 @@ struct EditStore {
                         scale: state.inputTextSize,
                         color: state.inputTextColor
                     )
+                    
                     state.texts.append(newText)
                 }
 

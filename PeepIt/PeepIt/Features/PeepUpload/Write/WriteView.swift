@@ -20,31 +20,20 @@ struct WriteView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                VStack {
-                    Spacer()
+                Color.black
+                    .ignoresSafeArea()
 
-                    if let image = store.image {
-                        Image(uiImage: image)
-                            .resizable()
-                            .scaledToFit()
-                    } else {
-                        Text("안됨")
-                            .foregroundStyle(.white)
-                    }
-                    
-                    Spacer()
-
-                    textView
-
-                    uploadButton
-                }
-                .padding(.horizontal, 20)
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    placeButton
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .mask(
+                            RoundedRectangle(cornerRadius: 24)
+                                .aspectRatio(9 / 16, contentMode: .fit)
+                                .frame(width: Constant.screenWidth)
+                        )
                 }
             }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
