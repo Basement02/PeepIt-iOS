@@ -205,6 +205,7 @@ struct EditView: View {
             TextEditor(text: $store.inputText)
                 .focused($isFocused)
                 .frame(minHeight: 34)
+                .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: store.inputTextSize, weight: .bold))
                 .foregroundStyle(store.inputTextColor)
