@@ -70,14 +70,16 @@ struct DraggableSticker: View {
                         }
                     )
                     .onAppear {
-                        let centerX = geometry.size.width / 2
-                        let centerY = geometry.size.height / 2
+                        if sticker.position == .zero {
+                            let centerX = geometry.size.width / 2
+                            let centerY = geometry.size.height / 2
 
-                        store.send(
-                            .updateStickerPosition(
-                                stickerId: sticker.id,
-                                position: CGPoint(x: centerX, y: centerY))
-                        )
+                            store.send(
+                                .updateStickerPosition(
+                                    stickerId: sticker.id,
+                                    position: CGPoint(x: centerX, y: centerY))
+                            )
+                        }
                     }
             }
         }
