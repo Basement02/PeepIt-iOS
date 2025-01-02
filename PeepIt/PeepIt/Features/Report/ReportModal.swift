@@ -11,6 +11,8 @@ import ComposableArchitecture
 struct ReportModal: View {
     @Perception.Bindable var store: StoreOf<ReportStore>
 
+    @FocusState var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
             ZStack(alignment: .bottom) {
@@ -212,11 +214,30 @@ struct ReportModal: View {
     }
 
     private var reasonWriteTextView: some View {
-        CustomTextEditor(
-            placeholder: "문제 상황을 인지하고 대처할 수 있도록 신고 사유에 대해 자세히 설명해주세요.".forceCharWrapping,
-            text: $store.reportReason
-        )
+        ZStack(alignment: .topLeading) {
+            TextEditor(text: $store.reportReason)
+                .focused($isFocused)
+                .foregroundStyle(Color.white)
+                .tint(Color.coreLime)
+                .scrollContentBackground(.hidden)
+                .background(Color.clear)
+
+            if store.reportReason.isEmpty {
+                Text("문제 상황을 인지하고 대처할 수 있도록 신고 사유에 대해 자세히 설명해주세요.")
+                    .opacity(isFocused ? 0 : 1)
+                    .foregroundStyle(Color.gray300)
+                    .padding(.top, 8)
+                    .padding(.leading, 4)
+            }
+        }
+        .pretendard(.body05)
+        .padding(.all, 18)
+        .background(Color.gray700)
         .frame(height: 268)
+        .roundedCorner(16, corners: .allCorners)
+        .onTapGesture {
+            isFocused = true
+        }
     }
 
     private var shareButton: some View {
