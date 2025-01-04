@@ -71,7 +71,7 @@ struct CameraView: View {
                         store.send(.shootButtonTapped, transaction: transaction)
                     }
             )
-            .simultaneousGesture( /// 영상 찍기
+            .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in
                         store.send(.shootButtonLongerTapStarted)
