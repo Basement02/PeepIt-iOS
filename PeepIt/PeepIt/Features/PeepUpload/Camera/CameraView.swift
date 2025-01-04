@@ -27,8 +27,13 @@ struct CameraView: View {
                 }
                 .ignoresSafeArea()
 
-                VStack {
+                VStack(spacing: 0) {
                     topBar
+
+                    if store.isRecording {
+                        timerView
+                            .padding(.top, 10.4.adjustedH)
+                    }
 
                     Spacer()
 
@@ -60,7 +65,11 @@ struct CameraView: View {
         Image(store.isRecording ? "BtnShotIng" : "BtnShot")
             .gesture( /// 탭해서 카메라 찍기
                 TapGesture()
-                    .onEnded { store.send(.shootButtonTapped) }
+                    .onEnded {
+                        var transaction = Transaction(animation: nil)
+                        transaction.disablesAnimations = true
+                        store.send(.shootButtonTapped, transaction: transaction)
+                    }
             )
             .simultaneousGesture( /// 영상 찍기
                 DragGesture(minimumDistance: 0)
@@ -71,6 +80,29 @@ struct CameraView: View {
                         store.send(.shootButtonLongerTapEnded)
                     }
             )
+    }
+
+    private var timerView: some View {
+        PeepItProgress(store: self.store)
+            .padding(.horizontal, 16)
+    }
+}
+
+fileprivate struct PeepItProgress: View {
+    let store: StoreOf<CameraStore>
+
+    var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 100)
+                .fill(Color.nonOp)
+
+            RoundedRectangle(cornerRadius: 100)
+                .fill(Color.coreLime)
+                .frame(width: CGFloat(store.recordingTime) / 30.0 * Constant.screenWidth)
+                .animation(.linear(duration: 1.0), value: store.recordingTime)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 3)
     }
 }
 
