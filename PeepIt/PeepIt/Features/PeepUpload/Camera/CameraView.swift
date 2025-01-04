@@ -92,17 +92,19 @@ fileprivate struct PeepItProgress: View {
     let store: StoreOf<CameraStore>
 
     var body: some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 100)
-                .fill(Color.nonOp)
+        WithPerceptionTracking {
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 100)
+                    .fill(Color.nonOp)
 
-            RoundedRectangle(cornerRadius: 100)
-                .fill(Color.coreLime)
-                .frame(width: CGFloat(store.recordingTime) / 30.0 * Constant.screenWidth)
-                .animation(.linear(duration: 1.0), value: store.recordingTime)
+                RoundedRectangle(cornerRadius: 100)
+                    .fill(Color.coreLime)
+                    .frame(width: CGFloat(store.recordingTime) / 30.0 * Constant.screenWidth)
+                    .animation(.linear(duration: 1.0), value: store.recordingTime)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 3)
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 3)
     }
 }
 
