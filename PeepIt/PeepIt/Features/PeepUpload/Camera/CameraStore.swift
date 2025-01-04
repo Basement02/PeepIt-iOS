@@ -15,21 +15,41 @@ struct CameraStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 카메라 세션
         var cameraSession: AVCaptureSession? = nil
+        /// 촬영한 사진
         var capturedPhoto: UIImage? = nil
+        /// 촬영한 영상
         var recordedVideo: URL? = nil
+        /// 영상 촬영 중인지 여부 -> 버튼 모양 및 영상 촬영 시간 체크
         var isRecording = false
+        /// 영상 촬영 시간
+        var recordingTime = 0
     }
 
     enum Action {
+        /// 화면 등장 - 카메라 세팅
         case onAppear
+        /// 사진, 영상 촬영 관련 뷰에서 발생한 이벤트
         case shootButtonTapped
         case shootButtonLongerTapStarted
         case shootButtonLongerTapEnded
+        /// 영상 촬영
+        case stopRecording
+        case startRecording
+        /// 촬영된 비디오/영상 저장
         case photoCaptured(image: UIImage?)
         case videoRecorded(video: URL?)
-        case pushToEdit(image: UIImage?)
+        /// 타이머
+        case setTimer
+        case timerTicked
+        /// 화면 전환
         case backButtonTapped
+        case pushToEdit(image: UIImage?)
+    }
+
+    enum CancelId {
+        case timer
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -59,6 +79,21 @@ struct CameraStore {
 
                 state.isRecording = true
 
+                return .merge(
+                    .send(.setTimer),
+                    .send(.startRecording)
+                )
+
+            case .shootButtonLongerTapEnded:
+                state.isRecording = false
+                state.recordingTime = 0
+
+                return .merge(
+                    .cancel(id: CancelId.timer),
+                    .send(.stopRecording)
+                )
+
+            case .startRecording:
                 return .run { _ in
                     do {
                         let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID()).mp4")
@@ -69,9 +104,7 @@ struct CameraStore {
                     }
                 }
 
-            case .shootButtonLongerTapEnded:
-                state.isRecording = false
-
+            case .stopRecording:
                 return .run { send in
                     let recordedURL = try await cameraService.stopRecording()
                     print("Recording saved at: \(recordedURL)")
@@ -84,6 +117,23 @@ struct CameraStore {
 
             case let .videoRecorded(url):
                 state.recordedVideo = url
+                return .none
+
+            case .setTimer:
+                if state.isRecording {
+                    return .run { send in
+                        while true {
+                            try await Task.sleep(for: .seconds(1))
+                            await send(.timerTicked)
+                        }
+                    }
+                    .cancellable(id: CancelId.timer)
+                }
+
+                return .none
+
+            case .timerTicked:
+                state.recordingTime += 1
                 return .none
 
             case .pushToEdit:
