@@ -15,6 +15,7 @@ struct CameraView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                /// 카메라 + 기본 레이어
                 Group {
                     if let session = store.cameraSession {
                         CameraPreview(session: session)
@@ -31,14 +32,9 @@ struct CameraView: View {
 
                     Spacer()
 
-                    Image(store.isRecording ? "BtnShotIng" : "BtnShot")
+                    shootButton
                         .padding(.bottom, 34.adjustedH)
-                        .onTapGesture {
-                            var transaction = Transaction(animation: nil)
-                            transaction.disablesAnimations = true
-                            store.send(.shootButtonTapped, transaction: transaction)
-                        }
-                    }
+                }
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
@@ -58,6 +54,23 @@ struct CameraView: View {
             Image("FlashOnN")
         }
         .padding(.horizontal, 16)
+    }
+
+    private var shootButton: some View {
+        Image(store.isRecording ? "BtnShotIng" : "BtnShot")
+            .gesture( /// 탭해서 카메라 찍기
+                TapGesture()
+                    .onEnded { store.send(.shootButtonTapped) }
+            )
+            .simultaneousGesture( /// 영상 찍기
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        store.send(.shootButtonLongerTapStarted)
+                    }
+                    .onEnded { _ in
+                        store.send(.shootButtonLongerTapEnded)
+                    }
+            )
     }
 }
 

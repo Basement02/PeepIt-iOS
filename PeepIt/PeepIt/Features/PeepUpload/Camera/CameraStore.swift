@@ -42,7 +42,7 @@ struct CameraStore {
             case .onAppear:
                 state.cameraSession = cameraService.startSession()
                 return .none
-                
+
             case .shootButtonTapped:
                 return .run { send in
                     do {
@@ -55,13 +55,15 @@ struct CameraStore {
                 }
 
             case .shootButtonLongerTapStarted:
+                guard !state.isRecording else { return .none }
+
                 state.isRecording = true
 
                 return .run { _ in
                     do {
-                        let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("video.mp4")
+                        let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID()).mp4")
                         try cameraService.startRecording(to: outputURL)
-                        print("Recording started...")
+                        print("Recording started")
                     } catch {
                         print("Failed to start recording: \(error)")
                     }
@@ -70,23 +72,18 @@ struct CameraStore {
             case .shootButtonLongerTapEnded:
                 state.isRecording = false
 
-                return .run { _ in
-                    Task {
-                        do {
-                            let recordedURL = try await cameraService.stopRecording()
-                            print("Recording saved at: \(recordedURL)")
-                        } catch {
-                            print("Failed to stop recording: \(error)")
-                        }
-                    }
+                return .run { send in
+                    let recordedURL = try await cameraService.stopRecording()
+                    print("Recording saved at: \(recordedURL)")
+                    await send(.videoRecorded(video: recordedURL))
                 }
 
             case let .photoCaptured(image):
                 state.capturedPhoto = image
                 return .send(.pushToEdit(image: image))
 
-            case let .videoRecorded(video):
-                state.recordedVideo = video
+            case let .videoRecorded(url):
+                state.recordedVideo = url
                 return .none
 
             case .pushToEdit:

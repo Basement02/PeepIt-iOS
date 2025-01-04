@@ -16,7 +16,7 @@ protocol CameraServiceProtocol {
 }
 
 final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
-    
+
     private let session = AVCaptureSession()
     private let photoOutput = AVCapturePhotoOutput()
     private let videoOutput = AVCaptureMovieFileOutput()
@@ -42,14 +42,14 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
 
         if session.canAddInput(input) { session.addInput(input) }
         if session.canAddOutput(photoOutput) { session.addOutput(photoOutput) }
-        if session.canAddOutput(videoOutput) { session.addOutput(videoOutput) } 
+        if session.canAddOutput(videoOutput) { session.addOutput(videoOutput) }
 
         session.commitConfiguration()
 
         DispatchQueue.global(qos: .userInitiated).async {
             self.session.startRunning()
         }
-        
+
         return session
     }
 
@@ -65,7 +65,11 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
 
     func startRecording(to url: URL) throws {
         guard !videoOutput.isRecording else {
-            throw NSError(domain: "CameraService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Already recording"])
+            throw NSError(
+                domain: "CameraService",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Already recording"]
+            )
         }
 
         videoOutput.startRecording(to: url, recordingDelegate: self)
@@ -73,7 +77,11 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
 
     func stopRecording() async throws -> URL {
         guard videoOutput.isRecording else {
-            throw NSError(domain: "CameraService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Not currently recording"])
+            throw NSError(
+                domain: "CameraService",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Not currently recording"]
+            )
         }
 
         return try await withCheckedThrowingContinuation { continuation in
@@ -81,27 +89,6 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             videoOutput.stopRecording()
         }
     }
-
-//    func photoOutput(
-//        _ output: AVCapturePhotoOutput,
-//        didFinishProcessingPhoto photo: AVCapturePhoto,
-//        error: Error?
-//    ) {
-//        if let error = error {
-//            continuation?.resume(throwing: error)
-//        } else if let data = photo.fileDataRepresentation() {
-//            continuation?.resume(returning: data)
-//        } else {
-//            continuation?.resume(
-//                throwing: NSError(
-//                    domain: "CameraService",
-//                    code: -1,
-//                    userInfo: [NSLocalizedDescriptionKey: "Unknown error"]
-//                )
-//            )
-//        }
-//        continuation = nil
-//    }
 
     func photoOutput(
         _ output: AVCapturePhotoOutput,
@@ -121,7 +108,7 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
                 )
             )
         }
-        
+
         continuation = nil
     }
 
@@ -137,22 +124,5 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             videoContinuation?.resume(returning: outputFileURL)
         }
         videoContinuation = nil
-    }
-
-
-    func cropTo9x16(image: UIImage) -> UIImage? {
-        let width = image.size.width
-        let height = image.size.height
-        let targetWidth = min(width, height * 9 / 16)
-        let targetHeight = targetWidth * 16 / 9
-        let cropRect = CGRect(
-            x: (width - targetWidth) / 2,
-            y: (height - targetHeight) / 2,
-            width: targetWidth,
-            height: targetHeight
-        )
-
-        guard let cgImage = image.cgImage?.cropping(to: cropRect) else { return nil }
-        return UIImage(cgImage: cgImage)
     }
 }
