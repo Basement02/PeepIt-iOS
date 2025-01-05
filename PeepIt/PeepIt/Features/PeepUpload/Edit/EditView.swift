@@ -21,7 +21,7 @@ struct EditView: View {
                     .ignoresSafeArea()
 
                 /// 보여주는 이미지에는 corner radius 처리
-                imageView
+                peepView
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(.top, 44)
                     .padding(.top, 11.adjustedH)
@@ -46,6 +46,7 @@ struct EditView: View {
 
                         HStack {
                             VStack(spacing: 25) {
+                                if let _ = store.videoURL { soundButton }
                                 stickerButton
                                 textButton
                             }
@@ -124,8 +125,8 @@ struct EditView: View {
         }
     }
 
-    /// 이미지 + 스티커 + 텍스트 -> 최종 저장할 이미지
-    private var imageView: some View {
+    /// 이미지(영상) + 스티커 + 텍스트 -> 최종 저장할 핍
+    private var peepView: some View {
         ZStack {
             if let image = store.image {
                 Image(uiImage: image)
@@ -225,14 +226,18 @@ struct EditView: View {
     }
 
     private var soundButton: some View {
-        HStack {
-            Button {
-                store.send(.soundOnOffButtonTapped)
-            } label: {
-                Text("소리 on/off")
-            }
-            Spacer()
+        Button {
+            store.send(.soundOnOffButtonTapped)
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            store.isVideoSoundOn ?
+            PressableButtonStyle(originImg: "SoundOnN", pressedImg: "SoundOnY") :
+                PressableButtonStyle(originImg: "SoundOffN", pressedImg: "SoundOffY")
+        )
     }
 
     private var stickerButton: some View {
@@ -293,7 +298,7 @@ struct EditView: View {
             Button {
                 store.send(.uploadButtonTapped)
 
-                let renderer = ImageRenderer(content: imageView)
+                let renderer = ImageRenderer(content: peepView)
                 renderer.scale = UIScreen.main.scale 
 
                 if let uiimage = renderer.uiImage {
