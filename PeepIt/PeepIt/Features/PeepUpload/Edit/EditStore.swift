@@ -15,6 +15,8 @@ struct EditStore {
     struct State: Equatable {
         /// 찍은 이미지
         var image: UIImage? = nil
+        /// 찍은 영상
+        var videoURL: URL? = nil
         /// 편집이 포함된 최종 이미지
         var renderedImage: UIImage? = nil
         /// 캡처 위한 이미지 사이즈
@@ -37,9 +39,8 @@ struct EditStore {
         var isCapturing = false
         /// slider state 관련
         var sliderState = SliderStore.State()
-
-        ///
-        var videoURL: URL? = nil
+        /// 영상 소리 모드
+        var isVideoSoundOn = true
 
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
@@ -113,11 +114,10 @@ struct EditStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                    await dismiss()
-                }
+                return .run { _ in await dismiss() }
 
             case .soundOnOffButtonTapped:
+                state.isVideoSoundOn.toggle()
                 return .none
 
             case .stickerButtonTapped:

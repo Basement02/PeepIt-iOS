@@ -106,9 +106,13 @@ struct CameraStore {
 
             case .stopRecording:
                 return .run { send in
-                    let recordedURL = try await cameraService.stopRecording()
-                    print("Recording saved at: \(recordedURL)")
-                    await send(.videoRecorded(video: recordedURL))
+                    do {
+                        let recordedURL = try await cameraService.stopRecording()
+                        print("Recording saved at: \(recordedURL)")
+                        await send(.videoRecorded(video: recordedURL))
+                    } catch {
+                        print("Failed Stop Recording: \(error)")
+                    }
                 }
 
             case let .photoCaptured(image):

@@ -38,9 +38,16 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             return session
         }
 
+        guard let microphone = AVCaptureDevice.default(for: .audio),
+              let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
+            session.commitConfiguration()
+            return session
+        }
+
         session.sessionPreset = .hd1920x1080
 
         if session.canAddInput(input) { session.addInput(input) }
+        if session.canAddInput(audioInput) { session.addInput(audioInput) }
         if session.canAddOutput(photoOutput) { session.addOutput(photoOutput) }
         if session.canAddOutput(videoOutput) { session.addOutput(videoOutput) }
 

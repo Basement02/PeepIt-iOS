@@ -132,7 +132,10 @@ struct EditView: View {
                 Image(uiImage: image)
                     .resizable()
             } else if let url = store.videoURL {
-                LoopingVideoPlayerView(videoURL: url)
+                LoopingVideoPlayerView(
+                    videoURL: url,
+                    isSoundOn: store.isVideoSoundOn
+                )
             } else {
                 Rectangle()
             }
