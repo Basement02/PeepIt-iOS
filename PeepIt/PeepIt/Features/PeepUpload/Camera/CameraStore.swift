@@ -45,7 +45,7 @@ struct CameraStore {
         case timerTicked
         /// 화면 전환
         case backButtonTapped
-        case pushToEdit(image: UIImage?)
+        case pushToEdit(image: UIImage?, video: URL?)
     }
 
     enum CancelId {
@@ -113,11 +113,11 @@ struct CameraStore {
 
             case let .photoCaptured(image):
                 state.capturedPhoto = image
-                return .send(.pushToEdit(image: image))
+                return .send(.pushToEdit(image: image, video: nil))
 
             case let .videoRecorded(url):
                 state.recordedVideo = url
-                return .none
+                return .send(.pushToEdit(image: nil, video: url))
 
             case .setTimer:
                 if state.isRecording {

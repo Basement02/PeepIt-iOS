@@ -113,8 +113,10 @@ struct RootStore {
                     state.path.append(.camera(.init()))
                     return .none
 
-                case let .element(_, action: .camera(.pushToEdit(image))):
-                    state.path.append(.edit(EditStore.State(image: image))) 
+                case let .element(_, action: .camera(.pushToEdit(image, videoURL))):
+                    state.path.append(
+                        .edit(EditStore.State(image: image, videoURL: videoURL))
+                    ) 
                     return .none
 
                 case let .element(_, action: .edit(.captureImage(image))):

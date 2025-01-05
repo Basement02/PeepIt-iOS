@@ -31,7 +31,8 @@ struct CameraView: View {
                     topBar
 
                     if store.isRecording {
-                        timerView
+                        PeepItProgress(store: self.store)
+                            .padding(.horizontal, 16)
                             .padding(.top, 10.4.adjustedH)
                     }
 
@@ -80,11 +81,6 @@ struct CameraView: View {
                         store.send(.shootButtonLongerTapEnded)
                     }
             )
-    }
-
-    private var timerView: some View {
-        PeepItProgress(store: self.store)
-            .padding(.horizontal, 16)
     }
 }
 
