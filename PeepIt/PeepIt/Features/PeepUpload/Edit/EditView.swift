@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 import ComposableArchitecture
 
 struct EditView: View {
@@ -129,6 +130,8 @@ struct EditView: View {
             if let image = store.image {
                 Image(uiImage: image)
                     .resizable()
+            } else if let url = store.videoURL {
+                LoopingVideoPlayerView(videoURL: url)
             } else {
                 Rectangle()
             }

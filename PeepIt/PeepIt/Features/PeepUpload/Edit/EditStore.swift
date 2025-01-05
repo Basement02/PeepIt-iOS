@@ -38,6 +38,9 @@ struct EditStore {
         /// slider state 관련
         var sliderState = SliderStore.State()
 
+        ///
+        var videoURL: URL? = nil
+
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
             case original
