@@ -17,8 +17,6 @@ struct EditStore {
         var image: UIImage? = nil
         /// 찍은 영상
         var videoURL: URL? = nil
-        /// 편집이 포함된 최종 이미지
-        var renderedImage: UIImage? = nil
         /// 캡처 위한 이미지 사이즈
         var imageSize: CGSize = .zero
         /// 스티커 저장
@@ -69,8 +67,12 @@ struct EditStore {
         case textButtonTapped
         /// 게시 버튼 탭
         case uploadButtonTapped
-        /// 현재 편집 중 이미지/캡처
+        /// 현재 편집 중 이미지 렌더링
         case captureImage(image: UIImage?)
+        /// 현재 편집 중 영상 렌더링
+        case renderVideo(url: URL?)
+        /// 영상 렌더링 완료
+        case renderingCompleted(url: URL?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         /// 드래그한 스티커 위치 업데이트
@@ -95,9 +97,12 @@ struct EditStore {
         case objectLongerTapEnded
         /// 뷰  사라질 때
         case onDisappear
+        /// 화면 전환
+        case pushToWriteBody(image: UIImage?, videoURL: URL?)
     }
 
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.videoRenderService) var videoRenderService
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -242,6 +247,26 @@ struct EditStore {
                 return .none
 
             case .captureImage:
+                return .none
+
+            case .renderVideo:
+                guard let url = state.videoURL else { return .none }
+                let stickers = state.stickers
+                let texts = state.texts
+
+                return .run { send in
+                    do {
+                        let outputURL = try await videoRenderService.renderVideo(
+                            fromVideoAt: url,
+                            stickers: stickers
+                        )
+                        await send(.pushToWriteBody(image: nil, videoURL: outputURL))
+                    } catch {
+                        print(error)
+                    }
+                }
+
+            case .pushToWriteBody:
                 return .none
 
             default:

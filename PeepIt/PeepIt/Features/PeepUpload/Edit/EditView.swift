@@ -244,36 +244,30 @@ struct EditView: View {
     }
 
     private var stickerButton: some View {
-        HStack {
-            Button {
-                store.send(.stickerButtonTapped)
-            } label: {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 42, height: 42)
-            }
-            .buttonStyle(
-                PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
-            )
-            Spacer()
+        Button {
+            store.send(.stickerButtonTapped)
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
+        )
     }
 
     private var textButton: some View {
-        HStack {
-            Button {
-                store.send(.textButtonTapped)
-                isFocused = true
-            } label: {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 42, height: 42)
-            }
-            .buttonStyle(
-                PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
-            )
-            Spacer()
+        Button {
+            store.send(.textButtonTapped)
+            isFocused = true
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
+        )
     }
 
     private var completeButton: some View {
@@ -304,9 +298,10 @@ struct EditView: View {
                 let renderer = ImageRenderer(content: peepView)
                 renderer.scale = UIScreen.main.scale 
 
-                if let uiimage = renderer.uiImage {
-//                    UIImageWriteToSavedPhotosAlbum(uiimage, nil, nil, nil)
-                    store.send(.captureImage(image: uiimage))
+                if let uiimage = renderer.uiImage, let _ = store.image {
+                    store.send(.pushToWriteBody(image: uiimage, videoURL: nil))
+                } else if let url = store.videoURL {
+                    store.send(.renderVideo(url: url))
                 }
             } label: {
                 Image("UploadBtnN")

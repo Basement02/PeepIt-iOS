@@ -80,6 +80,8 @@
 		ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E8F2D1D45F200C181DC /* ChipColors.swift */; };
 		ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA11E9B2D21766300C181DC /* TownTitleView.swift */; };
 		ABA67D4E2D2AE9090018EC92 /* LoopingVideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA67D4D2D2AE9010018EC92 /* LoopingVideoPlayerView.swift */; };
+		ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA67D502D2AFFBF0018EC92 /* VideoRenderService.swift */; };
+		ABA67D532D2B02B30018EC92 /* VideoRenderServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
@@ -221,6 +223,8 @@
 		ABA11E8F2D1D45F200C181DC /* ChipColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChipColors.swift; sourceTree = "<group>"; };
 		ABA11E9B2D21766300C181DC /* TownTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownTitleView.swift; sourceTree = "<group>"; };
 		ABA67D4D2D2AE9010018EC92 /* LoopingVideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopingVideoPlayerView.swift; sourceTree = "<group>"; };
+		ABA67D502D2AFFBF0018EC92 /* VideoRenderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderService.swift; sourceTree = "<group>"; };
+		ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderServiceKey.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
@@ -535,6 +539,7 @@
 				ABA67D4F2D2AEBFD0018EC92 /* Views */,
 				AB71E1C72CBC065600D2D3D9 /* EditView.swift */,
 				AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */,
+				ABA67D502D2AFFBF0018EC92 /* VideoRenderService.swift */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -560,6 +565,7 @@
 		AB97881B2D192FA0007E73B6 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
+				ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */,
 				AB97881C2D192FAF007E73B6 /* CameraServiceKey.swift */,
 			);
 			path = Dependencies;
@@ -1130,6 +1136,7 @@
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
 				ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */,
+				ABA67D532D2B02B30018EC92 /* VideoRenderServiceKey.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,
 				AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */,
 				ABA11E902D1D45F900C181DC /* ChipColors.swift in Sources */,
@@ -1174,6 +1181,7 @@
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB97881D2D192FAF007E73B6 /* CameraServiceKey.swift in Sources */,
+				ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */,
 				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,
@@ -1337,7 +1345,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Team-Basement02.PeepIt";
+				PRODUCT_BUNDLE_IDENTIFIER = Basement02.PeepIt.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1376,7 +1384,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "Team-Basement02.PeepIt";
+				PRODUCT_BUNDLE_IDENTIFIER = Basement02.PeepIt.iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
