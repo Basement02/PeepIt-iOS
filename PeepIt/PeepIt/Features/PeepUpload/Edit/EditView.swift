@@ -119,9 +119,8 @@ struct EditView: View {
                 }
             }
             .background(KeyboardToolbarView())
-            .onDisappear {
-                store.send(.onDisappear)
-            }
+            .onAppear { store.send(.onAppear) }
+            .onDisappear { store.send(.onDisappear) }
         }
     }
 
@@ -134,7 +133,8 @@ struct EditView: View {
             } else if let url = store.videoURL {
                 LoopingVideoPlayerView(
                     videoURL: url,
-                    isSoundOn: store.isVideoSoundOn
+                    isSoundOn: store.isVideoSoundOn,
+                    isPlaying: store.isVideoPlaying
                 )
             } else {
                 Rectangle()
@@ -300,8 +300,8 @@ struct EditView: View {
 
                 if let uiimage = renderer.uiImage, let _ = store.image {
                     store.send(.pushToWriteBody(image: uiimage, videoURL: nil))
-                } else if let url = store.videoURL {
-                    store.send(.renderVideo(url: url))
+                } else if let _ = store.videoURL {
+                    store.send(.renderVideo)
                 }
             } label: {
                 Image("UploadBtnN")

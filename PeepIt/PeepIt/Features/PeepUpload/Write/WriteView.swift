@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AVKit
 
 struct WriteView: View {
     @Perception.Bindable var store: StoreOf<WriteStore>
@@ -75,7 +76,6 @@ struct WriteView: View {
         }
     }
 
-    // TODO: dynamic height? - 디자이너와 협의
     private var textEditor: some View {
         TextEditor(text: $store.bodyText)
             .focused($isFocused)
@@ -110,6 +110,12 @@ struct WriteView: View {
             if let image = store.image {
                 Image(uiImage: image)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
+            } else if let url = store.videoURL {
+                LoopingVideoPlayerView(
+                    videoURL: url,
+                    isSoundOn: true,
+                    isPlaying: true
+                )
             } else {
                 Rectangle()
             }

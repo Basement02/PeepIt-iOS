@@ -12,13 +12,20 @@ import SwiftUI
 struct LoopingVideoPlayerView: UIViewRepresentable {
     var videoURL: URL
     var isSoundOn: Bool
+    var isPlaying: Bool
 
     func makeUIView(context: Context) -> LoopingVideoPlayerUIView {
-        LoopingVideoPlayerUIView(url: videoURL, isSoundOn: isSoundOn)
+        return LoopingVideoPlayerUIView(url: videoURL, isSoundOn: isSoundOn)
     }
 
     func updateUIView(_ uiView: LoopingVideoPlayerUIView, context: Context) {
-        uiView.toggleSound(isSoundOn: isSoundOn) 
+        uiView.toggleSound(isSoundOn: isSoundOn)
+
+        if isPlaying {
+            uiView.playVideo()
+        } else {
+            uiView.pauseVideo()
+        }
     }
 }
 
@@ -55,6 +62,14 @@ final class LoopingVideoPlayerUIView: UIView {
 
     func toggleSound(isSoundOn: Bool) {
         queuePlayer?.volume = isSoundOn ? 1.0 : 0.0
+    }
+
+    func pauseVideo() {
+        queuePlayer?.pause()
+    }
+
+    func playVideo() {
+        queuePlayer?.play()
     }
 
     override func layoutSubviews() {

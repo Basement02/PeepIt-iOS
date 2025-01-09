@@ -40,6 +40,8 @@ struct EditStore {
         /// 영상 소리 모드
         var isVideoSoundOn = true
 
+        var isVideoPlaying = true
+
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
             case original
@@ -69,8 +71,6 @@ struct EditStore {
         case uploadButtonTapped
         /// 현재 편집 중 이미지 렌더링
         case captureImage(image: UIImage?)
-        /// 현재 편집 중 영상 렌더링
-        case renderVideo(url: URL?)
         /// 영상 렌더링 완료
         case renderingCompleted(url: URL?)
         /// 스티커 모달 액션
@@ -95,10 +95,14 @@ struct EditStore {
         case doneButtonTapped
         /// 오브젝트 롱탭 제스처 끝
         case objectLongerTapEnded
+        /// 영상 소리 모드에 따른 렌더링
+        case renderVideo
         /// 뷰  사라질 때
         case onDisappear
         /// 화면 전환
         case pushToWriteBody(image: UIImage?, videoURL: URL?)
+
+        case onAppear
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -242,6 +246,10 @@ struct EditStore {
                 state.inputTextSize = state.sliderState.sliderValue
                 return .none
 
+            case .onAppear:
+                state.isVideoPlaying = true
+                return .none
+
             case .onDisappear:
                 state.isCapturing = false
                 return .none
@@ -251,18 +259,20 @@ struct EditStore {
 
             case .renderVideo:
                 guard let url = state.videoURL else { return .none }
-                let stickers = state.stickers
-                let texts = state.texts
+                let (stickers, texts, isSoundOn) = (state.stickers, state.texts, state.isVideoSoundOn)
+                state.isVideoPlaying = false
 
                 return .run { send in
                     do {
                         let outputURL = try await videoRenderService.renderVideo(
                             fromVideoAt: url,
-                            stickers: stickers
+                            stickers: stickers,
+                            texts: texts,
+                            isSoundOn: isSoundOn
                         )
                         await send(.pushToWriteBody(image: nil, videoURL: outputURL))
                     } catch {
-                        print(error)
+                        print("Failed to render video: \(error.localizedDescription)")
                     }
                 }
 

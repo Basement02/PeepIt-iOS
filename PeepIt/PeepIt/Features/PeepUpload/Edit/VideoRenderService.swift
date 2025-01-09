@@ -11,21 +11,27 @@ import SwiftUICore
 
 protocol VideoRenderServiceProtocol {
     /// 동영상에 스티커를 추가하는 메서드
-       /// - Parameters:
-       ///   - videoURL: 원본 동영상 URL
-       ///   - stickers: 추가할 스티커 리스트
-       /// - Returns: 스티커가 추가된 동영상의 URL
-       func renderVideo(
+    /// - Parameters:
+    ///   - videoURL: 원본 동영상 URL
+    ///   - stickers: 추가할 스티커 리스트
+    ///   - isSoundOn: 영상 소리 모드
+    /// - Returns: 스티커가 추가된 동영상의 URL
+    func renderVideo(
         fromVideoAt videoURL: URL,
-        stickers: [StickerItem]
-       ) async throws -> URL
+        stickers: [StickerItem],
+        texts: [TextItem],
+        isSoundOn: Bool
+    ) async throws -> URL
+
 }
 
 final class VideoRenderService: VideoRenderServiceProtocol {
 
     func renderVideo(
         fromVideoAt videoURL: URL,
-        stickers: [StickerItem]
+        stickers: [StickerItem],
+        texts: [TextItem],
+        isSoundOn: Bool
     ) async throws -> URL {
         let asset = AVURLAsset(url: videoURL)
         let composition = AVMutableComposition()
@@ -53,8 +59,34 @@ final class VideoRenderService: VideoRenderServiceProtocol {
             )
         }
 
-        // Apply preferredTransform
         compositionTrack.preferredTransform = try await assetTrack.load(.preferredTransform)
+
+        if isSoundOn {
+            if let audioTrack = try await asset.loadTracks(withMediaType: .audio).first {
+                guard let compositionAudioTrack = composition.addMutableTrack(
+                    withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid
+                ) else {
+                    throw NSError(
+                        domain: "VideoEditorError",
+                        code: 3,
+                        userInfo: [NSLocalizedDescriptionKey: "Unable to add audio track."]
+                    )
+                }
+
+                do {
+                    let timeRange = CMTimeRange(start: .zero, duration: try await asset.load(.duration))
+                    try compositionAudioTrack.insertTimeRange(timeRange, of: audioTrack, at: .zero)
+                } catch {
+                    throw NSError(
+                        domain: "VideoEditorError",
+                        code: 4,
+                        userInfo: [NSLocalizedDescriptionKey: "Failed to insert audio track: \(error.localizedDescription)"]
+                    )
+                }
+            } else {
+                print("No audio track found, exporting video without audio.")
+            }
+        }
 
 
         let transform = try await assetTrack.load(.preferredTransform)
@@ -73,10 +105,8 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         let overlayLayer = CALayer()
         overlayLayer.frame = CGRect(origin: .zero, size: videoSize)
 
-        // Add stickers to overlay layer
-        add(stickers: stickers, to: overlayLayer, videoSize: videoSize)
+        add(stickers: stickers, texts: texts, to: overlayLayer, videoSize: videoSize)
 
-        // Video Layer
         let videoLayer = CALayer()
         videoLayer.frame = CGRect(origin: .zero, size: videoSize)
 
@@ -85,7 +115,6 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         outputLayer.addSublayer(videoLayer)
         outputLayer.addSublayer(overlayLayer)
 
-        // Video Composition
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = videoSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
@@ -102,7 +131,6 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         instruction.layerInstructions = [layerInstruction]
         videoComposition.instructions = [instruction]
 
-        // Export
         guard let export = AVAssetExportSession(
             asset: composition,
             presetName: AVAssetExportPresetHighestQuality
@@ -143,15 +171,27 @@ final class VideoRenderService: VideoRenderServiceProtocol {
             }
         }
     }
-    
 
-    private func add(stickers: [StickerItem], to layer: CALayer, videoSize: CGSize) {
+    private func add(
+        stickers: [StickerItem],
+        texts: [TextItem],
+        to layer: CALayer,
+        videoSize: CGSize
+    ) {
         for sticker in stickers {
-            add(sticker: sticker, to: layer, videoSize: videoSize)
+            addSticker(sticker: sticker, to: layer, videoSize: videoSize)
+        }
+
+        for text in texts {
+            addText(text: text, to: layer, videoSize: videoSize)
         }
     }
 
-    private func add(sticker: StickerItem, to layer: CALayer, videoSize: CGSize) {
+    private func addSticker(
+        sticker: StickerItem,
+        to layer: CALayer,
+        videoSize: CGSize
+    ) {
         guard let stickerImage = UIImage(named: sticker.stickerName)?.cgImage else { return }
 
         // (1) 포지션 변환
@@ -176,5 +216,50 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         )
 
         layer.addSublayer(stickerLayer)
+    }
+
+    private func addText(
+        text: TextItem,
+        to layer: CALayer,
+        videoSize: CGSize
+    ) {
+        let adjustedFontSize = text.scale * videoSize.height / (Constant.screenWidth * (16 / 9))
+
+        let attributedText = NSAttributedString(
+            string: text.text,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: adjustedFontSize, weight: .bold),
+                .foregroundColor: UIColor(text.color)
+            ]
+        )
+
+        // (1) 텍스트의 크기 계산
+        let textSize = attributedText.boundingRect(
+            with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            context: nil
+        ).size
+
+        // (2) 포지션 변환
+        let xRatio = videoSize.width / Constant.screenWidth
+        let yRatio = videoSize.height / (Constant.screenWidth * (16/9))
+
+        let videoX = xRatio * text.position.x
+        let videoY = videoSize.height - yRatio * text.position.y
+
+        // (3) CATextLayer 생성
+        let textLayer = CATextLayer()
+        textLayer.string = attributedText
+        textLayer.alignmentMode = .center
+
+        textLayer.frame = CGRect(
+            x: videoX - textSize.width / 2,
+            y: videoY - textSize.height / 2,
+            width: textSize.width,
+            height: textSize.height
+        )
+
+        // (4) 레이어에 추가
+        layer.addSublayer(textLayer)
     }
 }
