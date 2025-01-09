@@ -16,6 +16,8 @@ struct WriteStore {
     struct State: Equatable {
         /// 전달된 편집 이미지
         var image: UIImage? = nil
+        /// 전달된 편집 영상
+        var videoURL: URL? = nil
         /// 본문
         var bodyText = ""
         /// 본문 입력 모드
