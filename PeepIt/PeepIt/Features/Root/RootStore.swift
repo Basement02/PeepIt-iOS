@@ -70,13 +70,9 @@ struct RootStore {
 
     var body: some Reducer<State, Action> {
 
-        Scope(state: \.home, action: \.home) {
-            HomeStore()
-        }
+        Scope(state: \.home, action: \.home) { HomeStore() }
 
-        Scope(state: \.login, action: \.login) {
-            LoginStore()
-        }
+        Scope(state: \.login, action: \.login) { LoginStore() }
 
         Reduce { state, action in
             switch action {
@@ -113,12 +109,16 @@ struct RootStore {
                     state.path.append(.camera(.init()))
                     return .none
 
-                case let .element(_, action: .camera(.pushToEdit(image))):
-                    state.path.append(.edit(EditStore.State(image: image))) 
+                case let .element(_, action: .camera(.pushToEdit(image, videoURL))):
+                    state.path.append(
+                        .edit(EditStore.State(image: image, videoURL: videoURL))
+                    ) 
                     return .none
 
-                case let .element(_, action: .edit(.captureImage(image))):
-                    state.path.append(.write(WriteStore.State(image: image)))
+                case let .element(_, action: .edit(.pushToWriteBody(image, videoURL))):
+                    state.path.append(
+                        .write(WriteStore.State(image: image, videoURL: videoURL))
+                    )
                     return .none
 
                 case .element(_, action: .write(.uploadButtonTapped)):

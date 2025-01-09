@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVKit
 import ComposableArchitecture
 
 struct EditView: View {
@@ -20,7 +21,7 @@ struct EditView: View {
                     .ignoresSafeArea()
 
                 /// 보여주는 이미지에는 corner radius 처리
-                imageView
+                peepView
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(.top, 44)
                     .padding(.top, 11.adjustedH)
@@ -45,6 +46,7 @@ struct EditView: View {
 
                         HStack {
                             VStack(spacing: 25) {
+                                if let _ = store.videoURL { soundButton }
                                 stickerButton
                                 textButton
                             }
@@ -117,20 +119,28 @@ struct EditView: View {
                 }
             }
             .background(KeyboardToolbarView())
-            .onDisappear {
-                store.send(.onDisappear)
-            }
+            .onAppear { store.send(.onAppear) }
+            .onDisappear { store.send(.onDisappear) }
         }
     }
 
-    /// 이미지 + 스티커 + 텍스트 -> 최종 저장할 이미지
-    private var imageView: some View {
+    /// 이미지(영상) + 스티커 + 텍스트 -> 최종 저장할 핍
+    private var peepView: some View {
         ZStack {
-            if let image = store.image {
-                Image(uiImage: image)
-                    .resizable()
-            } else {
-                Rectangle()
+            switch store.dataType {
+            case .image:
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .resizable()
+                }
+            case .video:
+                if let url = store.videoURL {
+                    LoopingVideoPlayerView(
+                    videoURL: url,
+                    isSoundOn: store.isVideoSoundOn,
+                    isPlaying: store.isVideoPlaying
+                    )
+                }
             }
 
             Group {
@@ -222,47 +232,45 @@ struct EditView: View {
     }
 
     private var soundButton: some View {
-        HStack {
-            Button {
-                store.send(.soundOnOffButtonTapped)
-            } label: {
-                Text("소리 on/off")
-            }
-            Spacer()
+        Button {
+            store.send(.soundOnOffButtonTapped)
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            store.isVideoSoundOn ?
+            PressableButtonStyle(originImg: "SoundOnN", pressedImg: "SoundOnY") :
+                PressableButtonStyle(originImg: "SoundOffN", pressedImg: "SoundOffY")
+        )
     }
 
     private var stickerButton: some View {
-        HStack {
-            Button {
-                store.send(.stickerButtonTapped)
-            } label: {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 42, height: 42)
-            }
-            .buttonStyle(
-                PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
-            )
-            Spacer()
+        Button {
+            store.send(.stickerButtonTapped)
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
+        )
     }
 
     private var textButton: some View {
-        HStack {
-            Button {
-                store.send(.textButtonTapped)
-                isFocused = true
-            } label: {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: 42, height: 42)
-            }
-            .buttonStyle(
-                PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
-            )
-            Spacer()
+        Button {
+            store.send(.textButtonTapped)
+            isFocused = true
+        } label: {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(width: 42, height: 42)
         }
+        .buttonStyle(
+            PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
+        )
     }
 
     private var completeButton: some View {
@@ -282,20 +290,27 @@ struct EditView: View {
         }
     }
 
-
     private var uploadButton: some View {
         HStack {
             Spacer()
 
             Button {
-                store.send(.uploadButtonTapped)
+                switch store.dataType {
 
-                let renderer = ImageRenderer(content: imageView)
-                renderer.scale = UIScreen.main.scale 
+                case .image:
+                    store.send(.uploadButtonTapped)
 
-                if let uiimage = renderer.uiImage {
-//                    UIImageWriteToSavedPhotosAlbum(uiimage, nil, nil, nil)
-                    store.send(.captureImage(image: uiimage))
+                    let renderer = ImageRenderer(content: peepView)
+                    renderer.scale = UIScreen.main.scale
+
+                    if let uiimage = renderer.uiImage {
+                        store.send(.pushToWriteBody(image: uiimage, videoURL: nil))
+                    }
+
+                case .video:
+                    if let _ = store.videoURL {
+                        store.send(.renderVideo)
+                    }
                 }
             } label: {
                 Image("UploadBtnN")

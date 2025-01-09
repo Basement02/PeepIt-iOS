@@ -15,8 +15,8 @@ struct EditStore {
     struct State: Equatable {
         /// 찍은 이미지
         var image: UIImage? = nil
-        /// 편집이 포함된 최종 이미지
-        var renderedImage: UIImage? = nil
+        /// 찍은 영상
+        var videoURL: URL? = nil
         /// 캡처 위한 이미지 사이즈
         var imageSize: CGSize = .zero
         /// 스티커 저장
@@ -37,6 +37,12 @@ struct EditStore {
         var isCapturing = false
         /// slider state 관련
         var sliderState = SliderStore.State()
+        /// 영상 소리 모드
+        var isVideoSoundOn = true
+        /// 비디오 재생 여부
+        var isVideoPlaying = true
+        /// 이미지인지 영상인지 체크
+        var dataType = DataType.image
 
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
@@ -45,11 +51,14 @@ struct EditStore {
             case editMode
         }
 
+        /// 데이터 타입 종류(이미지, 영상)
+        enum DataType {
+            case image
+            case video
+        }
+
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
-
-        /// 우측 상단 done 버튼 보여주기 여부
-        var isDoneButtonShowed = false
     }
 
     enum Action: BindableAction {
@@ -65,8 +74,10 @@ struct EditStore {
         case textButtonTapped
         /// 게시 버튼 탭
         case uploadButtonTapped
-        /// 현재 편집 중 이미지/캡처
+        /// 현재 편집 중 이미지 렌더링
         case captureImage(image: UIImage?)
+        /// 영상 렌더링 완료
+        case renderingCompleted(url: URL?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         /// 드래그한 스티커 위치 업데이트
@@ -89,11 +100,18 @@ struct EditStore {
         case doneButtonTapped
         /// 오브젝트 롱탭 제스처 끝
         case objectLongerTapEnded
+        /// 영상 소리 모드에 따른 렌더링
+        case renderVideo
         /// 뷰  사라질 때
         case onDisappear
+        /// 화면 전환
+        case pushToWriteBody(image: UIImage?, videoURL: URL?)
+
+        case onAppear
     }
 
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.videoRenderService) var videoRenderService
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -110,16 +128,14 @@ struct EditStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                    await dismiss()
-                }
+                return .run { _ in await dismiss() }
 
             case .soundOnOffButtonTapped:
+                state.isVideoSoundOn.toggle()
                 return .none
 
             case .stickerButtonTapped:
                 state.stickerModalState = .init()
-                state.isDoneButtonShowed = true
                 return .none
 
             case .textButtonTapped:
@@ -222,7 +238,7 @@ struct EditStore {
                 return .none
 
             case .doneButtonTapped:
-                state.isDoneButtonShowed = false
+
                 state.editMode = .original
                 return .none
 
@@ -234,11 +250,44 @@ struct EditStore {
                 state.inputTextSize = state.sliderState.sliderValue
                 return .none
 
+            case .onAppear:
+                state.isVideoPlaying = true
+
+                if let _ = state.image {
+                    state.dataType = .image
+                } else {
+                    state.dataType = .video
+                }
+                
+                return .none
+
             case .onDisappear:
                 state.isCapturing = false
                 return .none
 
             case .captureImage:
+                return .none
+
+            case .renderVideo:
+                guard let url = state.videoURL else { return .none }
+                let (stickers, texts, isSoundOn) = (state.stickers, state.texts, state.isVideoSoundOn)
+                state.isVideoPlaying = false
+
+                return .run { send in
+                    do {
+                        let outputURL = try await videoRenderService.renderVideo(
+                            fromVideoAt: url,
+                            stickers: stickers,
+                            texts: texts,
+                            isSoundOn: isSoundOn
+                        )
+                        await send(.pushToWriteBody(image: nil, videoURL: outputURL))
+                    } catch {
+                        print("Failed to render video: \(error.localizedDescription)")
+                    }
+                }
+
+            case .pushToWriteBody:
                 return .none
 
             default:

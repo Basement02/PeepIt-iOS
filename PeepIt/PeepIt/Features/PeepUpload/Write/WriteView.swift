@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ComposableArchitecture
+import AVKit
 
 struct WriteView: View {
     @Perception.Bindable var store: StoreOf<WriteStore>
@@ -75,7 +76,6 @@ struct WriteView: View {
         }
     }
 
-    // TODO: dynamic height? - 디자이너와 협의
     private var textEditor: some View {
         TextEditor(text: $store.bodyText)
             .focused($isFocused)
@@ -110,6 +110,8 @@ struct WriteView: View {
             if let image = store.image {
                 Image(uiImage: image)
                     .clipShape(RoundedRectangle(cornerRadius: 24))
+            } else if let url = store.videoURL {
+                videoThumbnail(from: url)
             } else {
                 Rectangle()
             }
@@ -124,11 +126,13 @@ struct WriteView: View {
             if let image = store.image {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFill()
+            } else if let url = store.videoURL {
+                videoThumbnail(from: url)
             } else {
                 Rectangle()
             }
         }
+        .scaledToFill()
         .frame(width: 300, height: 400)
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
@@ -173,6 +177,29 @@ struct WriteView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "DoneN", pressedImg: "DoneY")
         )
+    }
+
+    private func generateThumbnail(from url: URL) -> UIImage? {
+        let asset = AVAsset(url: url)
+        let assetImageGenerator = AVAssetImageGenerator(asset: asset)
+        assetImageGenerator.appliesPreferredTrackTransform = true
+
+        do {
+            let cgImage = try assetImageGenerator.copyCGImage(at: .zero, actualTime: nil)
+            return UIImage(cgImage: cgImage)
+        } catch {
+            print("Failed to generate thumbnail: \(error)")
+            return nil
+        }
+    }
+
+    @ViewBuilder
+    private func videoThumbnail(from url: URL) -> some View {
+        if let url = store.videoURL,
+            let thumbnail = generateThumbnail(from: url) {
+            Image(uiImage: thumbnail)
+                .resizable()
+        }
     }
 }
 
