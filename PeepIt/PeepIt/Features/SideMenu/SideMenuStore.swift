@@ -23,6 +23,7 @@ struct SideMenuStore {
         case notificationMenuTapped
         case settingHoldStart
         case settingHoldStop
+        case logoutButtonTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -43,6 +44,9 @@ struct SideMenuStore {
             case .settingHoldStop:
                 state.isSettingHold = false
                 return .none
+
+            case .logoutButtonTapped:
+                return .send(.dismissSideMenu)
             }
         }
     }

@@ -46,7 +46,7 @@ struct EditView: View {
 
                         HStack {
                             VStack(spacing: 25) {
-                                if let _ = store.videoURL { soundButton }
+                                if store.dataType == .video { soundButton }
                                 stickerButton
                                 textButton
                             }
@@ -332,6 +332,29 @@ struct EditView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
         )
+        .onDrop(of: [.text], isTargeted: nil) { providers in
+            handleDrop(providers: providers)
+        }
+    }
+
+    private func handleDrop(providers: [NSItemProvider]) -> Bool {
+        for provider in providers {
+            if provider.canLoadObject(ofClass: NSString.self) {
+                _ = provider.loadObject(ofClass: NSString.self) { object, _ in
+                    if let idString = object as? String, let id = UUID(uuidString: idString) {
+//                        DispatchQueue.main.async {
+//                            // 스티커 삭제
+//                            store.stickers.removeAll { $0.id == id }
+//                            // 텍스트 삭제
+//                            store.texts.removeAll { $0.id == id }
+//                        }
+                        print(idString)
+                    }
+                }
+                return true
+            }
+        }
+        return false
     }
 }
 
