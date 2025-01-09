@@ -9,6 +9,35 @@ import AVFoundation
 import UIKit
 import SwiftUICore
 
+enum VideoRenderingError: Error {
+    case unableToLoadVideoTrack
+    case failedToInsertVideoTrack(String)
+    case unableToAddAudioTrack
+    case failedToInsertAudioTrack(String)
+    case exportSessionCreationFailed
+    case exportFailed(String)
+    case unknownExportError
+
+    var localizedDescription: String {
+        switch self {
+        case .unableToLoadVideoTrack:
+            return "Unable to load video track."
+        case .failedToInsertVideoTrack(let reason):
+            return "Failed to insert video track: \(reason)"
+        case .unableToAddAudioTrack:
+            return "Unable to add audio track."
+        case .failedToInsertAudioTrack(let reason):
+            return "Failed to insert audio track: \(reason)"
+        case .exportSessionCreationFailed:
+            return "Unable to create export session."
+        case .exportFailed(let reason):
+            return "Export failed: \(reason)"
+        case .unknownExportError:
+            return "Unknown export error."
+        }
+    }
+}
+
 protocol VideoRenderServiceProtocol {
     /// 동영상에 스티커를 추가하는 메서드
     /// - Parameters:
@@ -41,22 +70,14 @@ final class VideoRenderService: VideoRenderServiceProtocol {
                 withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid),
             let assetTrack = try await asset.loadTracks(withMediaType: .video).first
         else {
-            throw NSError(
-                domain: "VideoEditorError",
-                code: 1,
-                userInfo: [NSLocalizedDescriptionKey: "Unable to load video track."]
-            )
+            throw VideoRenderingError.unableToLoadVideoTrack
         }
 
         do {
             let timeRange = CMTimeRange(start: .zero, duration: try await asset.load(.duration))
             try compositionTrack.insertTimeRange(timeRange, of: assetTrack, at: .zero)
         } catch {
-            throw NSError(
-                domain: "VideoEditorError",
-                code: 2,
-                userInfo: [NSLocalizedDescriptionKey: "Failed to insert video track: \(error.localizedDescription)"]
-            )
+            throw VideoRenderingError.failedToInsertVideoTrack(error.localizedDescription)
         }
 
         compositionTrack.preferredTransform = try await assetTrack.load(.preferredTransform)
@@ -66,28 +87,19 @@ final class VideoRenderService: VideoRenderServiceProtocol {
                 guard let compositionAudioTrack = composition.addMutableTrack(
                     withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid
                 ) else {
-                    throw NSError(
-                        domain: "VideoEditorError",
-                        code: 3,
-                        userInfo: [NSLocalizedDescriptionKey: "Unable to add audio track."]
-                    )
+                    throw VideoRenderingError.unableToAddAudioTrack
                 }
 
                 do {
                     let timeRange = CMTimeRange(start: .zero, duration: try await asset.load(.duration))
                     try compositionAudioTrack.insertTimeRange(timeRange, of: audioTrack, at: .zero)
                 } catch {
-                    throw NSError(
-                        domain: "VideoEditorError",
-                        code: 4,
-                        userInfo: [NSLocalizedDescriptionKey: "Failed to insert audio track: \(error.localizedDescription)"]
-                    )
+                    throw VideoRenderingError.failedToInsertAudioTrack(error.localizedDescription)
                 }
             } else {
                 print("No audio track found, exporting video without audio.")
             }
         }
-
 
         let transform = try await assetTrack.load(.preferredTransform)
         let naturalSize = try await assetTrack.load(.naturalSize)
@@ -135,11 +147,7 @@ final class VideoRenderService: VideoRenderServiceProtocol {
             asset: composition,
             presetName: AVAssetExportPresetHighestQuality
         ) else {
-            throw NSError(
-                domain: "VideoEditorError",
-                code: 3,
-                userInfo: [NSLocalizedDescriptionKey: "Unable to create export session."]
-            )
+            throw VideoRenderingError.exportSessionCreationFailed
         }
 
         let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID()).mp4")
@@ -148,6 +156,7 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         export.outputFileType = .mp4
         export.outputURL = outputURL
 
+        // FIX: - Capture of 'export' with non-sendable type 'AVAssetExportSession' in a `@Sendable` closure; this is an error in the Swift 6 language mode
         return try await withCheckedThrowingContinuation { continuation in
             export.exportAsynchronously {
                 switch export.status {
@@ -155,18 +164,12 @@ final class VideoRenderService: VideoRenderServiceProtocol {
                     continuation.resume(returning: outputURL)
                 case .failed, .cancelled:
                     continuation.resume(
-                        throwing: export.error ?? NSError(
-                            domain: "VideoEditorError",
-                            code: 4,
-                            userInfo: [NSLocalizedDescriptionKey: "Export failed."])
+                        throwing: VideoRenderingError.exportFailed(
+                            export.error?.localizedDescription ?? "Unknown error."
+                        )
                     )
                 default:
-                    continuation.resume(
-                        throwing: NSError(
-                            domain: "VideoEditorError",
-                            code: 5,
-                            userInfo: [NSLocalizedDescriptionKey: "Unknown export error."])
-                    )
+                    continuation.resume(throwing: VideoRenderingError.unknownExportError)
                 }
             }
         }
