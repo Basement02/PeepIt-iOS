@@ -39,8 +39,10 @@ struct EditStore {
         var sliderState = SliderStore.State()
         /// 영상 소리 모드
         var isVideoSoundOn = true
-
+        /// 비디오 재생 여부
         var isVideoPlaying = true
+        /// 이미지인지 영상인지 체크
+        var dataType = DataType.image
 
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
@@ -49,11 +51,14 @@ struct EditStore {
             case editMode
         }
 
+        /// 데이터 타입 종류(이미지, 영상)
+        enum DataType {
+            case image
+            case video
+        }
+
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
-
-        /// 우측 상단 done 버튼 보여주기 여부
-        var isDoneButtonShowed = false
     }
 
     enum Action: BindableAction {
@@ -131,7 +136,6 @@ struct EditStore {
 
             case .stickerButtonTapped:
                 state.stickerModalState = .init()
-                state.isDoneButtonShowed = true
                 return .none
 
             case .textButtonTapped:
@@ -234,7 +238,7 @@ struct EditStore {
                 return .none
 
             case .doneButtonTapped:
-                state.isDoneButtonShowed = false
+
                 state.editMode = .original
                 return .none
 
@@ -248,6 +252,13 @@ struct EditStore {
 
             case .onAppear:
                 state.isVideoPlaying = true
+
+                if let _ = state.image {
+                    state.dataType = .image
+                } else {
+                    state.dataType = .video
+                }
+                
                 return .none
 
             case .onDisappear:

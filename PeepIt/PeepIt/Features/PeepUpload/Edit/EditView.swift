@@ -127,17 +127,20 @@ struct EditView: View {
     /// 이미지(영상) + 스티커 + 텍스트 -> 최종 저장할 핍
     private var peepView: some View {
         ZStack {
-            if let image = store.image {
-                Image(uiImage: image)
-                    .resizable()
-            } else if let url = store.videoURL {
-                LoopingVideoPlayerView(
+            switch store.dataType {
+            case .image:
+                if let image = store.image {
+                    Image(uiImage: image)
+                        .resizable()
+                }
+            case .video:
+                if let url = store.videoURL {
+                    LoopingVideoPlayerView(
                     videoURL: url,
                     isSoundOn: store.isVideoSoundOn,
                     isPlaying: store.isVideoPlaying
-                )
-            } else {
-                Rectangle()
+                    )
+                }
             }
 
             Group {
@@ -287,21 +290,27 @@ struct EditView: View {
         }
     }
 
-
     private var uploadButton: some View {
         HStack {
             Spacer()
 
             Button {
-                store.send(.uploadButtonTapped)
+                switch store.dataType {
 
-                let renderer = ImageRenderer(content: peepView)
-                renderer.scale = UIScreen.main.scale 
+                case .image:
+                    store.send(.uploadButtonTapped)
 
-                if let uiimage = renderer.uiImage, let _ = store.image {
-                    store.send(.pushToWriteBody(image: uiimage, videoURL: nil))
-                } else if let _ = store.videoURL {
-                    store.send(.renderVideo)
+                    let renderer = ImageRenderer(content: peepView)
+                    renderer.scale = UIScreen.main.scale
+
+                    if let uiimage = renderer.uiImage {
+                        store.send(.pushToWriteBody(image: uiimage, videoURL: nil))
+                    }
+
+                case .video:
+                    if let _ = store.videoURL {
+                        store.send(.renderVideo)
+                    }
                 }
             } label: {
                 Image("UploadBtnN")
