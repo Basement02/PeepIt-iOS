@@ -19,8 +19,6 @@ struct EditStore {
         var videoURL: URL? = nil
         /// 캡처 위한 이미지 사이즈
         var imageSize: CGSize = .zero
-        /// 스티커 저장
-        var stickers: [StickerItem] = .init()
         /// 텍스트 저장
         var texts: [TextItem] = .init()
         /// 뷰 편집 모드
@@ -59,6 +57,8 @@ struct EditStore {
 
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
+
+        var stickerState = StickerLayerStore.State()
     }
 
     enum Action: BindableAction {
@@ -80,10 +80,6 @@ struct EditStore {
         case renderingCompleted(url: URL?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
-        /// 드래그한 스티커 위치 업데이트
-        case updateStickerPosition(stickerId: UUID, position: CGPoint)
-        /// 스티커 확대/축소 스케일 업데이트
-        case updateStickerScale(stickerId: UUID, scale: CGFloat)
         /// 텍스트 추가 완료 버튼 탭
         case textInputCompleteButtonTapped
         /// 텍스트 위치 업데이트
@@ -108,6 +104,8 @@ struct EditStore {
         case pushToWriteBody(image: UIImage?, videoURL: URL?)
 
         case onAppear
+
+        case stickerAction(StickerLayerStore.Action)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -118,6 +116,10 @@ struct EditStore {
 
         Scope(state: \.sliderState, action: \.sliderAction) {
             SliderStore()
+        }
+
+        Scope(state: \.stickerState, action: \.stickerAction) {
+            StickerLayerStore()
         }
 
         Reduce { state, action in
@@ -147,32 +149,12 @@ struct EditStore {
                 return .none
 
             case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
-                state.stickers.append(StickerItem(stickerName: selectedSticker))
+                state.stickerState.stickers.append(StickerItem(stickerName: selectedSticker))
                 state.stickerModalState = nil
                 return .send(.doneButtonTapped)
 
             case .stickerListAction(.dismiss):
                 return .send(.doneButtonTapped)
-
-            case let .updateStickerPosition(stickerId, position):
-                guard let index = state.stickers.firstIndex(
-                    where: { $0.id == stickerId }
-                ) else { return .none }
-
-                state.stickers[index].position = position
-                state.editMode = .original
-
-                return .none
-
-            case let .updateStickerScale(stickerId, scale):
-                guard let index = state.stickers.firstIndex(
-                    where: { $0.id == stickerId }
-                ) else { return .none }
-
-                state.stickers[index].scale = scale
-                state.editMode = .original
-
-                return .none
 
             case .textInputCompleteButtonTapped:
                 if let selectedTextId = state.selectedText?.id,
@@ -238,7 +220,6 @@ struct EditStore {
                 return .none
 
             case .doneButtonTapped:
-
                 state.editMode = .original
                 return .none
 
@@ -270,7 +251,7 @@ struct EditStore {
 
             case .renderVideo:
                 guard let url = state.videoURL else { return .none }
-                let (stickers, texts, isSoundOn) = (state.stickers, state.texts, state.isVideoSoundOn)
+                let (stickers, texts, isSoundOn) = (state.stickerState.stickers, state.texts, state.isVideoSoundOn)
                 state.isVideoPlaying = false
 
                 return .run { send in
@@ -288,6 +269,18 @@ struct EditStore {
                 }
 
             case .pushToWriteBody:
+                return .none
+
+            case .stickerAction(.stickerDragged),
+                    .stickerAction(.stickerLongTapped),
+                    .stickerAction(.updateStickerScale):
+                state.editMode = .editMode
+                return .none
+
+            case .stickerAction(.stickerDragEnded),
+                    .stickerAction(.stickerLongTapEnded),
+                    .stickerAction(.scaleUpdateEnded):
+                state.editMode = .original
                 return .none
 
             default:
