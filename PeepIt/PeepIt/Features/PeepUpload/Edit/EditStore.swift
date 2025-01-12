@@ -84,8 +84,6 @@ struct EditStore {
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
         /// 텍스트 추가 완료 버튼 탭
         case textInputCompleteButtonTapped
-        /// 텍스트 위치 업데이트
-        case updateTextPosition(textId: UUID, position: CGPoint)
         /// 텍스트 확대/축소 스케일 업데이트
         case updateTextScale(textId: UUID, scale: CGFloat)
         /// 텍스트 선택
@@ -100,17 +98,17 @@ struct EditStore {
         case objectLongerTapEnded
         /// 영상 소리 모드에 따른 렌더링
         case renderVideo
-        /// 뷰  사라질 때
-        case onDisappear
         /// 화면 전환
         case pushToWriteBody(image: UIImage?, videoURL: URL?)
-
+        /// 뷰 나타날 때
         case onAppear
-
-        case stickerAction(StickerLayerStore.Action)
-
+        /// 뷰  사라질 때
+        case onDisappear
+        /// 삭제 영역 계산
         case setDeleteFrame(rect: CGRect)
-
+        /// 자식 뷰 - 스티커 관련
+        case stickerAction(StickerLayerStore.Action)
+        /// 자식 뷰 - 텍스트 관련
         case textAction(TextLayerStore.Action)
     }
 
@@ -189,16 +187,6 @@ struct EditStore {
                 state.inputTextColor = .white
                 state.sliderState.sliderValue = 24.0
                 state.textState.selectedTextId = nil
-
-                return .none
-
-            case let .updateTextPosition(textId, position):
-                guard let index = state.texts.firstIndex(
-                    where: { $0.id == textId }
-                ) else { return .none }
-
-                state.texts[index].position = position
-                state.editMode = .original
 
                 return .none
 
