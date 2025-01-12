@@ -94,7 +94,7 @@ struct SideMenuView: View {
 
     private var logoutButton: some View {
         Button {
-            // TODO: 로그아웃
+            store.send(.logoutButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("LogoutN")

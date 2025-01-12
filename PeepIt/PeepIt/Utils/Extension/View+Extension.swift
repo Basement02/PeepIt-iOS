@@ -17,4 +17,13 @@ extension View {
             for: nil
         )
     }
+
+    func safeAreaTopInset() -> CGFloat {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
+            return 0
+        }
+
+        return window.safeAreaInsets.top
+    }
 }

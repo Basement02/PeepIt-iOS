@@ -19,8 +19,6 @@ struct EditStore {
         var videoURL: URL? = nil
         /// 캡처 위한 이미지 사이즈
         var imageSize: CGSize = .zero
-        /// 스티커 저장
-        var stickers: [StickerItem] = .init()
         /// 텍스트 저장
         var texts: [TextItem] = .init()
         /// 뷰 편집 모드
@@ -59,6 +57,10 @@ struct EditStore {
 
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
+
+        var stickerState = StickerLayerStore.State()
+
+        var textState = TextLayerStore.State()
     }
 
     enum Action: BindableAction {
@@ -80,14 +82,8 @@ struct EditStore {
         case renderingCompleted(url: URL?)
         /// 스티커 모달 액션
         case stickerListAction(PresentationAction<StickerModalStore.Action>)
-        /// 드래그한 스티커 위치 업데이트
-        case updateStickerPosition(stickerId: UUID, position: CGPoint)
-        /// 스티커 확대/축소 스케일 업데이트
-        case updateStickerScale(stickerId: UUID, scale: CGFloat)
         /// 텍스트 추가 완료 버튼 탭
         case textInputCompleteButtonTapped
-        /// 텍스트 위치 업데이트
-        case updateTextPosition(textId: UUID, position: CGPoint)
         /// 텍스트 확대/축소 스케일 업데이트
         case updateTextScale(textId: UUID, scale: CGFloat)
         /// 텍스트 선택
@@ -102,12 +98,18 @@ struct EditStore {
         case objectLongerTapEnded
         /// 영상 소리 모드에 따른 렌더링
         case renderVideo
-        /// 뷰  사라질 때
-        case onDisappear
         /// 화면 전환
         case pushToWriteBody(image: UIImage?, videoURL: URL?)
-
+        /// 뷰 나타날 때
         case onAppear
+        /// 뷰  사라질 때
+        case onDisappear
+        /// 삭제 영역 계산
+        case setDeleteFrame(rect: CGRect)
+        /// 자식 뷰 - 스티커 관련
+        case stickerAction(StickerLayerStore.Action)
+        /// 자식 뷰 - 텍스트 관련
+        case textAction(TextLayerStore.Action)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -118,6 +120,14 @@ struct EditStore {
 
         Scope(state: \.sliderState, action: \.sliderAction) {
             SliderStore()
+        }
+
+        Scope(state: \.stickerState, action: \.stickerAction) {
+            StickerLayerStore()
+        }
+
+        Scope(state: \.textState, action: \.textAction) {
+            TextLayerStore()
         }
 
         Reduce { state, action in
@@ -147,47 +157,27 @@ struct EditStore {
                 return .none
 
             case let .stickerListAction(.presented(.stickerSelected(selectedSticker))):
-                state.stickers.append(StickerItem(stickerName: selectedSticker))
+                state.stickerState.stickers.append(StickerItem(stickerName: selectedSticker))
                 state.stickerModalState = nil
                 return .send(.doneButtonTapped)
 
             case .stickerListAction(.dismiss):
                 return .send(.doneButtonTapped)
 
-            case let .updateStickerPosition(stickerId, position):
-                guard let index = state.stickers.firstIndex(
-                    where: { $0.id == stickerId }
-                ) else { return .none }
-
-                state.stickers[index].position = position
-                state.editMode = .original
-
-                return .none
-
-            case let .updateStickerScale(stickerId, scale):
-                guard let index = state.stickers.firstIndex(
-                    where: { $0.id == stickerId }
-                ) else { return .none }
-
-                state.stickers[index].scale = scale
-                state.editMode = .original
-
-                return .none
-
             case .textInputCompleteButtonTapped:
                 if let selectedTextId = state.selectedText?.id,
-                   let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
-                    state.texts[index].text = state.inputText
-                    state.texts[index].scale = state.inputTextSize
-                    state.texts[index].color = state.inputTextColor
+                   let index = state.textState.textItems.firstIndex(where: { $0.id == selectedTextId }) {
+                    state.textState.textItems[index].text = state.inputText
+                    state.textState.textItems[index].scale = state.inputTextSize
+                    state.textState.textItems[index].color = state.inputTextColor
                 } else {
                     let newText: TextItem = .init(
                         text: state.inputText,
                         scale: state.inputTextSize,
                         color: state.inputTextColor
                     )
-                    
-                    state.texts.append(newText)
+
+                    state.textState.textItems.append(newText)
                 }
 
                 state.inputText = ""
@@ -196,16 +186,7 @@ struct EditStore {
                 state.inputTextSize = 24.0
                 state.inputTextColor = .white
                 state.sliderState.sliderValue = 24.0
-
-                return .none
-
-            case let .updateTextPosition(textId, position):
-                guard let index = state.texts.firstIndex(
-                    where: { $0.id == textId }
-                ) else { return .none }
-
-                state.texts[index].position = position
-                state.editMode = .original
+                state.textState.selectedTextId = nil
 
                 return .none
 
@@ -220,7 +201,7 @@ struct EditStore {
                 return .none
 
             case let .textFieldTapped(textId):
-                guard let text = state.texts.first(
+                guard let text = state.textState.textItems.first(
                     where: { $0.id == textId }
                 ) else { return .none }
 
@@ -238,7 +219,6 @@ struct EditStore {
                 return .none
 
             case .doneButtonTapped:
-
                 state.editMode = .original
                 return .none
 
@@ -270,7 +250,7 @@ struct EditStore {
 
             case .renderVideo:
                 guard let url = state.videoURL else { return .none }
-                let (stickers, texts, isSoundOn) = (state.stickers, state.texts, state.isVideoSoundOn)
+                let (stickers, texts, isSoundOn) = (state.stickerState.stickers, state.texts, state.isVideoSoundOn)
                 state.isVideoPlaying = false
 
                 return .run { send in
@@ -289,6 +269,31 @@ struct EditStore {
 
             case .pushToWriteBody:
                 return .none
+
+            case .stickerAction(.stickerDragged),
+                    .stickerAction(.stickerLongTapped),
+                    .stickerAction(.updateStickerScale),
+                    .textAction(.textDragged),
+                    .textAction(.textLongerTapped):
+                state.editMode = .editMode
+                return .none
+
+            case .stickerAction(.stickerDragEnded),
+                    .stickerAction(.stickerLongTapEnded),
+                    .stickerAction(.scaleUpdateEnded),
+                    .textAction(.textDragEnded),
+                    .textAction(.textLongerTapEnded):
+                state.editMode = .original
+                return .none
+
+            case let .setDeleteFrame(rect):
+                state.stickerState.deleteRect = rect
+                state.textState.deleteRect = rect
+                return .none
+
+            case let .textAction(.textTapped(textItem)):
+                state.selectedText = textItem
+                return .send(.textFieldTapped(textId: textItem.id))
 
             default:
                 return .none

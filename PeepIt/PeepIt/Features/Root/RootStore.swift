@@ -93,6 +93,11 @@ struct RootStore {
                 state.path.append(.notification(.init()))
                 return .none
 
+            case .home(.sideMenu(.logoutButtonTapped)):
+                state.authState = .unAuthorized
+                state.path.removeAll()
+                return .none
+
             case .home(.uploadButtonTapped):
                 state.path.append(.camera(.init()))
                 return .none

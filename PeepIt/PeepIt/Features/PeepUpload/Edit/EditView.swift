@@ -46,7 +46,7 @@ struct EditView: View {
 
                         HStack {
                             VStack(spacing: 25) {
-                                if let _ = store.videoURL { soundButton }
+                                if store.dataType == .video { soundButton }
                                 stickerButton
                                 textButton
                             }
@@ -85,7 +85,7 @@ struct EditView: View {
                         .padding(.leading, 12)
 
                     textEditor
-                     .padding(.top, 281.adjustedH)
+                        .padding(.top, 281.adjustedH)
 
                 /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                 case .editMode:
@@ -150,19 +150,17 @@ struct EditView: View {
             .ignoresSafeArea()
             .opacity(store.isCapturing ? 0 : 1)
 
-            /// 스티커들
-            ForEach(store.stickers, id: \.id) { sticker in
-                DraggableSticker(sticker: sticker, store: store)
-            }
+            StickerLayerView(
+                store: store.scope(
+                    state: \.stickerState, action: \.stickerAction
+                )
+            )
 
-            /// 텍스트들
-            ForEach(store.texts, id: \.id) { textItem in
-                DraggableText(textItem: textItem, store: store)
-                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-                    .onTapGesture {
-                        store.send(.textFieldTapped(textId: textItem.id))
-                    }
-            }
+            TextLayerView(
+                store: store.scope(
+                    state: \.textState, action: \.textAction
+                )
+            )
         }
         .aspectRatio(9/16, contentMode: .fit)
         .frame(width: Constant.screenWidth)
@@ -331,6 +329,19 @@ struct EditView: View {
         }
         .buttonStyle(
             PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
+        )
+        .background(
+            GeometryReader { geo in
+                WithPerceptionTracking {
+                    Color.clear
+                        .onAppear {
+                            var deleteFrame = geo.frame(in: .global)
+                            /// 좌표계 맞추기 위한 계산(삭제 버튼은 전체 좌표, 스티커는 PeepView 좌표)
+                            deleteFrame.origin.y -= (safeAreaTopInset() + CGFloat(44) + 11.adjustedH)
+                            store.send(.setDeleteFrame(rect: deleteFrame))
+                        }
+                }
+            }
         )
     }
 }
