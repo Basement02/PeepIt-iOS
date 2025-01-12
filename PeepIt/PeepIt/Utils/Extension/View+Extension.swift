@@ -19,14 +19,11 @@ extension View {
     }
 
     func safeAreaTopInset() -> CGFloat {
-        let statusHeight = UIApplication.shared.statusBarFrame.size.height  
-
-        if #available(iOS 11.0, *) {
-            let window = UIApplication.shared.keyWindow
-            let topPadding = window?.safeAreaInsets.top
-            return topPadding ?? statusHeight
-        } else {
-            return statusHeight
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first(where: { $0.isKeyWindow }) else {
+            return 0
         }
+
+        return window.safeAreaInsets.top
     }
 }
