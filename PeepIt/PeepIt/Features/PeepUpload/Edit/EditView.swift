@@ -333,29 +333,19 @@ struct EditView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
         )
-        .onDrop(of: [.text], isTargeted: nil) { providers in
-            handleDrop(providers: providers)
-        }
-    }
-
-    private func handleDrop(providers: [NSItemProvider]) -> Bool {
-        for provider in providers {
-            if provider.canLoadObject(ofClass: NSString.self) {
-                _ = provider.loadObject(ofClass: NSString.self) { object, _ in
-                    if let idString = object as? String, let id = UUID(uuidString: idString) {
-//                        DispatchQueue.main.async {
-//                            // 스티커 삭제
-//                            store.stickers.removeAll { $0.id == id }
-//                            // 텍스트 삭제
-//                            store.texts.removeAll { $0.id == id }
-//                        }
-                        print(idString)
-                    }
+        .background(
+            GeometryReader { geo in
+                WithPerceptionTracking {
+                    Color.clear
+                        .onAppear {
+                            var deleteFrame = geo.frame(in: .global)
+                            /// 좌표계 맞추기 위한 계산(삭제 버튼은 전체 좌표, 스티커는 PeepView 좌표)
+                            deleteFrame.origin.y -= (safeAreaTopInset() + CGFloat(44) + 11.adjustedH)
+                            store.send(.setDeleteFrame(rect: deleteFrame))
+                        }
                 }
-                return true
             }
-        }
-        return false
+        )
     }
 }
 

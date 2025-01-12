@@ -106,6 +106,8 @@ struct EditStore {
         case onAppear
 
         case stickerAction(StickerLayerStore.Action)
+
+        case setDeleteFrame(rect: CGRect)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -281,6 +283,10 @@ struct EditStore {
                     .stickerAction(.stickerLongTapEnded),
                     .stickerAction(.scaleUpdateEnded):
                 state.editMode = .original
+                return .none
+
+            case let .setDeleteFrame(rect):
+                state.stickerState.deleteRect = rect
                 return .none
 
             default:

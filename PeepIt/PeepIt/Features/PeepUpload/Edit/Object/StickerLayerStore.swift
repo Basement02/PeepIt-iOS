@@ -15,6 +15,10 @@ struct StickerLayerStore {
     struct State: Equatable {
         /// 보여줄 스티커들
         var stickers: [StickerItem] = []
+        /// 삭제 영역
+        var deleteRect = CGRect.zero
+        /// 삭제 영역에 들어간 스티커 체크 - 삭제 및 크기 관리 위함
+        var stickersInDeleteArea: Set<UUID> = []
     }
 
     enum Action {
@@ -49,12 +53,33 @@ struct StickerLayerStore {
                 ) else { return .none }
 
                 state.stickers[idx].position = position
+
+
+                let size = 120 * state.stickers[idx].scale
+
+                let stickerRect = CGRect(
+                    x: position.x - size/2,
+                    y: position.y - size/2,
+                    width: size,
+                    height: size
+                )
+
+                if stickerRect.intersects(state.deleteRect) {
+                    state.stickersInDeleteArea.insert(id)
+                } else {
+                    state.stickersInDeleteArea.remove(id)
+                }
+
                 return .none
 
             case let .stickerDragged(id, loc):
-                return .send(.updateStickerPosition(id: id, position: loc))
+                return  .send(.updateStickerPosition(id: id, position: loc))
 
-            case .stickerDragEnded:
+            case let .stickerDragEnded(id):
+                if state.stickersInDeleteArea.contains(id) {
+                    state.stickers.removeAll { $0.id == id }
+                    state.stickersInDeleteArea.remove(id)
+                }
                 return .none
 
             case .stickerLongTapped:
