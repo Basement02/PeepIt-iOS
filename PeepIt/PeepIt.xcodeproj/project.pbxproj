@@ -113,6 +113,8 @@
 		ABCC50F12CF03D62004AD297 /* DismissButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50F02CF03D62004AD297 /* DismissButton.swift */; };
 		ABCE972C2D31202C00A07962 /* StickerLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE972B2D31202C00A07962 /* StickerLayerView.swift */; };
 		ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE972E2D31203C00A07962 /* StickerLayerStore.swift */; };
+		ABCE97312D342A4E00A07962 /* TextLayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE97302D342A4E00A07962 /* TextLayerView.swift */; };
+		ABCE97332D342A5800A07962 /* TextLayerStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCE97322D342A5400A07962 /* TextLayerStore.swift */; };
 		ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */; };
 		ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */; };
 		ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */; };
@@ -257,6 +259,8 @@
 		ABCC50F02CF03D62004AD297 /* DismissButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissButton.swift; sourceTree = "<group>"; };
 		ABCE972B2D31202C00A07962 /* StickerLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerLayerView.swift; sourceTree = "<group>"; };
 		ABCE972E2D31203C00A07962 /* StickerLayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerLayerStore.swift; sourceTree = "<group>"; };
+		ABCE97302D342A4E00A07962 /* TextLayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayerView.swift; sourceTree = "<group>"; };
+		ABCE97322D342A5400A07962 /* TextLayerStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLayerStore.swift; sourceTree = "<group>"; };
 		ABD3CAA22CA08D4C00438747 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAA42CA08D6C00438747 /* MyProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileStore.swift; sourceTree = "<group>"; };
 		ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyActivityPeep.swift; sourceTree = "<group>"; };
@@ -847,6 +851,8 @@
 			children = (
 				ABCE972B2D31202C00A07962 /* StickerLayerView.swift */,
 				ABCE972E2D31203C00A07962 /* StickerLayerStore.swift */,
+				ABCE97302D342A4E00A07962 /* TextLayerView.swift */,
+				ABCE97322D342A5400A07962 /* TextLayerStore.swift */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -1080,6 +1086,7 @@
 				ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
+				ABCE97332D342A5800A07962 /* TextLayerStore.swift in Sources */,
 				ABF72EB32CBE625400629E9C /* DraggableText.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,
 				AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */,
@@ -1159,6 +1166,7 @@
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
+				ABCE97312D342A4E00A07962 /* TextLayerView.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,

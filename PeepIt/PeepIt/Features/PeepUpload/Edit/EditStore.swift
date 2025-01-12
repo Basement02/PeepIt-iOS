@@ -59,6 +59,8 @@ struct EditStore {
         @Presents var stickerModalState: StickerModalStore.State?
 
         var stickerState = StickerLayerStore.State()
+
+        var textState = TextLayerStore.State()
     }
 
     enum Action: BindableAction {
@@ -108,6 +110,8 @@ struct EditStore {
         case stickerAction(StickerLayerStore.Action)
 
         case setDeleteFrame(rect: CGRect)
+
+        case textAction(TextLayerStore.Action)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -122,6 +126,10 @@ struct EditStore {
 
         Scope(state: \.stickerState, action: \.stickerAction) {
             StickerLayerStore()
+        }
+
+        Scope(state: \.textState, action: \.textAction) {
+            TextLayerStore()
         }
 
         Reduce { state, action in
@@ -160,18 +168,18 @@ struct EditStore {
 
             case .textInputCompleteButtonTapped:
                 if let selectedTextId = state.selectedText?.id,
-                   let index = state.texts.firstIndex(where: { $0.id == selectedTextId }) {
-                    state.texts[index].text = state.inputText
-                    state.texts[index].scale = state.inputTextSize
-                    state.texts[index].color = state.inputTextColor
+                   let index = state.textState.textItems.firstIndex(where: { $0.id == selectedTextId }) {
+                    state.textState.textItems[index].text = state.inputText
+                    state.textState.textItems[index].scale = state.inputTextSize
+                    state.textState.textItems[index].color = state.inputTextColor
                 } else {
                     let newText: TextItem = .init(
                         text: state.inputText,
                         scale: state.inputTextSize,
                         color: state.inputTextColor
                     )
-                    
-                    state.texts.append(newText)
+
+                    state.textState.textItems.append(newText)
                 }
 
                 state.inputText = ""
@@ -180,6 +188,7 @@ struct EditStore {
                 state.inputTextSize = 24.0
                 state.inputTextColor = .white
                 state.sliderState.sliderValue = 24.0
+                state.textState.selectedTextId = nil
 
                 return .none
 
@@ -204,7 +213,7 @@ struct EditStore {
                 return .none
 
             case let .textFieldTapped(textId):
-                guard let text = state.texts.first(
+                guard let text = state.textState.textItems.first(
                     where: { $0.id == textId }
                 ) else { return .none }
 
@@ -275,19 +284,28 @@ struct EditStore {
 
             case .stickerAction(.stickerDragged),
                     .stickerAction(.stickerLongTapped),
-                    .stickerAction(.updateStickerScale):
+                    .stickerAction(.updateStickerScale),
+                    .textAction(.textDragged),
+                    .textAction(.textLongerTapped):
                 state.editMode = .editMode
                 return .none
 
             case .stickerAction(.stickerDragEnded),
                     .stickerAction(.stickerLongTapEnded),
-                    .stickerAction(.scaleUpdateEnded):
+                    .stickerAction(.scaleUpdateEnded),
+                    .textAction(.textDragEnded),
+                    .textAction(.textLongerTapEnded):
                 state.editMode = .original
                 return .none
 
             case let .setDeleteFrame(rect):
                 state.stickerState.deleteRect = rect
+                state.textState.deleteRect = rect
                 return .none
+
+            case let .textAction(.textTapped(textItem)):
+                state.selectedText = textItem
+                return .send(.textFieldTapped(textId: textItem.id))
 
             default:
                 return .none

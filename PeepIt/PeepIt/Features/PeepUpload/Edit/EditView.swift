@@ -85,7 +85,7 @@ struct EditView: View {
                         .padding(.leading, 12)
 
                     textEditor
-                     .padding(.top, 281.adjustedH)
+                        .padding(.top, 281.adjustedH)
 
                 /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                 case .editMode:
@@ -155,15 +155,12 @@ struct EditView: View {
                     state: \.stickerState, action: \.stickerAction
                 )
             )
-//
-//            /// 텍스트들
-//            ForEach(store.texts, id: \.id) { textItem in
-//                DraggableText(textItem: textItem, store: store)
-//                    .opacity(store.selectedText?.id == textItem.id ? 0 : 1)
-//                    .onTapGesture {
-//                        store.send(.textFieldTapped(textId: textItem.id))
-//                    }
-//            }
+
+            TextLayerView(
+                store: store.scope(
+                    state: \.textState, action: \.textAction
+                )
+            )
         }
         .aspectRatio(9/16, contentMode: .fit)
         .frame(width: Constant.screenWidth)
