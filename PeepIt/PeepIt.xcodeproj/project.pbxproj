@@ -510,7 +510,6 @@
 			isa = PBXGroup;
 			children = (
 				ABA11E8A2D1D3F8600C181DC /* UIKit */,
-				ABE8A0C62CEAE62800AFBEAE /* CoreSystem */,
 				AB5159772CA97C9C0043AA0A /* Constant */,
 				AB094DE62CC76EB10091E9FB /* Extension */,
 			);
@@ -741,6 +740,7 @@
 			isa = PBXGroup;
 			children = (
 				ABE581B12CCA6EB0003366DC /* Font */,
+				ABE8A0C62CEAE62800AFBEAE /* CoreSystem */,
 				ABC305CD2C932342003B00FE /* Assets.xcassets */,
 				ABC305CF2C932342003B00FE /* Preview Content */,
 			);
