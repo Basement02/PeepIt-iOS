@@ -19,12 +19,10 @@ struct PeepDetailView: View {
                         Color.base
                             .ignoresSafeArea()
 
-                        BackImageLayer.secondary()
-                            .ignoresSafeArea()
 
                         VStack(spacing: 11.adjustedH) {
                             topBar
-                                .padding(.horizontal, 16)
+                                .opacity(0)
 
                             peepView
 
@@ -32,9 +30,16 @@ struct PeepDetailView: View {
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
 
-                        detailView
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 84)
+                        BackImageLayer.secondary()
+                            .ignoresSafeArea()
+
+                        VStack {
+                            topBar
+                            Spacer()
+                            detailView
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 84)
+                        }
 
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -75,6 +80,16 @@ struct PeepDetailView: View {
                             .easeInOut(duration: 0.3),
                             value: store.isReportSheetVisible
                         )
+
+                        /// 채팅 보여주기
+                        if store.showChat {
+                            ChatView(
+                                store: store.scope(
+                                    state: \.chatState,
+                                    action: \.chatAction
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -95,6 +110,7 @@ extension PeepDetailView {
             moreButton
         }
         .frame(height: 44)
+        .padding(.horizontal, 16)
     }
 
     private var backButton: some View {
@@ -213,7 +229,7 @@ extension PeepDetailView {
     /// TODO: 이미지로 수정
     private var peepView: some View {
         Rectangle()
-            .fill(Color.gray300)
+            .fill(Color.white)
             .aspectRatio(9/16, contentMode: .fit)
             .frame(width: Constant.screenWidth)
             .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -264,7 +280,7 @@ extension PeepDetailView {
 
     private var chattingButton: some View {
         Button {
-            // TODO: 채팅뷰 올리기
+            store.send(.showChat)
         } label: {
             Image("IconMessage")
                 .resizable()
