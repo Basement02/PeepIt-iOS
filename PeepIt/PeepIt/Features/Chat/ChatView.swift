@@ -14,48 +14,57 @@ struct ChatView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.white
+                Color.base
                     .ignoresSafeArea()
 
-                Color.black.opacity(0.2)
-                    .ignoresSafeArea()
+                VStack(spacing: 11.adjustedH) {
+                    topBar
+                        .opacity(0)
 
-                VStack(spacing: 0) {
-                    HStack {
-                        Spacer()
-                        closeChatButton
-                    }
-                    .padding(.bottom, 48)
+                    /// TODO: 이미지
+                    RoundedRectangle(cornerRadius: 24)
+                        .fill(Color.white)
+                        .aspectRatio(9/16, contentMode: .fit)
+                        .frame(width: Constant.screenWidth)
 
-                    uploaderBody
-
-                    ScrollView {
-                        ForEach(store.chats, id: \.self) { chat in
-                            ChatBubbleView(chat: chat)
-                        }
-                    }
-                    .padding(.vertical, 15)
                     Spacer()
-
-                    chatTextField
-                        .padding(.bottom, 35)
                 }
-                .padding(.horizontal, 17)
+
+                Group {
+                    BackImageLayer.primary()
+                    BackImageLayer.secondary()
+                    Color.blur2
+                }
+                .ignoresSafeArea()
+
+                VStack(spacing: 11.adjustedH) {
+                    topBar
+
+                    Spacer()
+                }
+
             }
+            .ignoresSafeArea(.all, edges: .bottom)
             .onAppear {
                 store.send(.loadChats)
             }
         }
     }
 
-    private var closeChatButton: some View  {
-        Button {
-            store.send(.closeChatButtonTapped)
-        } label: {
-            Rectangle()
-                .frame(width: 39, height: 39)
-                .foregroundStyle(Color.gray)
+    private var topBar: some View {
+        ZStack {
+            TownTitleView(townName: "동이름")
+
+            HStack {
+                Spacer()
+
+                DismissButton {
+                    store.send(.closeChatButtonTapped)
+                }
+            }
         }
+        .frame(height: 44)
+        .padding(.horizontal, 17)
     }
 
     private var uploaderBody: some View {
