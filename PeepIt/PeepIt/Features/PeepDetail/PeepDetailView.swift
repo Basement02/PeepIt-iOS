@@ -15,23 +15,26 @@ struct PeepDetailView: View {
         WithPerceptionTracking {
             GeometryReader { proxy in
                 WithPerceptionTracking {
-                    ZStack {
-                        Color.white
+                    ZStack(alignment: .bottom) {
+                        Color.base
                             .ignoresSafeArea()
 
                         BackImageLayer.secondary()
                             .ignoresSafeArea()
 
-                        VStack(spacing: 0) {
+                        VStack(spacing: 11.adjustedH) {
                             topBar
+                                .padding(.horizontal, 16)
+
+                            peepView
 
                             Spacer()
-
-                            detailView
-                                .padding(.bottom, 84)
                         }
-                        .padding(.horizontal, 16)
                         .ignoresSafeArea(.all, edges: .bottom)
+
+                        detailView
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 84)
 
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -43,8 +46,8 @@ struct PeepDetailView: View {
                                         secondButton: reportButton,
                                         bgColor: Color.blur2
                                     )
-                                    .padding(.top, 59)
-                                    .padding(.trailing, 36.adjustedW)
+                                    .padding(.top, 70)
+                                    .padding(.trailing, 33)
                                 }
                                 Spacer()
                             }
@@ -205,6 +208,15 @@ extension PeepDetailView {
                     .foregroundStyle(Color.gray300)
             )
         )
+    }
+
+    /// TODO: 이미지로 수정
+    private var peepView: some View {
+        Rectangle()
+            .fill(Color.gray300)
+            .aspectRatio(9/16, contentMode: .fit)
+            .frame(width: Constant.screenWidth)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 
     private var detailView: some View {
