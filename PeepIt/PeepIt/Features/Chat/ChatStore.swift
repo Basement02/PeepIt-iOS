@@ -14,6 +14,8 @@ struct ChatStore {
     struct State: Equatable {
         var chats: [Chat] = .init()
         var message = ""
+        var isBodyTrunscated = false
+        var peepBody = "채팅의 문구채팅의채팅의 문구채팅의채팅의 asdfasdfasdfasdfasdfad asdfasdf"
     }
 
     enum Action: BindableAction {
@@ -21,6 +23,8 @@ struct ChatStore {
         case closeChatButtonTapped
         case loadChats
         case sendButtonTapped
+        case setBodyIsTrunscated
+        case onAppear
     }
 
     var body: some Reducer<State, Action> {
@@ -28,6 +32,11 @@ struct ChatStore {
         
         Reduce { state, action in
             switch action {
+
+            case .onAppear:
+
+                return .none
+
             case .binding(\.message):
                 print(state.message)
                 return .none
@@ -43,7 +52,11 @@ struct ChatStore {
                 state.message.removeAll()
                 return .none
 
-            case .binding(_):
+            case .setBodyIsTrunscated:
+                state.isBodyTrunscated = true
+                return .none
+
+            default:
                 return .none
             }
         }
