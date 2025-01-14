@@ -46,11 +46,14 @@ struct ChatView: View {
                         /// 채팅 UI
                         VStack(spacing: 0) {
                             topBar
-                                .padding(.bottom, 33.adjustedH)
+                                .padding(.bottom, 33)
 
                             uploaderBodyView
+                                .padding(.bottom, 17)
 
-                            Spacer()
+                            chatListView
+                                .padding(.bottom, keyboardHeight)
+                                .clipped()
 
                             enterFieldView
                                 .padding(
@@ -60,9 +63,13 @@ struct ChatView: View {
                                 .offset(y: -keyboardHeight)
                                 .animation(.easeInOut, value: keyboardHeight)
                         }
+                        .onTapGesture { endTextEditing() }
                         .ignoresSafeArea(.all, edges: .bottom)
                         .onAppear(perform: addKeyboardObserver)
                         .onDisappear(perform: removeKeyboardObserver)
+                    }
+                    .onAppear {
+                        store.send(.onAppear)
                     }
                 }
             }
@@ -101,7 +108,7 @@ struct ChatView: View {
 
                 ZStack(alignment: .topTrailing) {
                     /// 채팅 높이 계산 위한 뷰
-                    Text(store.peepBody)
+                    Text(store.peepBody.message)
                         .pretendard(.body04)
                         .lineLimit(nil)
                         .background(
@@ -109,7 +116,6 @@ struct ChatView: View {
                                 Color.clear
                                     .onAppear {
                                         if geo.size.height >= 100 {
-                                            print(geo.size)
                                             store.send(.setBodyIsTrunscated)
                                         }
                                     }
@@ -121,7 +127,7 @@ struct ChatView: View {
 
                     VStack(spacing: 0) {
                         /// 진짜 채팅 뷰
-                        Text(store.peepBody)
+                        Text(store.peepBody.message)
                             .pretendard(.body04)
                             .lineLimit(5)
                             .padding(.horizontal, 14)
@@ -131,16 +137,9 @@ struct ChatView: View {
                                 VStack(spacing: 0) {
                                     ZStack(alignment: .bottomTrailing) {
                                         Rectangle()
-                                            .fill(Color(hex: 0x6B8400, alpha: 0.5))
+                                            .fill(Color.coreLimeDOp)
                                             .roundedCorner(13.2, corners: .topRight)
-                                            .roundedCorner(
-                                                store.isBodyTrunscated ? 0 : 13.2,
-                                                corners: .bottomRight
-                                            )
-                                            .roundedCorner(
-                                                store.isBodyTrunscated ? 0: 17.6,
-                                                corners: .bottomLeft
-                                            )
+                                            .makeCorner(of: .uploader)
 
                                         if store.isBodyTrunscated {
                                             Text("더보기")
@@ -174,14 +173,10 @@ struct ChatView: View {
                 .foregroundStyle(Color.white)
                 .tint(Color.coreLime)
                 .scrollContentBackground(.hidden)
-                .frame(minHeight: 23, maxHeight: 100)
+                .frame(minHeight: 20, maxHeight: 110)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray700)
-                )
 
             Spacer()
             sendButton
@@ -203,6 +198,33 @@ struct ChatView: View {
                 pressedImg: "BoxBtnN"
             )
         )
+    }
+
+    private var chatListView: some View {
+        ScrollView {
+            LazyVStack(spacing: 15) {
+                ForEach(store.chats, id: \.id) { chat in
+                    chatCell(chat: chat)
+                }
+            }
+        }
+        .scrollIndicators(.hidden)
+        .padding(.horizontal, 16)
+    }
+
+    @ViewBuilder
+    private func chatCell(chat: Chat) -> some View {
+        switch chat.type {
+
+        case .mine:
+            HStack {
+                Spacer()
+                ChatBubbleView(chat: chat)
+            }
+
+        case .uploader, .others:
+            OtherBubbleView(chat: chat)
+        }
     }
 }
 

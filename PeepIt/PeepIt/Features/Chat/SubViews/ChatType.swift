@@ -11,15 +11,4 @@ enum ChatType: Equatable, Hashable {
     case mine
     case uploader
     case others
-
-    var backgroundColor: Color {
-        switch self {
-        case .mine:
-            return .yellow
-        case .uploader:
-            return .green
-        case .others:
-            return .blue
-        }
-    }
 }
