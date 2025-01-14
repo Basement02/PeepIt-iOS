@@ -16,16 +16,12 @@ struct PeepDetailView: View {
             GeometryReader { proxy in
                 WithPerceptionTracking {
                     ZStack(alignment: .bottom) {
-                        Color.base
-                            .ignoresSafeArea()
-
+                        Color.base.ignoresSafeArea()
 
                         VStack(spacing: 11.adjustedH) {
                             topBar
                                 .opacity(0)
-
                             peepView
-
                             Spacer()
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
@@ -40,6 +36,8 @@ struct PeepDetailView: View {
                                 .padding(.horizontal, 16)
                                 .padding(.bottom, 84)
                         }
+                        .toolbar(.hidden, for: .navigationBar)
+                        .ignoresSafeArea(.all, edges: .bottom)
 
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -80,8 +78,9 @@ struct PeepDetailView: View {
                             .easeInOut(duration: 0.3),
                             value: store.isReportSheetVisible
                         )
-
-                        /// 채팅 보여주기
+                    }
+                    .overlay {
+                        /// 채팅
                         if store.showChat {
                             ChatView(
                                 store: store.scope(
@@ -114,9 +113,7 @@ extension PeepDetailView {
     }
 
     private var backButton: some View {
-        BackButton {
-            store.send(.closeView)
-        }
+        BackButton { store.send(.backButtonTapped) }
     }
 
     private var moreButton: some View {

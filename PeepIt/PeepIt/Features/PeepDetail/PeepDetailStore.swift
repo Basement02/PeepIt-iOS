@@ -38,7 +38,7 @@ struct PeepDetailStore {
         /// 채팅 뷰 보여주기
         case showChat
         /// 뒤로 가기
-        case closeView
+        case backButtonTapped
         /// 반응 선택
         case selectReaction(idx: Int)
         /// 더보기 메뉴 보여주기 여부
@@ -54,6 +54,8 @@ struct PeepDetailStore {
         /// 채팅 관련
         case chatAction(ChatStore.Action)
     }
+
+    @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         Scope(state: \.report, action: \.report) {
@@ -75,8 +77,8 @@ struct PeepDetailStore {
                 state.showChat = true
                 return .none
 
-            case .closeView:
-                return .none
+            case .backButtonTapped:
+                return .run { _ in await dismiss() }
 
             case let .selectReaction(idx):
                 state.selectedReaction = state.reactionList[idx]
@@ -111,6 +113,7 @@ struct PeepDetailStore {
 
             default:
                 return .none
+
             }
         }
     }
