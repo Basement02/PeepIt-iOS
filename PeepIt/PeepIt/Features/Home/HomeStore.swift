@@ -31,13 +31,11 @@ struct HomeStore {
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case camera(CameraStore.Action)
+
+        case pushToDetail
     }
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.peepDetail, action: \.peepDetail) {
-            PeepDetailStore()
-        }
-
         Scope(state: \.peepPreviewModal, action: \.peepPreviewModal) {
             PeepModalStore()
         }
@@ -45,13 +43,10 @@ struct HomeStore {
         Scope(state: \.sideMenu, action: \.sideMenu) {
             SideMenuStore()
         }
-
-        Scope(state: \.camera, action: \.camera) {
-            CameraStore()
-        }
-
+        
         Reduce { state, action in
             switch action {
+
             case .goToPeepTapped:
                 state.isPeepDetailShowed = true
                 return .none
@@ -66,12 +61,10 @@ struct HomeStore {
             case .uploadButtonTapped:
                 return .none
 
-            case .peepDetail(.closeView):
-                state.isPeepDetailShowed = false
-                return .none
-
             case .peepPreviewModal(.peepCellTapped):
-                state.isPeepDetailShowed = true
+                return .send(.pushToDetail)
+
+            case .pushToDetail:
                 return .none
 
             default:

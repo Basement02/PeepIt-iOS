@@ -107,6 +107,10 @@ struct RootView: View {
 
                 case let .write(store):
                     WriteView(store: store)
+
+                /// 핍
+                case let .peepDetail(store):
+                    PeepDetailView(store: store)
                 }
             }
         }
