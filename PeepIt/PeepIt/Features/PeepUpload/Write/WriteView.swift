@@ -24,7 +24,7 @@ struct WriteView: View {
 
                         backImageView
                             .padding(.top, 44)
-                            .padding(.top, 11.adjustedH)
+                            .padding(.top, 11)
 
                         Group {
                             BackImageLayer.primary()

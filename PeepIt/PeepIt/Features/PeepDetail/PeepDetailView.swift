@@ -18,7 +18,7 @@ struct PeepDetailView: View {
                     ZStack(alignment: .bottom) {
                         Color.base.ignoresSafeArea()
 
-                        VStack(spacing: 11.adjustedH) {
+                        VStack(spacing: 11) {
                             topBar
                                 .opacity(0)
                             peepView
