@@ -72,9 +72,50 @@ struct ChatView: View {
                     .onAppear {
                         store.send(.onAppear)
                     }
+                    .overlay {
+                        if store.showChatDetail {
+                            chatDetail
+                        }
+                    }
                 }
             }
         }
+    }
+
+    private var chatDetail: some View {
+        ZStack {
+            Color.blur1
+                .onTapGesture { store.send(.closeChatDetail) }
+
+            if let selectedChat = store.selectedChat {
+                VStack {
+                    originalChatCell(chat: selectedChat)
+
+                    Spacer()
+
+                    Button {
+                        store.send(.reportButtonTapped)
+                    } label: {
+                        HStack(spacing: 3) {
+                            Image("CombiReportBtnN")
+                            Text("신고하기")
+                                .foregroundStyle(Color.coreRed)
+                        }
+                        .frame(width: 108)
+                        .padding(.vertical, 13)
+                        .padding(.leading, 18)
+                        .padding(.trailing, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color.gray600)
+                        )
+                    }
+                    .padding(.bottom, 78.12)
+                }
+                .padding(.horizontal, 16)
+            }
+        }
+        .ignoresSafeArea()
     }
 
     private var topBar: some View {
@@ -210,6 +251,14 @@ struct ChatView: View {
             LazyVStack(spacing: 15) {
                 ForEach(store.chats, id: \.id) { chat in
                     chatCell(chat: chat)
+                        .gesture(
+                            LongPressGesture(minimumDuration: 1.2)
+                                .onEnded { isPressed in
+                                    if isPressed {
+                                        store.send(.chatLongTapped(chat: chat))
+                                    }
+                                }
+                        )
                 }
             }
         }
@@ -229,6 +278,20 @@ struct ChatView: View {
 
         case .uploader, .others:
             OtherBubbleView(chat: chat)
+        }
+    }
+
+    @ViewBuilder
+    private func originalChatCell(chat: Chat) -> some View {
+        switch chat.type {
+
+        case .mine:
+            OriginalChatBubbleView(chat: chat)
+                .padding(.top, 136)
+
+        case .uploader, .others:
+            OtherOriginalChatBubbleView(chat: chat)
+                .padding(.top, 169)
         }
     }
 }
