@@ -60,6 +60,7 @@
 		AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE542CA0289A00D8DC1F /* Chat.swift */; };
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
+		AB653BDD2D395E390002F04F /* YieldTouches.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB653BDC2D395E330002F04F /* YieldTouches.swift */; };
 		AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */; };
 		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
@@ -206,6 +207,7 @@
 		AB53DE542CA0289A00D8DC1F /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
+		AB653BDC2D395E330002F04F /* YieldTouches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YieldTouches.swift; sourceTree = "<group>"; };
 		AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterFieldStore.swift; sourceTree = "<group>"; };
 		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
@@ -511,7 +513,7 @@
 		AB53DE4F2CA00FD100D8DC1F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				ABA11E8A2D1D3F8600C181DC /* UIKit */,
+				ABA11E8A2D1D3F8600C181DC /* Helper */,
 				AB5159772CA97C9C0043AA0A /* Constant */,
 				AB094DE62CC76EB10091E9FB /* Extension */,
 			);
@@ -578,12 +580,13 @@
 			path = Dependencies;
 			sourceTree = "<group>";
 		};
-		ABA11E8A2D1D3F8600C181DC /* UIKit */ = {
+		ABA11E8A2D1D3F8600C181DC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				AB653BDC2D395E330002F04F /* YieldTouches.swift */,
 				ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */,
 			);
-			path = UIKit;
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		ABA67D4F2D2AEBFD0018EC92 /* Views */ = {
@@ -1153,6 +1156,7 @@
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
+				AB653BDD2D395E390002F04F /* YieldTouches.swift in Sources */,
 				ABA11E892D1D36B200C181DC /* BackMapPointer.swift in Sources */,
 				ABA67D532D2B02B30018EC92 /* VideoRenderServiceKey.swift in Sources */,
 				AB468D1B2CA941F600C1E430 /* NotificationStore.swift in Sources */,

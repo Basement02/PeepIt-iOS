@@ -142,6 +142,12 @@ struct ChatView: View {
 
         return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
             .padding(.horizontal, 16)
+            .gesture(
+                LongPressGesture(minimumDuration: 1.2)
+                    .onEnded { isPressed in
+                        if isPressed { store.send(.chatLongTapped(chat: store.peepBody)) }
+                    }
+            )
     }
 
     private var enterFieldView: some View {
@@ -189,6 +195,13 @@ struct ChatView: View {
                     chatCell(chat: chat) {
                         store.send(.showMoreButtonTapped(chat: chat))
                     }
+                    .yieldTouches()
+                    .gesture(
+                        LongPressGesture(minimumDuration: 1.2)
+                            .onEnded { isPressed in
+                                if isPressed { store.send(.chatLongTapped(chat: chat)) }
+                            }
+                    )
                 }
             }
         }
