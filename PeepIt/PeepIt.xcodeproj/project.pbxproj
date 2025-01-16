@@ -83,7 +83,6 @@
 		ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA67D502D2AFFBF0018EC92 /* VideoRenderService.swift */; };
 		ABA67D532D2B02B30018EC92 /* VideoRenderServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */; };
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
-		ABAC864F2D36B66C00B77D90 /* OtherBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABAC864E2D36B66C00B77D90 /* OtherBubbleView.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
 		ABB96D252CD344D2003C6742 /* CheckEnterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D242CD344D2003C6742 /* CheckEnterField.swift */; };
@@ -230,7 +229,6 @@
 		ABA67D502D2AFFBF0018EC92 /* VideoRenderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderService.swift; sourceTree = "<group>"; };
 		ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRenderServiceKey.swift; sourceTree = "<group>"; };
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
-		ABAC864E2D36B66C00B77D90 /* OtherBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherBubbleView.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
 		ABB96D242CD344D2003C6742 /* CheckEnterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterField.swift; sourceTree = "<group>"; };
@@ -523,10 +521,9 @@
 		AB53DE562CA02BC700D8DC1F /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				ABAC864E2D36B66C00B77D90 /* OtherBubbleView.swift */,
 				AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */,
-				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
 				AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */,
+				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -1181,7 +1178,6 @@
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
-				ABAC864F2D36B66C00B77D90 /* OtherBubbleView.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,

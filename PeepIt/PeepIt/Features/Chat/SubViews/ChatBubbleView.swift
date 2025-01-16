@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChatBubbleView: View {
     let chat: Chat
+    let showMoreButtonTapped: () -> Void
 
     @State private var isTrunscated = false
 
@@ -54,6 +55,7 @@ struct ChatBubbleView: View {
                                     .foregroundStyle(Color.nonOp)
                                     .padding(.bottom, 12)
                                     .padding(.trailing, 14)
+                                    .onTapGesture { showMoreButtonTapped() }
                             }
                         }
                     )
@@ -63,14 +65,5 @@ struct ChatBubbleView: View {
             maxWidth: 225 + 14 * 2,
             alignment: chat.type == .mine ? .trailing : .leading
         )
-    }
-}
-
-#Preview {
-    VStack(spacing: 0) {
-//        ChatBubbleView(chat: .chatStub1)
-//        ChatBubbleView(chat: .chatStub3)
-        ChatBubbleView(chat: .chatStub4)
-//        ChatBubbleView(chat: .chatStub6)
     }
 }

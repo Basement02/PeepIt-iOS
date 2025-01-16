@@ -21,7 +21,7 @@ struct ChatView: View {
                         Color.base.ignoresSafeArea()
 
                         /// 배경 핍 이미지
-                        VStack(spacing: 11.adjustedH) {
+                        VStack(spacing: 11) {
                             topBar
                                 .opacity(0)
 
@@ -83,7 +83,7 @@ struct ChatView: View {
     }
 
     private var chatDetail: some View {
-        ZStack {
+        ZStack(alignment: .top) {
             Color.blur1
                 .onTapGesture { store.send(.closeChatDetail) }
 
@@ -206,6 +206,14 @@ struct ChatView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
+        .gesture(
+            LongPressGesture(minimumDuration: 1.2)
+                .onEnded { isPressed in
+                    if isPressed {
+                        store.send(.chatLongTapped(chat: store.peepBody))
+                    }
+                }
+        )
     }
 
     private var enterFieldView: some View {
@@ -250,15 +258,20 @@ struct ChatView: View {
         ScrollView {
             LazyVStack(spacing: 15) {
                 ForEach(store.chats, id: \.id) { chat in
-                    chatCell(chat: chat)
-                        .gesture(
-                            LongPressGesture(minimumDuration: 1.2)
-                                .onEnded { isPressed in
-                                    if isPressed {
-                                        store.send(.chatLongTapped(chat: chat))
-                                    }
-                                }
-                        )
+                    chatCell(chat: chat) {
+                        store.send(.showMoreButtonTapped(chat: chat))
+                    }
+//                        .gesture(
+//                            DragGesture()
+//                                .onChanged { _ in /* 스크롤 중 */ }
+//                                .simultaneously(with: LongPressGesture(minimumDuration: 1.2)
+//                                    .onEnded { isPressed in
+//                                        if isPressed {
+//                                            store.send(.chatLongTapped(chat: chat))
+//                                        }
+//                                    }
+//                                )
+//                        )
                 }
             }
         }
@@ -267,17 +280,37 @@ struct ChatView: View {
     }
 
     @ViewBuilder
-    private func chatCell(chat: Chat) -> some View {
+    private func chatCell(
+        chat: Chat,
+        action: @escaping () -> Void
+    ) -> some View {
         switch chat.type {
 
         case .mine:
             HStack {
                 Spacer()
-                ChatBubbleView(chat: chat)
+                ChatBubbleView(chat: chat, showMoreButtonTapped: action)
             }
 
         case .uploader, .others:
-            OtherBubbleView(chat: chat)
+            HStack(alignment: .top, spacing: 10) {
+                Image("ProfileSample")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 7) {
+                        Text(chat.user.nickname)
+                            .pretendard(.caption03)
+                        Text(chat.sendTime)
+                            .pretendard(.caption04)
+                    }
+
+                    ChatBubbleView(chat: chat, showMoreButtonTapped: action)
+                }
+
+                Spacer()
+            }
         }
     }
 
@@ -287,11 +320,11 @@ struct ChatView: View {
 
         case .mine:
             OriginalChatBubbleView(chat: chat)
-                .padding(.top, 136)
+                .padding(.top, 169)
 
         case .uploader, .others:
             OtherOriginalChatBubbleView(chat: chat)
-                .padding(.top, 169)
+                .padding(.top, 136)
         }
     }
 }
@@ -326,4 +359,36 @@ extension ChatView {
     ChatView(
         store: .init(initialState: ChatStore.State()) { ChatStore() }
     )
+}
+
+import UIKit
+
+struct LongPressGestureModifier: UIViewRepresentable {
+    var action: () -> Void
+
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+        let longPress = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleLongPress))
+        longPress.minimumPressDuration = 1.2
+        view.addGestureRecognizer(longPress)
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(action: action)
+    }
+
+    class Coordinator: NSObject {
+        var action: () -> Void
+
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
+
+        @objc func handleLongPress() {
+            action()
+        }
+    }
 }

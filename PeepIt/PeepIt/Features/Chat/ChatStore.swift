@@ -38,6 +38,10 @@ struct ChatStore {
         case setBodyIsTrunscated
         /// 채팅 롱탭 발생
         case chatLongTapped(chat: Chat)
+        /// 채팅 더보기 탭
+        case showMoreButtonTapped(chat: Chat)
+        /// 채팅 상세 열기
+        case showChatDetail(chat: Chat)
         /// 채팅 상세 닫기
         case closeChatDetail
         /// 신고 버튼 탭
@@ -51,7 +55,7 @@ struct ChatStore {
             switch action {
 
             case .onAppear:
-                let stubChats: [Chat] = [.chatStub1, .chatStub2, .chatStub3, .chatStub4, .chatStub5, .chatStub6]
+                let stubChats: [Chat] = [.chatStub1, .chatStub2, .chatStub3, .chatStub5, .chatStub6]
                 state.chats.append(contentsOf: stubChats)
                 return .none
 
@@ -69,7 +73,11 @@ struct ChatStore {
                 state.isBodyTrunscated = true
                 return .none
 
-            case let .chatLongTapped(chat):
+            case let .chatLongTapped(chat),
+                let .showMoreButtonTapped(chat):
+                return .send(.showChatDetail(chat: chat))
+
+            case let .showChatDetail(chat):
                 state.showChatDetail = true
                 state.selectedChat = chat
                 return .none
