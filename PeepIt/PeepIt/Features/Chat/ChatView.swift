@@ -135,85 +135,13 @@ struct ChatView: View {
     }
 
     private var uploaderBodyView: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 40, height: 40)
-
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 7) {
-                    Text("닉네임")
-                        .pretendard(.caption03)
-                    Text("0분 전")
-                        .pretendard(.caption04)
-                }
-
-                ZStack(alignment: .topTrailing) {
-                    /// 채팅 높이 계산 위한 뷰
-                    Text(store.peepBody.message)
-                        .pretendard(.body04)
-                        .lineLimit(nil)
-                        .background(
-                            GeometryReader { geo in
-                                Color.clear
-                                    .onAppear {
-                                        if geo.size.height >= 100 {
-                                            store.send(.setBodyIsTrunscated)
-                                        }
-                                    }
-                            }
-                        )
-                        .padding(.horizontal, 14)
-                        .padding(.vertical, 12)
-                        .opacity(0)
-
-                    VStack(spacing: 0) {
-                        /// 진짜 채팅 뷰
-                        Text(store.peepBody.message)
-                            .pretendard(.body04)
-                            .lineLimit(5)
-                            .padding(.horizontal, 14)
-                            .padding(.top, 12)
-                            .padding(.bottom, store.isBodyTrunscated ? 36 : 12)
-                            .background(
-                                VStack(spacing: 0) {
-                                    ZStack(alignment: .bottomTrailing) {
-                                        Rectangle()
-                                            .fill(Color.coreLimeDOp)
-                                            .roundedCorner(13.2, corners: .topRight)
-                                            .makeCorner(of: .uploader)
-
-                                        if store.isBodyTrunscated {
-                                            Text("더보기")
-                                                .pretendard(.caption02)
-                                                .foregroundStyle(Color.nonOp)
-                                                .padding(.bottom, 12)
-                                                .padding(.trailing, 14)
-                                        }
-                                    }
-                                }
-                            )
-                    }
-
-                    Image("IconBookmark")
-                        .resizable()
-                        .frame(width: 25, height: 25)
-                        .offset(x: 25)
-                }
-                .frame(maxWidth: 225 + 14 * 2, alignment: .leading)
-            }
-
-            Spacer()
-        }
-        .padding(.horizontal, 16)
-        .gesture(
-            LongPressGesture(minimumDuration: 1.2)
-                .onEnded { isPressed in
-                    if isPressed {
-                        store.send(.chatLongTapped(chat: store.peepBody))
-                    }
-                }
+        let chatCell = ChatBubbleView(
+            chat: store.peepBody,
+            showMoreButtonTapped: { store.send(.showMoreButtonTapped(chat: store.peepBody)) }
         )
+
+        return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
+            .padding(.horizontal, 16)
     }
 
     private var enterFieldView: some View {
@@ -261,22 +189,32 @@ struct ChatView: View {
                     chatCell(chat: chat) {
                         store.send(.showMoreButtonTapped(chat: chat))
                     }
-//                        .gesture(
-//                            DragGesture()
-//                                .onChanged { _ in /* 스크롤 중 */ }
-//                                .simultaneously(with: LongPressGesture(minimumDuration: 1.2)
-//                                    .onEnded { isPressed in
-//                                        if isPressed {
-//                                            store.send(.chatLongTapped(chat: chat))
-//                                        }
-//                                    }
-//                                )
-//                        )
                 }
             }
         }
         .scrollIndicators(.hidden)
         .padding(.horizontal, 16)
+    }
+
+    private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image("ProfileSample")
+                .resizable()
+                .frame(width: 40, height: 40)
+
+            VStack(alignment: .leading, spacing: 12) {
+                HStack(spacing: 7) {
+                    Text(chat.user.nickname)
+                        .pretendard(.caption03)
+                    Text(chat.sendTime)
+                        .pretendard(.caption04)
+                }
+
+                chatCell
+            }
+
+            Spacer()
+        }
     }
 
     @ViewBuilder
@@ -293,24 +231,10 @@ struct ChatView: View {
             }
 
         case .uploader, .others:
-            HStack(alignment: .top, spacing: 10) {
-                Image("ProfileSample")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(spacing: 7) {
-                        Text(chat.user.nickname)
-                            .pretendard(.caption03)
-                        Text(chat.sendTime)
-                            .pretendard(.caption04)
-                    }
-
-                    ChatBubbleView(chat: chat, showMoreButtonTapped: action)
-                }
-
-                Spacer()
-            }
+            chatWithProfile(
+                chat: chat,
+                chatCell: ChatBubbleView(chat: chat, showMoreButtonTapped: action)
+            )
         }
     }
 
@@ -323,8 +247,11 @@ struct ChatView: View {
                 .padding(.top, 169)
 
         case .uploader, .others:
-            OtherOriginalChatBubbleView(chat: chat)
-                .padding(.top, 136)
+            chatWithProfile(
+                chat: chat,
+                chatCell: OriginalChatBubbleView(chat: chat)
+            )
+            .padding(.top, 136)
         }
     }
 }
@@ -359,36 +286,4 @@ extension ChatView {
     ChatView(
         store: .init(initialState: ChatStore.State()) { ChatStore() }
     )
-}
-
-import UIKit
-
-struct LongPressGestureModifier: UIViewRepresentable {
-    var action: () -> Void
-
-    func makeUIView(context: Context) -> UIView {
-        let view = UIView()
-        let longPress = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleLongPress))
-        longPress.minimumPressDuration = 1.2
-        view.addGestureRecognizer(longPress)
-        return view
-    }
-
-    func updateUIView(_ uiView: UIView, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(action: action)
-    }
-
-    class Coordinator: NSObject {
-        var action: () -> Void
-
-        init(action: @escaping () -> Void) {
-            self.action = action
-        }
-
-        @objc func handleLongPress() {
-            action()
-        }
-    }
 }
