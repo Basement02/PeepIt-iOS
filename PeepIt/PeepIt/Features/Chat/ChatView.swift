@@ -177,6 +177,10 @@ struct ChatView: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 12)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray700)
+                )
 
             Spacer()
             sendButton
