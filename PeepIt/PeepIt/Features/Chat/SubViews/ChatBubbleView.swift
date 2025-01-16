@@ -45,7 +45,7 @@ struct ChatBubbleView: View {
                     .background(
                         ZStack(alignment: .bottomTrailing) {
                             Rectangle()
-                                .fill(bgColor(type: chat.type))
+                                .fill(chat.type.backgroundColor)
                                 .makeCorner(of: chat.type)
 
                             if isTrunscated {
@@ -63,41 +63,6 @@ struct ChatBubbleView: View {
             maxWidth: 225 + 14 * 2,
             alignment: chat.type == .mine ? .trailing : .leading
         )
-    }
-
-    private func bgColor(type: ChatType) -> Color {
-        switch chat.type {
-        case .mine:
-            return Color.base
-        case .others:
-            return Color.elevated
-        case .uploader:
-            return Color.coreLimeDOp
-        }
-    }
-}
-
-extension View {
-
-    func makeCorner(of chatType: ChatType) -> some View {
-        switch chatType {
-
-        case .mine:
-            return AnyView(
-                self
-                    .roundedCorner(13.2, corners: .topLeft)
-                    .roundedCorner(13.2, corners: .bottomLeft)
-                    .roundedCorner(17.6, corners: .bottomRight)
-            )
-
-        case .uploader, .others:
-            return AnyView(
-                self
-                    .roundedCorner(13.2, corners: .topRight)
-                    .roundedCorner(13.2, corners: .bottomRight)
-                    .roundedCorner(17.6, corners: .bottomLeft)
-            )
-        }
     }
 }
 

@@ -48,6 +48,7 @@ struct ChatView: View {
                             topBar
                                 .padding(.bottom, 33)
 
+                            // FIX: - 여기 더보기했을 때 패딩도 고쳐야 함
                             uploaderBodyView
                                 .padding(.bottom, 17)
 
