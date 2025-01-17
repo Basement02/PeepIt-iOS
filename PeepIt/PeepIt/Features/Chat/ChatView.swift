@@ -53,19 +53,22 @@ struct ChatView: View {
                                 .padding(.bottom, 17)
 
                             chatListView
-                                .padding(.bottom, keyboardHeight)
+                                .padding(
+                                    .bottom,
+                                    keyboardHeight == 0 ?
+                                    21 : keyboardHeight
+                                )
                                 .clipped()
 
                             enterFieldView
                                 .padding(
                                     .bottom, keyboardHeight == 0 ?
-                                    34.adjustedH : 18
+                                    geo.safeAreaInsets.bottom : 0
                                 )
                                 .offset(y: -keyboardHeight)
-                                .animation(.easeInOut, value: keyboardHeight)
                         }
-                        .onTapGesture { endTextEditing() }
                         .ignoresSafeArea(.all, edges: .bottom)
+                        .onTapGesture { endTextEditing() }
                         .onAppear(perform: addKeyboardObserver)
                         .onDisappear(perform: removeKeyboardObserver)
                     }

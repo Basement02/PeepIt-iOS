@@ -56,6 +56,15 @@ struct PeepDetailView: View {
                             }
                         }
 
+                        if store.showChat {
+                            ChatView(
+                                store: store.scope(
+                                    state: \.chatState,
+                                    action: \.chatAction
+                                )
+                            )
+                        }
+
                         /// 신고 모달 오픈 시 bg
                         if store.isReportSheetVisible {
                             Color.op
@@ -66,29 +75,19 @@ struct PeepDetailView: View {
                         }
 
                         /// 신고 모달
-                        ReportModal(
-                            store: store.scope(
-                                state: \.report,
-                                action: \.report
-                            )
-                        )
-                        .frame(maxWidth: .infinity)
-                        .offset(y: store.modalOffset)
-                        .animation(
-                            .easeInOut(duration: 0.3),
-                            value: store.isReportSheetVisible
-                        )
-                    }
-                    .overlay {
-                        /// 채팅
-                        if store.showChat {
-                            ChatView(
-                                store: store.scope(
-                                    state: \.chatState,
-                                    action: \.chatAction
-                                )
-                            )
-                        }
+//                        ReportModal(
+//                            store: store.scope(
+//                                state: \.report,
+//                                action: \.report
+//                            )
+//                        )
+//                        .frame(maxWidth: .infinity)
+//                        .offset(y: -1000)
+//                        .animation(
+//                            .easeInOut(duration: 0.3),
+//                            value: store.isReportSheetVisible
+//                        )
+
                     }
                 }
             }
