@@ -90,6 +90,7 @@ struct PeepDetailView: View {
 
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .onAppear { store.send(.onAppear) }
                 }
             }
         }
@@ -245,10 +246,10 @@ extension PeepDetailView {
             }
 
             VStack(spacing: 15) {
-                if store.state.showReactionList {
+                if store.showReactionList {
                     reactionListView
                 } else {
-                    reactionButton
+                    initialReactionView
                 }
 
                 chattingButton
@@ -297,45 +298,56 @@ extension PeepDetailView {
         )
     }
 
-    private var reactionButton: some View {
-        Button {
-            store.send(
-                .setShowingReactionState(!store.state.showReactionList)
+    private var initialReactionView: some View {
+        RoundedRectangle(cornerRadius: 11.82)
+            .fill(
+                store.selectedReaction == nil ?
+                Color.blur2 : Color.coreLime
             )
-        } label: {
-            RoundedRectangle(cornerRadius: 11.82)
-                .fill(Color.clear)
-                .frame(width: 50, height: 50)
-        }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    RoundedRectangle(cornerRadius: 11.82)
-                        .fill(
-                            store.selectedReaction == nil ?
-                            Color.blur2: Color.coreLime.opacity(0.5)
-                        )
-                        .frame(width: 50, height: 50),
-                pressedView:
-                    RoundedRectangle(cornerRadius: 11.82)
-                        .fill(Color.blur1)
-                        .frame(width: 50, height: 50)
-            )
-        )
+            .frame(width: 50, height: 50)
+            .overlay {
+                if let selectedReaction = store.selectedReaction {
+                    Text(selectedReaction.rawValue)
+                        .font(.system(size: 24))
+                } else {
+                    Text(store.reactionList[store.showingReactionIdx].rawValue)
+                        .font(.system(size: 24))
+                }
+            }
+            .onTapGesture {
+                store.send(.initialReactionButtonTapped)
+            }
     }
 
     private var reactionListView: some View {
         VStack(spacing: 0) {
             ForEach(
-                0..<store.reactionList.count
-            ) { idx in
-                VStack(spacing: 0) {
+                Array(zip(store.reactionList.indices,
+                          store.reactionList))
+                , id: \.0
+            ) { idx, reaction in
+                ZStack(alignment: .bottom) {
                     Rectangle()
-                        .fill(Color.blur2)
+                        .fill(
+                            store.selectedReaction == reaction ?
+                            Color.coreLime : Color.blur2
+                        )
                         .frame(width: 50, height: 50)
-                }
-                .onTapGesture {
-                    store.send(.selectReaction(idx: idx))
+                        .overlay {
+                            Text(reaction.rawValue)
+                                .font(.system(size: 24))
+                        }
+                        .onTapGesture {
+                            store.send(
+                                .selectReaction(reaction: reaction, idx: idx)
+                            )
+                        }
+
+                    if idx < store.reactionList.count - 1 {
+                        Rectangle()
+                            .fill(Color.op)
+                            .frame(width: 33.9, height: 0.42)
+                    }
                 }
             }
         }
