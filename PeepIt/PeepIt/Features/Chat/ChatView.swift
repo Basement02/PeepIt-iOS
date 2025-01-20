@@ -71,14 +71,13 @@ struct ChatView: View {
                                 .offset(y: -keyboardHeight)
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
+                        .animation(.easeInOut(duration: 0.2), value: keyboardHeight)
                         .onTapGesture { endTextEditing() }
                         .onAppear(perform: addKeyboardObserver)
                         .onDisappear(perform: removeKeyboardObserver)
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
-                    .onAppear {
-                        store.send(.onAppear)
-                    }
+                    .onAppear { store.send(.onAppear) }
                     .overlay {
                         if store.showChatDetail {
                             chatDetail
