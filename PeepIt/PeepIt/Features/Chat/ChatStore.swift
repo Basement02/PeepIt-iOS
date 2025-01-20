@@ -46,6 +46,8 @@ struct ChatStore {
         case closeChatDetail
         /// 신고 버튼 탭
         case reportButtonTapped
+        /// 입력 메세지 줄 초과 체크
+        case checkIfEnterMessageLong(lineCount: Int)
     }
 
     var body: some Reducer<State, Action> {
@@ -60,6 +62,13 @@ struct ChatStore {
                 return .none
 
             case .binding(\.message):
+                let maxCount = 500
+
+                if state.message.count > maxCount {
+                    state.message = String(state.message.prefix(maxCount))
+                    return .none
+                }
+
                 return .none
 
             case .closeChatButtonTapped:
@@ -88,6 +97,14 @@ struct ChatStore {
                 return .none
 
             case .reportButtonTapped:
+                return .none
+
+            case let .checkIfEnterMessageLong(lineCount):
+                guard lineCount >= 25 else { return .none }
+
+                state.message = String((state.message.prefix(state.message.count - 1)))
+
+
                 return .none
 
             default:

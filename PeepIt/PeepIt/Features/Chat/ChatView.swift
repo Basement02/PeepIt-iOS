@@ -11,7 +11,10 @@ import ComposableArchitecture
 struct ChatView: View {
     @Perception.Bindable var store: StoreOf<ChatStore>
 
-    @State private var keyboardHeight: CGFloat = 0
+    @State private var keyboardHeight: CGFloat = .zero
+    @State private var sendButtonWidth: CGFloat = .zero
+    @State private var enterFieldHorizontalInset: CGFloat = 14
+    @State private var enterViewPadding: CGFloat = 16
 
     var body: some View {
         WithPerceptionTracking {
@@ -63,7 +66,7 @@ struct ChatView: View {
                             enterFieldView
                                 .padding(
                                     .bottom, keyboardHeight == 0 ?
-                                    geo.safeAreaInsets.bottom : 0
+                                    geo.safeAreaInsets.bottom : 18
                                 )
                                 .offset(y: -keyboardHeight)
                         }
@@ -72,6 +75,7 @@ struct ChatView: View {
                         .onAppear(perform: addKeyboardObserver)
                         .onDisappear(perform: removeKeyboardObserver)
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                     .onAppear {
                         store.send(.onAppear)
                     }
@@ -155,24 +159,43 @@ struct ChatView: View {
 
     private var enterFieldView: some View {
         HStack(alignment: .bottom) {
-            TextEditor(text: $store.message)
-                .pretendard(.body04)
-                .foregroundStyle(Color.white)
-                .tint(Color.coreLime)
-                .scrollContentBackground(.hidden)
-                .frame(minHeight: 20, maxHeight: 110)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 12)
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray700)
+            TextField(
+                "채팅을 입력해주세요",
+                text: $store.message,
+                axis: .vertical
+            )
+            .font(
+                Font.custom(
+                    PeepItFont.body04.style,
+                    size: PeepItFont.body04.size
                 )
+            )
+            .tint(Color.coreLime)
+            .lineLimit(5)
+            .frame(minHeight: 20)
+            .padding(.vertical, 12)
+            .padding(.horizontal, enterFieldHorizontalInset)
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.gray700)
+            )
+            .onChange(of: store.message) { newText in
+                let width = Constant.screenWidth
+                    - enterFieldHorizontalInset*2
+                    - 8 - enterViewPadding*2
+                    - sendButtonWidth
+
+                store.send(
+                    .checkIfEnterMessageLong(
+                        lineCount: calculateNumberOfLines(text: newText, width: width)
+                    )
+                )
+            }
 
             Spacer()
             sendButton
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, enterViewPadding)
     }
 
 
@@ -188,6 +211,14 @@ struct ChatView: View {
                 originImg: "BoxBtnY",
                 pressedImg: "BoxBtnN"
             )
+        )
+        .background(
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear {
+                        sendButtonWidth = geo.size.width
+                    }
+            }
         )
     }
 
@@ -274,6 +305,7 @@ struct ChatView: View {
 
 extension ChatView {
 
+    /// 키보드 옵저버 등록
     private func addKeyboardObserver() {
         NotificationCenter.default.addObserver(
             forName: UIResponder.keyboardWillShowNotification,
@@ -293,8 +325,23 @@ extension ChatView {
         }
     }
 
+    /// 키보드 옵저버 삭제
     private func removeKeyboardObserver() {
         NotificationCenter.default.removeObserver(self)
+    }
+
+    /// 입력창 줄 수 세기
+    private func calculateNumberOfLines(text: String, width: CGFloat) -> Int {
+        let constraintSize = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let font = UIFont(name: PeepItFont.body04.style, size: PeepItFont.body04.size) ?? UIFont.systemFont(ofSize: 14)
+        let boundingBox = (text as NSString).boundingRect(
+            with: constraintSize,
+            options: .usesLineFragmentOrigin,
+            attributes: [.font: font],
+            context: nil
+        )
+        let lineHeight = PeepItFont.body04.lineHeight
+        return Int(ceil(boundingBox.height / lineHeight))
     }
 }
 
