@@ -89,6 +89,7 @@ struct PeepDetailView: View {
 //                        )
 
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
             }
         }
