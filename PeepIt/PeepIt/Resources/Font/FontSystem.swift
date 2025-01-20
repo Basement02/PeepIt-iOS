@@ -71,8 +71,10 @@ enum PeepItFont {
             return 28
         case .headline, .body05:
             return 23
-        case .subhead, .body01, .body02, .body04:
+        case .subhead, .body01, .body02:
             return 22
+        case .body04:
+            return 20
         case .body03:
             return 24
         case .foodnote:

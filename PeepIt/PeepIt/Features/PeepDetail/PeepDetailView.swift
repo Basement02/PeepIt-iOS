@@ -16,25 +16,28 @@ struct PeepDetailView: View {
             GeometryReader { proxy in
                 WithPerceptionTracking {
                     ZStack(alignment: .bottom) {
-                        Color.base
-                            .ignoresSafeArea()
+                        Color.base.ignoresSafeArea()
 
-                        BackImageLayer.secondary()
-                            .ignoresSafeArea()
-
-                        VStack(spacing: 11.adjustedH) {
+                        VStack(spacing: 11) {
                             topBar
-                                .padding(.horizontal, 16)
-
+                                .opacity(0)
                             peepView
-
                             Spacer()
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
 
-                        detailView
-                            .padding(.horizontal, 16)
-                            .padding(.bottom, 84)
+                        BackImageLayer.secondary()
+                            .ignoresSafeArea()
+
+                        VStack {
+                            topBar
+                            Spacer()
+                            detailView
+                                .padding(.horizontal, 16)
+                                .padding(.bottom, 84)
+                        }
+                        .toolbar(.hidden, for: .navigationBar)
+                        .ignoresSafeArea(.all, edges: .bottom)
 
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -53,6 +56,15 @@ struct PeepDetailView: View {
                             }
                         }
 
+                        if store.showChat {
+                            ChatView(
+                                store: store.scope(
+                                    state: \.chatState,
+                                    action: \.chatAction
+                                )
+                            )
+                        }
+
                         /// 신고 모달 오픈 시 bg
                         if store.isReportSheetVisible {
                             Color.op
@@ -63,19 +75,21 @@ struct PeepDetailView: View {
                         }
 
                         /// 신고 모달
-                        ReportModal(
-                            store: store.scope(
-                                state: \.report,
-                                action: \.report
-                            )
-                        )
-                        .frame(maxWidth: .infinity)
-                        .offset(y: store.modalOffset)
-                        .animation(
-                            .easeInOut(duration: 0.3),
-                            value: store.isReportSheetVisible
-                        )
+//                        ReportModal(
+//                            store: store.scope(
+//                                state: \.report,
+//                                action: \.report
+//                            )
+//                        )
+//                        .frame(maxWidth: .infinity)
+//                        .offset(y: -1000)
+//                        .animation(
+//                            .easeInOut(duration: 0.3),
+//                            value: store.isReportSheetVisible
+//                        )
+
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
             }
         }
@@ -95,12 +109,11 @@ extension PeepDetailView {
             moreButton
         }
         .frame(height: 44)
+        .padding(.horizontal, 16)
     }
 
     private var backButton: some View {
-        BackButton {
-            store.send(.closeView)
-        }
+        BackButton { store.send(.backButtonTapped) }
     }
 
     private var moreButton: some View {
@@ -213,7 +226,7 @@ extension PeepDetailView {
     /// TODO: 이미지로 수정
     private var peepView: some View {
         Rectangle()
-            .fill(Color.gray300)
+            .fill(Color.white)
             .aspectRatio(9/16, contentMode: .fit)
             .frame(width: Constant.screenWidth)
             .clipShape(RoundedRectangle(cornerRadius: 24))
@@ -264,7 +277,7 @@ extension PeepDetailView {
 
     private var chattingButton: some View {
         Button {
-            // TODO: 채팅뷰 올리기
+            store.send(.showChat)
         } label: {
             Image("IconMessage")
                 .resizable()

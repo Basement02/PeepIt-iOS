@@ -24,7 +24,7 @@ struct EditView: View {
                 peepView
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .padding(.top, 44)
-                    .padding(.top, 11.adjustedH)
+                    .padding(.top, 11)
 
                 /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
                 switch store.editMode {
@@ -337,7 +337,7 @@ struct EditView: View {
                         .onAppear {
                             var deleteFrame = geo.frame(in: .global)
                             /// 좌표계 맞추기 위한 계산(삭제 버튼은 전체 좌표, 스티커는 PeepView 좌표)
-                            deleteFrame.origin.y -= (safeAreaTopInset() + CGFloat(44) + 11.adjustedH)
+                            deleteFrame.origin.y -= (safeAreaTopInset() + CGFloat(44) + 11)
                             store.send(.setDeleteFrame(rect: deleteFrame))
                         }
                 }

@@ -44,11 +44,11 @@ struct HomeView: View {
                     store: store.scope(state: \.sideMenu, action: \.sideMenu)
                 )
 
-                if store.isPeepDetailShowed {
-                    PeepDetailView(
-                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
-                    )
-                }
+//                if store.isPeepDetailShowed {
+//                    PeepDetailView(
+//                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
+//                    )
+//                }
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)

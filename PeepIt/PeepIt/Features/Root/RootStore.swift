@@ -46,6 +46,9 @@ struct RootStore {
         case camera(CameraStore)
         case edit(EditStore)
         case write(WriteStore)
+
+        /// 핍
+        case peepDetail(PeepDetailStore)
     }
 
     @ObservableState
@@ -100,6 +103,10 @@ struct RootStore {
 
             case .home(.uploadButtonTapped):
                 state.path.append(.camera(.init()))
+                return .none
+
+            case .home(.peepPreviewModal(.peepCellTapped)):
+                state.path.append(.peepDetail(.init()))
                 return .none
 
             case let .path(action):

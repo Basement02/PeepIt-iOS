@@ -9,55 +9,61 @@ import SwiftUI
 
 struct ChatBubbleView: View {
     let chat: Chat
+    let showMoreButtonTapped: () -> Void
+
+    @State private var isTrunscated = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            if chat.type != .mine {
-                profileView
-                    .padding(.leading, 3)
-            }
-
-            HStack(alignment: .bottom) {
-                if chat.type == .mine {
-                    Spacer()
-                    dateView
-                }
-
-                Text(chat.message)
+        ZStack {
+            /// 크기 측정 위한 뷰
+            if !isTrunscated {
+                Text(chat.message.forceCharWrapping)
                     .lineLimit(nil)
-                    .font(.system(size: 14))
-                    .padding(.all, 10)
+                    .pretendard(.body04)
                     .background(
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundStyle(chat.type.backgroundColor)
+                        GeometryReader { geo in
+                            Color.clear
+                                .onAppear {
+                                    if geo.size.height >= 101 {
+                                        isTrunscated = true
+                                    }
+                                }
+                        }
                     )
+                    .padding(.horizontal, 14)
+                    .padding(.vertical, 12)
+                    .opacity(0)
+            }
 
-                if chat.type != .mine {
-                    dateView
-                    Spacer()
-                }
+            VStack(spacing: 0) {
+                /// 진짜 채팅 뷰
+                Text(chat.message.forceCharWrapping)
+                    .pretendard(.body04)
+                    .lineLimit(5)
+                    .padding(.horizontal, 14)
+                    .padding(.top, 12)
+                    .padding(.bottom, isTrunscated ? 36 : 12)
+                    .background(
+                        ZStack(alignment: .bottomTrailing) {
+                            Rectangle()
+                                .fill(chat.type.backgroundColor)
+                                .makeCorner(of: chat.type)
+
+                            if isTrunscated {
+                                Text("더보기")
+                                    .pretendard(.caption02)
+                                    .foregroundStyle(Color.nonOp)
+                                    .padding(.bottom, 12)
+                                    .padding(.trailing, 14)
+                                    .onTapGesture { showMoreButtonTapped() }
+                            }
+                        }
+                    )
             }
         }
-    }
-
-    private var profileView: some View {
-        HStack(spacing: 6) {
-            Circle()
-                .frame(width: 19, height: 19)
-            Text(chat.user.nickname)
-                .font(.system(size: 11))
-        }
-    }
-
-    private var dateView: some View {
-        Text(chat.sendTime)
-            .font(.system(size: 11))
-    }
-}
-
-#Preview {
-    Group {
-        ChatBubbleView(chat: .chatStub1)
-        ChatBubbleView(chat: .chatStub2)
+        .frame(
+            maxWidth: 225 + 14 * 2,
+            alignment: chat.type == .mine ? .trailing : .leading
+        )
     }
 }
