@@ -286,73 +286,135 @@ extension PeepDetailView {
         }
         .buttonStyle(
             PressableViewButtonStyle(
-                normalView:
-                    RoundedRectangle(cornerRadius: 13.95)
-                        .fill(Color.blur2)
-                        .frame(width: 50, height: 50),
-                pressedView:
-                    RoundedRectangle(cornerRadius: 13.95)
-                        .fill(Color.blur1)
-                        .frame(width: 50, height: 50)
+                normalView: RoundedRectangle(cornerRadius: 13.95).fill(Color.blur2),
+                pressedView: RoundedRectangle(cornerRadius: 13.95).fill(Color.blur1)
             )
         )
+        .frame(width: 50, height: 50)
     }
 
+    @ViewBuilder
     private var initialReactionView: some View {
-        RoundedRectangle(cornerRadius: 11.82)
-            .fill(
-                store.selectedReaction == nil ?
-                Color.blur2 : Color.coreLime
+        if let selectedReaction = store.selectedReaction {
+            RoundedRectangle(cornerRadius: 11.82)
+                .fill(Color.coreLimeOp)
+                .frame(width: 50, height: 50)
+                .overlay {
+                    Text(selectedReaction.rawValue)
+                        .font(.system(size: 24))
+                }
+                .onTapGesture {
+                    store.send(.initialReactionButtonTapped)
+                }
+        } else {
+            Button {
+                store.send(.initialReactionButtonTapped)
+            } label: {
+                Rectangle()
+                    .frame(width: 50, height: 50)
+                    .hidden()
+            }
+            .buttonStyle(
+                PressableViewButtonStyle(
+                    normalView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur2),
+                    pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
+                )
             )
             .frame(width: 50, height: 50)
             .overlay {
-                if let selectedReaction = store.selectedReaction {
-                    Text(selectedReaction.rawValue)
-                        .font(.system(size: 24))
-                } else {
-                    Text(store.reactionList[store.showingReactionIdx].rawValue)
-                        .font(.system(size: 24))
-                }
+                Text(store.reactionList[store.showingReactionIdx].rawValue)
+                    .font(.system(size: 24))
             }
-            .onTapGesture {
-                store.send(.initialReactionButtonTapped)
-            }
+        }
     }
 
     private var reactionListView: some View {
-        VStack(spacing: 0) {
-            ForEach(
-                Array(zip(store.reactionList.indices,
-                          store.reactionList))
-                , id: \.0
-            ) { idx, reaction in
-                ZStack(alignment: .bottom) {
-                    Rectangle()
-                        .fill(
-                            store.selectedReaction == reaction ?
-                            Color.coreLime : Color.blur2
-                        )
-                        .frame(width: 50, height: 50)
-                        .overlay {
-                            Text(reaction.rawValue)
-                                .font(.system(size: 24))
-                        }
-                        .onTapGesture {
-                            store.send(
-                                .selectReaction(reaction: reaction, idx: idx)
-                            )
-                        }
+        ZStack {
+            Rectangle()
+                .fill(Color.blur2)
+                .frame(width: 50, height: 250)
 
-                    if idx < store.reactionList.count - 1 {
-                        Rectangle()
-                            .fill(Color.op)
-                            .frame(width: 33.9, height: 0.42)
+            VStack(spacing: 0) {
+                ForEach(
+                    Array(zip(store.reactionList.indices,
+                              store.reactionList))
+                    , id: \.0
+                ) { idx, reaction in
+                    ZStack(alignment: .bottom) {
+                        reactionCell(reaction: reaction)
+
+                        if idx < store.reactionList.count - 1 {
+                            Rectangle()
+                                .fill(Color.op)
+                                .frame(width: 33.9, height: 0.42)
+                        }
                     }
                 }
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 11.82))
     }
+
+    @ViewBuilder
+    private func reactionCell(
+        reaction: PeepDetailStore.State.ReactionType
+    ) -> some View{
+        if store.selectedReaction == reaction {
+            Button {
+                store.send(.selectReaction(reaction: reaction))
+            } label: {
+                RoundedRectangle(cornerRadius: 11.82)
+                    .fill(Color.coreLimeOp)
+                    .frame(width: 50, height: 50)
+                    .overlay {
+                        Text(reaction.rawValue)
+                            .font(.system(size: 24))
+                    }
+            }
+        } else {
+            Button {
+                store.send(
+                    .selectReaction(reaction: reaction)
+                )
+            } label: {
+                Rectangle()
+                    .frame(width: 50, height: 50)
+                    .hidden()
+            }
+            .buttonStyle(
+                PressableViewButtonStyle(
+                    normalView: RoundedRectangle(cornerRadius: 11.82)
+                        .fill(Color.clear).contentShape(Rectangle()),
+                    pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
+                )
+            )
+            .frame(width: 50, height: 50)
+            .overlay {
+                Text(reaction.rawValue).font(.system(size: 24))
+            }
+        }
+    }
+
+    private func unselectedReactionCell(
+        reaction: PeepDetailStore.State.ReactionType
+    ) -> some View {
+        Button {
+        } label: {
+            Rectangle().hidden()
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur2),
+                pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
+            )
+        )
+        .frame(width: 50, height: 50)
+        .overlay {
+            Text(reaction.rawValue)
+                .font(.system(size: 24))
+        }
+    }
+
 }
 
 #Preview {
