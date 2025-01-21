@@ -50,8 +50,6 @@ struct ChatView: View {
                         VStack(spacing: 0) {
                             topBar
                                 .padding(.bottom, 33)
-
-                            // FIX: - 여기 더보기했을 때 패딩도 고쳐야 함
                             uploaderBodyView
                                 .padding(.bottom, 14)
 
@@ -90,7 +88,7 @@ struct ChatView: View {
 
     private var chatDetail: some View {
         ZStack(alignment: .top) {
-            Color.blur1
+            BackdropBlurView(bgColor: .blur1, radius: 5)
                 .onTapGesture { store.send(.closeChatDetail) }
 
             if let selectedChat = store.selectedChat {
