@@ -30,7 +30,7 @@ struct LaunchScreen: View {
                             )
                     }
                 }
-                .padding(.top, 184.adjustedH)
+                .padding(.top, 184)
             }
         }
         .ignoresSafeArea()
