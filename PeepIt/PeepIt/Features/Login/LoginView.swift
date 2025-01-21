@@ -30,7 +30,7 @@ struct LoginView: View {
     }
 
     private var onboardingTab: some View {
-        VStack(spacing: 27.adjustedH) {
+        VStack(spacing: 27) {
             Text("설레는 여행,\n함께 시작해요!")
                 .pretendard(.title02)
                 .multilineTextAlignment(.center)
@@ -55,8 +55,8 @@ struct LoginView: View {
             ForEach(0..<4) { idx in
                 RoundedRectangle(cornerRadius: 60)
                     .frame(
-                        width: (currentTab == idx ? 21.6 : 12.3).adjustedW,
-                        height: 2.7.adjustedH
+                        width: (currentTab == idx ? 21.6 : 12.3),
+                        height: 2.7
                     )
                     .foregroundStyle(
                         currentTab == idx

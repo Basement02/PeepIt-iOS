@@ -18,9 +18,9 @@ struct NotificationSettingView: View {
                     leading: backButton,
                     title: "알림 설정"
                 )
-                .padding(.bottom, 39.adjustedH)
+                .padding(.bottom, 39)
 
-                VStack(spacing: 37.adjustedH) {
+                VStack(spacing: 37) {
                     topButton
 
                     peepNotiSettingList

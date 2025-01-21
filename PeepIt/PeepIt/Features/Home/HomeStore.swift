@@ -14,7 +14,6 @@ struct HomeStore {
     @ObservableState
     struct State: Equatable {
         var isPeepDetailShowed = false
-
         var peepPreviewModal = PeepModalStore.State()
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()

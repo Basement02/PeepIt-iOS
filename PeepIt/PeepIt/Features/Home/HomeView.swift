@@ -14,16 +14,19 @@ struct HomeView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
+                HomeMapView()
+                    .ignoresSafeArea()
+
                 Group {
-                    Color.white
                     BackMapLayer.teriary()
                     BackMapLayer.secondary()
                 }
+                .allowsHitTesting(false)
                 .ignoresSafeArea()
 
                 VStack {
                     topBar
-                        .padding(.horizontal, 16.adjustedW)
+                        .padding(.horizontal, 16)
 
                     Spacer()
 
@@ -32,7 +35,7 @@ struct HomeView: View {
                         Spacer()
                         uploadPeepButton
                     }
-                    .padding(.horizontal, 16.adjustedW)
+                    .padding(.horizontal, 16)
                     .padding(
                         .bottom, store.peepPreviewModal.sheetHeight + 24
                     )
@@ -43,12 +46,6 @@ struct HomeView: View {
                 SideMenuView(
                     store: store.scope(state: \.sideMenu, action: \.sideMenu)
                 )
-
-//                if store.isPeepDetailShowed {
-//                    PeepDetailView(
-//                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
-//                    )
-//                }
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
@@ -132,8 +129,8 @@ extension HomeView {
         } label: {
             ZStack {
                 Circle()
-                    .fill(.clear)
                     .frame(width: 44, height: 44)
+                    .hidden()
             }
         }
         .buttonStyle(
@@ -150,8 +147,8 @@ extension HomeView {
             store.send(.uploadButtonTapped)
         } label: {
             Circle()
-                .fill(.clear)
                 .frame(width: 56, height: 56)
+                .hidden()
         }
         .buttonStyle(
             PressableButtonStyle(

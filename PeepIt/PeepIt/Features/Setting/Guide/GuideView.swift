@@ -17,7 +17,7 @@ struct GuideView: View {
                 leading: backButton,
                 title: "이용 안내"
             )
-            .padding(.bottom, 39.adjustedH)
+            .padding(.bottom, 39)
 
             Group {
                 lastUpdateView

@@ -20,7 +20,7 @@ struct AnnounceView: View {
                 )
 
                 announceList
-                    .padding(.top, 23.adjustedH)
+                    .padding(.top, 23)
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
@@ -82,7 +82,7 @@ fileprivate struct AnnounceCell: View {
                 Spacer()
             }
             .padding(.vertical, 22)
-            .frame(width: 318)
+            .padding(.horizontal, 21.5)
         }
         .padding(.horizontal, 16)
     }

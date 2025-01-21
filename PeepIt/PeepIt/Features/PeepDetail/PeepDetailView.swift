@@ -238,7 +238,7 @@ extension PeepDetailView {
             VStack(spacing: 9) {
                 nameView
 
-                Text("한 문장은 몇 자까지일까? 어쨋든 말줄임표를 두 문장까지? 문장 끝까지 보이면 안될 것 같지 않아?")
+                Text("한 문장은 몇 자까지일까? 어쨋든 말줄임표를 두 문장까지? 문장 끝까지 보이면 안될 것 같지 않아?".forceCharWrapping)
                     .pretendard(.body03)
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)

@@ -13,21 +13,20 @@ struct BlockDescriptionModal: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundStyle(Color.base)
+            BackdropBlurView(bgColor: .base, radius: 1)
                 .roundedCorner(20, corners: [.topLeft, .topRight])
 
             VStack(spacing: 0) {
                 slider
                     .padding(.top, 10)
-                    .padding(.bottom, 50.21.adjustedH)
+                    .padding(.bottom, 50.21)
 
                 mainView
 
                 Spacer()
 
                 bottomView
-                    .padding(.bottom, 38.adjustedH)
+                    .padding(.bottom, 38)
             }
         }
         .frame(maxWidth: .infinity)
