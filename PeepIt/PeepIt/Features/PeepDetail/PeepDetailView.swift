@@ -330,8 +330,7 @@ extension PeepDetailView {
 
     private var reactionListView: some View {
         ZStack {
-            Rectangle()
-                .fill(Color.blur2)
+            BackdropBlurView(bgColor: .blur2, radius: 5.19)
                 .frame(width: 50, height: 250)
 
             VStack(spacing: 0) {

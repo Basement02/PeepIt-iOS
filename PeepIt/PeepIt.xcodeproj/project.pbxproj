@@ -51,6 +51,7 @@
 		AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D352CA9574700C1E430 /* NicknameModifyView.swift */; };
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
 		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
+		AB4A28C72D3FCA9B007E8383 /* BackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */; };
 		AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
@@ -198,6 +199,7 @@
 		AB468D352CA9574700C1E430 /* NicknameModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModifyView.swift; sourceTree = "<group>"; };
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
+		AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropView.swift; sourceTree = "<group>"; };
 		AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGrayButtonStyle.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
@@ -583,6 +585,7 @@
 		ABA11E8A2D1D3F8600C181DC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */,
 				AB653BDC2D395E330002F04F /* YieldTouches.swift */,
 				ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */,
 			);
@@ -1153,6 +1156,7 @@
 				AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */,
 				ABC171FA2CAB19FA00370901 /* NicknameStore.swift in Sources */,
 				AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */,
+				AB4A28C72D3FCA9B007E8383 /* BackdropView.swift in Sources */,
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
