@@ -53,7 +53,7 @@ struct PeepDetailStore {
         /// 뒤로 가기
         case backButtonTapped
         /// 반응 선택
-        case selectReaction(reaction: PeepDetailStore.State.ReactionType, idx: Int)
+        case selectReaction(reaction: PeepDetailStore.State.ReactionType)
         /// 선택 해제
         case unselectReaction
         /// 더보기 메뉴 보여주기 여부
@@ -107,8 +107,10 @@ struct PeepDetailStore {
             case .backButtonTapped:
                 return .run { _ in await dismiss() }
 
-            case let .selectReaction(selectedReaction, idx):
+            case let .selectReaction(selectedReaction):
                 if state.selectedReaction == selectedReaction { return .send(.unselectReaction) }
+
+                guard let idx = state.reactionList.firstIndex(where: { $0 == selectedReaction }) else { return .none }
 
                 state.selectedReaction = selectedReaction
                 state.reactionList.remove(at: idx)
@@ -155,7 +157,7 @@ struct PeepDetailStore {
                 
                 return .run { send in
                     while true {
-                        try await Task.sleep(for: .seconds(1))
+                        try await Task.sleep(for: .seconds(0.75))
                         await send(.timerTicked)
                     }
                 }
