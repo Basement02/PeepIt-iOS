@@ -410,8 +410,8 @@
 		AB416D322CF5F3730065BD09 /* Block */ = {
 			isa = PBXGroup;
 			children = (
-				AB416D332CF5F3890065BD09 /* BlockListStore.swift */,
 				AB416D352CF5F4D20065BD09 /* BlockListView.swift */,
+				AB416D332CF5F3890065BD09 /* BlockListStore.swift */,
 			);
 			path = Block;
 			sourceTree = "<group>";

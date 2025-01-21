@@ -21,14 +21,14 @@ struct SettingView: View {
                                 leading: backButton,
                                 title: "설정"
                             )
-                            .padding(.bottom, 39.adjustedH)
+                            .padding(.bottom, 39)
 
                             Group {
                                 header(title: "계정")
                                 accountSettingList
 
                                 Spacer()
-                                    .frame(height: 50.adjustedH)
+                                    .frame(height: 50)
 
                                 header(title: "서비스")
                                 serviceSettingList

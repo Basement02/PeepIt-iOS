@@ -18,7 +18,7 @@ struct BlockListView: View {
                     title: "차단한 계정",
                     trailing: dismissButton
                 )
-                .padding(.bottom, 39.adjustedH)
+                .padding(.bottom, 39)
 
                 Group {
                     header
