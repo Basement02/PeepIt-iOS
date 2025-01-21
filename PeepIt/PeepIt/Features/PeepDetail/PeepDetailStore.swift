@@ -110,11 +110,7 @@ struct PeepDetailStore {
             case let .selectReaction(selectedReaction):
                 if state.selectedReaction == selectedReaction { return .send(.unselectReaction) }
 
-                guard let idx = state.reactionList.firstIndex(where: { $0 == selectedReaction }) else { return .none }
-
                 state.selectedReaction = selectedReaction
-                state.reactionList.remove(at: idx)
-                state.reactionList.append(selectedReaction)
                 state.showReactionList = false
 
                 return .send(.stopTimer)
