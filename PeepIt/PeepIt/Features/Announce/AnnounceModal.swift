@@ -21,17 +21,15 @@ struct AnnounceModal: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 0) {
                     title
-                        .padding(.top, 39.adjustedH)
-                        .padding(.bottom, 30.adjustedH)
+                        .padding(.top, 39)
+                        .padding(.bottom, 30)
 
                     content
 
-                    if let _ = store.selectedAnnounce?.image {
-                        image
-                    }
+                    if let _ = store.selectedAnnounce?.image { image }
                 }
             }
-            .frame(width: 335)
+            .padding(.horizontal, 29)
 
             Spacer()
         }
