@@ -13,8 +13,7 @@ struct BlockDescriptionModal: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundStyle(Color.base)
+            BackdropBlurView(bgColor: .base, radius: 1)
                 .roundedCorner(20, corners: [.topLeft, .topRight])
 
             VStack(spacing: 0) {
