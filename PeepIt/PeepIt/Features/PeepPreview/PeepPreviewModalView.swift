@@ -14,7 +14,7 @@ struct PeepPreviewModalView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.blur1
+                BackdropBlurView(bgColor: .blur1, radius: 1)
 
                 VStack(spacing: 0) {
                     RoundedRectangle(cornerRadius: 100)
@@ -29,7 +29,7 @@ struct PeepPreviewModalView: View {
 
                     if !store.isSheetScrolledDown {
                         ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 10){
+                            HStack(spacing: 10) {
                                 ForEach(1...5, id: \.self) { _ in
                                     PeepPreviewCell(peep: .stubPeep1)
                                         .frame(width: 280, height: 384)
