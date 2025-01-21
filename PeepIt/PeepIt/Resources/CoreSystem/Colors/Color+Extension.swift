@@ -19,6 +19,7 @@ extension Color {
     static let coreLime: Color = .init(hex: 0xCEFF00)
     static let coreRed: Color = .init(hex: 0xFF5959)
     static let coreLimeDOp: Color = .init(hex: 0x6B8400, alpha: 0.5)
+    static let coreLimeOp: Color = Color.coreLime.opacity(0.5)
 
     /// Element Basic
     static let gray900: Color = .init(hex: 0x2F2F2F)
