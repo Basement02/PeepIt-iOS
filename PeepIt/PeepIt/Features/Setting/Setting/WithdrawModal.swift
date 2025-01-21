@@ -21,8 +21,7 @@ struct WithdrawModal: View {
     }
 
     private var slideBar: some View {
-        Rectangle()
-            .fill(Color.base)
+        BackdropBlurView(bgColor: .base, radius: 1)
             .frame(height: 64)
             .roundedCorner(20, corners: [.topLeft, .topRight])
             .overlay(alignment: .top) {
@@ -45,9 +44,7 @@ struct WithdrawModal: View {
     }
 
     private var content: some View {
-        Rectangle()
-            .fill(Color.base)
-            .background(Color.base)
+        BackdropBlurView(bgColor: .base, radius: 1)
             .overlay {
                 ScrollView {
                     VStack(spacing: 50) {
@@ -61,7 +58,7 @@ struct WithdrawModal: View {
                             .padding(.bottom, 21)
 
                         bottom
-                            .padding(.bottom, 21.6.adjustedH)
+                            .padding(.bottom, 21.6)
                     }
                     .frame(width: 317)
                 }
@@ -195,7 +192,8 @@ struct WithdrawModal: View {
                         .pretendard(.body05)
                         .tint(Color.coreLime)
                         .scrollContentBackground(.hidden)
-                        .padding(.all, 18)
+                        .padding(.all, 10)
+
                 }
                 .frame(width: 301, height: 142)
                 .onTapGesture {
