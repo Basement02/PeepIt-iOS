@@ -24,8 +24,8 @@ struct MyProfileView: View {
                 ScrollView {
                     VStack(spacing: 0) {
                         profileView
-                            .padding(.top, 43.adjustedH)
-                            .padding(.bottom, 6.adjustedH)
+                            .padding(.top, 43)
+                            .padding(.bottom, 6)
 
                         switch store.peepTabSelection {
 
@@ -81,11 +81,11 @@ struct MyProfileView: View {
     private var header: some View {
         VStack(spacing: 0) {
             peepTab
-                .padding(.bottom, 18.4.adjustedH)
+                .padding(.bottom, 18.4)
             filters
         }
-        .padding(.top, 20.adjustedH)
-        .padding(.bottom, 21.adjustedH)
+        .padding(.top, 20)
+        .padding(.bottom, 21)
         .background(Color.base)
     }
 
@@ -219,7 +219,7 @@ struct MyProfileView: View {
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.bottom, 120.adjustedH)
+                        .padding(.bottom, 120)
 
                     Text("내가 업로드한 핍을\n모아볼 수 있어요!")
                         .pretendard(.caption03)
@@ -264,8 +264,8 @@ struct MyProfileView: View {
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.top, 20.adjustedH)
-                        .padding(.bottom, 111.adjustedH)
+                        .padding(.top, 20)
+                        .padding(.bottom, 111)
 
                     Text(
                         """

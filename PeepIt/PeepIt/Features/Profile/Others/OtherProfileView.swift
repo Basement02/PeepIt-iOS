@@ -24,10 +24,10 @@ struct OtherProfileView: View {
                         title: "@아이디",
                         trailing: elseButton
                     )
-                    .padding(.bottom, 43.adjustedH)
+                    .padding(.bottom, 43)
 
                     UserProfileView(profile: .stubUser2)
-                        .padding(.bottom, 68.adjustedH)
+                        .padding(.bottom, 68)
 
                     Rectangle()
                         .fill(Color.op)
@@ -35,7 +35,7 @@ struct OtherProfileView: View {
 
                     if store.isUserBlocked {
                         blockedView
-                            .padding(.top, 26.adjustedH)
+                            .padding(.top, 26)
                     } else {
                         uploadPeepListView
                     }
@@ -51,7 +51,7 @@ struct OtherProfileView: View {
                         bgColor: .gray800
                     )
                     .padding(.top, 59)
-                    .padding(.trailing, 36.adjustedW)
+                    .padding(.trailing, 36)
                 }
 
                 /// 차단 안내문 모달 배경
