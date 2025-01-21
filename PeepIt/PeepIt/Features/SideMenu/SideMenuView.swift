@@ -16,14 +16,14 @@ struct SideMenuView: View {
             VStack(alignment: .leading, spacing: 0) {
 
                 PeepItNavigationBar(trailing: dismissButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
                 HStack {
                     Image("LogoIcon")
                         .frame(width: 57, height: 57)
                     Spacer()
                 }
-                .padding(.bottom, 70.adjustedH)
+                .padding(.bottom, 70)
 
                 VStack(spacing: 32) {
                     ForEach(SideMenuType.allCases, id: \.self) { menu in
@@ -41,17 +41,17 @@ struct SideMenuView: View {
                         }
                     }
                 }
-                .padding(.bottom, 186.adjustedH)
+                .padding(.bottom, 186)
 
                 Group {
                     versionLabel
-                        .padding(.bottom, 12.adjustedH)
+                        .padding(.bottom, 12)
 
                     goToAppStoreButton
-                        .padding(.bottom, 22.adjustedH)
+                        .padding(.bottom, 22)
 
                     divideView
-                        .padding(.bottom, 22.adjustedH)
+                        .padding(.bottom, 22)
 
                     HStack {
                         logoutButton
@@ -60,11 +60,11 @@ struct SideMenuView: View {
                     }
                     .frame(height: 29.4)
                 }
-                .padding(.trailing, 15.6.adjustedW)
+                .padding(.trailing, 15.6)
 
                 Spacer()
             }
-            .padding(.leading, 16.adjustedW)
+            .padding(.leading, 16)
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
             .background(Color.base)
@@ -77,8 +77,8 @@ struct SideMenuView: View {
             store.send(.dismissSideMenu, animation: .none)
         } label: {
             Rectangle()
-                .fill(Color.clear)
                 .frame(width: 33.6, height: 33.6)
+                .hidden()
         }
         .buttonStyle(
             PressableButtonStyle(originImg: "CloseN", pressedImg: "CloseY")
@@ -101,7 +101,7 @@ struct SideMenuView: View {
                 Text("로그아웃")
                     .pretendard(.body02)
             }
-            .opacity(0)
+            .hidden()
         }
         .buttonStyle(
             PressableViewButtonStyle(
