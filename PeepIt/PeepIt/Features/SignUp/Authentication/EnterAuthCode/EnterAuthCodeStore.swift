@@ -15,13 +15,10 @@ struct EnterAuthCodeStore {
     struct State: Equatable {
         /// focus되는 field - 초기: 첫 번째 tf로 설정
         var focusField: Field? = .first
-
         /// 인증 코드를 저장할 배열
         var fields = Array(repeating: "", count: 6)
-
         /// 인증이 성공했는지를 판단
         var isAuthSucceed = false
-
         /// focus될 Field 정의
         enum Field: CaseIterable, Hashable {
             case first, second, third, fourth, fifth, sixth
@@ -39,8 +36,12 @@ struct EnterAuthCodeStore {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        /// 인증 확인
         case checkAuthCode(code: String)
+        /// 뒤로가기 버튼 탭
         case backButtonTapped
+        /// 완료뷰로 이동
+        case pushToWelcomeView
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -52,7 +53,6 @@ struct EnterAuthCodeStore {
             switch action {
 
             case .binding(\.fields):
-
                 /// 코드 tf가 채워지면, 다음 tf로 focus 이동
                 for (index, field) in state.fields.enumerated() {
                     if field.count == 1,
@@ -79,6 +79,17 @@ struct EnterAuthCodeStore {
             case .checkAuthCode:
                 // TODO: 인증 API
                 state.isAuthSucceed = true
+
+                if state.isAuthSucceed {
+                    return .run { send in
+                        try await Task.sleep(for: .seconds(0.5))
+                        await send(.pushToWelcomeView)
+                    }
+                } else {
+                    return .none
+                }
+
+            case .pushToWelcomeView:
                 return .none
 
             default:
