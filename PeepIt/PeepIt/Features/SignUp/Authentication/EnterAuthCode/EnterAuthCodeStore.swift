@@ -18,7 +18,7 @@ struct EnterAuthCodeStore {
         /// 인증 코드를 저장할 배열
         var fields = Array(repeating: "", count: 6)
         /// 인증이 성공했는지를 판단
-        var isAuthSucceed = false
+        var authCodeState = AuthCodeState.none
         /// focus될 Field 정의
         enum Field: CaseIterable, Hashable {
             case first, second, third, fourth, fifth, sixth
@@ -31,6 +31,12 @@ struct EnterAuthCodeStore {
                 }
                 return allCases[currentIndex + 1]
             }
+        }
+
+        enum AuthCodeState: Equatable {
+            case none /// 인증 전
+            case success /// 인증 성공
+            case fail /// 인증 실패
         }
     }
 
@@ -77,10 +83,10 @@ struct EnterAuthCodeStore {
                 }
 
             case .checkAuthCode:
-                // TODO: 인증 API
-                state.isAuthSucceed = true
+                // TODO: 인증 API 호출
+                state.authCodeState = .success
 
-                if state.isAuthSucceed {
+                if state.authCodeState == .success {
                     return .run { send in
                         try await Task.sleep(for: .seconds(0.5))
                         await send(.pushToWelcomeView)

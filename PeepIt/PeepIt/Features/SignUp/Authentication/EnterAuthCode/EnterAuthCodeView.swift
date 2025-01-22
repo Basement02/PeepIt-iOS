@@ -30,7 +30,7 @@ struct EnterAuthCodeView: View {
 
                 Spacer()
 
-                if !store.isAuthSucceed {
+                if store.authCodeState != .success {
                     HStack {
                         Spacer()
                         skipButton
@@ -72,15 +72,7 @@ struct EnterAuthCodeView: View {
             HStack(spacing: 6) {
                 ForEach(0..<6) { idx in
                     ZStack {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray500)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .strokeBorder(
-                                        store.isAuthSucceed ? Color.coreLime : Color.clear,
-                                        lineWidth: 1
-                                    )
-                            )
+                        fieldBackground
 
                         TextField("", text: $store.fields[idx])
                             .keyboardType(.numberPad)
@@ -91,27 +83,50 @@ struct EnterAuthCodeView: View {
                                 $focusedField,
                                 equals: EnterAuthCodeStore.State.Field.allCases[idx]
                             )
-                            .foregroundStyle(store.isAuthSucceed ? Color.coreLime : Color.white)
+                            .foregroundStyle(
+                                store.authCodeState == .success ? Color.coreLime :
+                                    store.authCodeState == .fail ? Color.coreRed :
+                                    Color.white
+                            )
 
                     }
                     .frame(width: 40, height: 40)
                 }
             }
 
-            if store.isAuthSucceed {
-                Text("인증이 완료되었습니다.")
-                    .pretendard(.caption03)
-                    .foregroundStyle(Color.coreLime)
+            Group {
+                switch store.authCodeState {
+                case .none:
+                    Text("")
+                case .success:
+                    Text("인증이 완료되었습니다.")
+                        .foregroundStyle(Color.coreLime)
+                case .fail:
+                    Text("코드가 일치하지 않습니다.")
+                        .foregroundStyle(Color.coreRed)
+                }
             }
+            .pretendard(.caption03)
         }
     }
 
-    private var numberField: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: 40, height: 40)
-                .foregroundStyle(Color.gray500)
-        }
+    private var fieldBackground: some View {
+        RoundedRectangle(cornerRadius: 10)
+            .fill(Color.gray500)
+            .overlay {
+                switch store.authCodeState {
+                case .none:
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(Color.clear, lineWidth: 1)
+                case .success:
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(Color.coreLime, lineWidth: 1)
+                case .fail:
+                    RoundedRectangle(cornerRadius: 10)
+                        .strokeBorder(Color.coreRed, lineWidth: 1)
+                }
+            }
+
     }
 
     private var skipButton: some View {
