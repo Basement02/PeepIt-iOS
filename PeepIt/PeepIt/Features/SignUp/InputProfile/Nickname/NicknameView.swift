@@ -15,7 +15,7 @@ struct NicknameView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
                 PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
                 Group {
                     title
@@ -26,15 +26,15 @@ struct NicknameView: View {
                             action: \.enterFieldAction)
                     )
                     .frame(width: 285)
-                    .padding(.top, 50.adjustedH)
+                    .padding(.top, 50)
                 }
-                .padding(.leading, 20.adjustedW)
+                .padding(.leading, 20)
 
                 Spacer()
 
                 if store.nicknameValidation == .validated {
                     nextButton
-                        .padding(.bottom, 18.adjustedH)
+                        .padding(.bottom, 18)
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -46,9 +46,7 @@ struct NicknameView: View {
     }
 
     private var backButton: some View {
-        BackButton {
-            store.send(.backButtonTapped)
-        }
+        BackButton { store.send(.backButtonTapped) }
     }
 
     private var title: some View {

@@ -16,9 +16,9 @@ struct WelcomeView: View {
             VStack(spacing: 0) {
 
                 title
-                    .padding(.leading, 20.adjustedH)
-                    .padding(.top, 126.adjustedH)
-                    .padding(.bottom, 62.adjustedH)
+                    .padding(.leading, 20)
+                    .padding(.top, 67)
+                    .padding(.bottom, 62)
 
                 detailInfoView
 
@@ -27,10 +27,10 @@ struct WelcomeView: View {
                 Spacer()
 
                 goHomeButton
-                    .padding(.bottom, 84.adjustedH)
+                    .padding(.bottom, 84)
             }
             .toolbar(.hidden, for: .navigationBar)
-            .ignoresSafeArea()
+            .ignoresSafeArea(.all, edges: .bottom)
             .background(Color.base)
         }
     }
@@ -102,7 +102,7 @@ struct WelcomeView: View {
         .padding(.vertical, 3.2)
         .background(
             RoundedRectangle(cornerRadius: 80)
-                .stroke(Color.coreLime, lineWidth: 1.0)
+                .stroke(Color.coreLime, lineWidth: 1)
                 .foregroundStyle(.clear)
         )
     }

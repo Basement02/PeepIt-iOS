@@ -19,10 +19,22 @@ struct CheckEnterFieldStore {
 
     @ObservableState
     struct State: Equatable {
-        var content = "항목"
         var text = ""
         var message = "가이드 문구"
         var enterState = EnterState.base
+        var fieldType = FieldType.id
+
+        enum FieldType: String, Equatable {
+            case id = "아이디"
+            case nickname = "닉네임"
+
+            var placeholder: String {
+                switch self {
+                case .id: return "아이디를 입력해주세요."
+                case .nickname: return "닉네임을 입력해주세요."
+                }
+            }
+        }
     }
 
     enum Action: BindableAction {

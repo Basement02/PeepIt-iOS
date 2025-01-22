@@ -45,12 +45,9 @@ struct InputIdStore {
             /// EnterState로 변환하여 하위 뷰 사용
             var enterState: EnterState {
                 switch self {
-                case .validated:
-                    return .completed
-                case .empty:
-                    return .base
-                default:
-                    return .error
+                case .validated: return .completed
+                case .empty: return .base
+                default: return .error
                 }
             }
         }
@@ -87,7 +84,7 @@ struct InputIdStore {
             switch action {
 
             case .onAppeared:
-                state.enterFieldState.content = "아이디"
+                state.enterFieldState.fieldType = CheckEnterFieldStore.State.FieldType.id
                 state.enterFieldState.message = state.idValidation.message
                 return .none
 

@@ -16,26 +16,27 @@ struct InputIdView: View {
             VStack(alignment: .leading, spacing: 0) {
 
                 PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
                 Group {
                     title
+                        .padding(.bottom, 50)
 
                     CheckEnterField(
                         store: store.scope(
                             state: \.enterFieldState,
                             action: \.enterFieldAction)
                     )
-                    .padding(.top, 50.adjustedH)
+                    .submitLabel(.continue)
                     .frame(width: 285)
                 }
-                .padding(.leading, 20.adjustedW)
+                .padding(.leading, 20)
 
                 Spacer()
 
                 if store.idValidation == .validated {
                     nextButton
-                        .padding(.bottom, 18.adjustedH)
+                        .padding(.bottom, 18)
                 }
             }
             .background(Color.base)

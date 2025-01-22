@@ -18,15 +18,15 @@ struct EnterAuthCodeView: View {
             VStack(alignment: .leading, spacing: 0) {
 
                 PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
                 Group {
                     title
-                        .padding(.bottom, 50.adjustedH)
+                        .padding(.bottom, 50)
 
                     enterNumberField
                 }
-                .padding(.leading, 20.adjustedH)
+                .padding(.leading, 20)
 
                 Spacer()
 
@@ -36,7 +36,7 @@ struct EnterAuthCodeView: View {
                         skipButton
                         Spacer()
                     }
-                    .padding(.bottom, 36.adjustedH)
+                    .padding(.bottom, 36)
                 }
             }
             .background(Color.base)
