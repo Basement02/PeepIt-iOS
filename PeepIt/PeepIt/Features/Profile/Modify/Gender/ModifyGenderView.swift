@@ -11,79 +11,92 @@ import ComposableArchitecture
 struct ModifyGenderView: View {
     @Perception.Bindable var store: StoreOf<ProfileModifyStore>
 
-    @Environment(\.presentationMode) var presentationMode
-
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                HStack {
-                    Text("성별")
-                        .font(.system(size: 12))
+
+                PeepItNavigationBar(
+                    leading: BackButton { }
+                )
+                .padding(.bottom, 23)
+
+                VStack(alignment: .leading, spacing: 50) {
+                    HStack {
+                        Text("성별을 선택해주세요.")
+                            .pretendard(.title02)
+                    }
+
+                    genderListView
+
                     Spacer()
                 }
-                .padding(.top, 41)
-                .padding(.bottom, 30)
+                .padding(.leading, 20)
 
-                ForEach(GenderType.allCases, id: \.self) { gender in
-                    WithPerceptionTracking {
-                        GenderCell(
-                            title: gender.title,
-                            isSelected: gender == store.selectedGender
-                        )
-                        .onTapGesture {
-                            store.send(.selectGender(of: gender))
-                        }
-                    }
-                }
+                saveButton
+                    .padding(.bottom, 84)
+            }
+            .ignoresSafeArea(.all, edges: .bottom)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+        }
+    }
+
+    private var genderListView: some View {
+        VStack(spacing: 20) {
+            HStack(spacing: 7) {
+                Text("성별")
+                    .pretendard(.caption01)
+                Text("(선택사항)")
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.gray300)
 
                 Spacer()
-
-                modifyButton
-                    .padding(.bottom, 17)
             }
-            .padding(.horizontal, 20)
-        }
-    }
 
-    private var modifyButton: some View {
-        Button {
-            presentationMode.wrappedValue.dismiss()
-        } label: {
-            Text("저장")
-        }
-    }
-}
+            HStack(spacing: 9) {
+                ForEach(
+                    Array(zip(GenderType.allCases.indices,
+                              GenderType.allCases)
+                    ), id: \.0
+                ) { idx, item in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(
+                                store.selectedGender == item ? Color.coreLime : Color.white,
+                                lineWidth: 1
+                            )
 
-fileprivate struct GenderCell: View {
-    let title: String
-    let isSelected: Bool
-
-    var body: some View {
-        HStack(spacing: 9) {
-            Circle()
-                .frame(width: 20, height: 20)
-                .foregroundStyle(Color.init(uiColor: .systemGray4))
-                .overlay {
-                    if isSelected {
-                        Circle()
-                            .frame(width: 12, height: 12)
+                        Text(item.title)
+                            .pretendard(.caption01)
+                    }
+                    .foregroundStyle(
+                        store.selectedGender == item ? Color.coreLime : Color.white
+                    )
+                    .frame(height: 40)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        store.send(.selectGender(item))
                     }
                 }
-
-            Text(title)
-                .font(.system(size: 12))
-            Spacer()
-
+            }
+            .padding(.trailing, 17)
         }
-        .padding(.vertical, 11)
-        .contentShape(Rectangle())
+    }
+
+    private var saveButton: some View {
+        Button {
+
+        } label: {
+            Text("저장")
+                .mainGrayButtonStyle()
+        }
     }
 }
 
 #Preview {
-    NavigationStack {
-        ModifyGenderView(
-            store: .init(initialState: ProfileModifyStore.State()) { ProfileModifyStore() }
-        )
-    }
+    ModifyGenderView(
+        store: .init(initialState: ProfileModifyStore.State()) {
+            ProfileModifyStore()
+        }
+    )
 }

@@ -17,21 +17,21 @@ struct ProfileModifyStore {
         var nickname = "nickname"
         var gender: GenderType = .man
         var nicknameField = ""
-        var selectedGender: GenderType = .man
+        var selectedGender: GenderType? = nil
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
-        case bind
         case nicknameButtonTapped
         case genderButtonTapped
-        case selectGender(of: GenderType)
+        case selectGender(GenderType)
         case nicknameModifyButtonTapped
         case genderModifyButtonTapped
     }
 
     var body: some Reducer<State, Action> {
         BindingReducer()
+        
         Reduce { state, action in
             switch action {
             case .binding(\.nicknameField):
@@ -45,7 +45,12 @@ struct ProfileModifyStore {
                 return .none
 
             case let .selectGender(type):
-                state.selectedGender = type
+                if type == state.selectedGender {
+                    state.selectedGender = nil
+                } else {
+                    state.selectedGender = type
+                }
+                
                 return .none
 
             case .nicknameModifyButtonTapped:
