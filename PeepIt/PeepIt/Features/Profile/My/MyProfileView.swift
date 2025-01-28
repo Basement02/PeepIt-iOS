@@ -25,7 +25,6 @@ struct MyProfileView: View {
                     VStack(spacing: 0) {
                         profileView
                             .padding(.top, 43)
-                            .padding(.bottom, 6)
 
                         switch store.peepTabSelection {
 
@@ -68,13 +67,39 @@ struct MyProfileView: View {
     }
 
     private var profileView: some View {
-        ZStack(alignment: .trailing) {
-            UserProfileView(
-                profile: .stubUser1,
-                isMine: true,
-                modifyButtonAction: {
-                    // TODO:
-                })
+        VStack(spacing: 26) {
+            Image("ProfileSample")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 91.2, height: 91.2)
+
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 11) {
+                    Text("닉네임")
+                        .pretendard(.title02)
+
+                    HStack(spacing: 2) {
+                        Image("IconLocation")
+                            .resizable()
+                            .frame(width: 22.4, height: 22.4)
+                        Text("동이름")
+                            .pretendard(.body02)
+                    }
+                    .padding(.bottom, 7)
+                }
+                .frame(width: 361)
+                .padding(.vertical, 7)
+
+                NavigationLink(
+                    state: RootStore.Path.State.modifyProfile(ProfileModifyStore.State())
+                ) {
+                    Text("편집")
+                        .pretendard(.caption04)
+                        .underline()
+                        .foregroundStyle(Color.white)
+                        .frame(width: 44, height: 44)
+                }
+            }
         }
     }
 

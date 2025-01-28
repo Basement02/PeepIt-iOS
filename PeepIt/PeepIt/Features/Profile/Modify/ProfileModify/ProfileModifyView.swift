@@ -16,7 +16,7 @@ struct ProfileModifyView: View {
             VStack(spacing: 0) {
 
                 PeepItNavigationBar(
-                    trailing: DismissButton { }
+                    trailing: DismissButton { store.send(.backButtonTapped) }
                 )
                 .padding(.bottom, 23)
 
@@ -76,9 +76,9 @@ struct ProfileModifyView: View {
 
             Spacer()
 
-            Button {
-
-            } label: {
+            NavigationLink(
+                state: RootStore.Path.State.modifyNickname(self.store.state)
+            ) {
                 Text("수정")
                     .tint(.white)
                     .pretendard(.caption04)
@@ -98,9 +98,9 @@ struct ProfileModifyView: View {
 
             Spacer()
 
-            Button {
-
-            } label: {
+            NavigationLink(
+                state: RootStore.Path.State.modifyGender(self.store.state)
+            ) {
                 Text("수정")
                     .tint(.white)
                     .pretendard(.caption04)

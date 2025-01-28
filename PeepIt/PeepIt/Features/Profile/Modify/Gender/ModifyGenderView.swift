@@ -16,7 +16,7 @@ struct ModifyGenderView: View {
             VStack(spacing: 0) {
 
                 PeepItNavigationBar(
-                    leading: BackButton { }
+                    leading: BackButton { store.send(.backButtonTapped) }
                 )
                 .padding(.bottom, 23)
 
@@ -85,7 +85,7 @@ struct ModifyGenderView: View {
 
     private var saveButton: some View {
         Button {
-
+            store.send(.saveButtonTapped)
         } label: {
             Text("저장")
                 .mainGrayButtonStyle()

@@ -41,6 +41,9 @@ struct RootStore {
         /// 프로필
         case otherProfile(OtherProfileStore)
         case myProfile(MyProfileStore)
+        case modifyProfile(ProfileModifyStore)
+        case modifyNickname(ProfileModifyStore)
+        case modifyGender(ProfileModifyStore)
 
         // 업로드
         case camera(CameraStore)
