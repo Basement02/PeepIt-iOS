@@ -480,8 +480,8 @@
 		AB468D322CA9570500C1E430 /* ProfileModify */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */,
 				AB468D2C2CA94A5400C1E430 /* ProfileModifyView.swift */,
+				AB468D2A2CA94A2D00C1E430 /* ProfileModifyStore.swift */,
 			);
 			path = ProfileModify;
 			sourceTree = "<group>";

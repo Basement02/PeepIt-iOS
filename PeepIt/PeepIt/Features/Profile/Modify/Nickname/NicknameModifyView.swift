@@ -9,44 +9,52 @@ import SwiftUI
 import ComposableArchitecture
 
 struct NicknameModifyView: View {
-    @Perception.Bindable var store: StoreOf<ProfileModifyStore>
-
-    @Environment(\.presentationMode) var presentationMode
+    let store: StoreOf<ProfileModifyStore>
 
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
 
-                HStack {
-                    Text("닉네임")
-                        .font(.system(size: 12))
+                PeepItNavigationBar(
+                    leading: BackButton { store.send(.backButtonTapped) }
+                )
+                .padding(.bottom, 23)
+
+                VStack(alignment: .leading, spacing: 50) {
+                    HStack {
+                        Text("변경할 닉네임을 입력해주세요.")
+                            .pretendard(.title02)
+                        Spacer()
+                    }
+
+                    CheckEnterField(
+                        store: store.scope(
+                            state: \.enterFieldState,
+                            action: \.enterFieldAction)
+                    )
+                    .frame(width: 285)
+
                     Spacer()
                 }
-                .padding(.top, 41)
-                .padding(.bottom, 15)
+                .padding(.leading, 20)
 
-                TextField("", text: $store.nicknameField)
-                    .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(lineWidth: 1)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 38)
-                    )
-
-                Spacer()
-
-                modifyButton
-                    .padding(.bottom, 17)
+                if store.nicknameValidation == .validated {
+                    saveButton
+                        .padding(.bottom, 18)
+                }
             }
-            .padding(.horizontal, 20)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
-    private var modifyButton: some View {
+    private var saveButton: some View {
         Button {
-            presentationMode.wrappedValue.dismiss()
+            store.send(.saveButtonTapped)
         } label: {
             Text("저장")
+                .mainLimeButtonStyle()
         }
     }
 }
