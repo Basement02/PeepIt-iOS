@@ -70,7 +70,7 @@ struct EnterAuthCodeStore {
                 }
 
                 /// 6개 전부 채워졌을 때는 인증 api 호출 (TODO)
-                if state.fields.allSatisfy({ $0.count == 1 }) {
+                if state.fields.allSatisfy({ $0.count == 1 }) && state.authCodeState != .success {
                     let code = state.fields.joined(separator: "")
                     return .send(.checkAuthCode(code: code))
                 }
