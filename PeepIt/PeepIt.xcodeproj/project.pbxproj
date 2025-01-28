@@ -1358,7 +1358,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = B2X97RHADA;
+				DEVELOPMENT_TEAM = X27T8ZY8W3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PeepIt/Info.plist;
@@ -1377,7 +1377,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Basement02.PeepIt.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basement02-Peep-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -1397,7 +1397,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
-				DEVELOPMENT_TEAM = B2X97RHADA;
+				DEVELOPMENT_TEAM = X27T8ZY8W3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PeepIt/Info.plist;
@@ -1416,7 +1416,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Basement02.PeepIt.iOS;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basement02-Peep-It";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
