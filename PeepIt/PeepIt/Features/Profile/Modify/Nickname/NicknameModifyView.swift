@@ -9,14 +9,14 @@ import SwiftUI
 import ComposableArchitecture
 
 struct NicknameModifyView: View {
-    @Perception.Bindable var store: StoreOf<ProfileModifyStore>
+    let store: StoreOf<ProfileModifyStore>
 
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
 
                 PeepItNavigationBar(
-                    leading: DismissButton { store.send(.backButtonTapped) }
+                    leading: BackButton { store.send(.backButtonTapped) }
                 )
                 .padding(.bottom, 23)
 
@@ -24,28 +24,37 @@ struct NicknameModifyView: View {
                     HStack {
                         Text("변경할 닉네임을 입력해주세요.")
                             .pretendard(.title02)
-                            .padding(.bottom, 50)
                         Spacer()
                     }
+
+                    CheckEnterField(
+                        store: store.scope(
+                            state: \.enterFieldState,
+                            action: \.enterFieldAction)
+                    )
+                    .frame(width: 285)
 
                     Spacer()
                 }
                 .padding(.leading, 20)
 
-                saveButton
-                    .padding(.bottom, 18)
+                if store.nicknameValidation == .validated {
+                    saveButton
+                        .padding(.bottom, 18)
+                }
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
     private var saveButton: some View {
         Button {
-
+            store.send(.saveButtonTapped)
         } label: {
             Text("저장")
-                .mainGrayButtonStyle()
+                .mainLimeButtonStyle()
         }
     }
 }

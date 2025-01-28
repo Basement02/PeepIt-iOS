@@ -14,6 +14,38 @@ enum EnterState: Equatable {
     case error
 }
 
+/// 닉네임 유효성 검증 enum
+enum NicknameValidation {
+    case base
+    case maxCount
+    case validated
+    case wrongWord
+
+    var message: String {
+        switch self {
+        case .base:
+            return "영문, 숫자 특수문자(_,-, .)만 사용 가능합니다."
+        case .maxCount:
+            return "닉네임으로 사용하기에 너무 길어요 :("
+        case .validated:
+            return "사용 가능한 닉네임입니다 :)"
+        case .wrongWord:
+            return "사용할 수 없는 문자가 포함되어 있어요 :("
+        }
+    }
+
+    var enterState: EnterState {
+        switch self {
+        case .base:
+            return .base
+        case .validated:
+            return .completed
+        default:
+            return .error
+        }
+    }
+}
+
 @Reducer
 struct CheckEnterFieldStore {
 

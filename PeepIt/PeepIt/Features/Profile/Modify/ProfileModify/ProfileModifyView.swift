@@ -93,7 +93,7 @@ struct ProfileModifyView: View {
         HStack(spacing: 23) {
             Text("성별")
                 .pretendard(.foodnote)
-            Text(store.nickname)
+            Text("선택된 성별")
                 .pretendard(.body04)
 
             Spacer()
