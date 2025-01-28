@@ -14,105 +14,101 @@ struct ProfileModifyView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                Circle()
-                    .frame(width: 117, height: 117)
-                    .padding(.vertical, 21)
 
-                modifyProfileButton
-                    .padding(.bottom, 55)
+                PeepItNavigationBar(
+                    trailing: DismissButton { }
+                )
+                .padding(.bottom, 23)
 
-                idLabel
+                profileView
+                    .padding(.bottom, 42)
 
-                nicknameLabel
-
-                genderLabel
+                VStack(spacing: 15) {
+                    idLabel
+                    nicknameLabel
+                    genderLabel
+                }
+                .frame(width: 279)
 
                 Spacer()
             }
-            .padding(.horizontal, 23)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 
-    private var modifyProfileButton: some View {
-        Button {
+    private var profileView: some View {
+        VStack(spacing: 0) {
+            Image("ProfileSample")
+                .resizable()
+                .frame(width: 114, height: 114)
 
-        } label: {
-            Text("프로필 수정")
-                .font(.system(size: 12))
-                .foregroundStyle(Color.black)
-                .background(
-                    RoundedRectangle(cornerRadius: 100)
-                        .foregroundStyle(Color.init(uiColor: .lightGray))
-                        .frame(width: 100, height: 25)
-                )
+            Button {
+
+            } label: {
+                Text("수정")
+                    .tint(.white)
+                    .pretendard(.caption04)
+                    .underline()
+                    .frame(width: 44, height: 44)
+            }
         }
     }
 
     private var idLabel: some View {
-        HStack(spacing: 32) {
+        HStack(spacing: 11) {
             Text("아이디")
+                .pretendard(.foodnote)
             Text(store.id)
+                .pretendard(.body04)
 
             Spacer()
         }
-        .padding(.vertical, 22)
-        .font(.system(size: 12))
+        .frame(height: 44)
     }
 
     private var nicknameLabel: some View {
-//        NavigationLink(state: RootStore.Path.State.nicknameModify(store.state)) {
-//            HStack(spacing: 32) {
-//                Text("닉네임")
-//                Text(store.nickname)
-//
-//                Spacer()
-//
-//                Image(systemName: "chevron.right")
-//            }
-//            .padding(.vertical, 22)
-//            .contentShape(Rectangle())
-//            .font(.system(size: 12))
-//        }
-//        .buttonStyle(PlainButtonStyle())
-        HStack(spacing: 32) {
+        HStack(spacing: 11) {
             Text("닉네임")
+                .pretendard(.foodnote)
             Text(store.nickname)
+                .pretendard(.body04)
 
             Spacer()
 
-            Image(systemName: "chevron.right")
+            Button {
+
+            } label: {
+                Text("수정")
+                    .tint(.white)
+                    .pretendard(.caption04)
+                    .underline()
+                    .frame(width: 44, height: 44)
+            }
         }
-        .padding(.vertical, 22)
-        .contentShape(Rectangle())
-        .font(.system(size: 12))
+        .frame(height: 44)
     }
 
     private var genderLabel: some View {
-//        NavigationLink(state: RootStore.Path.State.genderModify(store.state)) {
-//            HStack(spacing: 43) {
-//                Text("성별")
-//                Text(store.gender.title)
-//
-//                Spacer()
-//
-//                Image(systemName: "chevron.right")
-//            }
-//            .padding(.vertical, 22)
-//            .contentShape(Rectangle())
-//            .font(.system(size: 12))
-//        }
-//        .buttonStyle(PlainButtonStyle())
-        HStack(spacing: 43) {
+        HStack(spacing: 23) {
             Text("성별")
-            Text(store.gender.title)
+                .pretendard(.foodnote)
+            Text(store.nickname)
+                .pretendard(.body04)
 
             Spacer()
 
-            Image(systemName: "chevron.right")
+            Button {
+
+            } label: {
+                Text("수정")
+                    .tint(.white)
+                    .pretendard(.caption04)
+                    .underline()
+                    .frame(width: 44, height: 44)
+            }
         }
-        .padding(.vertical, 22)
-        .contentShape(Rectangle())
-        .font(.system(size: 12))
+        .frame(height: 44)
     }
 }
 
