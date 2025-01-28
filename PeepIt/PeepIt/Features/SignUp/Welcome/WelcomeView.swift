@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import PhotosUI
 import ComposableArchitecture
 
 struct WelcomeView: View {
-    let store: StoreOf<WelcomeStore>
+    @Perception.Bindable var store: StoreOf<WelcomeStore>
 
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-
                 title
                     .padding(.leading, 20)
                     .padding(.top, 67)
@@ -55,11 +55,20 @@ struct WelcomeView: View {
 
     private var detailInfoView: some View {
         VStack(spacing: 0) {
-            Image("ProfileSample")
+            Group {
+                if let image = store.selectedImage {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image("ProfileSample")
+                        .resizable()
+                }
+            }
+            .frame(width: 91.2, height: 91.2)
+            .clipShape(RoundedRectangle(cornerRadius: 20.8))
 
-            Button {
-                // TODO: 프로필 이미지
-            } label: {
+            PhotosPicker(selection: $store.selectedPhotoItem) {
                 Text("수정")
                     .underline()
                     .pretendard(.caption01)
