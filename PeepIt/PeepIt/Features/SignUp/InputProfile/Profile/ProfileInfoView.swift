@@ -11,78 +11,135 @@ import ComposableArchitecture
 struct ProfileInfoView: View {
     @Perception.Bindable var store: StoreOf<ProfileInfoStore>
 
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
-            VStack(alignment: .leading, spacing: 0) {
-                Text("_ 님에 대해\n좀 더 알려주세요.")
-                    .font(.system(size: 18))
-                    .padding(.top, 48)
-                    .padding(.bottom, 54)
+            GeometryReader { _ in
+                WithPerceptionTracking {
+                    ZStack {
+                        Color.base
+                            .ignoresSafeArea()
 
-                TextField("YYYY.MM.DD", text: $store.date)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.numberPad)
-                    .padding(.bottom, 10)
+                        VStack(spacing: 0) {
+                            PeepItNavigationBar(leading: backButton)
+                                .padding(.bottom, 23)
 
-                Text("생년월일을 선택해 주세요. (선택)")
-                    .font(.system(size: 12, weight: .regular))
-                    .padding(.bottom, 24)
+                            VStack(spacing: 50) {
+                                titleView
 
-                HStack(spacing: 15) {
-                    ForEach(GenderType.allCases, id: \.self) { gender in
-                        GenderButton(
-                            gender: gender,
-                            isSelected: gender == store.selectedGender
-                        )
-                        .onTapGesture {
-                            store.send(.selectedGender(gender))
+                                birthField
+
+                                genderListView
+                            }
+                            .padding(.leading, 20)
+
+                            Spacer()
+
+                            nextButton
+                                .padding(.bottom, 84)
                         }
+                        .ignoresSafeArea(.all, edges: .bottom)
                     }
-                }
-                .frame(height: 38)
-                .padding(.bottom, 10)
-
-                Text("성별을 선택해 주세요. (선택)")
-                    .font(.system(size: 12, weight: .regular))
-
-                Spacer()
-
-                NavigationLink(
-                    state: RootStore.Path.State.inputPhoneNumber(AuthenticationStore.State())
-                ) {
-                    Text("다음")
-                        .mainGrayButtonStyle()
+                    .background(Color.base)
+                    .toolbar(.hidden, for: .navigationBar)
+                    .onAppear { isFocused = true }
+                    .onTapGesture { endTextEditing() }
                 }
             }
-            .padding(.horizontal, 23)
         }
     }
 
     private var backButton: some View {
-        Button {
-            store.send(.backButtonTapped)
-        } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 33.6, height: 33.6)
-        }
-        .buttonStyle(PressableButtonStyle(originImg: "backN", pressedImg: "backY"))
+        BackButton { store.send(.backButtonTapped) }
     }
-}
 
-fileprivate struct GenderButton: View {
-    let gender: GenderType
-    var isSelected: Bool
+    private var titleView: some View {
+        HStack {
+            Text("닉네임님에 대해\n좀 더 알려주세요.")
+                .pretendard(.title02)
+            Spacer()
+        }
+    }
 
-    var body: some View {
-        ZStack {
-            if isSelected {
-                Color.green
-            } else {
-                Color.init(uiColor: .systemGray4)
+    private var nextButton: some View {
+        NavigationLink(
+            state: RootStore.Path.State.inputPhoneNumber(AuthenticationStore.State())
+        ) {
+            Text("다음")
+                .mainGrayButtonStyle()
+        }
+    }
+
+    private var birthField: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 7) {
+                Text("생년월일")
+                    .pretendard(.caption01)
+                Text("(선택사항)")
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.gray300)
+
+                Spacer()
+            }
+            .padding(.bottom, 20)
+
+            Group {
+                TextField("YYYY.MM.DD", text: $store.date)
+                    .focused($isFocused)
+                    .pretendard(.body02)
+                    .tint(Color.coreLime)
+                    .frame(height: 29.4)
+                    .keyboardType(.numberPad)
+                    .padding(.bottom, 10)
+
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(height: 1)
+            }
+            .frame(width: 285)
+        }
+    }
+
+    private var genderListView: some View {
+        VStack(spacing: 20) {
+            HStack(spacing: 7) {
+                Text("성별")
+                    .pretendard(.caption01)
+                Text("(선택사항)")
+                    .pretendard(.caption03)
+                    .foregroundStyle(Color.gray300)
+
+                Spacer()
             }
 
-            Text(gender.minTitle)
+            HStack(spacing: 9) {
+                ForEach(
+                    Array(zip(GenderType.allCases.indices,
+                              GenderType.allCases)
+                    ), id: \.0
+                ) { idx, item in
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 12)
+                            .strokeBorder(
+                                store.selectedGender == item ? Color.coreLime : Color.white,
+                                lineWidth: 1
+                            )
+
+                        Text(item.title)
+                            .pretendard(.caption01)
+                    }
+                    .foregroundStyle(
+                        store.selectedGender == item ? Color.coreLime : Color.white
+                    )
+                    .frame(height: 40)
+                    .contentShape(Rectangle())
+                    .onTapGesture {
+                        store.send(.selectedGender(item))
+                    }
+                }
+            }
+            .padding(.trailing, 17)
         }
     }
 }

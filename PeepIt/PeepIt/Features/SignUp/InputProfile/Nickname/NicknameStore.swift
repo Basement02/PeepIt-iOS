@@ -87,7 +87,7 @@ struct NicknameStore {
                 return .none
 
             case .onAppeared:
-                state.enterFieldState.content = "닉네임"
+                state.enterFieldState.fieldType = CheckEnterFieldStore.State.FieldType.nickname
                 state.enterFieldState.message = state.nicknameValidation.message
 
                 return .none

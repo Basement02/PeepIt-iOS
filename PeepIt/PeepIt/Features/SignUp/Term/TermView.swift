@@ -16,14 +16,14 @@ struct TermView: View {
             VStack(alignment: .leading, spacing: 0) {
 
                 PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
                 Group {
                     title
-                        .padding(.bottom, 50.adjustedH)
+                        .padding(.bottom, 50)
 
                     allAgreeButtton
-                        .padding(.bottom, 50.adjustedH)
+                        .padding(.bottom, 50)
 
                     termList
 
@@ -31,12 +31,12 @@ struct TermView: View {
 
                     if store.isNextButtonActivated {
                         nextButton
-                            .padding(.bottom, 84.adjustedH)
+                            .padding(.bottom, 84)
                     }
                 }
-                .padding(.leading, 20.adjustedW)
+                .padding(.leading, 20)
             }
-            .padding(.trailing, 15.6.adjustedW)
+            .padding(.trailing, 15.6)
             .background(Color.base)
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
@@ -109,10 +109,7 @@ fileprivate struct termLabel: View {
 
     var body: some View {
         HStack {
-            Image(
-                isAgreed ?
-                "CheckY" : "CheckN"
-            )
+            Image(isAgreed ? "CheckY" : "CheckN")
 
             Group {
                 Text(term.isEssential ? "(필수)" : "(선택)")

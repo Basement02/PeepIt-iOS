@@ -137,6 +137,10 @@ struct RootStore {
                     state.path.removeAll()
                     return .none
 
+                case .element(_, action: .inputAuthCode(.pushToWelcomeView)):
+                    state.path.append(.welcome(.init()))
+                    return .none
+
                 default:
                     return .none
                 }

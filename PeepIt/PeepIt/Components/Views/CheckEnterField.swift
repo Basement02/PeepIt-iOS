@@ -16,20 +16,20 @@ struct CheckEnterField: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
-                Text(store.content)
+                Text(store.fieldType.rawValue)
                     .pretendard(.caption01)
                     .padding(.bottom, 20)
 
                 HStack {
                     TextField(
-                        "\(store.content)를 입력해주세요.",
+                        store.fieldType.placeholder,
                         text: $store.text
                     )
                     .focused($isFocused)
                     .pretendard(.body02)
                     .tint(
                         store.enterState == .base ?
-                        Color.gray400 : Color.white
+                        Color.coreLime : Color.white
                     )
                     .frame(height: 29.4)
 

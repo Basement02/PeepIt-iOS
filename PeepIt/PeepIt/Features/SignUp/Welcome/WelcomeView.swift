@@ -6,19 +6,19 @@
 //
 
 import SwiftUI
+import PhotosUI
 import ComposableArchitecture
 
 struct WelcomeView: View {
-    let store: StoreOf<WelcomeStore>
+    @Perception.Bindable var store: StoreOf<WelcomeStore>
 
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-
                 title
-                    .padding(.leading, 20.adjustedH)
-                    .padding(.top, 126.adjustedH)
-                    .padding(.bottom, 62.adjustedH)
+                    .padding(.leading, 20)
+                    .padding(.top, 67)
+                    .padding(.bottom, 62)
 
                 detailInfoView
 
@@ -27,10 +27,10 @@ struct WelcomeView: View {
                 Spacer()
 
                 goHomeButton
-                    .padding(.bottom, 84.adjustedH)
+                    .padding(.bottom, 84)
             }
             .toolbar(.hidden, for: .navigationBar)
-            .ignoresSafeArea()
+            .ignoresSafeArea(.all, edges: .bottom)
             .background(Color.base)
         }
     }
@@ -55,11 +55,20 @@ struct WelcomeView: View {
 
     private var detailInfoView: some View {
         VStack(spacing: 0) {
-            Image("ProfileSample")
+            Group {
+                if let image = store.selectedImage {
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    Image("ProfileSample")
+                        .resizable()
+                }
+            }
+            .frame(width: 91.2, height: 91.2)
+            .clipShape(RoundedRectangle(cornerRadius: 20.8))
 
-            Button {
-                // TODO: 프로필 이미지
-            } label: {
+            PhotosPicker(selection: $store.selectedPhotoItem) {
                 Text("수정")
                     .underline()
                     .pretendard(.caption01)
@@ -102,7 +111,7 @@ struct WelcomeView: View {
         .padding(.vertical, 3.2)
         .background(
             RoundedRectangle(cornerRadius: 80)
-                .stroke(Color.coreLime, lineWidth: 1.0)
+                .stroke(Color.coreLime, lineWidth: 1)
                 .foregroundStyle(.clear)
         )
     }

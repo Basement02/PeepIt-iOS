@@ -15,17 +15,18 @@ struct AuthenticationView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(spacing: 0) {
                 PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23.adjustedH)
+                    .padding(.bottom, 23)
 
-                Group {
-                    title
-
-                    phoneNumberTextField
-                        .padding(.top, 50.adjustedH)
+                HStack {
+                    VStack(alignment: .leading, spacing: 50) {
+                        title
+                        phoneNumberTextField
+                    }
+                    Spacer()
                 }
-                .padding(.leading, 20.adjustedW)
+                .padding(.leading, 20)
 
                 Spacer()
 
@@ -44,7 +45,7 @@ struct AuthenticationView: View {
                         }
                     }
                 }
-                .padding(.bottom, 36.adjustedH)
+                .padding(.bottom, 36)
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
