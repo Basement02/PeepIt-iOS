@@ -62,10 +62,11 @@ struct EditView: View {
                             HStack {
                                 Spacer()
                                 uploadButton
-                                    .padding(.bottom, 61.adjustedH)
+                                    .padding(.bottom, 60.88)
                                     .padding(.trailing, 4)
                             }
                         }
+                        .ignoresSafeArea(.all, edges: .bottom)
                     }
 
                 /// 텍스트 입력창 (추가 및 편집)
@@ -81,11 +82,13 @@ struct EditView: View {
                     }
 
                     fontSlider
-                        .padding(.top, 175.adjustedH)
+                        .ignoresSafeArea()
+                        .padding(.top, 175)
                         .padding(.leading, 12)
 
                     textEditor
-                        .padding(.top, 281.adjustedH)
+                        .ignoresSafeArea()
+                        .padding(.top, 281)
 
                 /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                 case .editMode:
@@ -93,11 +96,11 @@ struct EditView: View {
                         Spacer()
 
                         deleteButton
-                            .padding(.bottom, 84.adjustedH)
+                            .padding(.bottom, 84)
                     }
+                    .ignoresSafeArea(.all, edges: .bottom)
                 }
             }
-            .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
             .sheet(
                 item: $store.scope(
