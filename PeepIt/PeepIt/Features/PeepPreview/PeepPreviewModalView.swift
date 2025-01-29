@@ -95,16 +95,16 @@ fileprivate struct PeepPreviewCell: View {
                     Spacer()
                     hotLabel
                 }
-                .pretendard(.caption03)
+                .pretendard(.caption01)
                 .foregroundStyle(Color.white)
 
                 Spacer()
 
                 profileView
             }
-            .padding(.top, 21.adjustedH)
+            .padding(.top, 21)
             .padding(.bottom, 19.85.adjustedH)
-            .padding(.horizontal, 18.adjustedW)
+            .padding(.horizontal, 18)
 
         }
     }
@@ -131,13 +131,13 @@ fileprivate struct PeepPreviewCell: View {
                 .resizable()
                 .frame(width: 30, height: 30)
 
-            Text("혜림")
+            Text("hyerim")
                 .pretendard(.body02)
 
             Spacer()
 
             Text("3분 전")
-                .pretendard(.caption04)
+                .pretendard(.caption02)
         }
         .foregroundStyle(Color.white)
     }
