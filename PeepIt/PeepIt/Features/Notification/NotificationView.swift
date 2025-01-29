@@ -36,6 +36,7 @@ struct NotificationView: View {
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
