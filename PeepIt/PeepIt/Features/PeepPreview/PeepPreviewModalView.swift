@@ -66,6 +66,11 @@ struct PeepPreviewModalView: View {
                 .fill(Color.base)
                 .frame(height: 36)
         )
+        .onTapGesture {
+            store.send(
+                .scrollUpButtonTapped, animation: .easeInOut(duration: 0.2)
+            )
+        }
     }
 }
 

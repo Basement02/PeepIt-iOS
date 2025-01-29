@@ -24,6 +24,7 @@ struct PeepModalStore {
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded
         case peepCellTapped
+        case scrollUpButtonTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -60,6 +61,12 @@ struct PeepModalStore {
 
             case .peepCellTapped:
                 return .none
+
+            case .scrollUpButtonTapped:
+                state.offset = -(SheetType.scrollUp.height - SheetType.scrollDown.height)
+                return .send(
+                    .setSheetHeight(height: -state.offset + SheetType.scrollDown.height)
+                )
             }
         }
     }
