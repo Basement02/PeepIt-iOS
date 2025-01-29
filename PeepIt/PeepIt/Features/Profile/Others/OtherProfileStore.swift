@@ -46,6 +46,8 @@ struct OtherProfileStore {
         case modalDragChanged(offset: CGFloat)
         /// 모달 드래그 끝남
         case modalDragEnded
+        /// 뷰 탭
+        case viewTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -106,6 +108,12 @@ struct OtherProfileStore {
                     state.modalOffset = 0
                     return .none
                 }
+
+            case .viewTapped:
+                guard state.isElseButtonTapped else { return .none }
+                state.isElseButtonTapped = false
+
+                return .none
             }
         }
     }

@@ -26,8 +26,8 @@ struct OtherProfileView: View {
                     )
                     .padding(.bottom, 43)
 
-                    UserProfileView(profile: .stubUser2)
-                        .padding(.bottom, 68)
+                    profileView
+                        .padding(.bottom, 61)
 
                     Rectangle()
                         .fill(Color.op)
@@ -85,9 +85,8 @@ struct OtherProfileView: View {
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
-            .onAppear {
-                store.send(.onAppear)
-            }
+            .onAppear { store.send(.onAppear) }
+            .onTapGesture { store.send(.viewTapped) }
         }
     }
 
@@ -108,6 +107,29 @@ struct OtherProfileView: View {
         .buttonStyle(
             PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
         )
+    }
+
+    private var profileView: some View {
+        VStack(spacing: 26) {
+            Image("ProfileSample")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 91.2, height: 91.2)
+
+            VStack(spacing: 11) {
+                Text("${닉네임}")
+                    .pretendard(.title02)
+
+                HStack(spacing: 2) {
+                    Image("IconLocation")
+                        .resizable()
+                        .frame(width: 22.4, height: 22.4)
+                    Text("동이름")
+                        .pretendard(.body02)
+                }
+            }
+            .padding(.vertical, 7)
+        }
     }
 
     private var uploadPeepListView: some View {
