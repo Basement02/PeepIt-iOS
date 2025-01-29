@@ -18,18 +18,18 @@ struct NotificationView: View {
                     leading: backButton,
                     title: "내 소식"
                 )
-                .padding(.bottom, 39.adjustedH)
+                .padding(.bottom, 39)
+
+                myActivePeepList
+                    .padding(.leading, 16)
+                    .padding(.bottom, 25)
 
                 Group {
-                    myActivePeepList
-                        .padding(.bottom, 25.adjustedH)
-
                     divider
-                        .padding(.bottom, 25.adjustedH)
+                        .padding(.bottom, 25)
+                    notificationList
                 }
-                .frame(width: 337)
-
-                notificationList
+                .padding(.horizontal, 16)
 
                 Spacer()
             }
@@ -72,25 +72,20 @@ struct NotificationView: View {
     private var notificationList: some View {
         if store.notiList.count > 0 {
             List(store.notiList, id: \.id) { noti in
-                HStack {
-                    Spacer()
-
-                    NotificationCell(notification: noti)
-
-                    Spacer()
-                }
-                .listRowInsets(EdgeInsets())
-                .background(Color.base)
-                .swipeActions(
-                    allowsFullSwipe: false
-                ) {
-                    Button {
-                        store.send(.removeNoti(item: noti))
-                    } label: {
-                        Label("Delete", image: "IconTrash")
-                            .tint(Color.coreRed)
+                NotificationCell(notification: noti)
+                    .listRowSeparator(.hidden)
+                    .listRowInsets(EdgeInsets())
+                    .background(Color.base)
+                    .swipeActions(
+                        allowsFullSwipe: false
+                    ) {
+                        Button {
+                            store.send(.removeNoti(item: noti))
+                        } label: {
+                            Label("Delete", image: "IconTrash")
+                                .tint(Color.coreRed)
+                        }
                     }
-                }
             }
             .listRowSpacing(15)
             .listStyle(.plain)
@@ -105,7 +100,7 @@ struct NotificationView: View {
 
                 Spacer()
             }
-            .frame(height: 468)
+            .padding(.bottom, 66)
         }
     }
 
@@ -116,11 +111,11 @@ struct NotificationView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(Color.gray900)
-                    .frame(width: 92, height: 126)
+                    .frame(width: 110.25, height: 151)
 
-                Image("Subtract")
+                Image("IconSubtract")
                     .resizable()
-                    .frame(width: 27.31, height: 27.31)
+                    .frame(width: 22, height: 22)
             }
         }
     }
@@ -149,13 +144,13 @@ fileprivate struct NotificationCell: View {
 
                 Text(notification.date)
                     .pretendard(.caption04)
-                    .foregroundStyle(Color.nonOp)
+                    .foregroundStyle(Color.op)
             }
             .lineLimit(1)
 
             Spacer()
         }
-        .frame(width: 317, height: 60)
+        .frame(height: 60)
         .padding(.vertical, 9)
         .padding(.horizontal, 10)
         .background(

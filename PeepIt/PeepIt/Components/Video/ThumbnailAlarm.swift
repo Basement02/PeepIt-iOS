@@ -23,17 +23,17 @@ struct ThumbnailAlarm: View {
                 .strokeBorder(Color.coreLime, lineWidth: 1)
 
             HStack(spacing: 1) {
-                Image("IconComment")
-                    .resizable()
-                    .frame(width: 16.8, height: 16.8)
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 20.16, height: 20.16)
                 Text("00")
-                    .pretendard(.body04)
+                    .pretendard(.body01)
             }
-            .frame(height: 20)
-            .padding(.top, 9)
-            .padding(.leading, 10)
+            .frame(height: 22)
+            .padding(.top, 10.8)
+            .padding(.leading, 12)
         }
-        .frame(width: 92, height: 126)
+        .frame(width: 110.4, height: 151.2)
     }
 }
 
