@@ -18,7 +18,7 @@ struct TextLayerView: View {
                     WithPerceptionTracking {
                         let scale = (
                             store.textInDeleteArea.contains(textItem.id) ?
-                            textItem.scale * 1.5 : textItem.scale
+                            textItem.scale * 1.25 : textItem.scale
                         )
 
                         Text(textItem.text)
