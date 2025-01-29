@@ -17,10 +17,10 @@ struct MyProfileStore {
         var peepTabSelection = PeepTabType.uploaded
 
         /// 업로드한 핍들
-        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var uploadedPeeps: [Peep] = []
 
         /// 나의 활동 핍들
-        var activityPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var activityPeeps: [Peep] = []
 
         /// 나의 활동 필터 탭
         var myTabFilter = MyActivityType.all
@@ -40,6 +40,7 @@ struct MyProfileStore {
         case myTabTapped(selection: MyProfileStore.State.MyActivityType)
         case loadUploadedPeeps
         case uploadButtonTapped
+        case watchButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -52,9 +53,7 @@ struct MyProfileStore {
                 return .send(.loadUploadedPeeps)
 
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             case .modifyButtonTapped:
                 return .none
@@ -81,6 +80,9 @@ struct MyProfileStore {
                 return .none
 
             case .uploadButtonTapped:
+                return .none
+
+            case .watchButtonTapped:
                 return .none
             }
         }

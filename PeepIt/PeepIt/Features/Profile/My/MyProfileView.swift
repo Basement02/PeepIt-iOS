@@ -25,6 +25,7 @@ struct MyProfileView: View {
                     VStack(spacing: 0) {
                         profileView
                             .padding(.top, 43)
+                            .padding(.bottom, 26)
 
                         switch store.peepTabSelection {
 
@@ -62,7 +63,10 @@ struct MyProfileView: View {
                 .opacity(0)
         }
         .buttonStyle(
-            PressableButtonStyle(originImg: "UploadN", pressedImg: "UploadY")
+            PressableButtonStyle(
+                originImg: "UploadN",
+                pressedImg: "UploadY"
+            )
         )
     }
 
@@ -75,7 +79,7 @@ struct MyProfileView: View {
 
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 11) {
-                    Text("닉네임")
+                    Text("${닉네임}")
                         .pretendard(.title02)
 
                     HStack(spacing: 2) {
@@ -85,7 +89,6 @@ struct MyProfileView: View {
                         Text("동이름")
                             .pretendard(.body02)
                     }
-                    .padding(.bottom, 7)
                 }
                 .frame(width: 361)
                 .padding(.vertical, 7)
@@ -171,17 +174,15 @@ struct MyProfileView: View {
             store.send(.uploadButtonTapped)
         } label: {
             Rectangle()
-                .frame(width: 140, height: 38)
-                .opacity(0)
+                .frame(width: 140, height: 42)
+                .hidden()
         }
         .buttonStyle(
             PressableViewButtonStyle(
                 normalView: MiniBtn(
-                    width: 140,
                     title: "업로드하러 가기"
                 ),
                 pressedView: MiniBtn(
-                    width: 140,
                     title: "업로드하러 가기",
                     bg: Color.gray900
                 )
@@ -191,7 +192,7 @@ struct MyProfileView: View {
 
     private var watchButton: some View {
         Button {
-            // TODO:
+            store.send(.watchButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 140, height: 38)
@@ -244,7 +245,7 @@ struct MyProfileView: View {
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.bottom, 120)
+                        .padding(.bottom, 128)
 
                     Text("내가 업로드한 핍을\n모아볼 수 있어요!")
                         .pretendard(.caption03)
@@ -289,7 +290,6 @@ struct MyProfileView: View {
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.top, 20)
                         .padding(.bottom, 111)
 
                     Text(
