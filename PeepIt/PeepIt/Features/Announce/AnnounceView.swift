@@ -57,7 +57,7 @@ fileprivate struct AnnounceCell: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.gray500)
+                .fill(announce.isRead ? Color.gray800 : Color.gray600)
 
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
