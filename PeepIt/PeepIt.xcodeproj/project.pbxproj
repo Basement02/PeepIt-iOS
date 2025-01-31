@@ -432,8 +432,8 @@
 		AB468D142CA9400800C1E430 /* TownPeeps */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D152CA9401600C1E430 /* TownPeepsStore.swift */,
 				AB468D172CA9403700C1E430 /* TownPeepsView.swift */,
+				AB468D152CA9401600C1E430 /* TownPeepsStore.swift */,
 			);
 			path = TownPeeps;
 			sourceTree = "<group>";
