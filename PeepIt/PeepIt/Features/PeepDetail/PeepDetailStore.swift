@@ -22,7 +22,7 @@ struct PeepDetailStore {
         var showElseMenu = false
         /// 차단 모달 보여주기 여부
         var isReportSheetVisible = false
-        /// 차단 모달 offset 관련
+        /// 신고 모달 offset 관련
         var modalOffset = Constant.screenHeight
         /// 신고 모달 관련
         var report = ReportStore.State()
@@ -68,6 +68,8 @@ struct PeepDetailStore {
         case report(ReportStore.Action)
         /// 채팅 관련
         case chatAction(ChatStore.Action)
+        /// 뷰 탭
+        case viewTapped
 
         /// 타이머
         case setTimer
@@ -165,6 +167,15 @@ struct PeepDetailStore {
 
             case .stopTimer:
                 return .cancel(id: CancelId.timer)
+
+            case let .report(.dragOnChanged(height)):
+                state.modalOffset = height
+                return .none
+
+            case .viewTapped:
+                guard state.showElseMenu else { return .none }
+                state.showElseMenu = false
+                return .none
 
             default:
                 return .none
