@@ -28,13 +28,10 @@ struct TownPeepsView: View {
                         .pretendard(.title02)
                     Spacer()
                 }
-                .padding(.bottom, 17)
+                .padding(.bottom, 25)
 
                 LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(), spacing: 11),
-                        GridItem(.flexible())
-                    ],
+                    columns: [GridItem(.flexible()), GridItem(.flexible())],
                     alignment: .center,
                     spacing: 8
                 ) {
@@ -43,7 +40,7 @@ struct TownPeepsView: View {
                     }
                 }
             }
-            .frame(width: 337)
+            .frame(width: 361)
             .refreshable {
                 // TODO: 새로 고침
             }
@@ -141,7 +138,7 @@ fileprivate struct ThumbnailPeep: View {
             .padding(.top, 12)
             .padding(.leading, 15)
         }
-        .frame(width: 165, height: 225)
+        .frame(width: 175, height: 240)
     }
 
 

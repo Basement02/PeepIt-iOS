@@ -24,6 +24,12 @@ struct ChatStore {
         var showChatDetail = false
         /// 상세 보여줄 선택된 채팅
         var selectedChat: Chat? = nil
+        /// 채팅 신고 모달 보여주기 여부
+        var showReportModal = false
+        /// 채팅 신고 모달 Offset 관리
+        var reportModalOffset = Constant.screenHeight
+        /// 신고 상태 관리
+        var report = ReportStore.State()
     }
 
     enum Action: BindableAction {
@@ -48,11 +54,19 @@ struct ChatStore {
         case reportButtonTapped
         /// 입력 메세지 줄 초과 체크
         case checkIfEnterMessageLong(lineCount: Int)
+        /// 신고 모달 닫기
+        case closeReportModal
+        /// 신고 액션 처리
+        case report(ReportStore.Action)
     }
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        
+
+        Scope(state: \.report, action: \.report) {
+            ReportStore()
+        }
+
         Reduce { state, action in
             switch action {
 
@@ -97,14 +111,26 @@ struct ChatStore {
                 return .none
 
             case .reportButtonTapped:
+                state.showReportModal = true
+                state.reportModalOffset = 0
                 return .none
 
             case let .checkIfEnterMessageLong(lineCount):
                 guard lineCount >= 25 else { return .none }
-
                 state.message = String((state.message.prefix(state.message.count - 1)))
 
+                return .none
 
+            case .closeReportModal:
+                state.showReportModal = false
+                state.reportModalOffset = Constant.screenHeight
+                return .none
+
+            case .report(.closeButtonTapped):
+                return .send(.closeReportModal)
+
+            case let .report(.dragOnChanged(height)):
+                state.reportModalOffset = height
                 return .none
 
             default:

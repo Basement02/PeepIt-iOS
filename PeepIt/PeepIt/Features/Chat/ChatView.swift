@@ -76,10 +76,30 @@ struct ChatView: View {
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
                     .onAppear { store.send(.onAppear) }
-                    .overlay {
+                    .overlay { /// 채팅 상세
                         if store.showChatDetail {
                             chatDetail
                         }
+                    }
+                    .overlay(alignment: .bottom) { /// 채팅 신고
+                        if store.showReportModal {
+                            Color.op.ignoresSafeArea()
+                                .onTapGesture { store.send(.closeReportModal) }
+                        }
+
+                        ReportModal(
+                            store: store.scope(
+                                state: \.report,
+                                action: \.report
+                            )
+                        )
+                        .ignoresSafeArea()
+                        .frame(maxWidth: .infinity)
+                        .offset(y: store.reportModalOffset)
+                        .animation(
+                            .easeInOut(duration: 0.3),
+                            value: store.showReportModal
+                        )
                     }
                 }
             }

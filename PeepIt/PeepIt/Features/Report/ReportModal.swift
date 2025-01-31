@@ -12,6 +12,7 @@ struct ReportModal: View {
     @Perception.Bindable var store: StoreOf<ReportStore>
 
     @FocusState var isFocused: Bool
+    @State private var keyboardHeight: CGFloat = .zero
 
     var body: some View {
         WithPerceptionTracking {
@@ -22,10 +23,8 @@ struct ReportModal: View {
                     slideBar
                     content
                 }
-                .frame(height: 775)
             }
-            .ignoresSafeArea()
-            .ignoresSafeArea(.keyboard)
+            .onTapGesture { endTextEditing() }
         }
     }
 
@@ -40,54 +39,68 @@ struct ReportModal: View {
                     .frame(width: 60, height: 5)
                     .padding(.top, 10)
             }
+            .gesture(
+                DragGesture()
+                    .onChanged { value in
+                        /// 모달 드래그 시 UI 같이 움직임
+                        if value.translation.height > 0 {
+                            store.send(
+                                .dragOnChanged(height: value.translation.height)
+                            )
+                        }
+                    }
+                    .onEnded { value in
+                        /// 100 초과 드래그 될 시 모달 내려감
+                        if value.translation.height > 100 {
+                            store.send(.closeButtonTapped)
+                        } else {
+                            store.send(.dragOnChanged(height: 0))
+                        }
+                    }
+            )
     }
 
     private var content: some View {
-        ZStack {
-            Color.base
-
+        ScrollView {
             VStack(spacing: 0) {
-                VStack(spacing: 35) {
-                    HStack {
-                        Text("어떤 문제가 있나요?")
-                            .pretendard(.title02)
+                HStack {
+                    Text("어떤 문제가 있나요?")
+                        .pretendard(.title02)
 
-                        Spacer()
-                    }
+                    Spacer()
+                }
+                .padding(.bottom, 35)
 
-                    HStack {
-                        Text("더욱 건전하고 활발한 핍잇의 커뮤니티 문화를\n만들어나갈 수 있도록 솔직한 의견을 공유해주세요")
-                            .pretendard(.body04)
+                HStack {
+                    Text("더욱 건전하고 활발한 핍잇의 커뮤니티 문화를\n만들어나갈 수 있도록 솔직한 의견을 공유해주세요")
+                        .pretendard(.body04)
 
-                        Spacer()
-                    }
+                    Spacer()
+                }
+                .padding(.bottom, 35)
 
-                    HStack {
-                        Image("ProfileSample")
-                            .resizable()
-                            .frame(width: 25, height: 25)
+                HStack {
+                    Image("ProfileSample")
+                        .resizable()
+                        .frame(width: 25, height: 25)
 
-                        Text("닉네임")
-                            .pretendard(.caption01)
+                    Text("닉네임")
+                        .pretendard(.caption01)
 
-                        Spacer()
-                    }
+                    Spacer()
+                }
+                .padding(.bottom, 35)
+                .id("scrollTarget") // ✅ 스크롤 타겟 ID
 
-                    VStack(spacing: 0) {
-                        reportSelectButton
+                reportSelectButton
 
-                        if store.isReasonListShowed {
-                            reportReasonList
-                        }
+                if store.isReasonListShowed {
+                    reportReasonList
+                }
 
-                        if store.selectedReportReason
-                            == ReportStore.State.ReportReasonType.other
-                            && !store.isReasonListShowed
-                        {
-                            reasonWriteTextView
-                                .padding(.top, 18)
-                        }
-                    }
+                if store.selectedReportReason == ReportStore.State.ReportReasonType.other && !store.isReasonListShowed {
+                    reasonWriteTextView
+                        .padding(.top, 18)
                 }
 
                 Spacer()
@@ -97,16 +110,19 @@ struct ReportModal: View {
                 }
 
                 cancelButton
+                    .padding(.bottom, 40)
             }
             .frame(width: 335)
-            .padding(.bottom, 40)
+            .frame(height: 711)
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.base)
         .frame(height: 711)
     }
 
     private var cancelButton: some View {
         Button {
-            store.send(.closeModal)
+            store.send(.closeButtonTapped)
         } label: {
             Text("취소")
                 .pretendard(.caption02)
@@ -215,20 +231,19 @@ struct ReportModal: View {
 
     private var reasonWriteTextView: some View {
         ZStack(alignment: .topLeading) {
+            if store.reportReason.isEmpty {
+                Text("문제 상황을 인지하고 대처할 수 있도록 신고 사유에 대해 자세히 설명해주세요.")
+                    .foregroundStyle(Color.gray300)
+                    .padding(.top, 8)
+                    .padding(.leading, 4)
+            }
+
             TextEditor(text: $store.reportReason)
                 .focused($isFocused)
                 .foregroundStyle(Color.white)
                 .tint(Color.coreLime)
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
-
-            if store.reportReason.isEmpty {
-                Text("문제 상황을 인지하고 대처할 수 있도록 신고 사유에 대해 자세히 설명해주세요.")
-                    .opacity(isFocused ? 0 : 1)
-                    .foregroundStyle(Color.gray300)
-                    .padding(.top, 8)
-                    .padding(.leading, 4)
-            }
         }
         .pretendard(.body05)
         .padding(.all, 18)
@@ -238,6 +253,7 @@ struct ReportModal: View {
         .onTapGesture {
             isFocused = true
         }
+        .id("textView")
     }
 
     private var shareButton: some View {
@@ -251,11 +267,7 @@ struct ReportModal: View {
 }
 
 #Preview {
-    NavigationStack {
-        PeepDetailView(
-            store: .init(initialState: PeepDetailStore.State()) {
-                PeepDetailStore()
-            }
-        )
-    }
+    ChatView(
+        store: .init(initialState: ChatStore.State()) { ChatStore() }
+    )
 }

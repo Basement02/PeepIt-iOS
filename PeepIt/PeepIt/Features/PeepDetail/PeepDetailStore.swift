@@ -141,7 +141,7 @@ struct PeepDetailStore {
                     .send(.openReportSheet)
                 )
 
-            case .report(.closeModal):
+            case .report(.closeButtonTapped):
                 return .send(.closeReportSheet)
 
             case .chatAction(.closeChatButtonTapped):
