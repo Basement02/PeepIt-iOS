@@ -43,9 +43,7 @@ struct MyProfileView: View {
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
-            .onAppear {
-                store.send(.onAppear)
-            }
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -109,10 +107,9 @@ struct MyProfileView: View {
     private var header: some View {
         VStack(spacing: 0) {
             peepTab
-                .padding(.bottom, 18.4)
+                .padding(.bottom, 16)
             filters
         }
-        .padding(.top, 20)
         .padding(.bottom, 21)
         .background(Color.base)
     }
@@ -140,9 +137,7 @@ struct MyProfileView: View {
 
         case .uploaded:
             HStack(spacing: 5) {
-                TagTab(title: "전체 000", isSelected: true)
-                TagTab(title: "동이름 00", isSelected: false)
-                TagTab(title: "동이름 00", isSelected: false)
+                TagTab(title: "전체 \(store.uploadedPeeps.count)", isSelected: true)
 
                 Spacer()
             }
@@ -285,7 +280,7 @@ struct MyProfileView: View {
                         .padding(.bottom, 11)
                     }
                 }
-                .padding(.bottom, 29)
+//                .padding(.bottom, 29)
 
             } else {
                 VStack(spacing: 0) {

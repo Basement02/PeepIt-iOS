@@ -11,7 +11,7 @@ struct ThumbnailProfile: View {
     let peep: Peep
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .topTrailing) {
             // TODO: 이미지로 변경
             RoundedRectangle(cornerRadius: 8)
                 .fill(Color.white)
@@ -25,6 +25,14 @@ struct ThumbnailProfile: View {
                     Color.coreLime,
                     lineWidth: peep.isActive ? 1 : 0
                 )
+
+            if let reaction = peep.reaction, !peep.isMine {
+                RoundedRectangle(cornerRadius: 8.37)
+                    .fill(Color.coreLimeOp)
+                    .frame(width: 35, height: 35)
+                    .padding(.top, 9)
+                    .padding(.trailing, 8)
+            }
         }
         .frame(width: 113, height: 155)
     }
