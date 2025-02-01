@@ -280,7 +280,7 @@ struct MyProfileView: View {
                         .padding(.bottom, 11)
                     }
                 }
-//                .padding(.bottom, 29)
+                .padding(.bottom, 29)
 
             } else {
                 VStack(spacing: 0) {
