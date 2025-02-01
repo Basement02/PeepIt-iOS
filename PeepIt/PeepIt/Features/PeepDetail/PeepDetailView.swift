@@ -186,7 +186,7 @@ extension PeepDetailView {
                     HStack(spacing: 3) {
                         Image("CombiShareBtnY")
                         Text("공유하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
@@ -215,7 +215,7 @@ extension PeepDetailView {
                     HStack(spacing: 3) {
                         Image("CombiReportBtnY")
                         Text("신고하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )

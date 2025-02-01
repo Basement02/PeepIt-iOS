@@ -191,7 +191,7 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiShareBtnY")
                         Text("공유하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
@@ -220,7 +220,7 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiBlockBtnY")
                         Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
