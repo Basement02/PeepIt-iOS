@@ -15,6 +15,8 @@
 		AB0FBF1C2D4A2005003D8372 /* GuideDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */; };
 		AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */; };
 		AB0FBF212D4FC8F7003D8372 /* TownVerificationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */; };
+		AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */; };
+		AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF242D4FCFF1003D8372 /* PolygonLayer.swift */; };
 		AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCC2CF77EA10095B818 /* ReportModal.swift */; };
 		AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */; };
 		AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */; };
@@ -167,6 +169,8 @@
 		AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDescriptionView.swift; sourceTree = "<group>"; };
 		AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteMapModalView.swift; sourceTree = "<group>"; };
 		AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationModal.swift; sourceTree = "<group>"; };
+		AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationView.swift; sourceTree = "<group>"; };
+		AB0FBF242D4FCFF1003D8372 /* PolygonLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonLayer.swift; sourceTree = "<group>"; };
 		AB11FFCC2CF77EA10095B818 /* ReportModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModal.swift; sourceTree = "<group>"; };
 		AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStore.swift; sourceTree = "<group>"; };
 		AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalChatBubbleView.swift; sourceTree = "<group>"; };
@@ -365,6 +369,7 @@
 			isa = PBXGroup;
 			children = (
 				AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */,
+				AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */,
 			);
 			path = TownVerification;
 			sourceTree = "<group>";
@@ -1010,6 +1015,7 @@
 				ABE8A0CA2CEAEAB100AFBEAE /* BackMapLayer.swift */,
 				ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */,
 				ABA11E882D1D36B200C181DC /* BackMapPointer.swift */,
+				AB0FBF242D4FCFF1003D8372 /* PolygonLayer.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -1157,6 +1163,7 @@
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
+				AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
 				AB468D272CA943E500C1E430 /* CameraView.swift in Sources */,
@@ -1173,6 +1180,7 @@
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				AB0FBF212D4FC8F7003D8372 /* TownVerificationModal.swift in Sources */,
+				AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */,
 				ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
 				AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */,

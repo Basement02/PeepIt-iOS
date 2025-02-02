@@ -15,7 +15,7 @@ struct TownRegisterModalView: View {
             VStack {
                 Spacer()
 
-                BackdropBlurView(bgColor: .base, radius: 4)
+                BackdropBlurView(bgColor: .blur1, radius: 4)
                     .roundedCorner(20, corners: [.topLeft, .topRight])
                     .overlay {
                         VStack(spacing: 0) {
@@ -31,6 +31,9 @@ struct TownRegisterModalView: View {
                                 .padding(.bottom, 26)
 
                             HStack(spacing: 0) {
+                                Image("IconLocation")
+                                    .resizable()
+                                    .frame(width: 33.6, height: 33.6)
                                 Text("OO구 OO동")
                                     .pretendard(.title03)
                             }
@@ -39,7 +42,7 @@ struct TownRegisterModalView: View {
 
                             ZStack {
                                 HomeMapView()
-                                BackMapLayer.teriary()
+                                BackMapLayer.secondary()
                                 Circle()
                                     .fill(Color.coreLimeOp)
                                     .frame(width: 127, height: 126)
