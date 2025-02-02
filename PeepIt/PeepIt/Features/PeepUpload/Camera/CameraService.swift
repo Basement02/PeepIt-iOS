@@ -9,13 +9,22 @@ import AVFoundation
 import UIKit
 
 protocol CameraServiceProtocol {
+    /// 카메라 세팅
     func startSession() -> AVCaptureSession
+    /// 촬영
     func capture(with flashMode: Bool) async throws -> Data
+    /// 영상 촬영 시작
     func startRecording(to url: URL, with flashMode: Bool) throws
+    /// 영상 촬영 끝
     func stopRecording() async throws -> URL
+    /// 줌 세팅
+    func setZoom(_ factor: CGFloat)
 }
 
-final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
+final class CameraService: NSObject,
+                            CameraServiceProtocol,
+                            AVCapturePhotoCaptureDelegate,
+                            AVCaptureFileOutputRecordingDelegate {
 
     private let session = AVCaptureSession()
     private let photoOutput = AVCapturePhotoOutput()
@@ -29,12 +38,13 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
 
         session.inputs.forEach { session.removeInput($0) }
 
-        guard let camera = AVCaptureDevice.default(
-            .builtInWideAngleCamera,
-            for: .video,
-            position: .back
-        ),
-            let input = try? AVCaptureDeviceInput(device: camera) else {
+        let availableCamera = [
+            AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back),
+            AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        ].compactMap { $0 }.first
+
+        guard let camera = availableCamera,
+              let input = try? AVCaptureDeviceInput(device: camera) else {
             session.commitConfiguration()
             return session
         }
@@ -154,5 +164,19 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             videoContinuation?.resume(returning: outputFileURL)
         }
         videoContinuation = nil
+    }
+
+    func setZoom(_ factor: CGFloat) {
+        guard let camera = currentCamera else { return }
+
+        do {
+            try camera.lockForConfiguration()
+            let zoomFactor = max(camera.minAvailableVideoZoomFactor, min(factor, 6.0))
+
+            camera.videoZoomFactor = zoomFactor
+            camera.unlockForConfiguration()
+        } catch {
+            print("zoom setting failed: \(error.localizedDescription)")
+        }
     }
 }

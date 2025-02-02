@@ -37,6 +37,7 @@ struct CameraStore {
         case shootButtonLongerTapStarted
         case shootButtonLongerTapEnded
         case flashButtonTapped
+        case zoomGestureOnChanged(value: CGFloat)
         /// 영상 촬영
         case stopRecording
         case startRecording
@@ -101,6 +102,9 @@ struct CameraStore {
             case .flashButtonTapped:
                 state.isFlashOn.toggle()
                 return .none
+
+            case let .zoomGestureOnChanged(value):
+                return .run { _ in cameraService.setZoom(value) }
 
             case .startRecording:
                 let isFlashOn = state.isFlashOn

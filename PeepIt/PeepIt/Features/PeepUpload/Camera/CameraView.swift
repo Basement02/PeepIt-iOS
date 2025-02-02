@@ -12,6 +12,9 @@ import AVFoundation
 struct CameraView: View {
     let store: StoreOf<CameraStore>
 
+    @State private var currentZoom = 0.0
+    @State private var totalZoom = 1.0
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
@@ -19,11 +22,24 @@ struct CameraView: View {
                 Group {
                     if let session = store.cameraSession {
                         CameraPreview(session: session)
+                            .gesture(
+                                 MagnificationGesture()
+                                     .onChanged { value in
+                                         let zoomFactor = totalZoom * value
+                                         currentZoom = zoomFactor
+                                         store.send(
+                                            .zoomGestureOnChanged(value: CGFloat(currentZoom))
+                                         )
+                                     }
+                                     .onEnded { value in
+                                         totalZoom = currentZoom
+                                     }
+                             )
                     }
 
-                    BackImageLayer.primary()
-
-                    BackImageLayer.secondary()
+//                    BackImageLayer.primary()
+//
+//                    BackImageLayer.secondary()
                 }
                 .ignoresSafeArea()
 
