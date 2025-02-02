@@ -12,32 +12,34 @@ struct TownVerificationView: View {
     var store: StoreOf<TownVerificationStore>
 
     var body: some View {
-        ZStack {
-            HomeMapView()
+        WithPerceptionTracking {
+            ZStack {
+                HomeMapView()
+                    .ignoresSafeArea()
+
+                Group {
+                    BackMapLayer.secondary()
+                    PolygonLayer()
+                }
                 .ignoresSafeArea()
+                .allowsHitTesting(false)
 
-            Group {
-                BackMapLayer.secondary()
-                PolygonLayer()
+                VStack(spacing: 0) {
+                    topBar
+                        .padding(.bottom, 73)
+
+                    townLabel
+
+                    Spacer()
+
+                    toCurrentLocationButton
+                        .padding(.bottom, 20)
+
+                    verifyButton
+                        .padding(.bottom, 84)
+                }
+                .ignoresSafeArea(.all, edges: .bottom)
             }
-            .ignoresSafeArea()
-            .allowsHitTesting(false)
-
-            VStack(spacing: 0) {
-                topBar
-                    .padding(.bottom, 73)
-
-                townLabel
-
-                Spacer()
-
-                toCurrentLocationButton
-                    .padding(.bottom, 20)
-
-                verifyButton
-                    .padding(.bottom, 84)
-            }
-            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 

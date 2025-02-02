@@ -14,13 +14,16 @@ struct TownVerificationStore {
     @ObservableState
     struct State: Equatable {
         var isSheetVisible = false
+        var modalOffset = Constant.screenHeight
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case modalDragOnChanged(height: CGFloat)
         case registerButtonTapped
         case backButtonTapped
         case dismissButtonTapped
+        case closeModal
     }
 
     var body: some Reducer<State, Action> {
@@ -39,6 +42,14 @@ struct TownVerificationStore {
 
             case .dismissButtonTapped:
                 state.isSheetVisible = false
+                return .none
+
+            case let .modalDragOnChanged(height):
+                state.modalOffset = height
+                return .none
+
+            case .closeModal:
+                state.modalOffset = Constant.screenHeight
                 return .none
 
             default:

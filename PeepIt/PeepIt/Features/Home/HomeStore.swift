@@ -80,7 +80,16 @@ struct HomeStore {
 
             case .townVerification(.backButtonTapped):
                 state.townVerificationModalOffset = Constant.screenHeight
-                return .none 
+                return .none
+
+            case let .townVerification(.modalDragOnChanged(height)):
+                state.townVerificationModalOffset = height
+                return .none
+
+            case .townVerification(.closeModal):
+                state.townVerificationModalOffset = Constant.screenHeight
+                return .none
+
 
             default:
                 return .none
