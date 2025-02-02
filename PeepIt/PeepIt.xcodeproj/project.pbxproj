@@ -13,6 +13,7 @@
 		AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE22CC6266C0091E9FB /* SliderStore.swift */; };
 		AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */; };
 		AB0FBF1C2D4A2005003D8372 /* GuideDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */; };
+		AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */; };
 		AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCC2CF77EA10095B818 /* ReportModal.swift */; };
 		AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */; };
 		AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */; };
@@ -163,6 +164,7 @@
 		AB094DE22CC6266C0091E9FB /* SliderStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderStore.swift; sourceTree = "<group>"; };
 		AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDescriptionView.swift; sourceTree = "<group>"; };
+		AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteMapModalView.swift; sourceTree = "<group>"; };
 		AB11FFCC2CF77EA10095B818 /* ReportModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModal.swift; sourceTree = "<group>"; };
 		AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStore.swift; sourceTree = "<group>"; };
 		AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalChatBubbleView.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 			children = (
 				AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */,
 				AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */,
+				AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -1097,6 +1100,7 @@
 				AB97881A2D192F25007E73B6 /* CameraService.swift in Sources */,
 				ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
+				AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				ABCE97332D342A5800A07962 /* TextLayerStore.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,

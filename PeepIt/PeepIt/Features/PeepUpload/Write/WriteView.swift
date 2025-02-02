@@ -36,13 +36,13 @@ struct WriteView: View {
                         VStack(spacing: 0) {
                             peepItNavigationBar
                                 .padding(.horizontal, 16)
-                                .padding(.bottom, 23.adjustedH)
+                                .padding(.bottom, 23)
 
                             frontImageView
-                                .padding(.bottom, 22.adjustedH)
+                                .padding(.bottom, 22)
 
                             bodyTextView
-                                .padding(.bottom, 22.adjustedH)
+                                .padding(.bottom, 22)
 
                             uploadButton
 
@@ -68,8 +68,14 @@ struct WriteView: View {
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
+                    .overlay {
+                        WriteMapModalView(store: self.store)
+                            .offset(y: store.modalOffset)
+                            .animation(.easeInOut(duration: 0.3), value: store.modalOffset)
+                    }
                     .onTapGesture {
                         endTextEditing()
+                        store.send(.viewTapped)
                     }
                 }
             }
@@ -93,13 +99,14 @@ struct WriteView: View {
 
     private var peepItNavigationBar: some View {
         ZStack {
-            TownTitleView(townName: "동이름")
-
             HStack {
                 Spacer()
 
                 DismissButton { store.send(.dismissButtonTapped) }
             }
+
+            TownTitleView(townName: "동이름")
+                .onTapGesture { store.send(.addressTapped) }
         }
         .frame(height: 44)
         .opacity(store.isBodyInputMode ? 0 : 1)
@@ -132,7 +139,6 @@ struct WriteView: View {
                 Rectangle()
             }
         }
-        .scaledToFill()
         .frame(width: 300, height: 400)
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
