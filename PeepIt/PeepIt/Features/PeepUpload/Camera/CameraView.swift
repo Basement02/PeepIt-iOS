@@ -19,29 +19,30 @@ struct CameraView: View {
         WithPerceptionTracking {
             ZStack {
                 /// 카메라 + 기본 레이어
-                Group {
-                    if let session = store.cameraSession {
-                        CameraPreview(session: session)
-                            .gesture(
-                                 MagnificationGesture()
-                                     .onChanged { value in
-                                         let zoomFactor = totalZoom * value
-                                         currentZoom = zoomFactor
-                                         store.send(
-                                            .zoomGestureOnChanged(value: CGFloat(currentZoom))
-                                         )
-                                     }
-                                     .onEnded { value in
-                                         totalZoom = currentZoom
-                                     }
-                             )
-                    }
+                if let session = store.cameraSession {
+                    CameraPreview(session: session)
+                        .ignoresSafeArea()
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    let zoomFactor = totalZoom * value
+                                    currentZoom = zoomFactor
+                                    store.send(
+                                        .zoomGestureOnChanged(value: CGFloat(currentZoom))
+                                    )
+                                }
+                                .onEnded { value in
+                                    totalZoom = currentZoom
+                                }
+                        )
+                }
 
-//                    BackImageLayer.primary()
-//
-//                    BackImageLayer.secondary()
+                Group {
+                    BackImageLayer.primary()
+                    BackImageLayer.secondary()
                 }
                 .ignoresSafeArea()
+                .allowsHitTesting(false)
 
                 VStack(spacing: 0) {
                     topBar
