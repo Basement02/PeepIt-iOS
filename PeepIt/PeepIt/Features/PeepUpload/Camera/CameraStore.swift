@@ -25,6 +25,8 @@ struct CameraStore {
         var isRecording = false
         /// 영상 촬영 시간
         var recordingTime = 0
+        /// 플래시 기능
+        var isFlashOn = true
     }
 
     enum Action {
@@ -34,6 +36,7 @@ struct CameraStore {
         case shootButtonTapped
         case shootButtonLongerTapStarted
         case shootButtonLongerTapEnded
+        case flashButtonTapped
         /// 영상 촬영
         case stopRecording
         case startRecording
@@ -64,9 +67,11 @@ struct CameraStore {
                 return .none
 
             case .shootButtonTapped:
+                let isFlashOn = state.isFlashOn
+
                 return .run { send in
                     do {
-                        let data = try await cameraService.capture()
+                        let data = try await cameraService.capture(with: isFlashOn)
                         await send(.photoCaptured(image: UIImage(data: data)))
 
                     } catch {
@@ -93,11 +98,17 @@ struct CameraStore {
                     .send(.stopRecording)
                 )
 
+            case .flashButtonTapped:
+                state.isFlashOn.toggle()
+                return .none
+
             case .startRecording:
+                let isFlashOn = state.isFlashOn
+                
                 return .run { _ in
                     do {
                         let outputURL = FileManager.default.temporaryDirectory.appendingPathComponent("\(UUID()).mp4")
-                        try cameraService.startRecording(to: outputURL)
+                        try cameraService.startRecording(to: outputURL, with: isFlashOn)
                         print("Recording started")
                     } catch {
                         print("Failed to start recording: \(error)")

@@ -10,8 +10,8 @@ import UIKit
 
 protocol CameraServiceProtocol {
     func startSession() -> AVCaptureSession
-    func capture() async throws -> Data
-    func startRecording(to url: URL) throws
+    func capture(with flashMode: Bool) async throws -> Data
+    func startRecording(to url: URL, with flashMode: Bool) throws
     func stopRecording() async throws -> URL
 }
 
@@ -22,6 +22,7 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
     private let videoOutput = AVCaptureMovieFileOutput()
     private var continuation: CheckedContinuation<Data, Error>?
     private var videoContinuation: CheckedContinuation<URL, Error>?
+    private var currentCamera: AVCaptureDevice?
 
     func startSession() -> AVCaptureSession {
         session.beginConfiguration()
@@ -37,6 +38,8 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             session.commitConfiguration()
             return session
         }
+
+        currentCamera = camera
 
         guard let microphone = AVCaptureDevice.default(for: .audio),
               let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
@@ -60,9 +63,9 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         return session
     }
 
-    func capture() async throws -> Data {
+    func capture(with flashMode: Bool) async throws -> Data {
         let settings = AVCapturePhotoSettings()
-        settings.flashMode = .auto
+        settings.flashMode = flashMode ? .on : .off
 
         return try await withCheckedThrowingContinuation { continuation in
             self.continuation = continuation
@@ -70,13 +73,23 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         }
     }
 
-    func startRecording(to url: URL) throws {
+    func startRecording(to url: URL, with flashMode: Bool) throws {
         guard !videoOutput.isRecording else {
             throw NSError(
                 domain: "CameraService",
                 code: -1,
                 userInfo: [NSLocalizedDescriptionKey: "Already recording"]
             )
+        }
+
+        guard let camera = currentCamera, camera.hasTorch else { return }
+
+        do {
+            try camera.lockForConfiguration()
+            camera.torchMode = flashMode ? .on : .off
+            camera.unlockForConfiguration()
+        } catch {
+            print("torch setting failed: \(error.localizedDescription)")
         }
 
         videoOutput.startRecording(to: url, recordingDelegate: self)
@@ -94,6 +107,16 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         return try await withCheckedThrowingContinuation { continuation in
             self.videoContinuation = continuation
             videoOutput.stopRecording()
+
+            if let camera = currentCamera, camera.hasTorch {
+                do {
+                    try camera.lockForConfiguration()
+                    camera.torchMode = .off
+                    camera.unlockForConfiguration()
+                } catch {
+                    print("torch setting failed: \(error.localizedDescription)")
+                }
+            }
         }
     }
 

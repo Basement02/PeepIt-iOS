@@ -57,7 +57,18 @@ struct CameraView: View {
                 Spacer()
             }
 
-            Image("FlashOnN")
+            Button {
+                store.send(.flashButtonTapped)
+            } label: {
+                Image("FlashOffN")
+                    .hidden()
+            }
+            .buttonStyle(
+                PressableButtonStyle(
+                    originImg: store.isFlashOn ? "FlashOnN" : "FlashOffN",
+                    pressedImg:  store.isFlashOn ? "FlashOnY" : "FlashOffY"
+                )
+            )
         }
         .padding(.horizontal, 16)
     }

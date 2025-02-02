@@ -539,9 +539,9 @@
 		AB71E1C52CBC048500D2D3D9 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
 				AB468D262CA943E500C1E430 /* CameraView.swift */,
 				AB9788172D192DF9007E73B6 /* CameraPreview.swift */,
+				AB468D242CA943CA00C1E430 /* CameraStore.swift */,
 				AB9788192D192F25007E73B6 /* CameraService.swift */,
 			);
 			path = Camera;
