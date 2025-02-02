@@ -14,10 +14,12 @@ struct HomeStore {
     @ObservableState
     struct State: Equatable {
         var isPeepDetailShowed = false
+        var townVerificationModalOffset = Constant.screenHeight
         var peepPreviewModal = PeepModalStore.State()
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()
         var camera = CameraStore.State()
+        var townVerification = TownVerificationStore.State()
     }
 
     enum Action {
@@ -30,8 +32,10 @@ struct HomeStore {
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case camera(CameraStore.Action)
+        case townVerification(TownVerificationStore.Action)
 
         case pushToDetail
+        case addressButtonTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -42,7 +46,11 @@ struct HomeStore {
         Scope(state: \.sideMenu, action: \.sideMenu) {
             SideMenuStore()
         }
-        
+
+        Scope(state: \.townVerification, action: \.townVerification) {
+            TownVerificationStore()
+        }
+
         Reduce { state, action in
             switch action {
 
@@ -65,6 +73,14 @@ struct HomeStore {
 
             case .pushToDetail:
                 return .none
+
+            case .addressButtonTapped:
+                state.townVerificationModalOffset = 0
+                return .none
+
+            case .townVerification(.backButtonTapped):
+                state.townVerificationModalOffset = Constant.screenHeight
+                return .none 
 
             default:
                 return .none

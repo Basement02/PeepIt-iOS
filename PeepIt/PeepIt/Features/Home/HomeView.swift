@@ -49,6 +49,13 @@ struct HomeView: View {
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                TownRegisterModalView(
+                    store: store.scope(state: \.townVerification, action: \.townVerification)
+                )
+                .offset(y: store.townVerificationModalOffset)
+                .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
+            }
         }
     }
 }
@@ -89,7 +96,7 @@ extension HomeView {
 
     private var setMyTownButton: some View {
         Button {
-            // TODO: 모달 올리기
+            store.send(.addressButtonTapped)
         } label: {
             HStack(spacing: 2) {
                 Image("IconLocation")

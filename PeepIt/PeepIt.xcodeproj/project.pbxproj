@@ -14,9 +14,10 @@
 		AB094DE82CC76EBE0091E9FB /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */; };
 		AB0FBF1C2D4A2005003D8372 /* GuideDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */; };
 		AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */; };
-		AB0FBF212D4FC8F7003D8372 /* TownVerificationModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */; };
+		AB0FBF212D4FC8F7003D8372 /* TownRegisterModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF202D4FC8F7003D8372 /* TownRegisterModalView.swift */; };
 		AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */; };
 		AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF242D4FCFF1003D8372 /* PolygonLayer.swift */; };
+		AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF262D4FD8C1003D8372 /* TownVerificationStore.swift */; };
 		AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCC2CF77EA10095B818 /* ReportModal.swift */; };
 		AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */; };
 		AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */; };
@@ -168,9 +169,10 @@
 		AB094DE72CC76EBE0091E9FB /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		AB0FBF1B2D4A2005003D8372 /* GuideDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideDescriptionView.swift; sourceTree = "<group>"; };
 		AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteMapModalView.swift; sourceTree = "<group>"; };
-		AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationModal.swift; sourceTree = "<group>"; };
+		AB0FBF202D4FC8F7003D8372 /* TownRegisterModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownRegisterModalView.swift; sourceTree = "<group>"; };
 		AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationView.swift; sourceTree = "<group>"; };
 		AB0FBF242D4FCFF1003D8372 /* PolygonLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonLayer.swift; sourceTree = "<group>"; };
+		AB0FBF262D4FD8C1003D8372 /* TownVerificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationStore.swift; sourceTree = "<group>"; };
 		AB11FFCC2CF77EA10095B818 /* ReportModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModal.swift; sourceTree = "<group>"; };
 		AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStore.swift; sourceTree = "<group>"; };
 		AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalChatBubbleView.swift; sourceTree = "<group>"; };
@@ -368,8 +370,9 @@
 		AB0FBF1F2D4FC8E0003D8372 /* TownVerification */ = {
 			isa = PBXGroup;
 			children = (
-				AB0FBF202D4FC8F7003D8372 /* TownVerificationModal.swift */,
+				AB0FBF202D4FC8F7003D8372 /* TownRegisterModalView.swift */,
 				AB0FBF222D4FCF13003D8372 /* TownVerificationView.swift */,
+				AB0FBF262D4FD8C1003D8372 /* TownVerificationStore.swift */,
 			);
 			path = TownVerification;
 			sourceTree = "<group>";
@@ -1179,7 +1182,7 @@
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
-				AB0FBF212D4FC8F7003D8372 /* TownVerificationModal.swift in Sources */,
+				AB0FBF212D4FC8F7003D8372 /* TownRegisterModalView.swift in Sources */,
 				AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */,
 				ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
@@ -1236,6 +1239,7 @@
 				AB416D222CF34B880065BD09 /* NotificationSettingView.swift in Sources */,
 				AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */,
 				ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */,
+				AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */,
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB97881D2D192FAF007E73B6 /* CameraServiceKey.swift in Sources */,

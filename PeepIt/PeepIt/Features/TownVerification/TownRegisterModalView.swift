@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct TownRegisterModalView: View {
+    @Perception.Bindable var store: StoreOf<TownVerificationStore>
+
     var body: some View {
         ZStack(alignment: .bottom) {
             Color.clear
@@ -58,8 +61,7 @@ struct TownRegisterModalView: View {
                                 .pretendard(.body04)
                                 .padding(.bottom, 20)
 
-                            Text("동네 등록하기")
-                                .mainGrayButtonStyle()
+                            registerButton
 
                             Spacer()
                         }
@@ -68,10 +70,26 @@ struct TownRegisterModalView: View {
             }
             .frame(height: Constant.screenHeight)
         }
+        .fullScreenCover(isPresented: $store.isSheetVisible) {
+            TownVerificationView(store: self.store)
+        }
         .ignoresSafeArea()
+    }
+
+    private var registerButton: some View {
+        Button {
+            store.send(.registerButtonTapped)
+        } label: {
+            Text("동네 등록하기")
+                .mainGrayButtonStyle()
+        }
     }
 }
 
 #Preview {
-    TownRegisterModalView()
+    TownRegisterModalView(
+        store: .init(initialState: TownVerificationStore.State()) {
+            TownVerificationStore()
+        }
+    )
 }

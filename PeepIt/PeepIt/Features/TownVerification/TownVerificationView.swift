@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct TownVerificationView: View {
+    var store: StoreOf<TownVerificationStore>
+
     var body: some View {
         ZStack {
             HomeMapView()
@@ -42,7 +45,7 @@ struct TownVerificationView: View {
         ZStack {
             HStack {
                 Button {
-
+                    store.send(.backButtonTapped)
                 } label: {
                     Image("BackN")
                         .renderingMode(.template)
@@ -61,7 +64,7 @@ struct TownVerificationView: View {
             HStack {
                 Spacer()
                 Button {
-
+                    store.send(.dismissButtonTapped)
                 } label: {
                     Image("CloseN")
                         .renderingMode(.template)
@@ -128,5 +131,9 @@ struct TownVerificationView: View {
 }
 
 #Preview {
-    TownVerificationView()
+    TownVerificationView(
+        store: .init(initialState: TownVerificationStore.State()) {
+            TownVerificationStore()
+        }
+    )
 }
