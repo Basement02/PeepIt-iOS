@@ -35,9 +35,10 @@ struct TownVerificationStore {
 
             case .registerButtonTapped:
                 state.isSheetVisible = true
-                return .none
+                return .send(.closeModal)
 
             case .backButtonTapped:
+                state.modalOffset = 0
                 state.isSheetVisible = false
                 return .none
 

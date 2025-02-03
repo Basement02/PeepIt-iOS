@@ -94,6 +94,9 @@ struct TownRegisterModalView: View {
             .fullScreenCover(isPresented: $store.isSheetVisible) {
                 TownVerificationView(store: self.store)
             }
+            .transaction({ transaction in
+                transaction.disablesAnimations = true
+            })
         }
     }
 
