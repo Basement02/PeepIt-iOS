@@ -97,7 +97,7 @@ struct StickerLayerStore {
                     where: { $0.id == id }
                 ) else { return .none }
 
-                state.stickers[idx].scale = scale
+                state.stickers[idx].scale = max(scale, 0.6)
                 return .none
 
             case .scaleUpdateEnded:
