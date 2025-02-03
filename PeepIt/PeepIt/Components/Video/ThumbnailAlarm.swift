@@ -23,8 +23,9 @@ struct ThumbnailAlarm: View {
                 .strokeBorder(Color.coreLime, lineWidth: 1)
 
             HStack(spacing: 1) {
-                Rectangle()
-                    .fill(Color.white)
+                Image("IconCommentBold")
+                    .resizable()
+                    .frame(width: 14, height: 14)
                     .frame(width: 20.16, height: 20.16)
                 Text("00")
                     .pretendard(.body01)
