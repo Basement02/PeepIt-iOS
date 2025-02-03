@@ -23,6 +23,8 @@ struct TextLayerStore {
         var textSize: [UUID: CGSize] = [:]
         /// 수정을 위해 선택된 텍스트 (수정 중엔 원래 텍스트는 숨기기 위함)
         var selectedTextId: UUID?
+        /// 삭제 영역에 들어갔는지
+        var isDeleteAreaActive = false
     }
 
     enum Action {
@@ -70,8 +72,10 @@ struct TextLayerStore {
 
                 if textRect.intersects(state.deleteRect) {
                     state.textInDeleteArea.insert(id)
+                    state.isDeleteAreaActive = true
                 } else {
                     state.textInDeleteArea.remove(id)
+                    state.isDeleteAreaActive = false
                 }
 
                 return .none

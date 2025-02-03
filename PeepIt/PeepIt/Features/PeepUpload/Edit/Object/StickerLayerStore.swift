@@ -19,6 +19,8 @@ struct StickerLayerStore {
         var deleteRect = CGRect.zero
         /// 삭제 영역에 들어간 스티커 체크 - 삭제 및 크기 관리 위함
         var stickersInDeleteArea: Set<UUID> = []
+        /// 삭제 영역에 들어갔는지
+        var isDeleteAreaActive = false
     }
 
     enum Action {
@@ -66,8 +68,10 @@ struct StickerLayerStore {
 
                 if stickerRect.intersects(state.deleteRect) {
                     state.stickersInDeleteArea.insert(id)
+                    state.isDeleteAreaActive = true
                 } else {
                     state.stickersInDeleteArea.remove(id)
+                    state.isDeleteAreaActive = false
                 }
 
                 return .none

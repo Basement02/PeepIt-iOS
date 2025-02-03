@@ -326,13 +326,15 @@ struct EditView: View {
         Button {
 
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("TrashcanN")
+                .resizable()
                 .frame(width: 42, height: 42)
+                .scaleEffect(
+                    store.stickerState.isDeleteAreaActive ||
+                    store.textState.isDeleteAreaActive
+                    ? 1.25 : 1.0
+                )
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "TrashcanN", pressedImg: "TrashcanY")
-        )
         .background(
             GeometryReader { geo in
                 WithPerceptionTracking {
