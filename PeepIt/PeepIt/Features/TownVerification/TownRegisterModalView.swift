@@ -15,6 +15,8 @@ struct TownRegisterModalView: View {
         WithPerceptionTracking {
             ZStack(alignment: .bottom) {
                 Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture { store.send(.viewTapped) }
 
                 VStack {
                     Spacer()
@@ -27,7 +29,7 @@ struct TownRegisterModalView: View {
                                     .fill(Color.gray600)
                                     .frame(width: 60, height: 5)
                                     .padding(.top, 10)
-                                    .padding(.bottom, 26)
+                                    .padding(.bottom, 41)
 
                                 Text("현재 설정된 동네")
                                     .pretendard(.foodnote)

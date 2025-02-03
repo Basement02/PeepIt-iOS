@@ -24,6 +24,7 @@ struct TownVerificationStore {
         case backButtonTapped
         case dismissButtonTapped
         case closeModal
+        case viewTapped
     }
 
     var body: some Reducer<State, Action> {
@@ -51,6 +52,9 @@ struct TownVerificationStore {
             case .closeModal:
                 state.modalOffset = Constant.screenHeight
                 return .none
+
+            case .viewTapped:
+                return .send(.closeModal)
 
             default:
                 return .none
