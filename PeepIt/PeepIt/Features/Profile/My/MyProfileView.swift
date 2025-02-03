@@ -110,7 +110,7 @@ struct MyProfileView: View {
                 .padding(.bottom, 16)
             filters
         }
-        .padding(.bottom, 21)
+        .padding(.bottom, 11)
         .background(Color.base)
     }
 
@@ -236,7 +236,7 @@ struct MyProfileView: View {
                         .padding(.bottom, 11)
                     }
                 }
-                .padding(.bottom, 29)
+                .padding(.bottom, 38)
             } else {
                 VStack(spacing: 0) {
                     peepTab
@@ -280,7 +280,7 @@ struct MyProfileView: View {
                         .padding(.bottom, 11)
                     }
                 }
-                .padding(.bottom, 29)
+                .padding(.bottom, 38)
 
             } else {
                 VStack(spacing: 0) {

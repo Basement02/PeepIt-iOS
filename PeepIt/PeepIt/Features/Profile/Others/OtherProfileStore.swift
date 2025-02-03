@@ -14,7 +14,7 @@ struct OtherProfileStore {
     @ObservableState
     struct State: Equatable {
         /// 핍 리스트
-        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7, .stubPeep8, .stubPeep9]
         /// 상단 우측 더보기 버튼 탭 여부
         var isElseButtonTapped = false
         /// 유저 차단 여부

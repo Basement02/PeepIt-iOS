@@ -148,8 +148,8 @@ struct OtherProfileView: View {
 
                     Spacer()
                 }
-                .padding(.top, 18.4.adjustedH)
-                .padding(.bottom, 21.adjustedH)
+                .padding(.top, 18.4)
+                .padding(.bottom, 11)
 
                 ScrollView(showsIndicators: false) {
                     LazyVGrid(columns: columns, spacing: 11) {
@@ -159,12 +159,13 @@ struct OtherProfileView: View {
                             ThumbnailProfile(peep: peep)
                         }
                     }
+                    .padding(.bottom, 38)
                 }
             } else {
                 Text("아직 등록된 핍이 없어요.")
                     .pretendard(.body04)
                     .foregroundStyle(Color.nonOp)
-                    .padding(.top, 161.adjustedH)
+                    .padding(.top, 161)
             }
         }
         .frame(width: 361)
@@ -214,6 +215,7 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiBlockBtnN")
                         Text(store.isUserBlocked ? "차단해제" : "차단하기")
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.coreRed),
                 pressedView:
