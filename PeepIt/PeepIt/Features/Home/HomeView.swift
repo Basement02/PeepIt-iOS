@@ -24,28 +24,30 @@ struct HomeView: View {
                 .allowsHitTesting(false)
                 .ignoresSafeArea()
 
-                VStack {
-                    topBar
-                        .padding(.horizontal, 16)
+                if !store.showTownVeriModal {
+                    VStack {
+                        topBar
+                            .padding(.horizontal, 16)
 
-                    Spacer()
-
-                    HStack(alignment: .bottom) {
-                        currentLocationButton
                         Spacer()
-                        uploadPeepButton
+
+                        HStack(alignment: .bottom) {
+                            currentLocationButton
+                            Spacer()
+                            uploadPeepButton
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(
+                            .bottom, store.peepPreviewModal.sheetHeight + 24
+                        )
                     }
-                    .padding(.horizontal, 16)
-                    .padding(
-                        .bottom, store.peepPreviewModal.sheetHeight + 24
+
+                    peepPreviewView
+
+                    SideMenuView(
+                        store: store.scope(state: \.sideMenu, action: \.sideMenu)
                     )
                 }
-
-                peepPreviewView
-
-                SideMenuView(
-                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
-                )
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)

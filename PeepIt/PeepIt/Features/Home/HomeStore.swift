@@ -20,6 +20,7 @@ struct HomeStore {
         var sideMenu = SideMenuStore.State()
         var camera = CameraStore.State()
         var townVerification = TownVerificationStore.State()
+        var showTownVeriModal = false
     }
 
     enum Action {
@@ -76,10 +77,12 @@ struct HomeStore {
 
             case .addressButtonTapped:
                 state.townVerificationModalOffset = 0
+                state.showTownVeriModal = true
                 return .none
 
             case .townVerification(.backButtonTapped):
                 state.townVerificationModalOffset = Constant.screenHeight
+                state.showTownVeriModal = false
                 return .none
 
             case let .townVerification(.modalDragOnChanged(height)):
@@ -87,6 +90,7 @@ struct HomeStore {
                 return .none
 
             case .townVerification(.closeModal):
+                state.showTownVeriModal = false
                 state.townVerificationModalOffset = Constant.screenHeight
                 return .none
 
