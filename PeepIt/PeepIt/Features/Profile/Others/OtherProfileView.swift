@@ -192,11 +192,11 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiShareBtnY")
                         Text("공유하기")
-                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
         )
+        .pretendard(.body02)
     }
 
     private var blockButton: some View {
@@ -215,18 +215,17 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiBlockBtnN")
                         Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.coreRed),
                 pressedView:
                     HStack(spacing: 3) {
                         Image("CombiBlockBtnY")
                         Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
         )
+        .pretendard(.body02)
     }
 
     private var blockedView: some View {
