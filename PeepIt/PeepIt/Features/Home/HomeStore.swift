@@ -80,7 +80,7 @@ struct HomeStore {
                 state.showTownVeriModal = true
                 return .none
 
-            case .townVerification(.backButtonTapped):
+            case .townVerification(.dismissButtonTapped):
                 state.townVerificationModalOffset = Constant.screenHeight
                 state.showTownVeriModal = false
                 return .none
