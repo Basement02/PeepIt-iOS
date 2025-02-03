@@ -36,7 +36,11 @@ struct TownPeepsView: View {
                     spacing: 8
                 ) {
                     ForEach(0..<20) { _ in
-                        ThumbnailPeep()
+                        NavigationLink(
+                            state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
+                        ) {
+                            ThumbnailPeep()
+                        }
                     }
                 }
             }
@@ -142,8 +146,6 @@ fileprivate struct ThumbnailPeep: View {
         }
         .frame(width: 175, height: 240)
     }
-
-
 }
 
 #Preview {
