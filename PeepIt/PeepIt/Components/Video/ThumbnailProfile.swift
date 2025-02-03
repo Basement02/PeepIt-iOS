@@ -27,11 +27,16 @@ struct ThumbnailProfile: View {
                 )
 
             if let reaction = peep.reaction, !peep.isMine {
-                RoundedRectangle(cornerRadius: 8.37)
-                    .fill(Color.coreLimeOp)
-                    .frame(width: 35, height: 35)
-                    .padding(.top, 9)
-                    .padding(.trailing, 8)
+                ZStack {
+                    RoundedRectangle(cornerRadius: 8.37)
+                        .fill(Color.coreLimeOp)
+                        .frame(width: 35, height: 35)
+
+                    Text(reaction)
+                        .font(.system(size: 16))
+                }
+                .padding(.top, 9)
+                .padding(.trailing, 8)
             }
         }
         .frame(width: 113, height: 155)
