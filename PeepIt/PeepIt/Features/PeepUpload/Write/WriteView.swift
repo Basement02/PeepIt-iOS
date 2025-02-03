@@ -139,8 +139,10 @@ struct WriteView: View {
                 Rectangle()
             }
         }
+        .scaledToFill()
         .frame(width: 300, height: 400)
         .clipShape(RoundedRectangle(cornerRadius: 14))
+        .allowsHitTesting(false)
     }
 
     private var bodyTextView: some View {
@@ -185,6 +187,15 @@ struct WriteView: View {
         )
     }
 
+    @ViewBuilder
+    private func videoThumbnail(from url: URL) -> some View {
+        if let url = store.videoURL,
+            let thumbnail = generateThumbnail(from: url) {
+            Image(uiImage: thumbnail)
+                .resizable()
+        }
+    }
+
     private func generateThumbnail(from url: URL) -> UIImage? {
         let asset = AVAsset(url: url)
         let assetImageGenerator = AVAssetImageGenerator(asset: asset)
@@ -196,15 +207,6 @@ struct WriteView: View {
         } catch {
             print("Failed to generate thumbnail: \(error)")
             return nil
-        }
-    }
-
-    @ViewBuilder
-    private func videoThumbnail(from url: URL) -> some View {
-        if let url = store.videoURL,
-            let thumbnail = generateThumbnail(from: url) {
-            Image(uiImage: thumbnail)
-                .resizable()
         }
     }
 }
