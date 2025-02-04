@@ -35,16 +35,15 @@ struct TownVerificationStore {
 
             case .registerButtonTapped:
                 state.isSheetVisible = true
-                return .send(.closeModal)
+                return .none
 
             case .backButtonTapped:
-                state.modalOffset = 0
                 state.isSheetVisible = false
                 return .none
 
             case .dismissButtonTapped:
                 state.isSheetVisible = false
-                return .none
+                return .send(.closeModal)
 
             case let .modalDragOnChanged(height):
                 state.modalOffset = height

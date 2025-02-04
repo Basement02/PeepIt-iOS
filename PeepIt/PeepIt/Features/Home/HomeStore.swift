@@ -76,13 +76,8 @@ struct HomeStore {
                 return .none
 
             case .addressButtonTapped:
-                state.townVerificationModalOffset = 0
                 state.showTownVeriModal = true
-                return .none
-
-            case .townVerification(.dismissButtonTapped):
-                state.townVerificationModalOffset = Constant.screenHeight
-                state.showTownVeriModal = false
+                state.townVerificationModalOffset = 0
                 return .none
 
             case let .townVerification(.modalDragOnChanged(height)):
