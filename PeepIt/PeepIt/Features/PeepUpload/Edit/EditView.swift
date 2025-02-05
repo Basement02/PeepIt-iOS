@@ -14,116 +14,128 @@ struct EditView: View {
 
     @FocusState var isFocused: Bool
 
+    @State private var keyboardHeight: CGFloat = 0
+    @State private var textHeight: CGFloat = 34
+
     var body: some View {
         WithPerceptionTracking {
-            ZStack(alignment: .top) {
-                Color.base
-                    .ignoresSafeArea()
+            GeometryReader { geo in
+                WithPerceptionTracking {
+                    ZStack(alignment: .top) {
+                        Color.base
+                            .ignoresSafeArea()
 
-                /// 보여주는 이미지에는 corner radius 처리
-                peepView
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .padding(.top, 44)
-                    .padding(.top, 11)
-
-                /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
-                switch store.editMode {
-
-                /// 기본
-                case .original:
-                    ZStack {
-                        VStack(spacing: 0) {
-                            HStack {
-                                BackButton { store.send(.backButtonTapped) }
-
-                                Spacer()
-                            }
-                            .frame(height: 44)
-                            .padding(.horizontal, 16)
-
-                            Spacer()
-                        }
-
-                        HStack {
-                            VStack(spacing: 25) {
-                                if store.dataType == .video { soundButton }
-                                stickerButton
-                                textButton
-                            }
-                            .fixedSize()
-
-                            Spacer()
-                        }
-                        .padding(.leading, 16)
-
+                        /// 보여주는 이미지에는 corner radius 처리
                         VStack {
+                            peepView
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
+                                .padding(.top, 44)
+                                .padding(.top, 11)
                             Spacer()
-
-                            HStack {
-                                Spacer()
-                                uploadButton
-                                    .padding(.bottom, 60.88)
-                                    .padding(.trailing, 4)
-                            }
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+
+                        /// 편집 모드(기본, 텍스트 추가/편집, 드래그/줌)에 따른 UI 구성
+                        switch store.editMode {
+
+                            /// 기본
+                        case .original:
+                            ZStack {
+                                VStack(spacing: 0) {
+                                    HStack {
+                                        BackButton { store.send(.backButtonTapped) }
+
+                                        Spacer()
+                                    }
+                                    .frame(height: 44)
+                                    .padding(.horizontal, 16)
+
+                                    Spacer()
+                                }
+
+                                HStack {
+                                    VStack(spacing: 25) {
+                                        if store.dataType == .video { soundButton }
+                                        stickerButton
+                                        textButton
+                                    }
+                                    .fixedSize()
+
+                                    Spacer()
+                                }
+                                .padding(.leading, 16)
+
+                                VStack {
+                                    Spacer()
+
+                                    HStack {
+                                        Spacer()
+                                        uploadButton
+                                            .padding(.bottom, 60.88)
+                                            .padding(.trailing, 4)
+                                    }
+                                }
+                                .ignoresSafeArea(.all, edges: .bottom)
+                            }
+
+                            /// 텍스트 입력창 (추가 및 편집)
+                        case .textInputMode:
+                            BackMapPointer.secondary
+                                .ignoresSafeArea()
+
+                            VStack {
+                                textInputTopBar
+                                    .padding(.horizontal, 16)
+                                Spacer()
+                            }
+
+                            textEditor
+                                .padding(.top, 44)
+                                .padding(.top, 22)
+
+                            //                    fontSlider
+                            //                        .ignoresSafeArea()
+                            //                        .padding(.top, 175)
+                            //                        .padding(.leading, 12)
+
+                            /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
+                        case .editMode:
+                            VStack {
+                                Spacer()
+
+                                deleteButton
+                                    .padding(.bottom, 84)
+                            }
+                            .ignoresSafeArea(.all, edges: .bottom)
+                        }
                     }
-
-                /// 텍스트 입력창 (추가 및 편집)
-                case .textInputMode:
-                    BackMapPointer.secondary
-                        .ignoresSafeArea()
-
-                    VStack {
-                        textInputTopBar
-                            .padding(.horizontal, 16)
-
-                        Spacer()
+                    .toolbar(.hidden, for: .navigationBar)
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .sheet(
+                        item: $store.scope(
+                            state: \.stickerModalState,
+                            action: \.stickerListAction
+                        )
+                    ) { store in
+                        StickerModalView(store: store)
+                            .presentationDragIndicator(.visible)
+                            .presentationDetents([.height(675)])
                     }
-
-                    fontSlider
-                        .ignoresSafeArea()
-                        .padding(.top, 175)
-                        .padding(.leading, 12)
-
-                    textEditor
-                        .ignoresSafeArea()
-                        .padding(.top, 281)
-
-                /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
-                case .editMode:
-                    VStack {
-                        Spacer()
-
-                        deleteButton
-                            .padding(.bottom, 84)
+                    .toolbar {
+                        ToolbarItem(placement: .keyboard) {
+                            colorChips
+                                .frame(width: Constant.screenWidth)
+                                .background(Color.clear)
+                                .padding(.leading, 9)
+                                .padding(.bottom, 8)
+                        }
                     }
-                    .ignoresSafeArea(.all, edges: .bottom)
+                    .background(KeyboardToolbarView())
+                    .modifier(KeyboardHeightDetector($keyboardHeight))
+                    .onAppear { store.send(.onAppear) }
+                    .onDisappear { store.send(.onDisappear) }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .sheet(
-                item: $store.scope(
-                    state: \.stickerModalState,
-                    action: \.stickerListAction
-                )
-            ) { store in
-                StickerModalView(store: store)
-                    .presentationDragIndicator(.visible)
-                    .presentationDetents([.height(675)])
-            }
-            .toolbar {
-                ToolbarItem(placement: .keyboard) {
-                    colorChips
-                        .frame(width: Constant.screenWidth)
-                        .background(Color.clear)
-                        .padding(.leading, 9)
-                        .padding(.bottom, 8)
-                }
-            }
-            .background(KeyboardToolbarView())
-            .onAppear { store.send(.onAppear) }
-            .onDisappear { store.send(.onDisappear) }
         }
     }
 
@@ -139,9 +151,9 @@ struct EditView: View {
             case .video:
                 if let url = store.videoURL {
                     LoopingVideoPlayerView(
-                    videoURL: url,
-                    isSoundOn: store.isVideoSoundOn,
-                    isPlaying: store.isVideoPlaying
+                        videoURL: url,
+                        isSoundOn: store.isVideoSoundOn,
+                        isPlaying: store.isVideoPlaying
                     )
                 }
             }
@@ -165,8 +177,7 @@ struct EditView: View {
                 )
             )
         }
-        .aspectRatio(9/16, contentMode: .fit)
-        .frame(width: Constant.screenWidth)
+        .frame(width: Constant.screenWidth, height: Constant.screenWidth * 16/9)
         .clipShape(Rectangle())
     }
 
@@ -212,23 +223,39 @@ struct EditView: View {
     }
 
     private var textEditor: some View {
-        VStack {
+        ZStack {
+            if store.inputText.isEmpty {
+                Text("Text")
+                    .pretendard(.title01)
+                    .foregroundStyle(Color.nonOp)
+            }
+
             TextEditor(text: $store.inputText)
                 .focused($isFocused)
-                .frame(minHeight: 34)
+                .frame(height: textHeight)
+                .frame(minHeight: 30, maxHeight: 384)
                 .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: store.inputTextSize, weight: .bold))
                 .foregroundStyle(store.inputTextColor)
                 .tint(Color.coreLime)
-                .scrollDisabled(true)
                 .scrollContentBackground(.hidden)
                 .multilineTextAlignment(.center)
-                .onAppear {
-                    isFocused = true
-                }
-
-            Spacer()
+                .background(
+                    GeometryReader { geo in
+                        Color.red
+                            .opacity(0.3)
+                            .onChange(of: store.inputText) { _ in
+                                DispatchQueue.main.async {
+                                    adjustTextEditorHeight()
+                                }
+                            }
+                    }
+                )
+                .frame(height: 384)
+            //                .frame(height: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop)
+            //                .offset(x: store.inputText.isEmpty ? -30 : 0)
+            //                .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
         }
     }
 
@@ -279,6 +306,7 @@ struct EditView: View {
             Spacer()
 
             Button {
+                isFocused = false
                 store.send(.textInputCompleteButtonTapped)
             } label: {
                 Rectangle()
@@ -348,6 +376,37 @@ struct EditView: View {
                 }
             }
         )
+    }
+}
+
+extension EditView {
+
+    /// 본문 작성 크기 조절 위한 메서드
+    private func adjustTextEditorHeight() {
+        let font = UIFont.systemFont(ofSize: store.inputTextSize, weight: .bold)
+        let maxHeight = CGFloat(384)
+        let minHeight = font.lineHeight
+
+        /// 자동 줄바꿈 계산 위한 로직
+        let textSize = (store.inputText as NSString)
+            .boundingRect(
+                with: CGSize(
+                    width: Constant.screenWidth-8,
+                    height: .greatestFiniteMagnitude
+                ),
+                options: .usesLineFragmentOrigin,
+                attributes: [.font: font],
+                context: nil
+            )
+
+        let lineCount = max(1, store.inputText.filter { $0 == "\n" }.count + 1)
+        let calculatedHeight =  max(font.lineHeight * CGFloat(lineCount), textSize.height) + 18
+
+        let newHeight = min(max(minHeight, calculatedHeight), maxHeight)
+
+        withAnimation(.easeInOut(duration: 0.05)) {
+            textHeight = newHeight
+        }
     }
 }
 
