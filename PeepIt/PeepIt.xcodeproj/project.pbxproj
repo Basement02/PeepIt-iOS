@@ -20,6 +20,7 @@
 		AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0FBF262D4FD8C1003D8372 /* TownVerificationStore.swift */; };
 		AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCC2CF77EA10095B818 /* ReportModal.swift */; };
 		AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */; };
+		AB1E17B52D5392EA00653C74 /* KeyboardHeightDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1E17B42D5392EA00653C74 /* KeyboardHeightDetector.swift */; };
 		AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */; };
 		AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8202CB2D3D4007D432E /* TermType.swift */; };
 		AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8222CB2DE59007D432E /* InputIdView.swift */; };
@@ -175,6 +176,7 @@
 		AB0FBF262D4FD8C1003D8372 /* TownVerificationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownVerificationStore.swift; sourceTree = "<group>"; };
 		AB11FFCC2CF77EA10095B818 /* ReportModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportModal.swift; sourceTree = "<group>"; };
 		AB11FFCE2CF77EAC0095B818 /* ReportStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportStore.swift; sourceTree = "<group>"; };
+		AB1E17B42D5392EA00653C74 /* KeyboardHeightDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightDetector.swift; sourceTree = "<group>"; };
 		AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OriginalChatBubbleView.swift; sourceTree = "<group>"; };
 		AB26A8202CB2D3D4007D432E /* TermType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermType.swift; sourceTree = "<group>"; };
 		AB26A8222CB2DE59007D432E /* InputIdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdView.swift; sourceTree = "<group>"; };
@@ -613,6 +615,7 @@
 				AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */,
 				AB653BDC2D395E330002F04F /* YieldTouches.swift */,
 				ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */,
+				AB1E17B42D5392EA00653C74 /* KeyboardHeightDetector.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -1242,6 +1245,7 @@
 				AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */,
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
+				AB1E17B52D5392EA00653C74 /* KeyboardHeightDetector.swift in Sources */,
 				AB97881D2D192FAF007E73B6 /* CameraServiceKey.swift in Sources */,
 				ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,

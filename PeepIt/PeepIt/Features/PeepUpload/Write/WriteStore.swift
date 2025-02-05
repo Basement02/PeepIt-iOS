@@ -24,6 +24,8 @@ struct WriteStore {
         var isBodyInputMode = false
         /// 지도 모달 offset
         var modalOffset = Constant.screenHeight
+        /// 키보드 관리
+        var keyboardHeight = CGFloat(0)
     }
 
     enum Action: BindableAction {
