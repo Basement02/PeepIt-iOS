@@ -13,9 +13,7 @@ struct EditView: View {
     @Perception.Bindable var store: StoreOf<EditStore>
 
     @FocusState var isFocused: Bool
-
     @State private var keyboardHeight: CGFloat = 0
-    @State private var textHeight: CGFloat = 34
 
     var body: some View {
         WithPerceptionTracking {
@@ -88,15 +86,11 @@ struct EditView: View {
                                     .padding(.horizontal, 16)
                                 Spacer()
                             }
+                            .frame(height: Constant.screenHeight)
 
                             textEditor
                                 .padding(.top, 44)
                                 .padding(.top, 22)
-
-                            //                    fontSlider
-                            //                        .ignoresSafeArea()
-                            //                        .padding(.top, 175)
-                            //                        .padding(.leading, 12)
 
                             /// 오브젝트(스티커, 텍스트) 드래그 및 삭제
                         case .editMode:
@@ -232,8 +226,11 @@ struct EditView: View {
 
             TextEditor(text: $store.inputText)
                 .focused($isFocused)
-                .frame(height: textHeight)
-                .frame(minHeight: 30, maxHeight: 384)
+                .frame(height: store.currentTextHeight)
+                .frame(minHeight: 34)
+                .frame(
+                    maxHeight: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
+                )
                 .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: store.inputTextSize, weight: .bold))
@@ -243,8 +240,7 @@ struct EditView: View {
                 .multilineTextAlignment(.center)
                 .background(
                     GeometryReader { geo in
-                        Color.red
-                            .opacity(0.3)
+                        Color.clear
                             .onChange(of: store.inputText) { _ in
                                 DispatchQueue.main.async {
                                     adjustTextEditorHeight()
@@ -252,10 +248,12 @@ struct EditView: View {
                             }
                     }
                 )
-                .frame(height: 384)
-            //                .frame(height: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop)
-            //                .offset(x: store.inputText.isEmpty ? -30 : 0)
-            //                .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
+                .frame(
+                    height: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
+                )
+                .onAppear { isFocused = true }
+                .offset(x: store.inputText.isEmpty ? -30 : 0)
+                .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
         }
     }
 
@@ -269,8 +267,14 @@ struct EditView: View {
         }
         .buttonStyle(
             store.isVideoSoundOn ?
-            PressableButtonStyle(originImg: "SoundOnN", pressedImg: "SoundOnY") :
-                PressableButtonStyle(originImg: "SoundOffN", pressedImg: "SoundOffY")
+            PressableButtonStyle(
+                originImg: "SoundOnN",
+                pressedImg: "SoundOnY"
+            ) :
+            PressableButtonStyle(
+                originImg: "SoundOffN",
+                pressedImg: "SoundOffY"
+            )
         )
     }
 
@@ -345,7 +349,10 @@ struct EditView: View {
                 Image("UploadBtnN")
             }
             .buttonStyle(
-                PressableButtonStyle(originImg: "UploadBtnN", pressedImg: "UploadBtnY")
+                PressableButtonStyle(
+                    originImg: "UploadBtnN",
+                    pressedImg: "UploadBtnY"
+                )
             )
         }
     }
@@ -383,8 +390,11 @@ extension EditView {
 
     /// 본문 작성 크기 조절 위한 메서드
     private func adjustTextEditorHeight() {
+        // 키보드가 올라와 있을 때만 실행함
+        guard isFocused else { return }
+
         let font = UIFont.systemFont(ofSize: store.inputTextSize, weight: .bold)
-        let maxHeight = CGFloat(384)
+        let maxHeight = CGFloat(Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22)
         let minHeight = font.lineHeight
 
         /// 자동 줄바꿈 계산 위한 로직
@@ -404,8 +414,8 @@ extension EditView {
 
         let newHeight = min(max(minHeight, calculatedHeight), maxHeight)
 
-        withAnimation(.easeInOut(duration: 0.05)) {
-            textHeight = newHeight
+        if newHeight != store.currentTextHeight {
+            store.send(.changeEditTextHeight(height: newHeight))
         }
     }
 }

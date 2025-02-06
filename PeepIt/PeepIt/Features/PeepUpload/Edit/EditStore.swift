@@ -42,6 +42,8 @@ struct EditStore {
         /// 이미지인지 영상인지 체크
         var dataType = DataType.image
 
+        var currentTextHeight = CGFloat.zero
+
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
             case original
@@ -110,6 +112,8 @@ struct EditStore {
         case stickerAction(StickerLayerStore.Action)
         /// 자식 뷰 - 텍스트 관련
         case textAction(TextLayerStore.Action)
+        /// 편집 텍스트 크기 변경
+        case changeEditTextHeight(height: CGFloat)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -150,6 +154,7 @@ struct EditStore {
 
             case .textButtonTapped:
                 state.editMode = .textInputMode
+                state.currentTextHeight = 30
                 return .none
 
             case .uploadButtonTapped:
@@ -170,11 +175,13 @@ struct EditStore {
                     state.textState.textItems[index].text = state.inputText
                     state.textState.textItems[index].scale = state.inputTextSize
                     state.textState.textItems[index].color = state.inputTextColor
+                    state.textState.textItems[index].textHeight = state.currentTextHeight
                 } else {
                     let newText: TextItem = .init(
                         text: state.inputText,
                         scale: state.inputTextSize,
-                        color: state.inputTextColor
+                        color: state.inputTextColor,
+                        textHeight: state.currentTextHeight
                     )
 
                     state.textState.textItems.append(newText)
@@ -211,6 +218,7 @@ struct EditStore {
                 state.sliderState.sliderValue = text.scale
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
+                state.currentTextHeight = text.textHeight
 
                 return .none
 
@@ -294,6 +302,10 @@ struct EditStore {
             case let .textAction(.textTapped(textItem)):
                 state.selectedText = textItem
                 return .send(.textFieldTapped(textId: textItem.id))
+
+            case let .changeEditTextHeight(height):
+                state.currentTextHeight = height
+                return .none
 
             default:
                 return .none
