@@ -246,15 +246,27 @@ struct EditView: View {
                                     adjustTextEditorHeight()
                                 }
                             }
+                            .onChange(of: store.inputTextSize) { _ in
+                                DispatchQueue.main.async {
+                                    adjustTextEditorHeight()
+                                }
+                            }
                     }
-                )
-                .frame(
-                    height: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
                 )
                 .onAppear { isFocused = true }
                 .offset(x: store.inputText.isEmpty ? -30 : 0)
                 .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
+
+            HStack {
+                fontSlider
+                    .fixedSize()
+                Spacer()
+            }
+            .padding(.leading, 12)
         }
+        .frame(
+            height: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
+        )
     }
 
     private var soundButton: some View {
