@@ -13,76 +13,64 @@ struct SideMenuView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack {
+                        Image("LogoIcon")
+                            .frame(width: 57, height: 57)
+                        Spacer()
+                    }
+                    .padding(.top, 126)
+                    .padding(.bottom, 70)
 
-                PeepItNavigationBar(trailing: dismissButton)
-                    .padding(.bottom, 23)
-
-                HStack {
-                    Image("LogoIcon")
-                        .frame(width: 57, height: 57)
-                    Spacer()
-                }
-                .padding(.bottom, 70)
-
-                VStack(spacing: 32) {
-                    ForEach(SideMenuType.allCases, id: \.self) { menu in
-                        if menu == .notification {
-                            MenuView(menuType: menu)
-                                .onTapGesture {
-                                    store.send(.notificationMenuTapped)
-                                }
-                        } else {
-                            NavigationLink(
-                                state: menu.destinationState()
-                            ) {
+                    VStack(spacing: 32) {
+                        ForEach(SideMenuType.allCases, id: \.self) { menu in
+                            if menu == .notification {
                                 MenuView(menuType: menu)
+                                    .onTapGesture {
+                                        store.send(.notificationMenuTapped)
+                                    }
+                            } else {
+                                NavigationLink(
+                                    state: menu.destinationState()
+                                ) {
+                                    MenuView(menuType: menu)
+                                }
                             }
                         }
                     }
-                }
-                .padding(.bottom, 186)
+                    .padding(.bottom, 186)
 
-                Group {
-                    versionLabel
-                        .padding(.bottom, 12)
+                    Group {
+                        versionLabel
+                            .padding(.bottom, 12)
 
-                    goToAppStoreButton
-                        .padding(.bottom, 22)
+                        goToAppStoreButton
+                            .padding(.bottom, 22)
 
-                    divideView
-                        .padding(.bottom, 22)
+                        divideView
+                            .padding(.bottom, 22)
 
-                    HStack {
-                        logoutButton
-                        Spacer()
-                        settingButton
+                        HStack {
+                            logoutButton
+                            Spacer()
+                            settingButton
+                        }
+                        .frame(height: 29.4)
                     }
-                    .frame(height: 29.4)
+                    .padding(.trailing, 15.6)
+
+                    Spacer()
                 }
-                .padding(.trailing, 15.6)
+                .padding(.leading, 16)
+                .ignoresSafeArea(.all, edges: .bottom)
+                .toolbar(.hidden, for: .navigationBar)
+                .frame(width: 318)
+                .background(Color.base)
 
                 Spacer()
             }
-            .padding(.leading, 16)
-            .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
-            .background(Color.base)
-            .offset(x: store.sideMenuOffset)
         }
-    }
-
-    private var dismissButton: some View {
-        Button {
-            store.send(.dismissSideMenu, animation: .none)
-        } label: {
-            Rectangle()
-                .frame(width: 33.6, height: 33.6)
-                .hidden()
-        }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "CloseN", pressedImg: "CloseY")
-        )
     }
 
     private var divideView: some View {
@@ -133,16 +121,18 @@ struct SideMenuView: View {
     private var goToAppStoreButton: some View {
         HStack(spacing: 2) {
             Text("[핍잇이 마음에 드시나요?](https://www.apple.com)") // TODO: 변경
-                .pretendard(.caption02)
+                .pretendard(.body04)
                 .tint(Color.coreLime)
 
             Image("IconLink")
+                .resizable()
+                .frame(width: 20, height: 20)
         }
     }
 
     private var versionLabel: some View {
         Text("ver 0.0.0")
-            .pretendard(.caption01)
+            .pretendard(.body03)
             .foregroundStyle(Color.gray300)
     }
 }

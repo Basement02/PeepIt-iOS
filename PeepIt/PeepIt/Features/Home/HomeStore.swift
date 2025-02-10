@@ -21,6 +21,8 @@ struct HomeStore {
         var camera = CameraStore.State()
         var townVerification = TownVerificationStore.State()
         var showTownVeriModal = false
+
+        var mainViewOffset = CGFloat.zero
     }
 
     enum Action {
@@ -37,6 +39,7 @@ struct HomeStore {
 
         case pushToDetail
         case addressButtonTapped
+        case dismissSideMenu
     }
 
     var body: some Reducer<State, Action> {
@@ -61,6 +64,7 @@ struct HomeStore {
 
             case .sideMenuButtonTapped:
                 state.sideMenu.sideMenuOffset = 0
+                state.mainViewOffset = 318
                 return .none
 
             case .profileButtonTapped:
@@ -89,6 +93,10 @@ struct HomeStore {
                 state.townVerificationModalOffset = Constant.screenHeight
                 return .none
 
+            case .dismissSideMenu:
+                state.sideMenu.sideMenuOffset = -CGFloat(318)
+                state.mainViewOffset = 0
+                return .none
 
             default:
                 return .none

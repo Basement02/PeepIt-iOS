@@ -48,12 +48,22 @@ struct HomeView: View {
                     )
                 }
             }
+            .offset(x: store.mainViewOffset)
+            .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                if store.mainViewOffset > 0 {
+                    Color.blur2
+                        .ignoresSafeArea()
+                        .onTapGesture { store.send(.dismissSideMenu) }
+                }
+            }
             .overlay {
                 SideMenuView(
                     store: store.scope(state: \.sideMenu, action: \.sideMenu)
                 )
+                .offset(x: store.sideMenu.sideMenuOffset)
             }
             .overlay {
                 TownRegisterModalView(
