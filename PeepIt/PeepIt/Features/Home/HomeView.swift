@@ -42,26 +42,25 @@ struct HomeView: View {
                             PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
                         )
                     }
+
+                    PeepPreviewModalView(
+                        store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
+                    )
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                SideMenuView(
+                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                )
+            }
             .overlay {
                 TownRegisterModalView(
                     store: store.scope(state: \.townVerification, action: \.townVerification)
                 )
                 .offset(y: store.townVerificationModalOffset)
                 .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
-            }
-            .overlay {
-                PeepPreviewModalView(
-                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
-                )
-            }
-            .overlay {
-                SideMenuView(
-                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
-                )
             }
         }
     }
