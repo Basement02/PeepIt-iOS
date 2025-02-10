@@ -11,6 +11,11 @@ import ComposableArchitecture
 struct PeepPreviewModalView: View {
     let store: StoreOf<PeepModalStore>
 
+    @State private var offsetX: CGFloat = .zero
+    @State private var dragEndedOffset: CGFloat = .zero
+    @State private var isScrolling = true
+    @State private var isAutoScroll = false
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
@@ -67,18 +72,60 @@ struct PeepPreviewModalView: View {
             .frame(width: 60, height: 5)
     }
 
+    private var hiddenView: some View {
+        GeometryReader { proxy in
+            let offsetX = proxy.frame(in: .global).origin.x
+            Color.clear
+                .preference(
+                    key: ScrollOffsetKey.self,
+                    value: offsetX
+                )
+                .onAppear {
+                    store.send(.setPeepScrollOffset(offsetX))
+                }
+        }
+        .frame(height: 0)
+    }
+
     private var peepScrollView: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                ForEach(1...5, id: \.self) { _ in
-                    PeepPreviewCell(peep: .stubPeep1)
-                        .frame(width: 280, height: 383)
-                        .onTapGesture {
-                            store.send(.peepCellTapped)
-                        }
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                hiddenView
+                LazyHStack(spacing: 10) {
+                    ForEach(0...30, id: \.self) { idx in
+                        PeepPreviewCell(peep: .stubPeep1)
+                            .frame(width: 280, height: 383)
+                            .id(idx)
+                            .onTapGesture {
+                                store.send(.peepCellTapped)
+                            }
+                    }
+                }
+                .padding(.horizontal, 18)
+            }
+            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
+                store.send(.peepScrollUpdated(newOffset))
+
+                if store.isAutoScroll { return }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                    if abs(store.dragEndedOffset - newOffset) < 1 {
+                        store.send(.peepScrollEnded)
+                    }
                 }
             }
-            .padding(.horizontal, 18)
+            .onChange(of: store.isScrolling) { _ in
+                if !store.isScrolling {
+                    let newIdx = Int((abs(store.dragEndedOffset)) / 280)
+
+                    store.send(.autoScrollStarted)
+                    proxy.scrollTo(newIdx, anchor: .center)
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        store.send(.autoScrollEnded)
+                    }
+                }
+            }
         }
     }
 
@@ -171,6 +218,13 @@ fileprivate struct PeepPreviewCell: View {
                 .pretendard(.caption02)
         }
         .foregroundStyle(Color.white)
+    }
+}
+
+struct ScrollOffsetKey: PreferenceKey {
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value += nextValue()
     }
 }
 
