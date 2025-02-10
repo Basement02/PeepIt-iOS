@@ -70,7 +70,7 @@ struct EditView: View {
                                         Spacer()
                                         uploadButton
                                             .padding(.bottom, 60.88)
-                                            .padding(.trailing, 4)
+                                            .padding(.trailing, 7.75)
                                     }
                                 }
                                 .ignoresSafeArea(.all, edges: .bottom)
@@ -336,7 +336,14 @@ struct EditView: View {
     }
 
     private var uploadButton: some View {
-        HStack {
+        let normal = Image("UploadBtnN")
+            .resizable()
+            .frame(width: 94, height: 95)
+        let pressable = Image("UploadBtnY")
+            .resizable()
+            .frame(width: 94, height: 95)
+
+        return HStack {
             Spacer()
 
             Button {
@@ -359,11 +366,14 @@ struct EditView: View {
                 }
             } label: {
                 Image("UploadBtnN")
+                    .resizable()
+                    .frame(width: 94, height: 95)
+                    .hidden()
             }
             .buttonStyle(
-                PressableButtonStyle(
-                    originImg: "UploadBtnN",
-                    pressedImg: "UploadBtnY"
+                PressableViewButtonStyle(
+                    normalView: normal,
+                    pressedView: pressable
                 )
             )
         }

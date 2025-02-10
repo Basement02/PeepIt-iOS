@@ -174,7 +174,7 @@ extension HomeView {
             .frame(width: 56, height: 56)
 
         return Button {
-            // TODO:
+            store.send(.uploadButtonTapped)
         } label: {
             Circle()
                 .frame(width: 56, height: 56)

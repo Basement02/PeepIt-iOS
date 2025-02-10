@@ -45,7 +45,7 @@ struct PeepPreviewModalView: View {
                                 Spacer()
                             }
                         }
-                        .frame(height: 457)
+                        .frame(height: PeepModalStore.State.SheetType.scrollUp.height)
                         .offset(y: store.modalOffset)
                         .gesture(
                             DragGesture()
@@ -103,6 +103,7 @@ struct PeepPreviewModalView: View {
                 }
                 .padding(.horizontal, 18)
             }
+            .frame(height: 383)
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
                 store.send(.peepScrollUpdated(newOffset))
 
