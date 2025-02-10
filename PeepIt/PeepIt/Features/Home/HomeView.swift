@@ -38,15 +38,10 @@ struct HomeView: View {
                         }
                         .padding(.horizontal, 16)
                         .padding(
-                            .bottom, store.peepPreviewModal.sheetHeight + 24
+                            .bottom,
+                            PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
                         )
                     }
-
-                    peepPreviewView
-
-                    SideMenuView(
-                        store: store.scope(state: \.sideMenu, action: \.sideMenu)
-                    )
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
@@ -58,28 +53,38 @@ struct HomeView: View {
                 .offset(y: store.townVerificationModalOffset)
                 .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
             }
+            .overlay {
+                PeepPreviewModalView(
+                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
+                )
+            }
+            .overlay {
+                SideMenuView(
+                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                )
+            }
         }
     }
 }
 
 extension HomeView {
-
+    
     private var topBar: some View {
         HStack {
             moreButton
-
+            
             Spacer()
-
+            
             setMyTownButton
-
+            
             Spacer()
-
+            
             profileButton
         }
         .frame(maxWidth: .infinity)
         .frame(height: 44)
     }
-
+    
     private var moreButton: some View {
         Button {
             store.send(
@@ -90,24 +95,24 @@ extension HomeView {
                 RoundedRectangle(cornerRadius: 13)
                     .fill(Color.blur1)
                     .frame(width: 45, height: 45)
-
+                
                 Image("IconMenu")
             }
         }
     }
-
+    
     private var setMyTownButton: some View {
         Button {
             store.send(.addressButtonTapped)
         } label: {
             HStack(spacing: 2) {
                 Image("IconLocation")
-
+                
                 Text("지금")
                     .pretendard(.body02)
                     .foregroundStyle(Color.white)
                     .padding(.trailing, 3)
-
+                
                 Text("동이름")
                     .pretendard(.foodnote)
                     .foregroundStyle(Color.white)
@@ -121,7 +126,7 @@ extension HomeView {
             )
         }
     }
-
+    
     private var profileButton: some View {
         Button {
             store.send(.profileButtonTapped)
@@ -131,7 +136,7 @@ extension HomeView {
                 .frame(width: 45, height: 45)
         }
     }
-
+    
     private var currentLocationButton: some View {
         Button {
             // TODO:
@@ -150,7 +155,7 @@ extension HomeView {
         )
         .shadowElement()
     }
-
+    
     private var uploadPeepButton: some View {
         Button {
             store.send(.uploadButtonTapped)
@@ -166,51 +171,6 @@ extension HomeView {
             )
         )
         .shadowPoint()
-    }
-
-    private var peepPreviewView: some View {
-        GeometryReader { proxy in
-            WithPerceptionTracking {
-                let height = proxy
-                    .frame(in: .global)
-                    .height
-
-                PeepPreviewModalView(
-                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
-                )
-                .offset(y: height - SheetType.scrollDown.height)
-                .offset(y: store.peepPreviewModal.offset)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            store.send(
-                                .peepPreviewModal(.modalDragged(dragHeight: value.translation.height))
-                            )
-                        }
-                        .onEnded { _ in
-                            store.send(.peepPreviewModal(.modalDragEnded))
-                        }
-                )
-                .onAppear {
-                    store.send(
-                        .peepPreviewModal(.setSheetHeight(height: SheetType.scrollDown.height))
-                    )
-                }
-            }
-        }
-    }
-}
-
-enum SheetType: CaseIterable {
-    case scrollDown, scrollUp
-
-    var height: CGFloat {
-        switch self {
-        case .scrollDown:
-            return CGFloat(100)
-        case .scrollUp:
-            return CGFloat(457)
-        }
     }
 }
 

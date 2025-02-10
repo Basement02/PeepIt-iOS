@@ -14,40 +14,71 @@ struct PeepPreviewModalView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                BackdropBlurView(bgColor: .blur1, radius: 1)
+                Color.clear
+                    .allowsHitTesting(false)
 
-                VStack(spacing: 0) {
-                    RoundedRectangle(cornerRadius: 100)
-                        .frame(width: 60, height: 5)
-                        .foregroundStyle(Color.gray400)
-                        .padding(.top, 10)
-
-                    if store.isSheetScrolledDown {
-                        scrollUpLabel
-                            .padding(.top, 15.21)
-                    }
-
-                    if !store.isSheetScrolledDown {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 10) {
-                                ForEach(1...5, id: \.self) { _ in
-                                    PeepPreviewCell(peep: .stubPeep1)
-                                        .frame(width: 280, height: 384)
-                                        .onTapGesture {
-                                            store.send(.peepCellTapped)
-                                        }
-                                }
-                            }
-                            .padding(.top, 24.21)
-                            .padding(.horizontal, 18)
-                        }
-                    }
-
+                VStack {
                     Spacer()
+                        .allowsHitTesting(false)
+
+                    /// 핍 미리보기 모달
+                    BackdropBlurView(bgColor: .blur1, radius: 1)
+                        .roundedCorner(20, corners: [.topLeft, .topRight])
+                        .overlay {
+                            VStack(spacing: 0) {
+                                scrollIndicator
+                                    .padding(.top, 10)
+
+                                if store.isSheetScrolledDown {
+                                    scrollUpLabel
+                                        .padding(.top, 15.21)
+                                } else {
+                                    peepScrollView
+                                        .padding(.top, 24.21)
+                                }
+
+                                Spacer()
+                            }
+                        }
+                        .frame(height: 457)
+                        .offset(y: store.modalOffset)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    store.send(
+                                        .modalDragged(dragHeight: value.translation.height)
+                                    )
+                                }
+                                .onEnded { value in
+                                    store.send(
+                                        .modalDragEnded(dragHeight: value.translation.height)
+                                    )
+                                }
+                        )
                 }
             }
-            .ignoresSafeArea()
-            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .ignoresSafeArea(.all, edges: .bottom)
+        }
+    }
+
+    private var scrollIndicator: some View {
+        RoundedRectangle(cornerRadius: 100)
+            .fill(Color.gray400)
+            .frame(width: 60, height: 5)
+    }
+
+    private var peepScrollView: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                ForEach(1...5, id: \.self) { _ in
+                    PeepPreviewCell(peep: .stubPeep1)
+                        .frame(width: 280, height: 383)
+                        .onTapGesture {
+                            store.send(.peepCellTapped)
+                        }
+                }
+            }
+            .padding(.horizontal, 18)
         }
     }
 
