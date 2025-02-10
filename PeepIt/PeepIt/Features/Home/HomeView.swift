@@ -137,39 +137,63 @@ extension HomeView {
     }
     
     private var currentLocationButton: some View {
-        Button {
+        let normal = Circle()
+            .fill(Color.base)
+            .frame(width: 44, height: 44)
+
+        let pressable = Circle()
+            .fill(Color.gray700)
+            .frame(width: 44, height: 44)
+
+        return Button {
             // TODO:
         } label: {
-            ZStack {
-                Circle()
-                    .frame(width: 44, height: 44)
-                    .hidden()
-            }
+            Circle()
+                .frame(width: 44, height: 44)
+                .hidden()
         }
         .buttonStyle(
-            PressableButtonStyle(
-                originImg: "AlignBtnN",
-                pressedImg: "AlignBtnY"
-            )
+            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
         )
-        .shadowElement()
+        .overlay { Image("IconNavigationTarget") }
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
     
     private var uploadPeepButton: some View {
-        Button {
-            store.send(.uploadButtonTapped)
+        let normal = Circle()
+            .fill(Color.coreLime)
+            .frame(width: 56, height: 56)
+
+        let pressable = Circle()
+            .fill(Color.coreLimeClick)
+            .frame(width: 56, height: 56)
+
+        return Button {
+            // TODO:
         } label: {
             Circle()
                 .frame(width: 56, height: 56)
                 .hidden()
         }
         .buttonStyle(
-            PressableButtonStyle(
-                originImg: "PeepBtnN",
-                pressedImg: "PeepBtnY"
-            )
+            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
         )
-        .shadowPoint()
+        .overlay {
+            Image("IconSubtract")
+                .resizable()
+                .frame(width: 19, height: 19)
+        }
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
 }
 

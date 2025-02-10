@@ -216,6 +216,7 @@ fileprivate struct PeepPreviewCell: View {
 
             Text("3분 전")
                 .pretendard(.caption02)
+                .offset(y: 1)
         }
         .foregroundStyle(Color.white)
     }
