@@ -19,9 +19,6 @@ struct ThumbnailAlarm: View {
 
             ThumbnailLayer.secondary()
 
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(Color.coreLime, lineWidth: 1)
-
             HStack(spacing: 1) {
                 Image("IconCommentBold")
                     .resizable()
@@ -33,6 +30,9 @@ struct ThumbnailAlarm: View {
             .frame(height: 22)
             .padding(.top, 10.8)
             .padding(.leading, 12)
+
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(Color.coreLime, lineWidth: 1)
         }
         .frame(width: 110.4, height: 151.2)
     }

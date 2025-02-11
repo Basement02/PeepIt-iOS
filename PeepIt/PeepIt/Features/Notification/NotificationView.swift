@@ -15,11 +15,11 @@ struct NotificationView: View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
                 topBar
-                    .frame(width: Constant.isSmallDevice ? 343 : 361)
+                    .padding(.horizontal, Constant.isSmallDevice ? 15 : 16)
                     .padding(.bottom, 39)
 
                 myActivePeepList
-                    .padding(.leading, Constant.isSmallDevice ? 16 : 15)
+                    .padding(.leading, Constant.isSmallDevice ? 15 : 16)
                     .padding(.bottom, 25)
 
                 Group {
@@ -28,7 +28,7 @@ struct NotificationView: View {
 
                     notificationList
                 }
-                .frame(width: Constant.isSmallDevice ? 343 : 361)
+                .padding(.horizontal, Constant.isSmallDevice ? 15 : 16)
 
                 Spacer()
             }
@@ -68,6 +68,7 @@ struct NotificationView: View {
                     }
                 }
             }
+            .listRowInsets(EdgeInsets())
             .scrollIndicators(.hidden)
         } else {
             HStack {

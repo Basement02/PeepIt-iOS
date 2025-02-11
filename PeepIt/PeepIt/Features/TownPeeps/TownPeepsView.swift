@@ -125,8 +125,8 @@ fileprivate struct ThumbnailPeep: View {
             HStack(spacing: 0) {
                 Image("IconCommentBold")
                     .resizable()
-                    .frame(width: 14, height: 14)
-                    .frame(width: 20, height: 20)
+                    .frame(width: 13.5, height: 13.5)
+                    .frame(width: 21, height: 21)
 
                 Text("00")
                     .pretendard(.body02)
@@ -135,8 +135,8 @@ fileprivate struct ThumbnailPeep: View {
 
                 Image("IconReactionBold")
                     .resizable()
-                    .frame(width: 14, height: 13)
-                    .frame(width: 20, height: 20)
+                    .frame(width: 13.5, height: 13.5)
+                    .frame(width: 21, height: 21)
 
                 Text("00")
                     .pretendard(.body02)
