@@ -20,4 +20,8 @@ struct Constant {
 
     static var safeAreaTop: CGFloat { safeAreaInsets.top }
     static var safeAreaBottom: CGFloat { safeAreaInsets.bottom }
+
+    static var isSmallDevice: Bool {
+        return screenWidth <= 375
+    }
 }

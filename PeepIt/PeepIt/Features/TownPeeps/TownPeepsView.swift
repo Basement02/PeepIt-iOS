@@ -12,42 +12,46 @@ struct TownPeepsView: View {
     let store: StoreOf<TownPeepsStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            navigationBar
+        ZStack {
+            Color.base.ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                navigationBar
 
-            ScrollView(showsIndicators: false) {
-                HStack {
-                    hotLabel
-                    Spacer()
-                }
-                .padding(.top, 39)
-                .padding(.bottom, 25)
+                ScrollView(showsIndicators: false) {
+                    HStack {
+                        hotLabel
+                        Spacer()
+                    }
+                    .padding(.top, 39)
+                    .padding(.bottom, 25)
 
-                HStack {
-                    Text("N월 N일의 인기 핍")
-                        .pretendard(.title02)
-                    Spacer()
-                }
-                .padding(.bottom, 25)
+                    HStack {
+                        Text("N월 N일의 인기 핍")
+                            .pretendard(.title02)
+                        Spacer()
+                    }
+                    .padding(.bottom, 25)
 
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    alignment: .center,
-                    spacing: 8
-                ) {
-                    ForEach(0..<20) { _ in
-                        NavigationLink(
-                            state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
-                        ) {
-                            ThumbnailPeep()
+                    LazyVGrid(
+                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        alignment: .center,
+                        spacing: 8
+                    ) {
+                        ForEach(0..<20) { _ in
+                            NavigationLink(
+                                state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
+                            ) {
+                                ThumbnailPeep()
+                            }
                         }
                     }
                 }
+                .refreshable {
+                    // TODO: 새로 고침
+                }
             }
-            .frame(width: 361)
-            .refreshable {
-                // TODO: 새로 고침
-            }
+            .frame(width: Constant.isSmallDevice ? 343 : 361)
         }
         .frame(maxWidth: .infinity)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -65,7 +69,6 @@ struct TownPeepsView: View {
             titleView
         }
         .background(Color.base)
-        .padding(.horizontal, 16)
         .frame(height: 44)
     }
 
@@ -144,7 +147,10 @@ fileprivate struct ThumbnailPeep: View {
             .padding(.top, 12)
             .padding(.leading, 15)
         }
-        .frame(width: 175, height: 240)
+        .frame(
+            width: Constant.isSmallDevice ? 167 : 175,
+            height: Constant.isSmallDevice ? 229 : 240
+        )
     }
 }
 
