@@ -14,29 +14,43 @@ struct NotificationView: View {
     var body: some View {
         WithPerceptionTracking {
             VStack(spacing: 0) {
-                PeepItNavigationBar(
-                    leading: backButton,
-                    title: "내 소식"
-                )
-                .padding(.bottom, 39)
+                topBar
+                    .frame(width: Constant.isSmallDevice ? 343 : 361)
+                    .padding(.bottom, 39)
 
                 myActivePeepList
-                    .padding(.leading, 16)
+                    .padding(.leading, Constant.isSmallDevice ? 16 : 15)
                     .padding(.bottom, 25)
 
                 Group {
                     divider
                         .padding(.bottom, 25)
+
                     notificationList
                 }
-                .padding(.horizontal, 16)
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
 
                 Spacer()
             }
+            .frame(maxWidth: .infinity)
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
             .onAppear { store.send(.onAppear) }
+        }
+    }
+
+    private var topBar: some View {
+        ZStack {
+            HStack {
+                BackButton { store.send(.backButtonTapped) }
+                Spacer()
+            }
+
+            Spacer()
+
+            Text("내소식")
+                .pretendard(.subhead)
         }
     }
 
