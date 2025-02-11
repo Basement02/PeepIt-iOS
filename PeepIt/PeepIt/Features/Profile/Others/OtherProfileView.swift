@@ -31,7 +31,10 @@ struct OtherProfileView: View {
 
                     Rectangle()
                         .fill(Color.op)
-                        .frame(width: 361, height: 1)
+                        .frame(
+                            width: Constant.isSmallDevice ? 343 : 361,
+                            height: 1
+                        )
 
                     if store.isUserBlocked {
                         blockedView
@@ -133,9 +136,10 @@ struct OtherProfileView: View {
     }
 
     private var uploadPeepListView: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -152,7 +156,7 @@ struct OtherProfileView: View {
                 .padding(.bottom, 11)
 
                 ScrollView(showsIndicators: false) {
-                    LazyVGrid(columns: columns, spacing: 11) {
+                    LazyVGrid(columns: columns, spacing: spacing) {
                         ForEach(
                             store.uploadedPeeps
                         ) { peep in
@@ -168,7 +172,7 @@ struct OtherProfileView: View {
                     .padding(.top, 161)
             }
         }
-        .frame(width: 361)
+        .frame(width: Constant.isSmallDevice ? 343 : 361)
     }
 
     private var shareButton: some View {

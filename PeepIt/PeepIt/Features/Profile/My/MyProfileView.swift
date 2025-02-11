@@ -38,7 +38,7 @@ struct MyProfileView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .frame(width: 361)
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
@@ -88,7 +88,7 @@ struct MyProfileView: View {
                             .pretendard(.body02)
                     }
                 }
-                .frame(width: 361)
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
                 .padding(.vertical, 7)
 
                 NavigationLink(
@@ -129,6 +129,7 @@ struct MyProfileView: View {
                 }
             }
         }
+        .frame(width: Constant.isSmallDevice ? 343 : 361)
     }
 
     @ViewBuilder
@@ -209,9 +210,11 @@ struct MyProfileView: View {
     }
 
     private var myPeepList: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
+
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -233,7 +236,7 @@ struct MyProfileView: View {
                                 ThumbnailProfile(peep: store.uploadedPeeps[idx-1])
                             }
                         }
-                        .padding(.bottom, 11)
+                        .padding(.bottom, spacing)
                     }
                 }
                 .padding(.bottom, 38)
@@ -257,9 +260,11 @@ struct MyProfileView: View {
     }
 
     private var activityList: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
+
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -277,7 +282,7 @@ struct MyProfileView: View {
                         ) { peep in
                             ThumbnailProfile(peep: peep)
                         }
-                        .padding(.bottom, 11)
+                        .padding(.bottom, spacing)
                     }
                 }
                 .padding(.bottom, 38)
@@ -317,7 +322,10 @@ struct MyProfileView: View {
 
                 Image("Subtract")
             }
-            .frame(width: 113, height: 155)
+            .frame(
+                width: Constant.isSmallDevice ? 108 : 113,
+                height: Constant.isSmallDevice ? 148 : 155
+            )
         }
     }
 }

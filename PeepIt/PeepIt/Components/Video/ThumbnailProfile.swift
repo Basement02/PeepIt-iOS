@@ -20,12 +20,6 @@ struct ThumbnailProfile: View {
 
             ThumbnailLayer.secondary()
 
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(
-                    Color.coreLime,
-                    lineWidth: peep.isActive ? 1 : 0
-                )
-
             if let reaction = peep.reaction, !peep.isMine {
                 ZStack {
                     RoundedRectangle(cornerRadius: 8.37)
@@ -38,8 +32,17 @@ struct ThumbnailProfile: View {
                 .padding(.top, 9)
                 .padding(.trailing, 8)
             }
+
+            RoundedRectangle(cornerRadius: 8)
+                .strokeBorder(
+                    Color.coreLime,
+                    lineWidth: peep.isActive ? 1 : 0
+                )
         }
-        .frame(width: 113, height: 155)
+        .frame(
+            width: Constant.isSmallDevice ? 108 : 113,
+            height: Constant.isSmallDevice ? 148 : 155
+        )
     }
 }
 
