@@ -22,6 +22,10 @@ struct WriteStore {
         var bodyText = ""
         /// 본문 입력 모드
         var isBodyInputMode = false
+        /// 지도 모달 offset
+        var modalOffset = Constant.screenHeight
+        /// 키보드 관리
+        var keyboardHeight = CGFloat(0)
     }
 
     enum Action: BindableAction {
@@ -30,6 +34,10 @@ struct WriteStore {
         case uploadButtonTapped
         case bodyTextEditorTapped
         case doneButtonTapped
+        case addressTapped
+        case viewTapped
+        case modalDragOnChanged(height: CGFloat)
+        case closeModal
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -57,6 +65,21 @@ struct WriteStore {
 
             case .doneButtonTapped:
                 state.isBodyInputMode = false
+                return .none
+
+            case .addressTapped:
+                state.modalOffset = 0
+                return .none
+
+            case .viewTapped:
+                return .send(.closeModal)
+
+            case let .modalDragOnChanged(value):
+                state.modalOffset = value
+                return .none
+
+            case .closeModal:
+                state.modalOffset = Constant.screenHeight
                 return .none
 
             default:

@@ -28,6 +28,8 @@ struct ReportStore {
             case spam = "홍보 목적의 글을 도배해요"
             case other = "다른 문제가 있어요"
         }
+
+        var currentOffset = CGFloat.zero
     }
 
     enum Action: BindableAction {
@@ -36,8 +38,10 @@ struct ReportStore {
         case reasonSelectButtonTapped
         /// 신고 사유 선택
         case reasonSelected(type: State.ReportReasonType)
-        /// 모달 닫기
-        case closeModal
+        /// 취소 버튼 탭
+        case closeButtonTapped
+
+        case dragOnChanged(height: CGFloat)
     }
 
     var body: some Reducer<State, Action> {
@@ -58,9 +62,13 @@ struct ReportStore {
                 state.selectedReportReason = type
                 return .none
 
-            case .closeModal:
+            case .closeButtonTapped:
                 state.isReasonListShowed = false
                 state.selectedReportReason = nil
+                return .none
+
+            case let .dragOnChanged(height):
+                state.currentOffset = height
                 return .none
 
             default:

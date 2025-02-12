@@ -18,7 +18,7 @@ struct StickerLayerView: View {
                     WithPerceptionTracking {
                         let scale = (
                             store.stickersInDeleteArea.contains(sticker.id) ?
-                            sticker.scale * 1.5 : sticker.scale
+                            sticker.scale * 0.6 : sticker.scale
                         )
                         
                         Image(sticker.stickerName)

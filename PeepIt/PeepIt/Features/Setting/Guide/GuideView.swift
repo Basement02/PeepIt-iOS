@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct GuideView: View {
-    let store: StoreOf<GuideStore>
+    @Perception.Bindable var store: StoreOf<GuideStore>
 
     var body: some View {
         VStack(spacing: 0) {
@@ -32,6 +32,9 @@ struct GuideView: View {
         .background(Color.base)
         .ignoresSafeArea(.all, edges: .bottom)
         .toolbar(.hidden, for: .navigationBar)
+        .fullScreenCover(isPresented: $store.isSheetVisible) { 
+            GuideDescriptionView(store: self.store)
+        }
     }
 
     private var backButton: some View {
@@ -58,6 +61,7 @@ struct GuideView: View {
                 .resizable()
                 .frame(width: 21, height: 21)
         }
+        .contentShape(Rectangle())
     }
 
     private var guideList: some View {
@@ -67,6 +71,9 @@ struct GuideView: View {
             ), id: \.0
         ) { idx, item in
             listCell(title: item.rawValue)
+                .onTapGesture {
+                    store.send(.guideCellTapped(type: item))
+                }
                 .padding(
                     .bottom,
                     idx == GuideStore.State.GuideType.allCases.count-1 ?

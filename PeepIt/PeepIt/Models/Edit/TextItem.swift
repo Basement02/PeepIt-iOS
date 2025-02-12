@@ -13,4 +13,5 @@ struct TextItem: Identifiable, Equatable {
     var position: CGPoint = .zero
     var scale: CGFloat = 24.0
     var color: Color = .white
+    var textHeight: CGFloat = 0
 }

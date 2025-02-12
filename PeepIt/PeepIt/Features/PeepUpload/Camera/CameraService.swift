@@ -9,34 +9,47 @@ import AVFoundation
 import UIKit
 
 protocol CameraServiceProtocol {
+    /// 카메라 세팅
     func startSession() -> AVCaptureSession
-    func capture() async throws -> Data
-    func startRecording(to url: URL) throws
+    /// 촬영
+    func capture(with flashMode: Bool) async throws -> Data
+    /// 영상 촬영 시작
+    func startRecording(to url: URL, with flashMode: Bool) throws
+    /// 영상 촬영 끝
     func stopRecording() async throws -> URL
+    /// 줌 세팅
+    func setZoom(_ factor: CGFloat)
 }
 
-final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptureDelegate, AVCaptureFileOutputRecordingDelegate {
+final class CameraService: NSObject,
+                            CameraServiceProtocol,
+                            AVCapturePhotoCaptureDelegate,
+                            AVCaptureFileOutputRecordingDelegate {
 
     private let session = AVCaptureSession()
     private let photoOutput = AVCapturePhotoOutput()
     private let videoOutput = AVCaptureMovieFileOutput()
     private var continuation: CheckedContinuation<Data, Error>?
     private var videoContinuation: CheckedContinuation<URL, Error>?
+    private var currentCamera: AVCaptureDevice?
 
     func startSession() -> AVCaptureSession {
         session.beginConfiguration()
 
         session.inputs.forEach { session.removeInput($0) }
 
-        guard let camera = AVCaptureDevice.default(
-            .builtInWideAngleCamera,
-            for: .video,
-            position: .back
-        ),
-            let input = try? AVCaptureDeviceInput(device: camera) else {
+        let availableCamera = [
+            AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back),
+            AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        ].compactMap { $0 }.first
+
+        guard let camera = availableCamera,
+              let input = try? AVCaptureDeviceInput(device: camera) else {
             session.commitConfiguration()
             return session
         }
+
+        currentCamera = camera
 
         guard let microphone = AVCaptureDevice.default(for: .audio),
               let audioInput = try? AVCaptureDeviceInput(device: microphone) else {
@@ -60,9 +73,9 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         return session
     }
 
-    func capture() async throws -> Data {
+    func capture(with flashMode: Bool) async throws -> Data {
         let settings = AVCapturePhotoSettings()
-        settings.flashMode = .auto
+        settings.flashMode = flashMode ? .on : .off
 
         return try await withCheckedThrowingContinuation { continuation in
             self.continuation = continuation
@@ -70,13 +83,23 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         }
     }
 
-    func startRecording(to url: URL) throws {
+    func startRecording(to url: URL, with flashMode: Bool) throws {
         guard !videoOutput.isRecording else {
             throw NSError(
                 domain: "CameraService",
                 code: -1,
                 userInfo: [NSLocalizedDescriptionKey: "Already recording"]
             )
+        }
+
+        guard let camera = currentCamera, camera.hasTorch else { return }
+
+        do {
+            try camera.lockForConfiguration()
+            camera.torchMode = flashMode ? .on : .off
+            camera.unlockForConfiguration()
+        } catch {
+            print("torch setting failed: \(error.localizedDescription)")
         }
 
         videoOutput.startRecording(to: url, recordingDelegate: self)
@@ -94,6 +117,16 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
         return try await withCheckedThrowingContinuation { continuation in
             self.videoContinuation = continuation
             videoOutput.stopRecording()
+
+            if let camera = currentCamera, camera.hasTorch {
+                do {
+                    try camera.lockForConfiguration()
+                    camera.torchMode = .off
+                    camera.unlockForConfiguration()
+                } catch {
+                    print("torch setting failed: \(error.localizedDescription)")
+                }
+            }
         }
     }
 
@@ -131,5 +164,19 @@ final class CameraService: NSObject, CameraServiceProtocol, AVCapturePhotoCaptur
             videoContinuation?.resume(returning: outputFileURL)
         }
         videoContinuation = nil
+    }
+
+    func setZoom(_ factor: CGFloat) {
+        guard let camera = currentCamera else { return }
+
+        do {
+            try camera.lockForConfiguration()
+            let zoomFactor = max(camera.minAvailableVideoZoomFactor, min(factor, 6.0))
+
+            camera.videoZoomFactor = zoomFactor
+            camera.unlockForConfiguration()
+        } catch {
+            print("zoom setting failed: \(error.localizedDescription)")
+        }
     }
 }

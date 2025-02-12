@@ -19,21 +19,22 @@ struct ThumbnailAlarm: View {
 
             ThumbnailLayer.secondary()
 
+            HStack(spacing: 1) {
+                Image("IconCommentBold")
+                    .resizable()
+                    .frame(width: 14, height: 14)
+                    .frame(width: 20.16, height: 20.16)
+                Text("00")
+                    .pretendard(.body01)
+            }
+            .frame(height: 22)
+            .padding(.top, 10.8)
+            .padding(.leading, 12)
+
             RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(Color.coreLime, lineWidth: 1)
-
-            HStack(spacing: 1) {
-                Image("IconComment")
-                    .resizable()
-                    .frame(width: 16.8, height: 16.8)
-                Text("00")
-                    .pretendard(.body04)
-            }
-            .frame(height: 20)
-            .padding(.top, 9)
-            .padding(.leading, 10)
         }
-        .frame(width: 92, height: 126)
+        .frame(width: 110.4, height: 151.2)
     }
 }
 

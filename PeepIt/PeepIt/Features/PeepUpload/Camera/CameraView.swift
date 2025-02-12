@@ -12,20 +12,37 @@ import AVFoundation
 struct CameraView: View {
     let store: StoreOf<CameraStore>
 
+    @State private var currentZoom = 0.0
+    @State private var totalZoom = 1.0
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
                 /// 카메라 + 기본 레이어
+                if let session = store.cameraSession {
+                    CameraPreview(session: session)
+                        .ignoresSafeArea()
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    let zoomFactor = totalZoom * value
+                                    currentZoom = zoomFactor
+                                    store.send(
+                                        .zoomGestureOnChanged(value: CGFloat(currentZoom))
+                                    )
+                                }
+                                .onEnded { value in
+                                    totalZoom = currentZoom
+                                }
+                        )
+                }
+
                 Group {
-                    if let session = store.cameraSession {
-                        CameraPreview(session: session)
-                    }
-
                     BackImageLayer.primary()
-
                     BackImageLayer.secondary()
                 }
                 .ignoresSafeArea()
+                .allowsHitTesting(false)
 
                 VStack(spacing: 0) {
                     topBar
@@ -33,7 +50,7 @@ struct CameraView: View {
                     if store.isRecording {
                         PeepItProgress(store: self.store)
                             .padding(.horizontal, 16)
-                            .padding(.top, 10.4.adjustedH)
+                            .padding(.top, 10.4)
                     }
 
                     Spacer()
@@ -57,7 +74,18 @@ struct CameraView: View {
                 Spacer()
             }
 
-            Image("FlashOnN")
+            Button {
+                store.send(.flashButtonTapped)
+            } label: {
+                Image("FlashOffN")
+                    .hidden()
+            }
+            .buttonStyle(
+                PressableButtonStyle(
+                    originImg: store.isFlashOn ? "FlashOnN" : "FlashOffN",
+                    pressedImg:  store.isFlashOn ? "FlashOnY" : "FlashOffY"
+                )
+            )
         }
         .padding(.horizontal, 16)
     }

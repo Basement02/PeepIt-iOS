@@ -8,59 +8,117 @@
 import Foundation
 import ComposableArchitecture
 
+//@State private var offsetX: CGFloat = .zero
+//@State private var dragEndedOffset: CGFloat = .zero
+//@State private var isScrolling = true
+//@State private var isAutoScroll = false
+
 @Reducer
 struct PeepModalStore {
 
     @ObservableState
     struct State: Equatable {
-        var sheetHeight = SheetType.scrollDown.height
-        var isSheetScrolledDown = false
-        var offset = CGFloat(0)
-        var lastOffset = CGFloat(0)
+        var baseOffset = SheetType.scrollDown.offset
+
+        var isSheetScrolledDown: Bool {
+            return modalOffset == SheetType.scrollDown.offset
+        }
+
+        var modalOffset = CGFloat(SheetType.scrollDown.offset)
+
+        var scrollOffsetX: CGFloat = .zero
+        var dragEndedOffset: CGFloat = .zero
+        var isScrolling = true
+        var isAutoScroll = false
+
+        enum SheetType: CaseIterable {
+            case scrollDown, scrollUp
+
+            var height: CGFloat {
+                switch self {
+                case .scrollDown:
+                    return CGFloat(100)
+                case .scrollUp:
+                    return CGFloat(457)
+                }
+            }
+
+            var offset: CGFloat {
+                switch self {
+                case .scrollDown:
+                    return CGFloat(457-100)
+                case .scrollUp:
+                    return CGFloat(0)
+                }
+            }
+        }
     }
 
     enum Action {
-        case setSheetHeight(height: CGFloat)
         case modalDragged(dragHeight: CGFloat)
-        case modalDragEnded
+        case modalDragEnded(dragHeight: CGFloat)
         case peepCellTapped
+        case scrollUpButtonTapped
+        case peepScrollUpdated(CGFloat)
+        case peepScrollEnded
+        case autoScrollStarted
+        case autoScrollEnded
+        case setPeepScrollOffset(CGFloat)
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
-            case let .setSheetHeight(height):
-                state.sheetHeight = height
-                state.isSheetScrolledDown = (height == SheetType.scrollDown.height)
+
+            case let .modalDragged(dragHeight):
+                state.modalOffset = max(
+                    min(state.baseOffset + dragHeight, State.SheetType.scrollDown.offset),
+                    State.SheetType.scrollUp.offset
+                )
+                return .none
+
+            case let .modalDragEnded(dragHeight):
+                let isScrollingUp = dragHeight < 0
+                let shouldSnapUp = abs(dragHeight) > 60
+
+                state.baseOffset = shouldSnapUp
+                    ? (isScrollingUp ? State.SheetType.scrollUp.offset : State.SheetType.scrollDown.offset)
+                    : (isScrollingUp ? State.SheetType.scrollDown.offset : State.SheetType.scrollUp.offset)
+
+                state.modalOffset = state.baseOffset
 
                 return .none
 
-            case let .modalDragged(dragHeight):
-                state.offset = max(
-                    dragHeight,
-                    -(SheetType.scrollUp.height - SheetType.scrollDown.height)
-                ) + state.lastOffset
-
-                return .send(
-                    .setSheetHeight(height: -state.offset + SheetType.scrollDown.height)
-                )
-
-            case .modalDragEnded:
-                if -state.offset > SheetType.scrollUp.height / 2 {
-                    state.offset = -(SheetType.scrollUp.height - SheetType.scrollDown.height)
-                } else {
-                    state.offset = 0
-                }
-
-                state.lastOffset = state.offset
-                
-                return .send(
-                    .setSheetHeight(height: -state.offset + SheetType.scrollDown.height)
-                )
-
             case .peepCellTapped:
+                return .none
+
+            case .scrollUpButtonTapped:
+                state.modalOffset = State.SheetType.scrollUp.offset
+                state.baseOffset = State.SheetType.scrollUp.offset
+                return .none
+
+            case let .peepScrollUpdated(offset):
+                state.dragEndedOffset = offset
+                state.isScrolling = true
+                return .none
+
+            case .peepScrollEnded:
+                state.isScrolling = false
+                return .none
+
+            case .autoScrollStarted:
+                state.isAutoScroll = true
+                return .none
+
+            case .autoScrollEnded:
+                state.isAutoScroll = false
+                return .none
+
+            case let .setPeepScrollOffset(offset):
+                state.scrollOffsetX = offset
                 return .none
             }
         }
     }
 }
+

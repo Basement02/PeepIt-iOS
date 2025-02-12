@@ -15,7 +15,7 @@ struct PeepDetailView: View {
         WithPerceptionTracking {
             GeometryReader { proxy in
                 WithPerceptionTracking {
-                    ZStack(alignment: .bottom) {
+                    ZStack(alignment: .topTrailing) {
                         Color.base.ignoresSafeArea()
 
                         VStack(spacing: 11) {
@@ -41,21 +41,20 @@ struct PeepDetailView: View {
 
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    ElseMenuView(
-                                        firstButton: shareButton,
-                                        secondButton: reportButton,
-                                        bgColor: Color.blur2
-                                    )
-                                    .padding(.top, 70)
-                                    .padding(.trailing, 33)
-                                }
-                                Spacer()
-                            }
+                            ElseMenuView(
+                                firstButton: shareButton,
+                                secondButton: reportButton,
+                                bgColor: Color.blur2
+                            )
+                            .padding(.top, 70)
+                            .padding(.trailing, 33)
                         }
-
+                    }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .onAppear { store.send(.onAppear) }
+                    .onTapGesture { store.send(.viewTapped) }
+                    .overlay {
+                        /// 채팅 상세
                         if store.showChat {
                             ChatView(
                                 store: store.scope(
@@ -64,7 +63,8 @@ struct PeepDetailView: View {
                                 )
                             )
                         }
-
+                    }
+                    .overlay(alignment: .bottom) {
                         /// 신고 모달 오픈 시 bg
                         if store.isReportSheetVisible {
                             Color.op
@@ -75,22 +75,20 @@ struct PeepDetailView: View {
                         }
 
                         /// 신고 모달
-//                        ReportModal(
-//                            store: store.scope(
-//                                state: \.report,
-//                                action: \.report
-//                            )
-//                        )
-//                        .frame(maxWidth: .infinity)
-//                        .offset(y: -1000)
-//                        .animation(
-//                            .easeInOut(duration: 0.3),
-//                            value: store.isReportSheetVisible
-//                        )
-
+                        ReportModal(
+                            store: store.scope(
+                                state: \.report,
+                                action: \.report
+                            )
+                        )
+                        .ignoresSafeArea()
+                        .frame(maxWidth: .infinity)
+                        .offset(y: store.modalOffset)
+                        .animation(
+                            .easeInOut(duration: 0.3),
+                            value: store.isReportSheetVisible
+                        )
                     }
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
-                    .onAppear { store.send(.onAppear) }
                 }
             }
         }
@@ -188,7 +186,7 @@ extension PeepDetailView {
                     HStack(spacing: 3) {
                         Image("CombiShareBtnY")
                         Text("공유하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )
@@ -217,7 +215,7 @@ extension PeepDetailView {
                     HStack(spacing: 3) {
                         Image("CombiReportBtnY")
                         Text("신고하기")
-                            .pretendard(.body04)
+                            .pretendard(.body02)
                     }
                     .foregroundStyle(Color.gray300)
             )

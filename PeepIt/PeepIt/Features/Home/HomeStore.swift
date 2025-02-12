@@ -14,10 +14,15 @@ struct HomeStore {
     @ObservableState
     struct State: Equatable {
         var isPeepDetailShowed = false
+        var townVerificationModalOffset = Constant.screenHeight
         var peepPreviewModal = PeepModalStore.State()
         var peepDetail = PeepDetailStore.State()
         var sideMenu = SideMenuStore.State()
         var camera = CameraStore.State()
+        var townVerification = TownVerificationStore.State()
+        var showTownVeriModal = false
+
+        var mainViewOffset = CGFloat.zero
     }
 
     enum Action {
@@ -30,8 +35,11 @@ struct HomeStore {
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case camera(CameraStore.Action)
+        case townVerification(TownVerificationStore.Action)
 
         case pushToDetail
+        case addressButtonTapped
+        case dismissSideMenu
     }
 
     var body: some Reducer<State, Action> {
@@ -42,7 +50,11 @@ struct HomeStore {
         Scope(state: \.sideMenu, action: \.sideMenu) {
             SideMenuStore()
         }
-        
+
+        Scope(state: \.townVerification, action: \.townVerification) {
+            TownVerificationStore()
+        }
+
         Reduce { state, action in
             switch action {
 
@@ -52,6 +64,7 @@ struct HomeStore {
 
             case .sideMenuButtonTapped:
                 state.sideMenu.sideMenuOffset = 0
+                state.mainViewOffset = 318
                 return .none
 
             case .profileButtonTapped:
@@ -64,6 +77,25 @@ struct HomeStore {
                 return .send(.pushToDetail)
 
             case .pushToDetail:
+                return .none
+
+            case .addressButtonTapped:
+                state.showTownVeriModal = true
+                state.townVerificationModalOffset = 0
+                return .none
+
+            case let .townVerification(.modalDragOnChanged(height)):
+                state.townVerificationModalOffset = height
+                return .none
+
+            case .townVerification(.closeModal):
+                state.showTownVeriModal = false
+                state.townVerificationModalOffset = Constant.screenHeight
+                return .none
+
+            case .dismissSideMenu:
+                state.sideMenu.sideMenuOffset = -CGFloat(318)
+                state.mainViewOffset = 0
                 return .none
 
             default:

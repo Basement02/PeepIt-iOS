@@ -144,6 +144,11 @@ struct RootStore {
                     state.path.append(.welcome(.init()))
                     return .none
 
+                case .element(_, action: .myProfile(.watchButtonTapped)):
+                    state.path.removeAll()
+                    return .none
+
+
                 default:
                     return .none
                 }

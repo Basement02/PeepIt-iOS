@@ -24,53 +24,76 @@ struct HomeView: View {
                 .allowsHitTesting(false)
                 .ignoresSafeArea()
 
-                VStack {
-                    topBar
-                        .padding(.horizontal, 16)
+                if !store.showTownVeriModal {
+                    VStack {
+                        topBar
+                            .padding(.horizontal, 16)
 
-                    Spacer()
-
-                    HStack(alignment: .bottom) {
-                        currentLocationButton
                         Spacer()
-                        uploadPeepButton
+
+                        HStack(alignment: .bottom) {
+                            currentLocationButton
+                            Spacer()
+                            uploadPeepButton
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(
+                            .bottom,
+                            PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
+                        )
                     }
-                    .padding(.horizontal, 16)
-                    .padding(
-                        .bottom, store.peepPreviewModal.sheetHeight + 24
+
+                    PeepPreviewModalView(
+                        store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
                     )
                 }
-
-                peepPreviewView
-
+            }
+            .offset(x: store.mainViewOffset)
+            .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                if store.mainViewOffset > 0 {
+                    Color.blur2
+                        .ignoresSafeArea()
+                        .onTapGesture { store.send(.dismissSideMenu) }
+                }
+            }
+            .overlay {
                 SideMenuView(
                     store: store.scope(state: \.sideMenu, action: \.sideMenu)
                 )
+                .offset(x: store.sideMenu.sideMenuOffset)
             }
-            .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                TownRegisterModalView(
+                    store: store.scope(state: \.townVerification, action: \.townVerification)
+                )
+                .offset(y: store.townVerificationModalOffset)
+                .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
+            }
         }
     }
 }
 
 extension HomeView {
-
+    
     private var topBar: some View {
         HStack {
             moreButton
-
+            
             Spacer()
-
+            
             setMyTownButton
-
+            
             Spacer()
-
+            
             profileButton
         }
         .frame(maxWidth: .infinity)
         .frame(height: 44)
     }
-
+    
     private var moreButton: some View {
         Button {
             store.send(
@@ -81,24 +104,24 @@ extension HomeView {
                 RoundedRectangle(cornerRadius: 13)
                     .fill(Color.blur1)
                     .frame(width: 45, height: 45)
-
+                
                 Image("IconMenu")
             }
         }
     }
-
+    
     private var setMyTownButton: some View {
         Button {
-            // TODO: 모달 올리기
+            store.send(.addressButtonTapped)
         } label: {
             HStack(spacing: 2) {
                 Image("IconLocation")
-
+                
                 Text("지금")
                     .pretendard(.body02)
                     .foregroundStyle(Color.white)
                     .padding(.trailing, 3)
-
+                
                 Text("동이름")
                     .pretendard(.foodnote)
                     .foregroundStyle(Color.white)
@@ -112,7 +135,7 @@ extension HomeView {
             )
         }
     }
-
+    
     private var profileButton: some View {
         Button {
             store.send(.profileButtonTapped)
@@ -122,28 +145,45 @@ extension HomeView {
                 .frame(width: 45, height: 45)
         }
     }
-
+    
     private var currentLocationButton: some View {
-        Button {
+        let normal = Circle()
+            .fill(Color.base)
+            .frame(width: 44, height: 44)
+
+        let pressable = Circle()
+            .fill(Color.gray700)
+            .frame(width: 44, height: 44)
+
+        return Button {
             // TODO:
         } label: {
-            ZStack {
-                Circle()
-                    .frame(width: 44, height: 44)
-                    .hidden()
-            }
+            Circle()
+                .frame(width: 44, height: 44)
+                .hidden()
         }
         .buttonStyle(
-            PressableButtonStyle(
-                originImg: "AlignBtnN",
-                pressedImg: "AlignBtnY"
-            )
+            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
         )
-        .shadowElement()
+        .overlay { Image("IconNavigationTarget") }
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
-
+    
     private var uploadPeepButton: some View {
-        Button {
+        let normal = Circle()
+            .fill(Color.coreLime)
+            .frame(width: 56, height: 56)
+
+        let pressable = Circle()
+            .fill(Color.coreLimeClick)
+            .frame(width: 56, height: 56)
+
+        return Button {
             store.send(.uploadButtonTapped)
         } label: {
             Circle()
@@ -151,57 +191,19 @@ extension HomeView {
                 .hidden()
         }
         .buttonStyle(
-            PressableButtonStyle(
-                originImg: "PeepBtnN",
-                pressedImg: "PeepBtnY"
-            )
+            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
         )
-        .shadowPoint()
-    }
-
-    private var peepPreviewView: some View {
-        GeometryReader { proxy in
-            WithPerceptionTracking {
-                let height = proxy
-                    .frame(in: .global)
-                    .height
-
-                PeepPreviewModalView(
-                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
-                )
-                .offset(y: height - SheetType.scrollDown.height)
-                .offset(y: store.peepPreviewModal.offset)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            store.send(
-                                .peepPreviewModal(.modalDragged(dragHeight: value.translation.height))
-                            )
-                        }
-                        .onEnded { _ in
-                            store.send(.peepPreviewModal(.modalDragEnded))
-                        }
-                )
-                .onAppear {
-                    store.send(
-                        .peepPreviewModal(.setSheetHeight(height: SheetType.scrollDown.height))
-                    )
-                }
-            }
+        .overlay {
+            Image("IconSubtract")
+                .resizable()
+                .frame(width: 19, height: 19)
         }
-    }
-}
-
-enum SheetType: CaseIterable {
-    case scrollDown, scrollUp
-
-    var height: CGFloat {
-        switch self {
-        case .scrollDown:
-            return CGFloat(100)
-        case .scrollUp:
-            return CGFloat(457)
-        }
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
 }
 

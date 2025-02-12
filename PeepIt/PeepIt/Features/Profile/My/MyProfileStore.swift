@@ -17,10 +17,10 @@ struct MyProfileStore {
         var peepTabSelection = PeepTabType.uploaded
 
         /// 업로드한 핍들
-        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var uploadedPeeps: [Peep] = []
 
         /// 나의 활동 핍들
-        var activityPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3]
+        var activityPeeps: [Peep] = []
 
         /// 나의 활동 필터 탭
         var myTabFilter = MyActivityType.all
@@ -39,7 +39,9 @@ struct MyProfileStore {
         case peepTabTapped(selection: PeepTabType)
         case myTabTapped(selection: MyProfileStore.State.MyActivityType)
         case loadUploadedPeeps
+        case loadActivityPeeps
         case uploadButtonTapped
+        case watchButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -52,9 +54,7 @@ struct MyProfileStore {
                 return .send(.loadUploadedPeeps)
 
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             case .modifyButtonTapped:
                 return .none
@@ -62,25 +62,36 @@ struct MyProfileStore {
             case let .peepTabTapped(selection):
                 state.peepTabSelection = selection
 
-//                if selection == .myActivity {
-//                    return .merge(
-//                        .send(.loadReactedPeeps),
-//                        .send(.loadCommentPeeps)
-//                    )
-//                }
-
-                return .none
+                switch selection {
+                case .uploaded:
+                    return .send(.loadUploadedPeeps)
+                case .myActivity:
+                    return .send(.loadActivityPeeps)
+                }
 
             case let .myTabTapped(selection):
                 state.myTabFilter = selection
-
+                
                 return .none
 
             case .loadUploadedPeeps:
-                // TODO: 나의 핍 API
+                let random = Bool.random()
+                if random {
+                    state.uploadedPeeps = [.stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7, .stubPeep8, .stubPeep9, .stubPeep10, .stubPeep11]
+                }
+                return .none
+
+            case .loadActivityPeeps:
+                let random = Bool.random()
+                if random {
+                    state.activityPeeps = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7, .stubPeep8, .stubPeep9]
+                }
                 return .none
 
             case .uploadButtonTapped:
+                return .none
+
+            case .watchButtonTapped:
                 return .none
             }
         }

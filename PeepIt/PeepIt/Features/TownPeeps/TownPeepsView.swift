@@ -12,41 +12,15 @@ struct TownPeepsView: View {
     let store: StoreOf<TownPeepsStore>
 
     var body: some View {
-        VStack(spacing: 0) {
-            navigationBar
+        ZStack {
+            Color.base.ignoresSafeArea()
+            
+            VStack(spacing: 0) {
+                navigationBar
 
-            ScrollView(showsIndicators: false) {
-                HStack {
-                    hotLabel
-                    Spacer()
-                }
-                .padding(.top, 39)
-                .padding(.bottom, 25)
-
-                HStack {
-                    Text("N월 N일의 인기 핍")
-                        .pretendard(.title02)
-                    Spacer()
-                }
-                .padding(.bottom, 17)
-
-                LazyVGrid(
-                    columns: [
-                        GridItem(.flexible(), spacing: 11),
-                        GridItem(.flexible())
-                    ],
-                    alignment: .center,
-                    spacing: 8
-                ) {
-                    ForEach(0..<20) { _ in
-                        ThumbnailPeep()
-                    }
-                }
+                scrollView
             }
-            .frame(width: 337)
-            .refreshable {
-                // TODO: 새로 고침
-            }
+            .frame(width: Constant.isSmallDevice ? 343 : 361)
         }
         .frame(maxWidth: .infinity)
         .ignoresSafeArea(.all, edges: .bottom)
@@ -64,7 +38,6 @@ struct TownPeepsView: View {
             titleView
         }
         .background(Color.base)
-        .padding(.horizontal, 16)
         .frame(height: 44)
     }
 
@@ -104,6 +77,72 @@ struct TownPeepsView: View {
                 .frame(height: 28)
         )
     }
+
+    private var hiddenView: some View {
+        GeometryReader { proxy in
+            let offsetY = proxy.frame(in: .global).origin.y
+            Color.clear
+                .preference(
+                    key: ScrollOffsetKey.self,
+                    value: offsetY
+                )
+                .onAppear {
+                    store.send(.setInitialOffsetY(offsetY))
+                }
+        }
+        .frame(height: 0)
+    }
+
+    private var scrollView: some View {
+        ZStack(alignment: .top) {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(height: store.isRefreshing ? 76 : 0)
+
+            Image("IconPopularWhite")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .rotationEffect(.degrees(store.rotateAngle))
+                    .opacity(store.isRefreshing ? 1 : 0)
+                    .offset(y: 23)
+
+            ScrollView(showsIndicators: false) {
+                hiddenView
+                HStack {
+                    hotLabel
+                    Spacer()
+                }
+                .padding(.top, store.isRefreshing ? 99 : 39)
+                .padding(.bottom, 25)
+
+                HStack {
+                    Text("N월 N일의 인기 핍")
+                        .pretendard(.title02)
+                    Spacer()
+                }
+                .padding(.bottom, 25)
+
+                LazyVGrid(
+                    columns: [GridItem(.flexible()), GridItem(.flexible())],
+                    alignment: .center,
+                    spacing: 8
+                ) {
+                    ForEach(0..<20) { _ in
+                        NavigationLink(
+                            state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
+                        ) {
+                            ThumbnailPeep()
+                        }
+                    }
+                }
+            }
+            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
+                if newOffset >= 140 && !store.isRefreshing {
+                    store.send(.refresh)
+                }
+            }
+        }
+    }
 }
 
 fileprivate struct ThumbnailPeep: View {
@@ -119,18 +158,20 @@ fileprivate struct ThumbnailPeep: View {
             ThumbnailLayer.secondary()
 
             HStack(spacing: 0) {
-                Image("IconComment")
+                Image("IconCommentBold")
                     .resizable()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 13.5, height: 13.5)
+                    .frame(width: 21, height: 21)
 
                 Text("00")
                     .pretendard(.body02)
                     .foregroundStyle(Color.white)
                     .padding(.trailing, 5)
 
-                Image("IconReact")
+                Image("IconReactionBold")
                     .resizable()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 13.5, height: 13.5)
+                    .frame(width: 21, height: 21)
 
                 Text("00")
                     .pretendard(.body02)
@@ -141,10 +182,11 @@ fileprivate struct ThumbnailPeep: View {
             .padding(.top, 12)
             .padding(.leading, 15)
         }
-        .frame(width: 165, height: 225)
+        .frame(
+            width: Constant.isSmallDevice ? 167 : 175,
+            height: Constant.isSmallDevice ? 229 : 240
+        )
     }
-
-
 }
 
 #Preview {

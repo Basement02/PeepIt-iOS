@@ -25,6 +25,7 @@ struct MyProfileView: View {
                     VStack(spacing: 0) {
                         profileView
                             .padding(.top, 43)
+                            .padding(.bottom, 26)
 
                         switch store.peepTabSelection {
 
@@ -37,14 +38,12 @@ struct MyProfileView: View {
                     }
                 }
                 .scrollIndicators(.hidden)
-                .frame(width: 361)
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
-            .onAppear {
-                store.send(.onAppear)
-            }
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -62,7 +61,10 @@ struct MyProfileView: View {
                 .opacity(0)
         }
         .buttonStyle(
-            PressableButtonStyle(originImg: "UploadN", pressedImg: "UploadY")
+            PressableButtonStyle(
+                originImg: "UploadN",
+                pressedImg: "UploadY"
+            )
         )
     }
 
@@ -75,7 +77,7 @@ struct MyProfileView: View {
 
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 11) {
-                    Text("닉네임")
+                    Text("${닉네임}")
                         .pretendard(.title02)
 
                     HStack(spacing: 2) {
@@ -85,9 +87,8 @@ struct MyProfileView: View {
                         Text("동이름")
                             .pretendard(.body02)
                     }
-                    .padding(.bottom, 7)
                 }
-                .frame(width: 361)
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
                 .padding(.vertical, 7)
 
                 NavigationLink(
@@ -106,11 +107,10 @@ struct MyProfileView: View {
     private var header: some View {
         VStack(spacing: 0) {
             peepTab
-                .padding(.bottom, 18.4)
+                .padding(.bottom, 16)
             filters
         }
-        .padding(.top, 20)
-        .padding(.bottom, 21)
+        .padding(.bottom, 11)
         .background(Color.base)
     }
 
@@ -129,6 +129,7 @@ struct MyProfileView: View {
                 }
             }
         }
+        .frame(width: Constant.isSmallDevice ? 343 : 361)
     }
 
     @ViewBuilder
@@ -137,9 +138,7 @@ struct MyProfileView: View {
 
         case .uploaded:
             HStack(spacing: 5) {
-                TagTab(title: "전체 000", isSelected: true)
-                TagTab(title: "동이름 00", isSelected: false)
-                TagTab(title: "동이름 00", isSelected: false)
+                TagTab(title: "전체 \(store.uploadedPeeps.count)", isSelected: true)
 
                 Spacer()
             }
@@ -171,17 +170,15 @@ struct MyProfileView: View {
             store.send(.uploadButtonTapped)
         } label: {
             Rectangle()
-                .frame(width: 140, height: 38)
-                .opacity(0)
+                .frame(width: 140, height: 42)
+                .hidden()
         }
         .buttonStyle(
             PressableViewButtonStyle(
                 normalView: MiniBtn(
-                    width: 140,
                     title: "업로드하러 가기"
                 ),
                 pressedView: MiniBtn(
-                    width: 140,
                     title: "업로드하러 가기",
                     bg: Color.gray900
                 )
@@ -191,7 +188,7 @@ struct MyProfileView: View {
 
     private var watchButton: some View {
         Button {
-            // TODO:
+            store.send(.watchButtonTapped)
         } label: {
             Rectangle()
                 .frame(width: 140, height: 38)
@@ -213,9 +210,11 @@ struct MyProfileView: View {
     }
 
     private var myPeepList: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
+
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -237,14 +236,14 @@ struct MyProfileView: View {
                                 ThumbnailProfile(peep: store.uploadedPeeps[idx-1])
                             }
                         }
-                        .padding(.bottom, 11)
+                        .padding(.bottom, spacing)
                     }
                 }
-                .padding(.bottom, 29)
+                .padding(.bottom, 38)
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.bottom, 120)
+                        .padding(.bottom, 128)
 
                     Text("내가 업로드한 핍을\n모아볼 수 있어요!")
                         .pretendard(.caption03)
@@ -261,9 +260,11 @@ struct MyProfileView: View {
     }
 
     private var activityList: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
+
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -281,15 +282,14 @@ struct MyProfileView: View {
                         ) { peep in
                             ThumbnailProfile(peep: peep)
                         }
-                        .padding(.bottom, 11)
+                        .padding(.bottom, spacing)
                     }
                 }
-                .padding(.bottom, 29)
+                .padding(.bottom, 38)
 
             } else {
                 VStack(spacing: 0) {
                     peepTab
-                        .padding(.top, 20)
                         .padding(.bottom, 111)
 
                     Text(
@@ -322,7 +322,10 @@ struct MyProfileView: View {
 
                 Image("Subtract")
             }
-            .frame(width: 113, height: 155)
+            .frame(
+                width: Constant.isSmallDevice ? 108 : 113,
+                height: Constant.isSmallDevice ? 148 : 155
+            )
         }
     }
 }

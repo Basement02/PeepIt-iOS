@@ -26,12 +26,15 @@ struct OtherProfileView: View {
                     )
                     .padding(.bottom, 43)
 
-                    UserProfileView(profile: .stubUser2)
-                        .padding(.bottom, 68)
+                    profileView
+                        .padding(.bottom, 61)
 
                     Rectangle()
                         .fill(Color.op)
-                        .frame(width: 361, height: 1)
+                        .frame(
+                            width: Constant.isSmallDevice ? 343 : 361,
+                            height: 1
+                        )
 
                     if store.isUserBlocked {
                         blockedView
@@ -85,9 +88,8 @@ struct OtherProfileView: View {
             }
             .ignoresSafeArea(.all, edges: .bottom)
             .toolbar(.hidden, for: .navigationBar)
-            .onAppear {
-                store.send(.onAppear)
-            }
+            .onAppear { store.send(.onAppear) }
+            .onTapGesture { store.send(.viewTapped) }
         }
     }
 
@@ -110,10 +112,34 @@ struct OtherProfileView: View {
         )
     }
 
+    private var profileView: some View {
+        VStack(spacing: 26) {
+            Image("ProfileSample")
+                .resizable()
+                .scaledToFill()
+                .frame(width: 91.2, height: 91.2)
+
+            VStack(spacing: 11) {
+                Text("${닉네임}")
+                    .pretendard(.title02)
+
+                HStack(spacing: 2) {
+                    Image("IconLocation")
+                        .resizable()
+                        .frame(width: 22.4, height: 22.4)
+                    Text("동이름")
+                        .pretendard(.body02)
+                }
+            }
+            .padding(.vertical, 7)
+        }
+    }
+
     private var uploadPeepListView: some View {
+        let spacing = Constant.isSmallDevice ? CGFloat(9) : CGFloat(11)
         let columns = [
-            GridItem(.flexible(), spacing: 11),
-            GridItem(.flexible(), spacing: 11),
+            GridItem(.flexible(), spacing: spacing),
+            GridItem(.flexible(), spacing: spacing),
             GridItem(.flexible())
         ]
 
@@ -126,26 +152,27 @@ struct OtherProfileView: View {
 
                     Spacer()
                 }
-                .padding(.top, 18.4.adjustedH)
-                .padding(.bottom, 21.adjustedH)
+                .padding(.top, 18.4)
+                .padding(.bottom, 11)
 
                 ScrollView(showsIndicators: false) {
-                    LazyVGrid(columns: columns, spacing: 11) {
+                    LazyVGrid(columns: columns, spacing: spacing) {
                         ForEach(
                             store.uploadedPeeps
                         ) { peep in
                             ThumbnailProfile(peep: peep)
                         }
                     }
+                    .padding(.bottom, 38)
                 }
             } else {
                 Text("아직 등록된 핍이 없어요.")
                     .pretendard(.body04)
                     .foregroundStyle(Color.nonOp)
-                    .padding(.top, 161.adjustedH)
+                    .padding(.top, 161)
             }
         }
-        .frame(width: 361)
+        .frame(width: Constant.isSmallDevice ? 343 : 361)
     }
 
     private var shareButton: some View {
@@ -169,11 +196,11 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiShareBtnY")
                         Text("공유하기")
-                            .pretendard(.body04)
                     }
                     .foregroundStyle(Color.gray300)
             )
         )
+        .pretendard(.body02)
     }
 
     private var blockButton: some View {
@@ -198,11 +225,11 @@ struct OtherProfileView: View {
                     HStack(spacing: 3) {
                         Image("CombiBlockBtnY")
                         Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                            .pretendard(.body04)
                     }
                     .foregroundStyle(Color.gray300)
             )
         )
+        .pretendard(.body02)
     }
 
     private var blockedView: some View {
