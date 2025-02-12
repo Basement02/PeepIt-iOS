@@ -223,13 +223,6 @@ fileprivate struct PeepPreviewCell: View {
     }
 }
 
-struct ScrollOffsetKey: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value += nextValue()
-    }
-}
-
 #Preview {
     PeepPreviewModalView(
         store: .init(initialState: PeepModalStore.State()) {

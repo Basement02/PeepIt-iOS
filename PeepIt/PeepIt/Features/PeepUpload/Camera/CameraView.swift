@@ -50,7 +50,7 @@ struct CameraView: View {
                     if store.isRecording {
                         PeepItProgress(store: self.store)
                             .padding(.horizontal, 16)
-                            .padding(.top, 10.4.adjustedH)
+                            .padding(.top, 10.4)
                     }
 
                     Spacer()

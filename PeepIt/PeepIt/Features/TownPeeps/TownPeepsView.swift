@@ -18,38 +18,7 @@ struct TownPeepsView: View {
             VStack(spacing: 0) {
                 navigationBar
 
-                ScrollView(showsIndicators: false) {
-                    HStack {
-                        hotLabel
-                        Spacer()
-                    }
-                    .padding(.top, 39)
-                    .padding(.bottom, 25)
-
-                    HStack {
-                        Text("N월 N일의 인기 핍")
-                            .pretendard(.title02)
-                        Spacer()
-                    }
-                    .padding(.bottom, 25)
-
-                    LazyVGrid(
-                        columns: [GridItem(.flexible()), GridItem(.flexible())],
-                        alignment: .center,
-                        spacing: 8
-                    ) {
-                        ForEach(0..<20) { _ in
-                            NavigationLink(
-                                state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
-                            ) {
-                                ThumbnailPeep()
-                            }
-                        }
-                    }
-                }
-                .refreshable {
-                    // TODO: 새로 고침
-                }
+                scrollView
             }
             .frame(width: Constant.isSmallDevice ? 343 : 361)
         }
@@ -107,6 +76,72 @@ struct TownPeepsView: View {
                 .fill(Color.coreLime)
                 .frame(height: 28)
         )
+    }
+
+    private var hiddenView: some View {
+        GeometryReader { proxy in
+            let offsetY = proxy.frame(in: .global).origin.y
+            Color.clear
+                .preference(
+                    key: ScrollOffsetKey.self,
+                    value: offsetY
+                )
+                .onAppear {
+                    store.send(.setInitialOffsetY(offsetY))
+                }
+        }
+        .frame(height: 0)
+    }
+
+    private var scrollView: some View {
+        ZStack(alignment: .top) {
+            Rectangle()
+                .fill(Color.clear)
+                .frame(height: store.isRefreshing ? 76 : 0)
+
+            Image("IconPopularWhite")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .rotationEffect(.degrees(store.rotateAngle))
+                    .opacity(store.isRefreshing ? 1 : 0)
+                    .offset(y: 23)
+
+            ScrollView(showsIndicators: false) {
+                hiddenView
+                HStack {
+                    hotLabel
+                    Spacer()
+                }
+                .padding(.top, store.isRefreshing ? 99 : 39)
+                .padding(.bottom, 25)
+
+                HStack {
+                    Text("N월 N일의 인기 핍")
+                        .pretendard(.title02)
+                    Spacer()
+                }
+                .padding(.bottom, 25)
+
+                LazyVGrid(
+                    columns: [GridItem(.flexible()), GridItem(.flexible())],
+                    alignment: .center,
+                    spacing: 8
+                ) {
+                    ForEach(0..<20) { _ in
+                        NavigationLink(
+                            state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
+                        ) {
+                            ThumbnailPeep()
+                        }
+                    }
+                }
+            }
+            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
+                if newOffset >= 140 && !store.isRefreshing {
+                    store.send(.refresh)
+                }
+            }
+        }
     }
 }
 

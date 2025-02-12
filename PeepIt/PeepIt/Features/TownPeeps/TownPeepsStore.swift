@@ -13,11 +13,17 @@ struct TownPeepsStore {
 
     @ObservableState
     struct State: Equatable {
-
+        var offsetY = CGFloat.zero
+        var isRefreshing = false
+        var rotateAngle = Double.zero
     }
 
     enum Action {
         case backButtonTapped
+        case setInitialOffsetY(CGFloat)
+        case refresh
+        case refreshEnded
+        case updateRotation
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -30,6 +36,29 @@ struct TownPeepsStore {
                 return .run { _ in
                      await self.dismiss()
                 }
+
+            case let .setInitialOffsetY(offsetY):
+                state.offsetY = offsetY
+                return .none
+
+            case .refresh:
+                state.isRefreshing = true
+
+                return .run { send in
+                    let startTime = Date()
+                    while Date().timeIntervalSince(startTime) < 3 { 
+                        await send(.updateRotation)
+                    }
+                    await send(.refreshEnded, animation: .linear)
+                }
+                
+            case .refreshEnded:
+                state.isRefreshing = false
+                return .none
+
+            case .updateRotation:
+                state.rotateAngle += 90
+                return .none
             }
         }
     }
