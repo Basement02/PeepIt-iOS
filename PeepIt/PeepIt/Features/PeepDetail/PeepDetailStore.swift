@@ -173,8 +173,8 @@ struct PeepDetailStore {
                 return .none
 
             case .viewTapped:
-                guard state.showElseMenu else { return .none }
                 state.showElseMenu = false
+                state.showReactionList = false
                 return .none
 
             default:
