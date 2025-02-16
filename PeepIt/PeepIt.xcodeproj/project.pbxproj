@@ -79,6 +79,7 @@
 		AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */; };
 		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
+		AB74E44C2D61F92A00A51A58 /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB74E44B2D61F92A00A51A58 /* CameraServiceKey.swift */; };
 		AB8A062B2D5B291300A70A9C /* ScrollOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A062A2D5B291300A70A9C /* ScrollOffsetKey.swift */; };
 		AB8A06472D5E58C000A70A9C /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A06462D5E58C000A70A9C /* CameraServiceKey.swift */; };
 		AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */; };
@@ -236,6 +237,7 @@
 		AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalStore.swift; sourceTree = "<group>"; };
 		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
+		AB74E44B2D61F92A00A51A58 /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
 		AB8A062A2D5B291300A70A9C /* ScrollOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetKey.swift; sourceTree = "<group>"; };
 		AB8A06462D5E58C000A70A9C /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
 		AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -606,7 +608,7 @@
 			isa = PBXGroup;
 			children = (
 				ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */,
-				AB8A06462D5E58C000A70A9C /* CameraServiceKey.swift */,
+				AB74E44B2D61F92A00A51A58 /* CameraServiceKey.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -1227,7 +1229,7 @@
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
-				AB8A06472D5E58C000A70A9C /* CameraServiceKey.swift in Sources */,
+				AB74E44C2D61F92A00A51A58 /* CameraServiceKey.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
