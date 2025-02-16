@@ -34,6 +34,8 @@ struct PeepDetailStore {
         var showingReactionIdx = 0
         /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
         var showPeepDetailObject = false
+        /// 공유시트
+        var showShareSheet = false
 
         // TODO: 이모티콘 추후 수정
         enum ReactionType: String, CaseIterable {
@@ -45,7 +47,8 @@ struct PeepDetailStore {
         }
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         /// 뷰 나타날 때
         case onAppear
         /// 반응 리스트 보여주기
@@ -72,6 +75,8 @@ struct PeepDetailStore {
         case chatAction(ChatStore.Action)
         /// 뷰 탭
         case viewTapped
+        /// 공유하기
+        case shareButtonTapped
 
         /// 타이머
         case setTimer
@@ -86,6 +91,8 @@ struct PeepDetailStore {
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+
         Scope(state: \.report, action: \.report) {
             ReportStore()
         }
@@ -96,6 +103,8 @@ struct PeepDetailStore {
 
         Reduce { state, action in
             switch action {
+            case .binding(\.showShareSheet):
+                return .none
 
             case .onAppear:
                 return .send(.setTimer)
@@ -180,9 +189,12 @@ struct PeepDetailStore {
                 state.showReactionList = false
                 return .none
 
-            default:
+            case .shareButtonTapped:
+                state.showShareSheet.toggle()
                 return .none
 
+            default:
+                return .none
             }
         }
     }

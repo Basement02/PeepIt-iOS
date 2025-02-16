@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct OtherProfileView: View {
-    let store: StoreOf<OtherProfileStore>
+    @Perception.Bindable var store: StoreOf<OtherProfileStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -90,6 +90,11 @@ struct OtherProfileView: View {
             .toolbar(.hidden, for: .navigationBar)
             .onAppear { store.send(.onAppear) }
             .onTapGesture { store.send(.viewTapped) }
+            .sheet(isPresented: $store.showShareSheet) {
+                ShareSheet(activityItems: ["핍 공유하기"])
+                    .presentationDetents([.medium])
+                    .ignoresSafeArea()
+            }
         }
     }
 
@@ -174,7 +179,7 @@ struct OtherProfileView: View {
 
     private var shareButton: some View {
         Button {
-            // TODO: 공유하기
+            store.send(.shareButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiShareBtnN")

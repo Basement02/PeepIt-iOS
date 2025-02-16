@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct PeepDetailView: View {
-    let store: StoreOf<PeepDetailStore>
+    @Perception.Bindable var store: StoreOf<PeepDetailStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -91,6 +91,11 @@ struct PeepDetailView: View {
                             value: store.isReportSheetVisible
                         )
                     }
+                    .sheet(isPresented: $store.showShareSheet) {
+                        ShareSheet(activityItems: ["핍 공유하기"])
+                            .presentationDetents([.medium])
+                            .ignoresSafeArea()
+                    }
                 }
             }
         }
@@ -162,7 +167,7 @@ extension PeepDetailView {
 
     private var shareButton: some View {
         Button {
-            // TODO: 공유하기
+            store.send(.shareButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiShareBtnN")
