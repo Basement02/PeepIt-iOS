@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
     let store: StoreOf<PeepModalStore>
+    let namespace: Namespace.ID
 
     @State private var offsetX: CGFloat = .zero
     @State private var dragEndedOffset: CGFloat = .zero
@@ -97,7 +98,17 @@ struct PeepPreviewModalView: View {
                             .frame(width: 280, height: 383)
                             .id(idx)
                             .onTapGesture {
-                                store.send(.peepCellTapped)
+                                store.send(.peepCellTapped(idx: idx), animation: .linear(duration: 0.2))
+                                store.send(.showPeepDetail, animation: .linear.delay(0.3))
+                            }
+                            .background {
+                                Image("SampleImage")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 280, height: 383)
+                                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                                    .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+
                             }
                     }
                 }
@@ -158,7 +169,9 @@ fileprivate struct PeepPreviewCell: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            Image("SampleImage")
+                .resizable()
+                .scaledToFill()
                 .foregroundStyle(Color.white)
 
             ThumbnailLayer.primary()
@@ -186,6 +199,7 @@ fileprivate struct PeepPreviewCell: View {
             .padding(.horizontal, 18)
 
         }
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 
     private var hotLabel: some View {
@@ -224,9 +238,9 @@ fileprivate struct PeepPreviewCell: View {
 }
 
 #Preview {
-    PeepPreviewModalView(
-        store: .init(initialState: PeepModalStore.State()) {
-            PeepModalStore()
+    HomeView(
+        store: .init(initialState: HomeStore.State()) {
+            HomeStore()
         }
     )
 }

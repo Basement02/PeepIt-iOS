@@ -26,28 +26,30 @@ struct PeepDetailView: View {
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
 
-                        BackImageLayer.secondary()
-                            .ignoresSafeArea()
+                        if store.showPeepDetailObject {
+                            BackImageLayer.secondary()
+                                .ignoresSafeArea()
 
-                        VStack {
-                            topBar
-                            Spacer()
-                            detailView
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, 84)
-                        }
-                        .toolbar(.hidden, for: .navigationBar)
-                        .ignoresSafeArea(.all, edges: .bottom)
+                            VStack {
+                                topBar
+                                Spacer()
+                                detailView
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 84)
+                            }
+                            .toolbar(.hidden, for: .navigationBar)
+                            .ignoresSafeArea(.all, edges: .bottom)
 
-                        /// 상단 우측 더보기 메뉴
-                        if store.state.showElseMenu {
-                            ElseMenuView(
-                                firstButton: shareButton,
-                                secondButton: reportButton,
-                                bgColor: Color.blur2
-                            )
-                            .padding(.top, 70)
-                            .padding(.trailing, 33)
+                            /// 상단 우측 더보기 메뉴
+                            if store.state.showElseMenu {
+                                ElseMenuView(
+                                    firstButton: shareButton,
+                                    secondButton: reportButton,
+                                    bgColor: Color.blur2
+                                )
+                                .padding(.top, 70)
+                                .padding(.trailing, 33)
+                            }
                         }
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -224,8 +226,8 @@ extension PeepDetailView {
 
     /// TODO: 이미지로 수정
     private var peepView: some View {
-        Rectangle()
-            .fill(Color.white)
+        Image("SampleImage")
+            .resizable()
             .aspectRatio(9/16, contentMode: .fit)
             .frame(width: Constant.screenWidth)
             .clipShape(RoundedRectangle(cornerRadius: 24))

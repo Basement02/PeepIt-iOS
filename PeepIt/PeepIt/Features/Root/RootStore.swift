@@ -108,10 +108,6 @@ struct RootStore {
                 state.path.append(.camera(.init()))
                 return .none
 
-            case .home(.peepPreviewModal(.peepCellTapped)):
-                state.path.append(.peepDetail(.init()))
-                return .none
-
             case let .path(action):
                 switch action {
 

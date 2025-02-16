@@ -23,6 +23,9 @@ struct HomeStore {
         var showTownVeriModal = false
 
         var mainViewOffset = CGFloat.zero
+
+        var showPeepDetail = false
+        var selectedPeepIndex = 0
     }
 
     enum Action {
@@ -55,6 +58,10 @@ struct HomeStore {
             TownVerificationStore()
         }
 
+        Scope(state: \.peepDetail, action: \.peepDetail) {
+            PeepDetailStore()
+        }
+
         Reduce { state, action in
             switch action {
 
@@ -73,8 +80,15 @@ struct HomeStore {
             case .uploadButtonTapped:
                 return .none
 
-            case .peepPreviewModal(.peepCellTapped):
-                return .send(.pushToDetail)
+            case let .peepPreviewModal(.peepCellTapped(idx)):
+                state.showPeepDetail = true
+                state.selectedPeepIndex = idx
+
+                return .none
+
+            case .peepPreviewModal(.showPeepDetail):
+                state.peepDetail.showPeepDetailObject = true
+                return .none
 
             case .pushToDetail:
                 return .none
@@ -91,6 +105,10 @@ struct HomeStore {
             case .townVerification(.closeModal):
                 state.showTownVeriModal = false
                 state.townVerificationModalOffset = Constant.screenHeight
+                return .none
+
+            case .peepDetail(.backButtonTapped):
+                state.showPeepDetail = false
                 return .none
 
             case .dismissSideMenu:

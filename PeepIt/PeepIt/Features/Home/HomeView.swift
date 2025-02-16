@@ -11,6 +11,8 @@ import ComposableArchitecture
 struct HomeView: View {
     var store: StoreOf<HomeStore>
 
+    @Namespace private var namespace
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
@@ -43,9 +45,20 @@ struct HomeView: View {
                         )
                     }
 
+                    /// 핍 미리보기 모달
                     PeepPreviewModalView(
-                        store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
+                        store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal),
+                        namespace: namespace
                     )
+
+                    /// 핍 상세
+                    if store.showPeepDetail {
+                        PeepDetailView(
+                            store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                        )
+                        .matchedGeometryEffect(id: "peep\(store.selectedPeepIndex)", in: namespace)
+                        .transition(.scale(scale: 1))
+                    }
                 }
             }
             .offset(x: store.mainViewOffset)

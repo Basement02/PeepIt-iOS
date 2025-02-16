@@ -32,6 +32,8 @@ struct PeepDetailStore {
         var chatState = ChatStore.State()
         /// 반응 선택 x일 때 보여줄 리액션들
         var showingReactionIdx = 0
+        /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
+        var showPeepDetailObject = false
 
         // TODO: 이모티콘 추후 수정
         enum ReactionType: String, CaseIterable {
@@ -107,7 +109,8 @@ struct PeepDetailStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in await dismiss() }
+                state.showPeepDetailObject = false
+                return .none
 
             case let .selectReaction(selectedReaction):
                 if state.selectedReaction == selectedReaction { return .send(.unselectReaction) }
