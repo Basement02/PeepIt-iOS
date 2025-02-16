@@ -25,7 +25,7 @@ struct HomeStore {
         var mainViewOffset = CGFloat.zero
 
         var showPeepDetail = false
-        var selectedPeepIndex = 0
+        var selectedPeepIndex: Int? = nil
     }
 
     enum Action {
@@ -109,6 +109,8 @@ struct HomeStore {
 
             case .peepDetail(.backButtonTapped):
                 state.showPeepDetail = false
+                state.selectedPeepIndex = nil
+                state.peepPreviewModal.showPeepDetail = false
                 return .none
 
             case .dismissSideMenu:

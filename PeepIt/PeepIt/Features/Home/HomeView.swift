@@ -52,11 +52,11 @@ struct HomeView: View {
                     )
 
                     /// 핍 상세
-                    if store.showPeepDetail {
+                    if store.showPeepDetail, let idx = store.selectedPeepIndex {
                         PeepDetailView(
                             store: store.scope(state: \.peepDetail, action: \.peepDetail)
                         )
-                        .matchedGeometryEffect(id: "peep\(store.selectedPeepIndex)", in: namespace)
+                        .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
                         .transition(.scale(scale: 1))
                     }
                 }

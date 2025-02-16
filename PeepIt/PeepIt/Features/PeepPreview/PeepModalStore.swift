@@ -26,6 +26,8 @@ struct PeepModalStore {
         var isScrolling = true
         var isAutoScroll = false
 
+        var showPeepDetail = false
+
         enum SheetType: CaseIterable {
             case scrollDown, scrollUp
 
@@ -60,6 +62,7 @@ struct PeepModalStore {
         case autoScrollEnded
         case setPeepScrollOffset(CGFloat)
         case showPeepDetail
+        case test
     }
 
     var body: some Reducer<State, Action> {
@@ -86,7 +89,7 @@ struct PeepModalStore {
                 return .none
 
             case .peepCellTapped:
-                return .none
+                return .send(.test)
 
             case .scrollUpButtonTapped:
                 state.modalOffset = State.SheetType.scrollUp.offset
@@ -115,6 +118,10 @@ struct PeepModalStore {
                 return .none
 
             case .showPeepDetail:
+                return .none
+
+            case .test:
+                state.showPeepDetail = true
                 return .none
             }
         }

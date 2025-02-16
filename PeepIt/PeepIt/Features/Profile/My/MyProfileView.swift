@@ -58,14 +58,7 @@ struct MyProfileView: View {
             // TODO:
         } label: {
             Image("UploadN")
-                .opacity(0)
         }
-        .buttonStyle(
-            PressableButtonStyle(
-                originImg: "UploadN",
-                pressedImg: "UploadY"
-            )
-        )
     }
 
     private var profileView: some View {

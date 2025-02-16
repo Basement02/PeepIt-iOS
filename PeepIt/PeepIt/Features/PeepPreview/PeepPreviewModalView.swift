@@ -102,42 +102,43 @@ struct PeepPreviewModalView: View {
                                 store.send(.showPeepDetail, animation: .linear.delay(0.3))
                             }
                             .background {
-                                Image("SampleImage")
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(width: 280, height: 383)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                                    .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
-
+                                if !store.showPeepDetail {
+                                    Image("SampleImage")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: 280, height: 383)
+                                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                                        .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+                                }
                             }
                     }
                 }
                 .padding(.horizontal, 18)
             }
             .frame(height: 383)
-            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
-                store.send(.peepScrollUpdated(newOffset))
-
-                if store.isAutoScroll { return }
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-                    if abs(store.dragEndedOffset - newOffset) < 1 {
-                        store.send(.peepScrollEnded)
-                    }
-                }
-            }
-            .onChange(of: store.isScrolling) { _ in
-                if !store.isScrolling {
-                    let newIdx = Int((abs(store.dragEndedOffset)) / 280)
-
-                    store.send(.autoScrollStarted)
-                    proxy.scrollTo(newIdx, anchor: .center)
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                        store.send(.autoScrollEnded)
-                    }
-                }
-            }
+//            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
+//                store.send(.peepScrollUpdated(newOffset))
+//
+//                if store.isAutoScroll { return }
+//
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+//                    if abs(store.dragEndedOffset - newOffset) < 1 {
+//                        store.send(.peepScrollEnded)
+//                    }
+//                }
+//            }
+//            .onChange(of: store.isScrolling) { _ in
+//                if !store.isScrolling {
+//                    let newIdx = Int((abs(store.dragEndedOffset)) / 280)
+//
+//                    store.send(.autoScrollStarted)
+//                    proxy.scrollTo(newIdx, anchor: .center)
+//
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+//                        store.send(.autoScrollEnded)
+//                    }
+//                }
+//            }
         }
     }
 

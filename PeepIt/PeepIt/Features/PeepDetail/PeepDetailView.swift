@@ -101,7 +101,8 @@ extension PeepDetailView {
 
     private var topBar: some View {
         HStack {
-            backButton
+            BackButton { store.send(.backButtonTapped) }
+
             Spacer()
 
             locationButton
@@ -113,21 +114,14 @@ extension PeepDetailView {
         .padding(.horizontal, 16)
     }
 
-    private var backButton: some View {
-        BackButton { store.send(.backButtonTapped) }
-    }
-
     private var moreButton: some View {
         Button {
             store.send(.setShowingElseMenu(!store.showElseMenu))
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("ElseN")
+                .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
-        )
     }
 
     private var locationButton: some View {
@@ -172,27 +166,11 @@ extension PeepDetailView {
         } label: {
             HStack(spacing: 3) {
                 Image("CombiShareBtnN")
-                    .opacity(0)
                 Text("공유하기")
             }
-            .opacity(0)
+            .pretendard(.body02)
+            .foregroundStyle(Color.white)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnN")
-                        Text("공유하기")
-                    },
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnY")
-                        Text("공유하기")
-                            .pretendard(.body02)
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
     }
 
     private var reportButton: some View {
@@ -203,25 +181,9 @@ extension PeepDetailView {
                 Image("CombiReportBtnN")
                 Text("신고하기")
             }
-            .opacity(0)
+            .pretendard(.body02)
+            .foregroundStyle(Color.coreRed)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiReportBtnN")
-                        Text("신고하기")
-                    }
-                    .foregroundStyle(Color.coreRed),
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiReportBtnY")
-                        Text("신고하기")
-                            .pretendard(.body02)
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
     }
 
     /// TODO: 이미지로 수정
