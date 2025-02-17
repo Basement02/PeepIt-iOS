@@ -106,7 +106,7 @@ extension PeepDetailView {
 
     private var topBar: some View {
         HStack {
-            BackButton { store.send(.backButtonTapped) }
+            BackButton { store.send(.backButtonTapped, animation: .linear(duration: 0.2)) }
 
             Spacer()
 
