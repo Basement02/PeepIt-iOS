@@ -92,21 +92,25 @@ struct CameraView: View {
 
     private var shootButton: some View {
         Image(store.isRecording ? "BtnShotIng" : "BtnShot")
-            .gesture( /// 탭해서 카메라 찍기
-                TapGesture()
-                    .onEnded {
-                        var transaction = Transaction(animation: nil)
-                        transaction.disablesAnimations = true
-                        store.send(.shootButtonTapped, transaction: transaction)
+            .onTapGesture {
+                if !store.isRecording {
+                    store.send(.shootButtonTapped)
+                }
+            }
+            .simultaneousGesture(
+                LongPressGesture(minimumDuration: 0.1)
+                    .onEnded { _ in
+                        if !store.isRecording {
+                            store.send(.shootButtonLongerTapStarted)
+                        }
                     }
             )
-            .gesture(
+            .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged { _ in
-                        store.send(.shootButtonLongerTapStarted)
-                    }
                     .onEnded { _ in
-                        store.send(.shootButtonLongerTapEnded)
+                        if store.isRecording {
+                            store.send(.shootButtonLongerTapEnded)
+                        }
                     }
             )
     }
