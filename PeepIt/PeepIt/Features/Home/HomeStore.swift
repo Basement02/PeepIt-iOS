@@ -26,6 +26,7 @@ struct HomeStore {
 
         var showPeepDetail = false
         var selectedPeepIndex: Int? = nil
+        var mainViewMoved = false
     }
 
     enum Action {
@@ -43,6 +44,7 @@ struct HomeStore {
         case pushToDetail
         case addressButtonTapped
         case dismissSideMenu
+        case showMainViewBg
     }
 
     var body: some Reducer<State, Action> {
@@ -71,7 +73,7 @@ struct HomeStore {
 
             case .sideMenuButtonTapped:
                 state.sideMenu.sideMenuOffset = 0
-                state.mainViewOffset = 318
+                state.mainViewOffset = CGFloat(318)
                 return .none
 
             case .profileButtonTapped:
@@ -114,8 +116,13 @@ struct HomeStore {
                 return .none
 
             case .dismissSideMenu:
+                state.mainViewMoved = false
                 state.sideMenu.sideMenuOffset = -CGFloat(318)
                 state.mainViewOffset = 0
+                return .none
+
+            case .showMainViewBg:
+                state.mainViewMoved = true
                 return .none
 
             default:

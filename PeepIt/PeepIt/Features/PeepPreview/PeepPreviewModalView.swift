@@ -109,6 +109,7 @@ struct PeepPreviewModalView: View {
                                         .frame(width: 280, height: 383)
                                         .clipShape(RoundedRectangle(cornerRadius: 20))
                                         .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+                                        .transition(.scale(scale: 1))
                                 }
                             }
                     }
