@@ -141,6 +141,8 @@ struct CameraStore {
             case .setTimer:
                 if state.isRecording {
                     return .run { send in
+                        await send(.timerTicked)
+
                         while true {
                             try await Task.sleep(for: .seconds(1))
                             await send(.timerTicked)
