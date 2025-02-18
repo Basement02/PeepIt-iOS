@@ -12,20 +12,22 @@ struct TownPeepsView: View {
     let store: StoreOf<TownPeepsStore>
 
     var body: some View {
-        ZStack {
-            Color.base.ignoresSafeArea()
-            
-            VStack(spacing: 0) {
-                navigationBar
+        WithPerceptionTracking {
+            ZStack {
+                Color.base.ignoresSafeArea()
 
-                scrollView
+                VStack(spacing: 0) {
+                    navigationBar
+
+                    scrollView
+                }
+                .frame(width: Constant.isSmallDevice ? 343 : 361)
             }
-            .frame(width: Constant.isSmallDevice ? 343 : 361)
+            .frame(maxWidth: .infinity)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .background(Color.base)
+            .toolbar(.hidden, for: .navigationBar)
         }
-        .frame(maxWidth: .infinity)
-        .ignoresSafeArea(.all, edges: .bottom)
-        .background(Color.base)
-        .toolbar(.hidden, for: .navigationBar)
     }
 
     private var navigationBar: some View {
@@ -102,7 +104,9 @@ struct TownPeepsView: View {
             Image("IconPopularWhite")
                     .resizable()
                     .frame(width: 30, height: 30)
-                    .rotationEffect(.degrees(store.rotateAngle))
+                    .rotationEffect(.degrees(store.isRefreshing ? 360 : 0))
+                    .animation(store.isRefreshing ? foreverAnimation : .default, value: store.isRefreshing)
+//                    .animation(store.isRefreshing ? foreverAnimation : .default)
                     .opacity(store.isRefreshing ? 1 : 0)
                     .offset(y: 23)
 
@@ -142,6 +146,11 @@ struct TownPeepsView: View {
                 }
             }
         }
+    }
+
+    private var foreverAnimation: Animation {
+      Animation.linear(duration: 2.0)
+        .repeatForever(autoreverses: false)
     }
 }
 

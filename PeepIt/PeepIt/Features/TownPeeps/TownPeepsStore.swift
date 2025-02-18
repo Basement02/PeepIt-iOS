@@ -23,7 +23,6 @@ struct TownPeepsStore {
         case setInitialOffsetY(CGFloat)
         case refresh
         case refreshEnded
-        case updateRotation
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -47,17 +46,14 @@ struct TownPeepsStore {
                 return .run { send in
                     let startTime = Date()
                     while Date().timeIntervalSince(startTime) < 3 { 
-                        await send(.updateRotation)
+//                        await send(.updateRotation)
+                        print("새로고침 중...")
                     }
                     await send(.refreshEnded, animation: .linear)
                 }
                 
             case .refreshEnded:
                 state.isRefreshing = false
-                return .none
-
-            case .updateRotation:
-                state.rotateAngle += 90
                 return .none
             }
         }
