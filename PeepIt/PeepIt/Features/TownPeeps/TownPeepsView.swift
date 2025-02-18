@@ -158,21 +158,15 @@ fileprivate struct ThumbnailPeep: View {
             ThumbnailLayer.secondary()
 
             HStack(spacing: 0) {
-                Image("IconCommentBold")
-                    .resizable()
-                    .frame(width: 13.5, height: 13.5)
-                    .frame(width: 21, height: 21)
+                Image("IconCommentBoldFrame")
 
                 Text("00")
                     .pretendard(.body02)
                     .foregroundStyle(Color.white)
                     .padding(.trailing, 5)
 
-                Image("IconReactionBold")
-                    .resizable()
-                    .frame(width: 13.5, height: 13.5)
-                    .frame(width: 21, height: 21)
-
+                Image("IconReactionBoldFrame")
+                
                 Text("00")
                     .pretendard(.body02)
                     .foregroundStyle(Color.white)

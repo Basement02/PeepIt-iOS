@@ -156,6 +156,7 @@ extension HomeView {
             Image("ProfileSample")
                 .resizable()
                 .frame(width: 45, height: 45)
+                .clipShape(RoundedRectangle(cornerRadius: 13))
         }
     }
     
