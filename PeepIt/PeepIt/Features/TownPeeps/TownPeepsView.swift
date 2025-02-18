@@ -106,7 +106,6 @@ struct TownPeepsView: View {
                     .frame(width: 30, height: 30)
                     .rotationEffect(.degrees(store.isRefreshing ? 360 : 0))
                     .animation(store.isRefreshing ? foreverAnimation : .default, value: store.isRefreshing)
-//                    .animation(store.isRefreshing ? foreverAnimation : .default)
                     .opacity(store.isRefreshing ? 1 : 0)
                     .offset(y: 23)
 
@@ -143,6 +142,8 @@ struct TownPeepsView: View {
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
                 if newOffset >= 140 && !store.isRefreshing {
                     store.send(.refresh)
+                } else if newOffset < 0 {
+                    store.send(.refreshEnded)
                 }
             }
         }
