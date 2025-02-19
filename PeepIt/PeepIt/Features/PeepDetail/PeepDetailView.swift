@@ -16,15 +16,21 @@ struct PeepDetailView: View {
             GeometryReader { proxy in
                 WithPerceptionTracking {
                     ZStack(alignment: .topTrailing) {
-                        Color.base.ignoresSafeArea()
+                        ZStack {
+                            if store.showPeepDetailBg {
+                                Color.base.ignoresSafeArea()
+                            } else {
+                                Color.clear.ignoresSafeArea()
+                            }
 
-                        VStack(spacing: 11) {
-                            topBar
-                                .opacity(0)
-                            peepView
-                            Spacer()
+                            VStack(spacing: 11) {
+                                topBar
+                                    .opacity(0)
+                                peepView
+                                Spacer()
+                            }
+                            .ignoresSafeArea(.all, edges: .bottom)
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
 
                         if store.showPeepDetailObject {
                             BackImageLayer.secondary()
@@ -106,7 +112,7 @@ extension PeepDetailView {
 
     private var topBar: some View {
         HStack {
-            BackButton { store.send(.backButtonTapped, animation: .linear(duration: 0.2)) }
+            BackButton { store.send(.backButtonTapped, animation: .linear(duration: 0.1)) }
 
             Spacer()
 

@@ -111,9 +111,9 @@ extension HomeView {
     
     private var moreButton: some View {
         Button {
-            store.send(.showMainViewBg)
+            store.send(.sideMenuButtonTapped)
             store.send(
-                .sideMenuButtonTapped, animation: .easeIn(duration: 0.3)
+                .showSideMenu, animation: .easeIn(duration: 0.3)
             )
         } label: {
             RoundedRectangle(cornerRadius: 13)

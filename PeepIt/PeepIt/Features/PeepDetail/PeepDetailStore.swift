@@ -34,6 +34,8 @@ struct PeepDetailStore {
         var showingReactionIdx = 0
         /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
         var showPeepDetailObject = false
+
+        var showPeepDetailBg = false
         /// 공유시트
         var showShareSheet = false
 
@@ -118,6 +120,7 @@ struct PeepDetailStore {
                 return .none
 
             case .backButtonTapped:
+                state.showPeepDetailBg = false
                 state.showPeepDetailObject = false
                 return .none
 

@@ -95,11 +95,9 @@ struct PeepPreviewModalView: View {
                 LazyHStack(spacing: 10) {
                     ForEach(0...30, id: \.self) { idx in
                         PeepPreviewCell(peep: .stubPeep1)
-                            .frame(width: 280, height: 383)
                             .id(idx)
                             .onTapGesture {
-                                store.send(.peepCellTapped(idx: idx), animation: .linear(duration: 0.2))
-                                store.send(.showPeepDetail, animation: .linear.delay(0.3))
+                                store.send(.peepCellTapped(idx: idx), animation: .linear(duration: 0.1))
                             }
                             .background {
                                 if !store.showPeepDetail {
@@ -117,29 +115,6 @@ struct PeepPreviewModalView: View {
                 .padding(.horizontal, 18)
             }
             .frame(height: 383)
-//            .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
-//                store.send(.peepScrollUpdated(newOffset))
-//
-//                if store.isAutoScroll { return }
-//
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
-//                    if abs(store.dragEndedOffset - newOffset) < 1 {
-//                        store.send(.peepScrollEnded)
-//                    }
-//                }
-//            }
-//            .onChange(of: store.isScrolling) { _ in
-//                if !store.isScrolling {
-//                    let newIdx = Int((abs(store.dragEndedOffset)) / 280)
-//
-//                    store.send(.autoScrollStarted)
-//                    proxy.scrollTo(newIdx, anchor: .center)
-//
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-//                        store.send(.autoScrollEnded)
-//                    }
-//                }
-//            }
         }
     }
 
@@ -201,6 +176,7 @@ fileprivate struct PeepPreviewCell: View {
             .padding(.horizontal, 18)
 
         }
+        .frame(width: 280, height: 383)
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 

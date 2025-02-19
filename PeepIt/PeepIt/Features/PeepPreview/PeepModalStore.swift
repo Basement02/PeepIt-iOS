@@ -62,7 +62,6 @@ struct PeepModalStore {
         case autoScrollEnded
         case setPeepScrollOffset(CGFloat)
         case showPeepDetail
-        case test
     }
 
     var body: some Reducer<State, Action> {
@@ -89,7 +88,12 @@ struct PeepModalStore {
                 return .none
 
             case .peepCellTapped:
-                return .send(.test)
+                state.showPeepDetail = true
+
+                return .run { send in
+                    try await Task.sleep(for: .seconds(0.1))
+                    await send(.showPeepDetail)
+                }
 
             case .scrollUpButtonTapped:
                 state.modalOffset = State.SheetType.scrollUp.offset
@@ -118,10 +122,6 @@ struct PeepModalStore {
                 return .none
 
             case .showPeepDetail:
-                return .none
-
-            case .test:
-                state.showPeepDetail = true
                 return .none
             }
         }
