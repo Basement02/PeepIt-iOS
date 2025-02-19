@@ -57,7 +57,7 @@ struct MyProfileView: View {
         Button {
             // TODO:
         } label: {
-            Image("UploadN")
+            Image("IconUpload")
         }
     }
 

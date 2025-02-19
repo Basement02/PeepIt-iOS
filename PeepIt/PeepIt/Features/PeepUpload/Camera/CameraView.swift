@@ -70,22 +70,19 @@ struct CameraView: View {
     private var topBar: some View {
         ZStack {
             HStack {
-                BackButton { store.send(.backButtonTapped) }
+                Button {
+                    store.send(.backButtonTapped)
+                } label: {
+                    Image("IconBackY")
+                }
                 Spacer()
             }
 
             Button {
                 store.send(.flashButtonTapped)
             } label: {
-                Image("FlashOffN")
-                    .hidden()
+                Image(store.isFlashOn ? "FlashOnY" : "FlashOffY")
             }
-            .buttonStyle(
-                PressableButtonStyle(
-                    originImg: store.isFlashOn ? "FlashOnN" : "FlashOffN",
-                    pressedImg:  store.isFlashOn ? "FlashOnY" : "FlashOffY"
-                )
-            )
         }
         .padding(.horizontal, 16)
     }

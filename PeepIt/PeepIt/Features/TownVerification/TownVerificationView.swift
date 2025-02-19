@@ -49,7 +49,7 @@ struct TownVerificationView: View {
                 Button {
                     store.send(.backButtonTapped)
                 } label: {
-                    Image("BackN")
+                    Image("IconBack")
                         .renderingMode(.template)
                         .resizable()
                         .foregroundStyle(Color.base)
@@ -68,7 +68,7 @@ struct TownVerificationView: View {
                 Button {
                     store.send(.dismissButtonTapped)
                 } label: {
-                    Image("CloseN")
+                    Image("IconClose")
                         .renderingMode(.template)
                         .resizable()
                         .foregroundStyle(Color.base)

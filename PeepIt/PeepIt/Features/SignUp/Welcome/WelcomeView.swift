@@ -45,14 +45,6 @@ struct WelcomeView: View {
         }
     }
 
-    private var dismissButton: some View {
-        Button {
-            store.send(.goToHomeButtonTapped)
-        } label: {
-            Image("CloseN")
-        }
-    }
-
     private var detailInfoView: some View {
         VStack(spacing: 0) {
             Group {

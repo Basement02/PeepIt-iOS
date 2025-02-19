@@ -108,7 +108,7 @@ struct OtherProfileView: View {
         Button {
             store.send(.elseButtonTapped(!store.isElseButtonTapped))
         } label: {
-            Image("ElseN")
+            Image("IconElse")
                 .resizable()
                 .frame(width: 33.6, height: 33.6)
         }

@@ -14,7 +14,7 @@ struct DismissButton: View {
         Button {
             action()
         } label: {
-            Image("CloseN")
+            Image("IconClose")
                 .resizable()
                 .frame(width: 33.6, height: 33.6)
         }

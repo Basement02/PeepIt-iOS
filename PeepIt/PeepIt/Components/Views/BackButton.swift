@@ -14,7 +14,7 @@ struct BackButton: View {
         Button {
             action()
         } label: {
-            Image("BackN")
+            Image("IconBack")
                 .resizable()
                 .frame(width: 33.6, height: 33.6)
         }

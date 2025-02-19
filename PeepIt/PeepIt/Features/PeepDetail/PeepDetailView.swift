@@ -129,7 +129,7 @@ extension PeepDetailView {
         Button {
             store.send(.setShowingElseMenu(!store.showElseMenu))
         } label: {
-            Image("ElseN")
+            Image("IconElse")
                 .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
