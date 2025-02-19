@@ -23,9 +23,12 @@ struct OtherProfileStore {
         var modalOffset = Constant.screenHeight
         /// 모달 보여주기 여부
         var isModalVisible = false
+        /// 공유하기 보여주기
+        var showShareSheet = false
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         /// 뷰 나타날 때
         case onAppear
         /// 더보기 버튼 탭했을 때
@@ -48,13 +51,20 @@ struct OtherProfileStore {
         case modalDragEnded
         /// 뷰 탭
         case viewTapped
+        /// 공유하기 버튼 탭
+        case shareButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+
         Reduce { state, action in
             switch action {
+            case .binding(\.showShareSheet):
+                return .none
+
             case .onAppear:
                 // TODO: 차단 여부 로드
                 return .none
@@ -113,6 +123,13 @@ struct OtherProfileStore {
                 guard state.isElseButtonTapped else { return .none }
                 state.isElseButtonTapped = false
 
+                return .none
+
+            case .shareButtonTapped:
+                state.showShareSheet.toggle()
+                return .none
+
+            default:
                 return .none
             }
         }

@@ -14,13 +14,10 @@ struct DismissButton: View {
         Button {
             action()
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("IconClose")
+                .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "CloseN", pressedImg: "CloseY")
-        )
     }
 }
 

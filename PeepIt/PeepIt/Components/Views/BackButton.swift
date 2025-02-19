@@ -14,16 +14,10 @@ struct BackButton: View {
         Button {
             action()
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("IconBack")
+                .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(
-                originImg: "BackN",
-                pressedImg: "BackY"
-            )
-        )
     }
 }
 

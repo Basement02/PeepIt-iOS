@@ -26,7 +26,7 @@ struct CameraStore {
         /// 영상 촬영 시간
         var recordingTime = 0
         /// 플래시 기능
-        var isFlashOn = true
+        var isFlashOn = false
     }
 
     enum Action {
@@ -141,6 +141,8 @@ struct CameraStore {
             case .setTimer:
                 if state.isRecording {
                     return .run { send in
+                        await send(.timerTicked)
+
                         while true {
                             try await Task.sleep(for: .seconds(1))
                             await send(.timerTicked)

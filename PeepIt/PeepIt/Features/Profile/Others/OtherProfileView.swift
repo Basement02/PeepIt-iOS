@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct OtherProfileView: View {
-    let store: StoreOf<OtherProfileStore>
+    @Perception.Bindable var store: StoreOf<OtherProfileStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -90,6 +90,11 @@ struct OtherProfileView: View {
             .toolbar(.hidden, for: .navigationBar)
             .onAppear { store.send(.onAppear) }
             .onTapGesture { store.send(.viewTapped) }
+            .sheet(isPresented: $store.showShareSheet) {
+                ShareSheet(activityItems: ["핍 공유하기"])
+                    .presentationDetents([.medium])
+                    .ignoresSafeArea()
+            }
         }
     }
 
@@ -103,13 +108,10 @@ struct OtherProfileView: View {
         Button {
             store.send(.elseButtonTapped(!store.isElseButtonTapped))
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("IconElse")
+                .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
-        )
     }
 
     private var profileView: some View {
@@ -177,30 +179,15 @@ struct OtherProfileView: View {
 
     private var shareButton: some View {
         Button {
-            // TODO: 공유하기
+            store.send(.shareButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiShareBtnN")
                 Text("공유하기")
             }
-            .opacity(0)
+            .foregroundStyle(Color.white)
+            .pretendard(.body02)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnN")
-                        Text("공유하기")
-                    },
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnY")
-                        Text("공유하기")
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
-        .pretendard(.body02)
     }
 
     private var blockButton: some View {
@@ -208,28 +195,12 @@ struct OtherProfileView: View {
             store.send(.elseBlockButtonTapped)
         } label: {
             HStack(spacing: 3) {
-                Image("CombiReportBtnN")
-                Text("차단하기")
+                Image("CombiBlockBtnN")
+                Text(store.isUserBlocked ? "차단해제" : "차단하기")
             }
-            .opacity(0)
+            .foregroundStyle(Color.coreRed)
+            .pretendard(.body02)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiBlockBtnN")
-                        Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                    }
-                    .foregroundStyle(Color.coreRed),
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiBlockBtnY")
-                        Text(store.isUserBlocked ? "차단해제" : "차단하기")
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
-        .pretendard(.body02)
     }
 
     private var blockedView: some View {

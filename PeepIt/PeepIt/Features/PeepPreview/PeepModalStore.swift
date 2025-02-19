@@ -8,11 +8,6 @@
 import Foundation
 import ComposableArchitecture
 
-//@State private var offsetX: CGFloat = .zero
-//@State private var dragEndedOffset: CGFloat = .zero
-//@State private var isScrolling = true
-//@State private var isAutoScroll = false
-
 @Reducer
 struct PeepModalStore {
 
@@ -30,6 +25,8 @@ struct PeepModalStore {
         var dragEndedOffset: CGFloat = .zero
         var isScrolling = true
         var isAutoScroll = false
+
+        var showPeepDetail = false
 
         enum SheetType: CaseIterable {
             case scrollDown, scrollUp
@@ -57,13 +54,14 @@ struct PeepModalStore {
     enum Action {
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded(dragHeight: CGFloat)
-        case peepCellTapped
+        case peepCellTapped(idx: Int)
         case scrollUpButtonTapped
         case peepScrollUpdated(CGFloat)
         case peepScrollEnded
         case autoScrollStarted
         case autoScrollEnded
         case setPeepScrollOffset(CGFloat)
+        case showPeepDetail
     }
 
     var body: some Reducer<State, Action> {
@@ -90,7 +88,12 @@ struct PeepModalStore {
                 return .none
 
             case .peepCellTapped:
-                return .none
+                state.showPeepDetail = true
+
+                return .run { send in
+                    try await Task.sleep(for: .seconds(0.1))
+                    await send(.showPeepDetail)
+                }
 
             case .scrollUpButtonTapped:
                 state.modalOffset = State.SheetType.scrollUp.offset
@@ -116,6 +119,9 @@ struct PeepModalStore {
 
             case let .setPeepScrollOffset(offset):
                 state.scrollOffsetX = offset
+                return .none
+
+            case .showPeepDetail:
                 return .none
             }
         }

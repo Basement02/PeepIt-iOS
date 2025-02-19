@@ -11,59 +11,74 @@ import ComposableArchitecture
 struct HomeView: View {
     var store: StoreOf<HomeStore>
 
+    @Namespace private var namespace
+
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                HomeMapView()
+                Group {
+                    HomeMapView()
+                        .ignoresSafeArea()
+
+                    Group {
+                        BackMapLayer.teriary()
+                        BackMapLayer.secondary()
+                    }
+                    .allowsHitTesting(false)
                     .ignoresSafeArea()
 
-                Group {
-                    BackMapLayer.teriary()
-                    BackMapLayer.secondary()
-                }
-                .allowsHitTesting(false)
-                .ignoresSafeArea()
+                    if !store.showTownVeriModal {
+                        VStack {
+                            topBar
+                                .padding(.horizontal, 16)
 
-                if !store.showTownVeriModal {
-                    VStack {
-                        topBar
-                            .padding(.horizontal, 16)
-
-                        Spacer()
-
-                        HStack(alignment: .bottom) {
-                            currentLocationButton
                             Spacer()
-                            uploadPeepButton
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(
-                            .bottom,
-                            PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
-                        )
-                    }
 
-                    PeepPreviewModalView(
-                        store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal)
-                    )
+                            HStack(alignment: .bottom) {
+                                currentLocationButton
+                                Spacer()
+                                uploadPeepButton
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(
+                                .bottom,
+                                PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
+                            )
+                        }
+
+                        /// 핍 미리보기 모달
+                        PeepPreviewModalView(
+                            store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal),
+                            namespace: namespace
+                        )
+
+                        /// 사이드메뉴 등장 시 필터
+                        if store.mainViewMoved {
+                            Color.blur2
+                                .ignoresSafeArea()
+                                .onTapGesture { store.send(.dismissSideMenu) }
+                        }
+                    }
                 }
-            }
-            .offset(x: store.mainViewOffset)
-            .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
-            .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
-            .overlay {
-                if store.mainViewOffset > 0 {
-                    Color.blur2
-                        .ignoresSafeArea()
-                        .onTapGesture { store.send(.dismissSideMenu) }
-                }
-            }
-            .overlay {
+                .offset(x: store.mainViewOffset)
+
                 SideMenuView(
                     store: store.scope(state: \.sideMenu, action: \.sideMenu)
                 )
                 .offset(x: store.sideMenu.sideMenuOffset)
+            }
+            .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
+            .ignoresSafeArea(.all, edges: .bottom)
+            .toolbar(.hidden, for: .navigationBar)
+            .overlay {
+                /// 핍 상세
+                if store.showPeepDetail, let idx = store.selectedPeepIndex {
+                    PeepDetailView(
+                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                    )
+                    .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+                    .transition(.scale(scale: 1))
+                }
             }
             .overlay {
                 TownRegisterModalView(
@@ -96,17 +111,15 @@ extension HomeView {
     
     private var moreButton: some View {
         Button {
+            store.send(.sideMenuButtonTapped)
             store.send(
-                .sideMenuButtonTapped, animation: .easeIn(duration: 0.3)
+                .showSideMenu, animation: .easeIn(duration: 0.3)
             )
         } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: 13)
-                    .fill(Color.blur1)
-                    .frame(width: 45, height: 45)
-                
-                Image("IconMenu")
-            }
+            RoundedRectangle(cornerRadius: 13)
+                .fill(Color.blur1)
+                .frame(width: 45, height: 45)
+                .overlay { Image("IconMenu") }
         }
     }
     
@@ -143,6 +156,7 @@ extension HomeView {
             Image("ProfileSample")
                 .resizable()
                 .frame(width: 45, height: 45)
+                .clipShape(RoundedRectangle(cornerRadius: 13))
         }
     }
     

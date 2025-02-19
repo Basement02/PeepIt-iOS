@@ -9,45 +9,53 @@ import SwiftUI
 import ComposableArchitecture
 
 struct PeepDetailView: View {
-    let store: StoreOf<PeepDetailStore>
+    @Perception.Bindable var store: StoreOf<PeepDetailStore>
 
     var body: some View {
         WithPerceptionTracking {
             GeometryReader { proxy in
                 WithPerceptionTracking {
                     ZStack(alignment: .topTrailing) {
-                        Color.base.ignoresSafeArea()
+                        ZStack {
+                            if store.showPeepDetailBg {
+                                Color.base.ignoresSafeArea()
+                            } else {
+                                Color.clear.ignoresSafeArea()
+                            }
 
-                        VStack(spacing: 11) {
-                            topBar
-                                .opacity(0)
-                            peepView
-                            Spacer()
+                            VStack(spacing: 11) {
+                                topBar
+                                    .opacity(0)
+                                peepView
+                                Spacer()
+                            }
+                            .ignoresSafeArea(.all, edges: .bottom)
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
 
-                        BackImageLayer.secondary()
-                            .ignoresSafeArea()
+                        if store.showPeepDetailObject {
+                            BackImageLayer.secondary()
+                                .ignoresSafeArea()
 
-                        VStack {
-                            topBar
-                            Spacer()
-                            detailView
-                                .padding(.horizontal, 16)
-                                .padding(.bottom, 84)
-                        }
-                        .toolbar(.hidden, for: .navigationBar)
-                        .ignoresSafeArea(.all, edges: .bottom)
+                            VStack {
+                                topBar
+                                Spacer()
+                                detailView
+                                    .padding(.horizontal, 16)
+                                    .padding(.bottom, 84)
+                            }
+                            .toolbar(.hidden, for: .navigationBar)
+                            .ignoresSafeArea(.all, edges: .bottom)
 
-                        /// 상단 우측 더보기 메뉴
-                        if store.state.showElseMenu {
-                            ElseMenuView(
-                                firstButton: shareButton,
-                                secondButton: reportButton,
-                                bgColor: Color.blur2
-                            )
-                            .padding(.top, 70)
-                            .padding(.trailing, 33)
+                            /// 상단 우측 더보기 메뉴
+                            if store.state.showElseMenu {
+                                ElseMenuView(
+                                    firstButton: shareButton,
+                                    secondButton: reportButton,
+                                    bgColor: Color.blur2
+                                )
+                                .padding(.top, 70)
+                                .padding(.trailing, 33)
+                            }
                         }
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
@@ -89,6 +97,11 @@ struct PeepDetailView: View {
                             value: store.isReportSheetVisible
                         )
                     }
+                    .sheet(isPresented: $store.showShareSheet) {
+                        ShareSheet(activityItems: ["핍 공유하기"])
+                            .presentationDetents([.medium])
+                            .ignoresSafeArea()
+                    }
                 }
             }
         }
@@ -99,7 +112,8 @@ extension PeepDetailView {
 
     private var topBar: some View {
         HStack {
-            backButton
+            BackButton { store.send(.backButtonTapped, animation: .linear(duration: 0.1)) }
+
             Spacer()
 
             locationButton
@@ -111,21 +125,14 @@ extension PeepDetailView {
         .padding(.horizontal, 16)
     }
 
-    private var backButton: some View {
-        BackButton { store.send(.backButtonTapped) }
-    }
-
     private var moreButton: some View {
         Button {
             store.send(.setShowingElseMenu(!store.showElseMenu))
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("IconElse")
+                .resizable()
                 .frame(width: 33.6, height: 33.6)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "ElseN", pressedImg: "ElseY")
-        )
     }
 
     private var locationButton: some View {
@@ -166,31 +173,15 @@ extension PeepDetailView {
 
     private var shareButton: some View {
         Button {
-            // TODO: 공유하기
+            store.send(.shareButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("CombiShareBtnN")
-                    .opacity(0)
                 Text("공유하기")
             }
-            .opacity(0)
+            .pretendard(.body02)
+            .foregroundStyle(Color.white)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnN")
-                        Text("공유하기")
-                    },
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiShareBtnY")
-                        Text("공유하기")
-                            .pretendard(.body02)
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
     }
 
     private var reportButton: some View {
@@ -201,31 +192,15 @@ extension PeepDetailView {
                 Image("CombiReportBtnN")
                 Text("신고하기")
             }
-            .opacity(0)
+            .pretendard(.body02)
+            .foregroundStyle(Color.coreRed)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("CombiReportBtnN")
-                        Text("신고하기")
-                    }
-                    .foregroundStyle(Color.coreRed),
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("CombiReportBtnY")
-                        Text("신고하기")
-                            .pretendard(.body02)
-                    }
-                    .foregroundStyle(Color.gray300)
-            )
-        )
     }
 
     /// TODO: 이미지로 수정
     private var peepView: some View {
-        Rectangle()
-            .fill(Color.white)
+        Image("SampleImage")
+            .resizable()
             .aspectRatio(9/16, contentMode: .fit)
             .frame(width: Constant.screenWidth)
             .clipShape(RoundedRectangle(cornerRadius: 24))

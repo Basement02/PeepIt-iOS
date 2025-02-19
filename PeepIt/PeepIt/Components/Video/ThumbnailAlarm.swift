@@ -20,10 +20,8 @@ struct ThumbnailAlarm: View {
             ThumbnailLayer.secondary()
 
             HStack(spacing: 1) {
-                Image("IconCommentBold")
-                    .resizable()
-                    .frame(width: 14, height: 14)
-                    .frame(width: 20.16, height: 20.16)
+                Image("IconCommentBoldFrame")
+
                 Text("00")
                     .pretendard(.body01)
             }
