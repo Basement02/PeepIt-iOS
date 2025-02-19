@@ -175,8 +175,9 @@ fileprivate struct PeepPreviewCell: View {
             .padding(.bottom, 19.85.adjustedH)
             .padding(.horizontal, 18)
 
+            // TODO: - 활성화 핍 border
         }
-        .frame(width: 280, height: 383)
+        .frame(width: 281, height: 383)
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 
