@@ -15,61 +15,67 @@ struct PeepDetailView: View {
         WithPerceptionTracking {
             GeometryReader { proxy in
                 WithPerceptionTracking {
-                    ZStack(alignment: .topTrailing) {
-                        ZStack {
-                            if store.showPeepDetailBg {
-                                Color.base.ignoresSafeArea()
-                            } else {
-                                Color.clear.ignoresSafeArea()
-                            }
-
-                            VStack(spacing: 11) {
-                                topBar
-                                    .opacity(0)
-                                peepView
-                                Spacer()
-                            }
-                            .ignoresSafeArea(.all, edges: .bottom)
+                    ZStack {
+                        if store.showPeepDetailBg {
+                            Color.base.ignoresSafeArea()
+                        } else {
+                            Color.clear.ignoresSafeArea()
                         }
 
-                        if store.showPeepDetailObject {
-                            BackImageLayer.secondary()
-                                .ignoresSafeArea()
+                        TabView(selection: $store.currentIdx) {
+                            ForEach(0..<store.peepList.count, id: \.self) { idx in
+                                WithPerceptionTracking {
+                                    ZStack {
+                                        /// 뒷 배경 사진 레이아웃
+                                        VStack(spacing: 11) {
+                                            topBar
+                                                .opacity(0)
+                                            peepView
+                                            Spacer()
+                                        }
 
+                                        BackImageLayer.secondary()
+                                            .ignoresSafeArea()
+
+                                        if store.showPeepDetailObject {
+                                            /// 앞 오브젝트
+                                            VStack {
+                                                Spacer()
+                                                detailView
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.bottom, 84)
+                                            }
+                                            .ignoresSafeArea()
+                                        }
+                                    }
+                                    .tag(idx)
+                                }
+                            }
+                        }
+                        .tabViewStyle(.page(indexDisplayMode: .never))
+
+                        /// 상단바 - 탭뷰와 같이 안 움직이고 고정됨
+                        if store.showPeepDetailObject {
                             VStack {
                                 topBar
                                 Spacer()
-                                detailView
-                                    .padding(.horizontal, 16)
-                                    .padding(.bottom, 84)
-                            }
-                            .toolbar(.hidden, for: .navigationBar)
-                            .ignoresSafeArea(.all, edges: .bottom)
-
-                            /// 상단 우측 더보기 메뉴
-                            if store.state.showElseMenu {
-                                ElseMenuView(
-                                    firstButton: shareButton,
-                                    secondButton: reportButton,
-                                    bgColor: Color.blur2
-                                )
-                                .padding(.top, 70)
-                                .padding(.trailing, 33)
                             }
                         }
                     }
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .ignoresSafeArea(.all, edges: .bottom)
+                    .toolbar(.hidden, for: .navigationBar)
                     .onAppear { store.send(.onAppear) }
                     .onTapGesture { store.send(.viewTapped) }
-                    .overlay {
-                        /// 채팅 상세
-                        if store.showChat {
-                            ChatView(
-                                store: store.scope(
-                                    state: \.chatState,
-                                    action: \.chatAction
-                                )
+                    .overlay(alignment: .topTrailing) {
+                        /// 상단 우측 더보기 메뉴
+                        if store.state.showElseMenu {
+                            ElseMenuView(
+                                firstButton: shareButton,
+                                secondButton: reportButton,
+                                bgColor: Color.blur2
                             )
+                            .padding(.top, 69)
+                            .padding(.trailing, 36)
                         }
                     }
                     .overlay(alignment: .bottom) {
@@ -97,6 +103,17 @@ struct PeepDetailView: View {
                             value: store.isReportSheetVisible
                         )
                     }
+                    .overlay {
+                        /// 채팅 상세
+                        if store.showChat {
+                            ChatView(
+                                store: store.scope(
+                                    state: \.chatState,
+                                    action: \.chatAction
+                                )
+                            )
+                        }
+                    }
                     .sheet(isPresented: $store.showShareSheet) {
                         ShareSheet(activityItems: ["핍 공유하기"])
                             .presentationDetents([.medium])
@@ -112,7 +129,9 @@ extension PeepDetailView {
 
     private var topBar: some View {
         HStack {
-            BackButton { store.send(.backButtonTapped, animation: .linear(duration: 0.1)) }
+            BackButton {
+                store.send(.backButtonTapped, animation: .linear(duration: 0.1))
+            }
 
             Spacer()
 

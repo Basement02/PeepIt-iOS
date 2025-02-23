@@ -78,9 +78,11 @@ struct HomeStore {
         Reduce { state, action in
             switch action {
 
-            case let .peepPreviewModal(.peepCellTapped(idx)):
+            case let .peepPreviewModal(.peepCellTapped(idx, peeps)):
                 state.showPeepDetail = true
                 state.selectedPeepIndex = idx
+                state.peepDetail.peepList = peeps
+                state.peepDetail.currentIdx = idx
 
                 return .none
 

@@ -12,6 +12,10 @@ struct PeepDetailStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 스크롤된 핍 리스트
+        var peepList: [Peep] = []
+        /// 현재 핍 인덱스
+        var currentIdx = 0
         /// 반응 리스트
         var reactionList = ReactionType.allCases
         /// 선택된 반응
@@ -34,7 +38,7 @@ struct PeepDetailStore {
         var showingReactionIdx = 0
         /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
         var showPeepDetailObject = false
-
+        /// 핍 상세 나타날 때 백그라운드 보여줄 타이밍 
         var showPeepDetailBg = false
         /// 공유시트
         var showShareSheet = false
@@ -105,6 +109,10 @@ struct PeepDetailStore {
 
         Reduce { state, action in
             switch action {
+
+            case .binding(\.currentIdx):
+                return .none
+                
             case .binding(\.showShareSheet):
                 return .none
 
@@ -189,7 +197,6 @@ struct PeepDetailStore {
 
             case .viewTapped:
                 state.showElseMenu = false
-                state.showReactionList = false
                 return .none
 
             case .shareButtonTapped:

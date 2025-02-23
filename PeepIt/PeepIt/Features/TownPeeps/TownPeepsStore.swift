@@ -16,6 +16,7 @@ struct TownPeepsStore {
         var offsetY = CGFloat.zero
         var isRefreshing = false
         var rotateAngle = Double.zero
+        var peeps: [Peep] = []
     }
 
     enum Action {
