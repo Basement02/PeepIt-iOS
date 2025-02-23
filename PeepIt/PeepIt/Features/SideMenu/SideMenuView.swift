@@ -87,27 +87,10 @@ struct SideMenuView: View {
             HStack(spacing: 3) {
                 Image("LogoutN")
                 Text("로그아웃")
-                    .pretendard(.body02)
             }
-            .hidden()
+            .foregroundStyle(Color.white)
+            .pretendard(.body02)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("LogoutN")
-                        Text("로그아웃")
-                            .pretendard(.body02)
-                    },
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("LogoutY")
-                        Text("로그아웃")
-                            .pretendard(.body05)
-                            .foregroundStyle(Color.gray300)
-                }
-            )
-        )
     }
 
     private var settingButton: some View {

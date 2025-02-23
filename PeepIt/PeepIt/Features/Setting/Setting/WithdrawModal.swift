@@ -144,17 +144,10 @@ struct WithdrawModal: View {
             Button {
                 store.send(.closeSheet)
             } label: {
-                Rectangle()
+                Text("취소")
+                    .pretendard(.body04)
                     .frame(width: 250, height: 20)
-                    .opacity(0)
             }
-            .buttonStyle(
-                PressableViewButtonStyle(
-                    normalView: Text("취소"),
-                    pressedView: Text("취소").foregroundStyle(Color.gray300)
-                )
-            )
-            .pretendard(.body04 )
         }
         .frame(height: 91)
     }

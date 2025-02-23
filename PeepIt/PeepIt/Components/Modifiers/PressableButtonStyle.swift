@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct PressableButtonStyle: ButtonStyle {
-    let originImg: String
-    let pressedImg: String
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .overlay {
-                Image(configuration.isPressed ? pressedImg : originImg)
-            }
-    }
-}
+//struct PressableButtonStyle: ButtonStyle {
+//    let originImg: String
+//    let pressedImg: String
+//
+//    func makeBody(configuration: Configuration) -> some View {
+//        configuration.label
+//            .overlay {
+//                Image(configuration.isPressed ? pressedImg : originImg)
+//            }
+//    }
+//}
 
 struct PressableViewButtonStyle<NormalView: View, PressedView: View>: ButtonStyle {
     let normalView: NormalView

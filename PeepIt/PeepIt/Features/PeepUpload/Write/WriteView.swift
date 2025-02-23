@@ -210,13 +210,8 @@ struct WriteView: View {
             endTextEditing()
             store.send(.doneButtonTapped)
         } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 38, height: 38)
+            Image("DoneN")
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "DoneN", pressedImg: "DoneY")
-        )
     }
 
     @ViewBuilder

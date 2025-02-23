@@ -273,34 +273,19 @@ struct EditView: View {
         Button {
             store.send(.soundOnOffButtonTapped)
         } label: {
-            Rectangle()
-                .fill(Color.clear)
-                .frame(width: 42, height: 42)
+            Image(store.isVideoSoundOn ? "SoundOn" : "SoundOff")
         }
-        .buttonStyle(
-            store.isVideoSoundOn ?
-            PressableButtonStyle(
-                originImg: "SoundOnN",
-                pressedImg: "SoundOnY"
-            ) :
-            PressableButtonStyle(
-                originImg: "SoundOffN",
-                pressedImg: "SoundOffY"
-            )
-        )
+        .frame(width: 42, height: 42)
     }
 
     private var stickerButton: some View {
         Button {
             store.send(.stickerButtonTapped)
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("StickerN")
+                .resizable()
                 .frame(width: 42, height: 42)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "StickerN", pressedImg: "StickerY")
-        )
     }
 
     private var textButton: some View {
@@ -308,13 +293,10 @@ struct EditView: View {
             store.send(.textButtonTapped)
             isFocused = true
         } label: {
-            Rectangle()
-                .fill(Color.clear)
+            Image("TextN")
+                .resizable()
                 .frame(width: 42, height: 42)
         }
-        .buttonStyle(
-            PressableButtonStyle(originImg: "TextN", pressedImg: "TextY")
-        )
     }
 
     private var completeButton: some View {
@@ -325,13 +307,10 @@ struct EditView: View {
                 isFocused = false
                 store.send(.textInputCompleteButtonTapped)
             } label: {
-                Rectangle()
-                    .fill(Color.clear)
+                Image("DoneN")
+                    .resizable()
                     .frame(width: 38, height: 38)
             }
-            .buttonStyle(
-                PressableButtonStyle(originImg: "DoneN", pressedImg: "DoneY")
-            )
         }
     }
 
