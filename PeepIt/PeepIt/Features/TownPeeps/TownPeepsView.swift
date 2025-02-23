@@ -27,6 +27,7 @@ struct TownPeepsView: View {
             .ignoresSafeArea(.all, edges: .bottom)
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -130,14 +131,18 @@ struct TownPeepsView: View {
                     alignment: .center,
                     spacing: 8
                 ) {
-                    ForEach(0..<20) { _ in
-                        NavigationLink(
-                            state: RootStore.Path.State.peepDetail(PeepDetailStore.State())
-                        ) {
-                            ThumbnailPeep()
+                    ForEach(0..<store.peeps.count, id: \.self) { idx in
+                        WithPerceptionTracking {
+                            ThumbnailPeep(peep: store.peeps[idx])
+                                .onTapGesture {
+                                    store.send(
+                                        .peepCellTapped(idx: idx, peeps: store.peeps)
+                                    )
+                                }
                         }
                     }
                 }
+                .padding(.bottom, 11)
             }
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
                 if newOffset >= 140 && !store.isRefreshing {
@@ -156,6 +161,7 @@ struct TownPeepsView: View {
 }
 
 fileprivate struct ThumbnailPeep: View {
+    let peep: Peep
 
     var body: some View {
         ZStack(alignment: .top) {

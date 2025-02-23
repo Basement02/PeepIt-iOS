@@ -12,6 +12,8 @@ struct PeepDetailStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 핍 상세 진입 경로
+        var entryType = EntryType.peepPreview
         /// 스크롤된 핍 리스트
         var peepList: [Peep] = []
         /// 현재 핍 인덱스
@@ -50,6 +52,12 @@ struct PeepDetailStore {
             case c = "🤔"
             case d = "😙"
             case e = "😍"
+        }
+
+        enum EntryType {
+            case peepPreview
+            case townPeep
+            case notification
         }
     }
 
@@ -130,7 +138,12 @@ struct PeepDetailStore {
             case .backButtonTapped:
                 state.showPeepDetailBg = false
                 state.showPeepDetailObject = false
-                return .none
+
+                let entry = state.entryType
+                return .run { _ in
+                    guard entry != .peepPreview else { return }
+                    await dismiss()
+                }
 
             case let .selectReaction(selectedReaction):
                 if state.selectedReaction == selectedReaction { return .send(.unselectReaction) }
