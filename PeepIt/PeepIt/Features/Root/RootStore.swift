@@ -144,6 +144,29 @@ struct RootStore {
                     state.path.removeAll()
                     return .none
 
+                case let .element(_, action: .townPeeps(.peepCellTapped(idx, peeps))):
+                    state.path.append(
+                        .peepDetail(PeepDetailStore.State(
+                            entryType: .townPeep,
+                            peepList: peeps,
+                            currentIdx: idx,
+                            showPeepDetailObject: true,
+                            showPeepDetailBg: true
+                        ))
+                    )
+                    return .none
+
+                case let .element(_, action: .notification(.activePeepCellTapped(selectedPeep))):
+                    state.path.append(
+                        .peepDetail(PeepDetailStore.State(
+                            entryType: .notification,
+                            peepList: [selectedPeep],
+                            currentIdx: 0,
+                            showPeepDetailObject: true,
+                            showPeepDetailBg: true
+                        ))
+                    )
+                    return .none
 
                 default:
                     return .none

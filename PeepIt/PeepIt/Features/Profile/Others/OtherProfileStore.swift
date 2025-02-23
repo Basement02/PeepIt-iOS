@@ -120,7 +120,6 @@ struct OtherProfileStore {
                 }
 
             case .viewTapped:
-                guard state.isElseButtonTapped else { return .none }
                 state.isElseButtonTapped = false
 
                 return .none

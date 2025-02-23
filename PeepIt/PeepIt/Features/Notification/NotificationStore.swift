@@ -24,6 +24,7 @@ struct NotificationStore {
         case backButtonTapped
         case removeNoti(item: Notification)
         case uploadButtonTapped
+        case activePeepCellTapped(selectedPeep: Peep)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -47,6 +48,9 @@ struct NotificationStore {
                 return .none
 
             case .uploadButtonTapped:
+                return .none
+
+            case .activePeepCellTapped:
                 return .none
             }
         }

@@ -64,6 +64,7 @@ struct PeepPreviewModalView: View {
                 }
             }
             .ignoresSafeArea(.all, edges: .bottom)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -93,11 +94,14 @@ struct PeepPreviewModalView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 hiddenView
                 LazyHStack(spacing: 10) {
-                    ForEach(0...30, id: \.self) { idx in
-                        PeepPreviewCell(peep: .stubPeep1)
+                    ForEach(0..<store.peeps.count, id: \.self) { idx in
+                        PeepPreviewCell(peep: store.peeps[idx])
                             .id(idx)
                             .onTapGesture {
-                                store.send(.peepCellTapped(idx: idx), animation: .linear(duration: 0.1))
+                                store.send(
+                                    .peepCellTapped(idx: idx, peeps: store.peeps),
+                                    animation: .linear(duration: 0.1)
+                                )
                             }
                             .background {
                                 if !store.showPeepDetail {
@@ -142,7 +146,7 @@ struct PeepPreviewModalView: View {
 }
 
 fileprivate struct PeepPreviewCell: View {
-    let peep: PeepPreview
+    let peep: Peep
 
     var body: some View {
         ZStack {
@@ -160,7 +164,7 @@ fileprivate struct PeepPreviewCell: View {
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
                     Image("IconPeep")
-                    Text("현재 위치에서 \(peep.distance)km")
+                    Text("현재 위치에서 4km")
                     Spacer()
                     hotLabel
                 }

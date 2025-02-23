@@ -49,12 +49,14 @@ struct PeepModalStore {
                 }
             }
         }
+
+        var peeps: [Peep] = []
     }
 
     enum Action {
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded(dragHeight: CGFloat)
-        case peepCellTapped(idx: Int)
+        case peepCellTapped(idx: Int, peeps: [Peep])
         case scrollUpButtonTapped
         case peepScrollUpdated(CGFloat)
         case peepScrollEnded
@@ -62,11 +64,15 @@ struct PeepModalStore {
         case autoScrollEnded
         case setPeepScrollOffset(CGFloat)
         case showPeepDetail
+        case onAppear
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+            case .onAppear:
+                state.peeps.append(contentsOf: [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5])
+                return .none
 
             case let .modalDragged(dragHeight):
                 state.modalOffset = max(
