@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct ChatStore {
@@ -30,6 +31,8 @@ struct ChatStore {
         var reportModalOffset = Constant.screenHeight
         /// 신고 상태 관리
         var report = ReportStore.State()
+
+        var sendButtonIsPressing = false
     }
 
     enum Action: BindableAction {
@@ -89,7 +92,21 @@ struct ChatStore {
                 return .none
 
             case .sendButtonTapped:
+                state.sendButtonIsPressing = true
+
+                let newChat: Chat = .init(
+                    id: UUID().uuidString,
+                    user: .stubUser1,
+                    message: state.message,
+                    sendTime: "5분 전",
+                    type: .others
+                )
+
+                state.chats.append(newChat)
                 state.message.removeAll()
+
+                state.sendButtonIsPressing = false
+
                 return .none
 
             case .setBodyIsTrunscated:
