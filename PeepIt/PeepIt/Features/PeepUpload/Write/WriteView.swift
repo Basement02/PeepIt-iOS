@@ -165,8 +165,11 @@ struct WriteView: View {
             store.send(.uploadButtonTapped)
         } label: {
             Text("업로드")
+                .mainButtonStyle(width: 300)
+                .foregroundStyle(Color.gray800)
         }
-        .mainLimeButtonStyle(width: 300)
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var textEditor: some View {

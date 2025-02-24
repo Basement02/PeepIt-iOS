@@ -17,6 +17,7 @@ struct WithdrawModal: View {
                 slideBar
                 content
             }
+            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 
@@ -137,8 +138,11 @@ struct WithdrawModal: View {
                 // TODO:
             } label: {
                 Text("탈퇴하기")
+                    .mainButtonStyle()
+                    .foregroundStyle(Color.white)
             }
-            .mainGrayButtonStyle()
+            .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
             .opacity(store.isWithdrawActivated ? 1 : 0)
 
             Button {
@@ -146,6 +150,7 @@ struct WithdrawModal: View {
             } label: {
                 Text("취소")
                     .pretendard(.body04)
+                    .foregroundStyle(Color.white)
                     .frame(width: 250, height: 20)
             }
         }

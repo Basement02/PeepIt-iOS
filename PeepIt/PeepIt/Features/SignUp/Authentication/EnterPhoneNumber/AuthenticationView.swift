@@ -67,21 +67,27 @@ struct AuthenticationView: View {
     }
 
     private var skipButton: some View {
-        NavigationLink(
-            state: RootStore.Path.State.welcome(WelcomeStore.State())
-        ) {
+        Button {
+            store.send(.skipButtonTapped)
+        } label: {
             Text("건너뛰기")
-                .mainGrayButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var nextButton: some View {
-        NavigationLink(
-            state: RootStore.Path.State.inputAuthCode(EnterAuthCodeStore.State())
-        ) {
+        Button {
+            store.send(.nextButtonTapped)
+        } label: {
             Text("인증하기")
-                .mainLimeButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.gray800)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var phoneNumberTextField: some View {

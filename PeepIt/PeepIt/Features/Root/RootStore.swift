@@ -111,6 +111,30 @@ struct RootStore {
             case let .path(action):
                 switch action {
 
+                case .element(_, action: .term(.nextButtonTapped)):
+                    state.path.append(.inputId(.init()))
+                    return .none
+
+                case .element(_, action: .inputId(.nextButtonTapped)):
+                    state.path.append(.nickname(.init()))
+                    return .none
+
+                case .element(_, action: .nickname(.nextButtonTapped)):
+                    state.path.append(.inputProfle(.init()))
+                    return .none
+
+                case .element(_, action: .inputProfle(.nextButtonTapped)):
+                    state.path.append(.inputPhoneNumber(.init()))
+                    return .none
+
+                case .element(_, action: .inputPhoneNumber(.nextButtonTapped)):
+                    state.path.append(.inputAuthCode(.init()))
+                    return .none
+
+                case .element(_, action: .inputPhoneNumber(.skipButtonTapped)):
+                    state.path.append(.welcome(.init()))
+                    return .none
+
                 case .element(_, action: .welcome(.goToHomeButtonTapped)):
                     state.authState = .authorized
                     state.path.removeAll()

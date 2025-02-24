@@ -63,12 +63,15 @@ struct ProfileInfoView: View {
     }
 
     private var nextButton: some View {
-        NavigationLink(
-            state: RootStore.Path.State.inputPhoneNumber(AuthenticationStore.State())
-        ) {
+        Button {
+            store.send(.nextButtonTapped)
+        } label: {
             Text("다음")
-                .mainGrayButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var birthField: some View {

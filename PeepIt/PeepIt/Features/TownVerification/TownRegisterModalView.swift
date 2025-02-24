@@ -105,8 +105,11 @@ struct TownRegisterModalView: View {
             store.send(.registerButtonTapped)
         } label: {
             Text("동네 등록하기")
-                .mainGrayButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

@@ -124,14 +124,20 @@ struct TownVerificationView: View {
     }
 
     private var verifyButton: some View {
-        Text("현재 위치로 인증하기")
-            .mainGrayButtonStyle()
-            .shadow(
-                color: Color(hex: 0x202020, alpha: 0.15),
-                radius: 5,
-                x: 0,
-                y: 4
-            )
+        Button {
+        } label: {
+            Text("현재 위치로 인증하기")
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
+        }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
 }
 

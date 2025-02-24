@@ -177,29 +177,15 @@ extension HomeView {
     }
     
     private var uploadPeepButton: some View {
-        let normal = Circle()
-            .fill(Color.coreLime)
-            .frame(width: 56, height: 56)
-
-        let pressable = Circle()
-            .fill(Color.coreLimeClick)
-            .frame(width: 56, height: 56)
-
-        return Button {
+        Button {
             store.send(.uploadButtonTapped)
         } label: {
-            Circle()
-                .frame(width: 56, height: 56)
-                .hidden()
+            Image("PeepUploadSubtract")
+                .padding(.all, 13.3)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
-        )
-        .overlay {
-            Image("IconSubtract")
-                .resizable()
-                .frame(width: 19, height: 19)
-        }
+        .frame(width: 56, height: 56)
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(Circle())
         .shadow(
             color: Color(hex: 0x202020, alpha: 0.15),
             radius: 5,

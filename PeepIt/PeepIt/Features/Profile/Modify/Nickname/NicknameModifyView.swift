@@ -54,8 +54,11 @@ struct NicknameModifyView: View {
             store.send(.saveButtonTapped)
         } label: {
             Text("저장")
-                .mainLimeButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.gray800)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

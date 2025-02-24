@@ -261,8 +261,11 @@ struct ReportModal: View {
             // TODO:
         } label: {
             Text("공유하기")
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
-        .mainGrayButtonStyle()
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

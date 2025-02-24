@@ -276,19 +276,15 @@ extension PeepDetailView {
                 .resizable()
                 .frame(width: 29.66, height: 29.66)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView: RoundedRectangle(cornerRadius: 13.95).fill(Color.blur2),
-                pressedView: RoundedRectangle(cornerRadius: 13.95).fill(Color.blur1)
-            )
-        )
         .frame(width: 50, height: 50)
+        .background(Color.blur1)
+        .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 
     @ViewBuilder
     private var initialReactionView: some View {
         if let selectedReaction = store.selectedReaction {
-            RoundedRectangle(cornerRadius: 11.82)
+            RoundedRectangle(cornerRadius: 12)
                 .fill(Color.coreLimeOp)
                 .frame(width: 50, height: 50)
                 .overlay {
@@ -299,24 +295,16 @@ extension PeepDetailView {
                     store.send(.initialReactionButtonTapped)
                 }
         } else {
-            Button {
-                store.send(.initialReactionButtonTapped)
-            } label: {
-                Rectangle()
-                    .frame(width: 50, height: 50)
-                    .hidden()
-            }
-            .buttonStyle(
-                PressableViewButtonStyle(
-                    normalView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur2),
-                    pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
-                )
-            )
-            .frame(width: 50, height: 50)
-            .overlay {
-                Text(store.reactionList[store.showingReactionIdx].rawValue)
-                    .font(.system(size: 24))
-            }
+            RoundedRectangle(cornerRadius: 12)
+                .fill(Color.blur2)
+                .frame(width: 50, height: 50)
+                .overlay {
+                    Text(store.reactionList[store.showingReactionIdx].rawValue)
+                        .font(.system(size: 24))
+                }
+                .onTapGesture {
+                    store.send(.initialReactionButtonTapped)
+                }
         }
     }
 

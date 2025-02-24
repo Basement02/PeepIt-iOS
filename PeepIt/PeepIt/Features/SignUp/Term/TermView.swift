@@ -91,12 +91,15 @@ struct TermView: View {
         HStack {
             Spacer()
 
-            NavigationLink(
-                state: RootStore.Path.State.inputId(InputIdStore.State())
-            ) {
+            Button {
+                store.send(.nextButtonTapped)
+            } label: {
                 Text("다음")
-                    .mainGrayButtonStyle()
+                    .mainButtonStyle()
+                    .foregroundStyle(Color.white)
             }
+            .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+            .clipShape(RoundedRectangle(cornerRadius: 16))
 
             Spacer()
         }

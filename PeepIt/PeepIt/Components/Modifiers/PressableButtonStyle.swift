@@ -7,18 +7,6 @@
 
 import SwiftUI
 
-//struct PressableButtonStyle: ButtonStyle {
-//    let originImg: String
-//    let pressedImg: String
-//
-//    func makeBody(configuration: Configuration) -> some View {
-//        configuration.label
-//            .overlay {
-//                Image(configuration.isPressed ? pressedImg : originImg)
-//            }
-//    }
-//}
-
 enum ButtonColorStyle {
     case lime
     case gray900
@@ -83,5 +71,23 @@ struct PressableViewButtonStyle<NormalView: View, PressedView: View>: ButtonStyl
 
             configuration.label
         }
+    }
+}
+
+struct MainButtonStyle: ViewModifier {
+    var width: CGFloat
+    var height: CGFloat
+
+    func body(content: Content) -> some View {
+        content
+            .frame(width: width, height: height)
+            .pretendard(.foodnote)
+    }
+}
+
+extension View {
+
+    func mainButtonStyle(width: CGFloat = 250, height: CGFloat = 55) -> some View {
+        self.modifier(MainButtonStyle(width: width, height: height))
     }
 }

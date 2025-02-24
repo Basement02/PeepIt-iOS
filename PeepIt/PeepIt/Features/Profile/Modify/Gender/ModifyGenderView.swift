@@ -88,8 +88,11 @@ struct ModifyGenderView: View {
             store.send(.saveButtonTapped)
         } label: {
             Text("저장")
-                .mainGrayButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 
