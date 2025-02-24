@@ -33,9 +33,9 @@ struct PeepDetailView: View {
                                             peepView
                                             Spacer()
                                         }
+                                        .ignoresSafeArea(.all, edges: .bottom)
 
-                                        BackImageLayer.secondary()
-                                            .ignoresSafeArea()
+                                        BackImageLayer.secondary().ignoresSafeArea()
 
                                         if store.showPeepDetailObject {
                                             /// 앞 오브젝트

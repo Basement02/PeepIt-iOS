@@ -15,77 +15,82 @@ struct HomeView: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack {
-                Group {
-                    HomeMapView()
-                        .ignoresSafeArea()
-
-                    Group {
-                        BackMapLayer.teriary()
-                        BackMapLayer.secondary()
-                    }
-                    .allowsHitTesting(false)
-                    .ignoresSafeArea()
-
-                    if !store.showTownVeriModal {
-                        VStack {
-                            topBar
-                                .padding(.horizontal, 16)
-
-                            Spacer()
-
-                            HStack(alignment: .bottom) {
-                                currentLocationButton
-                                Spacer()
-                                uploadPeepButton
-                            }
-                            .padding(.horizontal, 16)
-                            .padding(
-                                .bottom,
-                                PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
-                            )
-                        }
-
-                        /// 핍 미리보기 모달
-                        PeepPreviewModalView(
-                            store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal),
-                            namespace: namespace
-                        )
-
-                        /// 사이드메뉴 등장 시 필터
-                        if store.mainViewMoved {
-                            Color.blur2
+            GeometryReader { _ in
+                WithPerceptionTracking {
+                    ZStack {
+                        Group {
+                            HomeMapView()
                                 .ignoresSafeArea()
-                                .onTapGesture { store.send(.dismissSideMenu) }
+
+                            Group {
+                                BackMapLayer.teriary()
+                                BackMapLayer.secondary()
+                            }
+                            .allowsHitTesting(false)
+                            .ignoresSafeArea()
+
+                            if !store.showTownVeriModal {
+                                VStack {
+                                    topBar
+                                        .padding(.horizontal, 16)
+
+                                    Spacer()
+
+                                    HStack(alignment: .bottom) {
+                                        currentLocationButton
+                                        Spacer()
+                                        uploadPeepButton
+                                    }
+                                    .padding(.horizontal, 16)
+                                    .padding(
+                                        .bottom,
+                                        PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
+                                    )
+                                }
+
+                                /// 핍 미리보기 모달
+                                PeepPreviewModalView(
+                                    store: store.scope(state: \.peepPreviewModal, action: \.peepPreviewModal),
+                                    namespace: namespace
+                                )
+
+                                /// 사이드메뉴 등장 시 필터
+                                if store.mainViewMoved {
+                                    Color.blur2
+                                        .ignoresSafeArea()
+                                        .onTapGesture { store.send(.dismissSideMenu) }
+                                }
+                            }
+                        }
+                        .offset(x: store.mainViewOffset)
+
+                        SideMenuView(
+                            store: store.scope(state: \.sideMenu, action: \.sideMenu)
+                        )
+                        .offset(x: store.sideMenu.sideMenuOffset)
+                    }
+                    .ignoresSafeArea(.keyboard)
+                    .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
+                    .ignoresSafeArea(.all, edges: .bottom)
+                    .toolbar(.hidden, for: .navigationBar)
+                    .overlay {
+                        /// 핍 상세
+                        if store.showPeepDetail, let idx = store.selectedPeepIndex {
+                            PeepDetailView(
+                                store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                            )
+                            .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+                            .transition(.scale(scale: 1))
                         }
                     }
+                    .overlay {
+                        TownRegisterModalView(
+                            store: store.scope(state: \.townVerification, action: \.townVerification)
+                        )
+                        .offset(y: store.townVerificationModalOffset)
+                        .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
+                    }
                 }
-                .offset(x: store.mainViewOffset)
-
-                SideMenuView(
-                    store: store.scope(state: \.sideMenu, action: \.sideMenu)
-                )
-                .offset(x: store.sideMenu.sideMenuOffset)
-            }
-            .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
-            .ignoresSafeArea(.all, edges: .bottom)
-            .toolbar(.hidden, for: .navigationBar)
-            .overlay {
-                /// 핍 상세
-                if store.showPeepDetail, let idx = store.selectedPeepIndex {
-                    PeepDetailView(
-                        store: store.scope(state: \.peepDetail, action: \.peepDetail)
-                    )
-                    .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
-                    .transition(.scale(scale: 1))
-                }
-            }
-            .overlay {
-                TownRegisterModalView(
-                    store: store.scope(state: \.townVerification, action: \.townVerification)
-                )
-                .offset(y: store.townVerificationModalOffset)
-                .animation(.easeInOut(duration: 0.3), value: store.townVerificationModalOffset)
             }
         }
     }

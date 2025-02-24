@@ -29,52 +29,53 @@ struct ChatView: View {
                                 .opacity(0)
 
                             /// TODO: 이미지
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                            Image("SampleImage")
+                                .resizable()
                                 .aspectRatio(9/16, contentMode: .fit)
                                 .frame(width: Constant.screenWidth)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
 
                             Spacer()
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
 
                         /// 필터 레이어
-                        Group {
-                            BackImageLayer.primary()
-                            BackImageLayer.secondary()
-                            Color.blur1
-                        }
-                        .ignoresSafeArea()
+//                        Group {
+//                            BackImageLayer.primary()
+//                            BackImageLayer.secondary()
+//                            Color.blur1
+//                        }
+//                        .ignoresSafeArea()
 
                         /// 채팅 UI
-                        VStack(spacing: 0) {
-                            topBar
-                                .padding(.bottom, 33)
-                            uploaderBodyView
-                                .padding(.bottom, 14)
+//                        VStack(spacing: 0) {
+//                            topBar
+//                                .padding(.bottom, 33)
+//                            uploaderBodyView
+//                                .padding(.bottom, 14)
+//
+//                            chatListView
+//                                .padding(
+//                                    .bottom,
+//                                    keyboardHeight == 0 ?
+//                                    21 : keyboardHeight
+//                                )
+//                                .clipped()
+//
+//                            Spacer()
+//                        }
 
-                            chatListView
-                                .padding(
-                                    .bottom,
-                                    keyboardHeight == 0 ?
-                                    21 : keyboardHeight
-                                )
-                                .clipped()
-
+                        VStack {
+                            Spacer()
                             enterFieldView
-                                .padding(
-                                    .bottom, keyboardHeight == 0 ?
-                                    geo.safeAreaInsets.bottom : 18
-                                )
                                 .offset(y: -keyboardHeight)
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
-                        .animation(.easeInOut(duration: 0.2), value: keyboardHeight)
-                        .onTapGesture { endTextEditing() }
-                        .onAppear(perform: addKeyboardObserver)
-                        .onDisappear(perform: removeKeyboardObserver)
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .animation(.easeInOut(duration: 0.2), value: keyboardHeight)
+                    .onTapGesture { endTextEditing() }
+                    .onAppear(perform: addKeyboardObserver)
+                    .onDisappear(perform: removeKeyboardObserver)
                     .onAppear { store.send(.onAppear) }
                     .overlay { /// 채팅 상세
                         if store.showChatDetail {
