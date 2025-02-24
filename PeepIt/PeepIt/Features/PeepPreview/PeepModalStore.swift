@@ -28,6 +28,8 @@ struct PeepModalStore {
 
         var showPeepDetail = false
 
+        var currentIdx = 0
+
         enum SheetType: CaseIterable {
             case scrollDown, scrollUp
 
@@ -53,7 +55,8 @@ struct PeepModalStore {
         var peeps: [Peep] = []
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded(dragHeight: CGFloat)
         case peepCellTapped(idx: Int, peeps: [Peep])
@@ -68,8 +71,13 @@ struct PeepModalStore {
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+
         Reduce { state, action in
             switch action {
+            case .binding(\.currentIdx):
+                return .none
+
             case .onAppear:
                 state.peeps.append(contentsOf: [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5])
                 return .none
@@ -128,6 +136,9 @@ struct PeepModalStore {
                 return .none
 
             case .showPeepDetail:
+                return .none
+
+            default:
                 return .none
             }
         }

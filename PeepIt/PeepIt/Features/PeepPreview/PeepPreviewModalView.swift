@@ -9,13 +9,13 @@ import SwiftUI
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
-    let store: StoreOf<PeepModalStore>
+    @Perception.Bindable var store: StoreOf<PeepModalStore>
     let namespace: Namespace.ID
 
     @State private var offsetX: CGFloat = .zero
-    @State private var dragEndedOffset: CGFloat = .zero
-    @State private var isScrolling = true
-    @State private var isAutoScroll = false
+
+    @State private var isDragging: Bool = false
+    @State private var totalDrag: CGFloat = 0.0
 
     var body: some View {
         WithPerceptionTracking {
@@ -220,9 +220,12 @@ fileprivate struct PeepPreviewCell: View {
 }
 
 #Preview {
-    HomeView(
-        store: .init(initialState: HomeStore.State()) {
-            HomeStore()
-        }
+    @Namespace var namespaceStub
+
+    return PeepPreviewModalView(
+        store: .init(initialState: PeepModalStore.State()) {
+            PeepModalStore()
+        },
+        namespace: namespaceStub
     )
 }

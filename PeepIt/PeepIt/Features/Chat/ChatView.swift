@@ -15,6 +15,7 @@ struct ChatView: View {
     @State private var sendButtonWidth: CGFloat = .zero
     @State private var enterFieldHorizontalInset: CGFloat = 14
     @State private var enterViewPadding: CGFloat = 16
+    @State private var enterFieldHeight: CGFloat = 44
 
     var body: some View {
         WithPerceptionTracking {
@@ -29,10 +30,11 @@ struct ChatView: View {
                                 .opacity(0)
 
                             /// TODO: 이미지
-                            RoundedRectangle(cornerRadius: 24)
-                                .fill(Color.white)
+                            Image("SampleImage")
+                                .resizable()
                                 .aspectRatio(9/16, contentMode: .fit)
                                 .frame(width: Constant.screenWidth)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
 
                             Spacer()
                         }
@@ -52,29 +54,29 @@ struct ChatView: View {
                                 .padding(.bottom, 33)
                             uploaderBodyView
                                 .padding(.bottom, 14)
-
                             chatListView
-                                .padding(
-                                    .bottom,
-                                    keyboardHeight == 0 ?
-                                    21 : keyboardHeight
-                                )
-                                .clipped()
+                                .padding(.bottom, keyboardHeight)
 
-                            enterFieldView
-                                .padding(
-                                    .bottom, keyboardHeight == 0 ?
-                                    geo.safeAreaInsets.bottom : 18
-                                )
-                                .offset(y: -keyboardHeight)
+                            Spacer()
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
-                        .animation(.easeInOut(duration: 0.2), value: keyboardHeight)
-                        .onTapGesture { endTextEditing() }
-                        .onAppear(perform: addKeyboardObserver)
-                        .onDisappear(perform: removeKeyboardObserver)
+
+                        VStack {
+                            Spacer()
+
+                            enterFieldView
+                                .padding(.bottom, keyboardHeight)
+                                .padding(.bottom, keyboardHeight > 0 ? 18 : Constant.safeAreaBottom)
+
+                            Spacer().frame(height:1)
+                        }
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
+                        .ignoresSafeArea()
                     }
-                    .ignoresSafeArea(.keyboard, edges: .bottom)
+                    .ignoresSafeArea(.all, edges: .bottom)
+                    .onTapGesture { endTextEditing() }
+                    .onAppear(perform: addKeyboardObserver)
+                    .onDisappear(perform: removeKeyboardObserver)
                     .onAppear { store.send(.onAppear) }
                     .overlay { /// 채팅 상세
                         if store.showChatDetail {
@@ -198,9 +200,9 @@ struct ChatView: View {
             )
             .onChange(of: store.message) { newText in
                 let width = Constant.screenWidth
-                    - enterFieldHorizontalInset*2
-                    - 8 - enterViewPadding*2
-                    - sendButtonWidth
+                - enterFieldHorizontalInset*2
+                - 8 - enterViewPadding*2
+                - sendButtonWidth
 
                 store.send(
                     .checkIfEnterMessageLong(
@@ -212,6 +214,14 @@ struct ChatView: View {
             Spacer()
             sendButton
         }
+        .onChange(of: store.message) { newText in
+            GeometryReader { geo in
+                Color.clear
+                    .onAppear {
+                        enterFieldHeight = geo.size.height
+                    }
+            }
+        }
         .padding(.horizontal, enterViewPadding)
     }
 
@@ -219,11 +229,12 @@ struct ChatView: View {
     private var sendButton: some View {
         Button {
             store.send(.sendButtonTapped)
+            endTextEditing()
         } label: {
             Image("BoxBtnN")
                 .padding(.all, 7)
+                .frame(width: 44, height: 44)
         }
-        .frame(width: 44, height: 44)
         .buttonStyle(PressableButtonStyle(colorStyle: .lime))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .background(
@@ -237,24 +248,27 @@ struct ChatView: View {
     }
 
     private var chatListView: some View {
-        ScrollView {
-            LazyVStack(spacing: 15) {
-                ForEach(store.chats, id: \.id) { chat in
-                    chatCell(chat: chat) {
-                        store.send(.showMoreButtonTapped(chat: chat))
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 15) {
+                    ForEach(store.chats, id: \.id) { chat in
+                        chatCell(chat: chat) {
+                            store.send(.showMoreButtonTapped(chat: chat))
+                        }
+                        .id(chat.id)
+                        .yieldTouches()
+                        .gesture(
+                            LongPressGesture(minimumDuration: 1.2)
+                                .onEnded { isPressed in
+                                    if isPressed { store.send(.chatLongTapped(chat: chat)) }
+                                }
+                        )
                     }
-                    .yieldTouches()
-                    .gesture(
-                        LongPressGesture(minimumDuration: 1.2)
-                            .onEnded { isPressed in
-                                if isPressed { store.send(.chatLongTapped(chat: chat)) }
-                            }
-                    )
                 }
             }
+            .scrollIndicators(.hidden)
+            .padding(.horizontal, 16)
         }
-        .scrollIndicators(.hidden)
-        .padding(.horizontal, 16)
     }
 
     private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
