@@ -123,25 +123,24 @@ struct PeepPreviewModalView: View {
     }
 
     private var scrollUpLabel: some View {
-        HStack(spacing: 6) {
-            Image("IconUp")
-            Text("nnn개의 핍 보기")
-                .pretendard(.body04)
-
-            Image("IconEyes")
-        }
-        .padding(.leading, 20)
-        .padding(.trailing, 15)
-        .background(
-            RoundedRectangle(cornerRadius: 100)
-                .fill(Color.base)
-                .frame(height: 36)
-        )
-        .onTapGesture {
+        Button {
             store.send(
                 .scrollUpButtonTapped, animation: .easeInOut(duration: 0.2)
             )
+        } label: {
+            HStack(spacing: 6) {
+                Image("IconUp")
+                Text("nnn개의 핍 보기")
+                    .pretendard(.body04)
+
+                Image("IconEyes")
+            }
+            .padding(.leading, 20)
+            .padding(.trailing, 15)
+            .frame(height: 36)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .base))
+        .clipShape(RoundedRectangle(cornerRadius: 100))
     }
 }
 

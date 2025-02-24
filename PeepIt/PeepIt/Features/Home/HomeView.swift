@@ -116,11 +116,11 @@ extension HomeView {
                 .showSideMenu, animation: .easeIn(duration: 0.3)
             )
         } label: {
-            RoundedRectangle(cornerRadius: 13)
-                .fill(Color.blur1)
-                .frame(width: 45, height: 45)
-                .overlay { Image("IconMenu") }
+            Image("IconMenu")
+                .padding(.all, 10)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .base))
+        .clipShape(RoundedRectangle(cornerRadius: 13))
     }
     
     private var setMyTownButton: some View {
@@ -141,12 +141,10 @@ extension HomeView {
             }
             .padding(.leading, 15)
             .padding(.trailing, 23)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.blur1)
-                    .frame(height: 45)
-            )
+            .frame(height: 45)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .base))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
     
     private var profileButton: some View {
@@ -156,30 +154,20 @@ extension HomeView {
             Image("ProfileSample")
                 .resizable()
                 .frame(width: 45, height: 45)
-                .clipShape(RoundedRectangle(cornerRadius: 13))
         }
+        .buttonStyle(PressableOpacityButtonStyle())
+        .clipShape(RoundedRectangle(cornerRadius: 13))
     }
     
     private var currentLocationButton: some View {
-        let normal = Circle()
-            .fill(Color.base)
-            .frame(width: 44, height: 44)
-
-        let pressable = Circle()
-            .fill(Color.gray700)
-            .frame(width: 44, height: 44)
-
-        return Button {
+        Button {
             // TODO:
         } label: {
-            Circle()
+            Image("IconNavigationTarget")
                 .frame(width: 44, height: 44)
-                .hidden()
         }
-        .buttonStyle(
-            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
-        )
-        .overlay { Image("IconNavigationTarget") }
+        .buttonStyle(PressableButtonStyle(colorStyle: .base))
+        .clipShape(Circle())
         .shadow(
             color: Color(hex: 0x202020, alpha: 0.15),
             radius: 5,
@@ -189,29 +177,15 @@ extension HomeView {
     }
     
     private var uploadPeepButton: some View {
-        let normal = Circle()
-            .fill(Color.coreLime)
-            .frame(width: 56, height: 56)
-
-        let pressable = Circle()
-            .fill(Color.coreLimeClick)
-            .frame(width: 56, height: 56)
-
-        return Button {
+        Button {
             store.send(.uploadButtonTapped)
         } label: {
-            Circle()
-                .frame(width: 56, height: 56)
-                .hidden()
+            Image("PeepUploadSubtract")
+                .padding(.all, 13.3)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(normalView: normal, pressedView: pressable)
-        )
-        .overlay {
-            Image("IconSubtract")
-                .resizable()
-                .frame(width: 19, height: 19)
-        }
+        .frame(width: 56, height: 56)
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(Circle())
         .shadow(
             color: Color(hex: 0x202020, alpha: 0.15),
             radius: 5,

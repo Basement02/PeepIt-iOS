@@ -48,6 +48,8 @@ struct EnterAuthCodeStore {
         case backButtonTapped
         /// 완료뷰로 이동
         case pushToWelcomeView
+        /// 스킵 버튼
+        case skipButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -96,6 +98,9 @@ struct EnterAuthCodeStore {
                 }
 
             case .pushToWelcomeView:
+                return .none
+
+            case .skipButtonTapped:
                 return .none
 
             default:

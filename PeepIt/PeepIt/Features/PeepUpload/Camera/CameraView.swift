@@ -81,7 +81,7 @@ struct CameraView: View {
             Button {
                 store.send(.flashButtonTapped)
             } label: {
-                Image(store.isFlashOn ? "FlashOnY" : "FlashOffY")
+                Image(store.isFlashOn ? "FlashOn" : "FlashOff")
             }
         }
         .padding(.horizontal, 16)

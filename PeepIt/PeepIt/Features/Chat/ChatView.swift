@@ -220,15 +220,12 @@ struct ChatView: View {
         Button {
             store.send(.sendButtonTapped)
         } label: {
-            Image("BoxBtnY")
-                .opacity(0)
+            Image("BoxBtnN")
+                .padding(.all, 7)
         }
-        .buttonStyle(
-            PressableButtonStyle(
-                originImg: "BoxBtnY",
-                pressedImg: "BoxBtnN"
-            )
-        )
+        .frame(width: 44, height: 44)
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .background(
             GeometryReader { geo in
                 Color.clear

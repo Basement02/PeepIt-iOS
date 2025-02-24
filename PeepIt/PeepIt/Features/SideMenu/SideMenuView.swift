@@ -87,27 +87,10 @@ struct SideMenuView: View {
             HStack(spacing: 3) {
                 Image("LogoutN")
                 Text("로그아웃")
-                    .pretendard(.body02)
             }
-            .hidden()
+            .foregroundStyle(Color.white)
+            .pretendard(.body02)
         }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView:
-                    HStack(spacing: 3) {
-                        Image("LogoutN")
-                        Text("로그아웃")
-                            .pretendard(.body02)
-                    },
-                pressedView:
-                    HStack(spacing: 3) {
-                        Image("LogoutY")
-                        Text("로그아웃")
-                            .pretendard(.body05)
-                            .foregroundStyle(Color.gray300)
-                }
-            )
-        )
     }
 
     private var settingButton: some View {
@@ -119,15 +102,26 @@ struct SideMenuView: View {
     }
 
     private var goToAppStoreButton: some View {
-        HStack(spacing: 2) {
+        let button = HStack(spacing: 2) {
             Text("[핍잇이 마음에 드시나요?](https://www.apple.com)") // TODO: 변경
-                .pretendard(.body04)
-                .tint(Color.coreLime)
+                .pretendard(.caption02)
 
             Image("IconLink")
                 .resizable()
                 .frame(width: 20, height: 20)
         }
+
+        return Button {
+            // TODO: 
+        } label: {
+            button.hidden()
+        }
+        .buttonStyle(
+            PressableViewButtonStyle(
+                normalView: button.tint(Color.coreLime),
+                pressedView: button.tint(Color.coreLimeClick)
+            )
+        )
     }
 
     private var versionLabel: some View {

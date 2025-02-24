@@ -130,12 +130,15 @@ struct EnterAuthCodeView: View {
     }
 
     private var skipButton: some View {
-        NavigationLink(
-            state: RootStore.Path.State.welcome(WelcomeStore.State())
-        ) {
+        Button {
+            store.send(.skipButtonTapped)
+        } label: {
             Text("건너뛰기")
-                .mainGrayButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 

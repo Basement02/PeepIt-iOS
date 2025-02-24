@@ -100,35 +100,44 @@ struct TownVerificationView: View {
     }
 
     private var toCurrentLocationButton: some View {
-        RoundedRectangle(cornerRadius: 100)
-            .fill(Color.white)
-            .frame(width: 194, height: 38)
-            .overlay(alignment: .leading) {
-                HStack(spacing: 3) {
-                    Image("IconDirection")
-                    Text("현재 위치로 돌아가기")
-                        .pretendard(.body04)
-                        .foregroundStyle(Color.base)
-                }
-                .padding(.leading, 23)
+        Button {
+
+        } label: {
+            HStack(spacing: 3) {
+                Image("IconDirection")
+                Text("현재 위치로 돌아가기")
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.base)
+                Spacer()
             }
-            .shadow(
-                color: Color(hex: 0x202020, alpha: 0.15),
-                radius: 5,
-                x: 0,
-                y: 4
-            )
+            .padding(.leading, 23)
+            .frame(width: 194, height: 38)
+        }
+        .buttonStyle(PressableButtonStyle(colorStyle: .white))
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 100))
     }
 
     private var verifyButton: some View {
-        Text("현재 위치로 인증하기")
-            .mainGrayButtonStyle()
-            .shadow(
-                color: Color(hex: 0x202020, alpha: 0.15),
-                radius: 5,
-                x: 0,
-                y: 4
-            )
+        Button {
+        } label: {
+            Text("현재 위치로 인증하기")
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
+        }
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .shadow(
+            color: Color(hex: 0x202020, alpha: 0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
     }
 }
 

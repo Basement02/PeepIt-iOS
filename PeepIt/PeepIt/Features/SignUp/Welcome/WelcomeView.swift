@@ -87,8 +87,11 @@ struct WelcomeView: View {
             store.send(.goToHomeButtonTapped)
         } label: {
             Text("홈으로")
-                .mainLimeButtonStyle()
+                .mainButtonStyle()
+                .foregroundStyle(Color.gray800)
         }
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var authLabel: some View {

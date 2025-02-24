@@ -99,8 +99,11 @@ struct BlockDescriptionModal: View {
             store.send(.blockUser)
         } label: {
             Text("차단하기")
+                .mainButtonStyle()
+                .foregroundStyle(Color.white)
         }
-        .mainGrayButtonStyle()
+        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private var cancelButton: some View {

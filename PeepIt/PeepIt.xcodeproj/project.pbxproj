@@ -58,11 +58,10 @@
 		AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB468D352CA9574700C1E430 /* NicknameModifyView.swift */; };
 		AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */; };
 		AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */; };
+		AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB47D6E22D6B836100934A0F /* CameraServiceKey.swift */; };
 		AB4A28C72D3FCA9B007E8383 /* BackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */; };
 		AB4A28C92D3FD31A007E8383 /* HomeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */; };
 		AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */; };
-		AB4F35D32D64296800F799ED /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35D22D64296800F799ED /* CameraServiceKey.swift */; };
-		AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
 		AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159822CAAFCA40043AA0A /* LoginType.swift */; };
@@ -116,7 +115,6 @@
 		ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */; };
 		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
 		ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserProfile.swift */; };
-		ABC701322CE6E069004DCFF1 /* MainLimeButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */; };
 		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
@@ -216,11 +214,10 @@
 		AB468D352CA9574700C1E430 /* NicknameModifyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModifyView.swift; sourceTree = "<group>"; };
 		AB469C702C9FED6C00DC7B8A /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
 		AB469C722C9FF7F000DC7B8A /* SideMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuStore.swift; sourceTree = "<group>"; };
+		AB47D6E22D6B836100934A0F /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
 		AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropView.swift; sourceTree = "<group>"; };
 		AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapView.swift; sourceTree = "<group>"; };
 		AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
-		AB4F35D22D64296800F799ED /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
-		AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGrayButtonStyle.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
 		AB5159822CAAFCA40043AA0A /* LoginType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginType.swift; sourceTree = "<group>"; };
@@ -274,7 +271,6 @@
 		ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgroundViewModifier.swift; sourceTree = "<group>"; };
 		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
 		ABC305F22C95A567003B00FE /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
-		ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLimeButtonStyle.swift; sourceTree = "<group>"; };
 		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
@@ -608,7 +604,7 @@
 			isa = PBXGroup;
 			children = (
 				ABA67D522D2B02AD0018EC92 /* VideoRenderServiceKey.swift */,
-				AB4F35D22D64296800F799ED /* CameraServiceKey.swift */,
+				AB47D6E22D6B836100934A0F /* CameraServiceKey.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -833,8 +829,6 @@
 			isa = PBXGroup;
 			children = (
 				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
-				AB5159752CA97A320043AA0A /* MainGrayButtonStyle.swift */,
-				ABC701312CE6E069004DCFF1 /* MainLimeButtonStyle.swift */,
 				ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */,
 				ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */,
 				AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */,
@@ -1161,9 +1155,7 @@
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
 				ABA67D4E2D2AE9090018EC92 /* LoopingVideoPlayerView.swift in Sources */,
 				AB416D262CF371110065BD09 /* ThumbnailAlarm.swift in Sources */,
-				AB5159762CA97A320043AA0A /* MainGrayButtonStyle.swift in Sources */,
 				ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */,
-				ABC701322CE6E069004DCFF1 /* MainLimeButtonStyle.swift in Sources */,
 				ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */,
 				AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */,
 				ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */,
@@ -1246,7 +1238,7 @@
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
-				AB4F35D32D64296800F799ED /* CameraServiceKey.swift in Sources */,
+				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 				AB416D222CF34B880065BD09 /* NotificationSettingView.swift in Sources */,
 				AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */,
