@@ -75,7 +75,7 @@ struct NicknameStore {
         switch true {
         case nickname.isEmpty:
             return .base
-        case !nickname.isValidForAllowedCharacters:
+        case !nickname.isValidForWords:
             return .wrongWord
         case nickname.count > 18:
             return .maxCount

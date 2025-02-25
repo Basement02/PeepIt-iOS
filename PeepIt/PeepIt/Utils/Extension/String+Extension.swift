@@ -14,6 +14,12 @@ extension String {
         return self.rangeOfCharacter(from: allowedCharacters.inverted) == nil
     }
 
+    var isValidForWords: Bool {
+        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+            .union(CharacterSet(charactersIn: "\u{AC00}"..."\u{D7A3}")) // 한글 범위 포함
+        return self.rangeOfCharacter(from: allowedCharacters.inverted) == nil
+    }
+
     var forceCharWrapping: Self {
         self.map({ String($0) }).joined(separator: "\u{200B}")
     }

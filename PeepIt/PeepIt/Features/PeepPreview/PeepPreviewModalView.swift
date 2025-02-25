@@ -48,6 +48,7 @@ struct PeepPreviewModalView: View {
                         }
                         .frame(height: PeepModalStore.State.SheetType.scrollUp.height)
                         .offset(y: store.modalOffset)
+                        .animation(.linear(duration: 0.2), value: store.modalOffset)
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
@@ -124,9 +125,7 @@ struct PeepPreviewModalView: View {
 
     private var scrollUpLabel: some View {
         Button {
-            store.send(
-                .scrollUpButtonTapped, animation: .easeInOut(duration: 0.2)
-            )
+            store.send(.scrollUpButtonTapped)
         } label: {
             HStack(spacing: 6) {
                 Image("IconUp")
