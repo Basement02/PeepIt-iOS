@@ -36,8 +36,10 @@ struct ProfileInfoView: View {
 
                             Spacer()
 
-                            nextButton
-                                .padding(.bottom, 84)
+                            if store.isBirthValidate {
+                                nextButton
+                                    .padding(.bottom, 84)
+                            }
                         }
                         .ignoresSafeArea(.all, edges: .bottom)
                     }
@@ -45,6 +47,13 @@ struct ProfileInfoView: View {
                     .toolbar(.hidden, for: .navigationBar)
                     .onAppear { isFocused = true }
                     .onTapGesture { endTextEditing() }
+                    .onChange(of: isFocused) { _ in
+                        if !isFocused {
+                            store.send(.tfFocusing)
+                        } else {
+                            store.send(.tfNotFocusing)
+                        }
+                    }
                 }
             }
         }
@@ -75,32 +84,37 @@ struct ProfileInfoView: View {
     }
 
     private var birthField: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(spacing: 7) {
-                Text("생년월일")
-                    .pretendard(.caption01)
-                Text("(선택사항)")
-                    .pretendard(.caption03)
-                    .foregroundStyle(Color.gray300)
+        HStack {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(spacing: 7) {
+                    Text("생년월일")
+                        .pretendard(.caption01)
+                    Text("(선택사항)")
+                        .pretendard(.caption03)
+                        .foregroundStyle(Color.gray300)
 
-                Spacer()
-            }
-            .padding(.bottom, 20)
+                    Spacer()
+                }
+                .padding(.bottom, 10)
 
-            Group {
                 TextField("YYYY.MM.DD", text: $store.date)
                     .focused($isFocused)
                     .pretendard(.body02)
                     .tint(Color.coreLime)
                     .frame(height: 29.4)
                     .keyboardType(.numberPad)
-                    .padding(.bottom, 10)
 
                 Rectangle()
-                    .fill(Color.white)
+                    .fill(store.isBirthValidate ? Color.white : Color.coreRed)
                     .frame(height: 1)
+
+                Text(store.guideline.isEmpty ? " " : store.guideline)
+                    .pretendard(.caption03)
+                    .foregroundStyle(store.isBirthValidate ? Color.white : Color.coreRed)
             }
             .frame(width: 285)
+
+            Spacer()
         }
     }
 
