@@ -50,7 +50,7 @@ struct NicknameView: View {
     }
 
     private var title: some View {
-        Text("핍잇에서 어떤 닉네임으로\n불리고 싶나요?")
+        Text("회원님을 나타낼 수 있는 닉네임을 설정해보세요.")
             .pretendard(.title02)
     }
 
