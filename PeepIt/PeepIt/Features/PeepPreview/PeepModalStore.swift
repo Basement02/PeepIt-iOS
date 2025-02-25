@@ -13,8 +13,6 @@ struct PeepModalStore {
 
     @ObservableState
     struct State: Equatable {
-        var baseOffset = SheetType.scrollDown.offset
-
         var isSheetScrolledDown: Bool {
             return modalOffset == SheetType.scrollDown.offset
         }
@@ -29,6 +27,7 @@ struct PeepModalStore {
         var showPeepDetail = false
 
         var currentIdx = 0
+        var peeps: [Peep] = []
 
         enum SheetType: CaseIterable {
             case scrollDown, scrollUp
@@ -52,7 +51,6 @@ struct PeepModalStore {
             }
         }
 
-        var peeps: [Peep] = []
     }
 
     enum Action: BindableAction {
@@ -83,21 +81,29 @@ struct PeepModalStore {
                 return .none
 
             case let .modalDragged(dragHeight):
-                state.modalOffset = max(
-                    min(state.baseOffset + dragHeight, State.SheetType.scrollDown.offset),
+                let newOffset = max(
+                    min(state.modalOffset + dragHeight, State.SheetType.scrollDown.offset),
                     State.SheetType.scrollUp.offset
                 )
+
+                state.modalOffset = newOffset
                 return .none
 
             case let .modalDragEnded(dragHeight):
-                let isScrollingUp = dragHeight < 0
-                let shouldSnapUp = abs(dragHeight) > 60
-
-                state.baseOffset = shouldSnapUp
-                    ? (isScrollingUp ? State.SheetType.scrollUp.offset : State.SheetType.scrollDown.offset)
-                    : (isScrollingUp ? State.SheetType.scrollDown.offset : State.SheetType.scrollUp.offset)
-
-                state.modalOffset = state.baseOffset
+                // 모달 올림 드래그
+                if dragHeight < 0 {
+                    if dragHeight < -60 {
+                        state.modalOffset = State.SheetType.scrollUp.offset
+                    } else {
+                        state.modalOffset = State.SheetType.scrollDown.offset
+                    }
+                } else { // 모달 내림 드래그
+                    if dragHeight > 60 {
+                        state.modalOffset = State.SheetType.scrollDown.offset
+                    } else {
+                        state.modalOffset = State.SheetType.scrollUp.offset
+                    }
+                }
 
                 return .none
 
@@ -111,7 +117,6 @@ struct PeepModalStore {
 
             case .scrollUpButtonTapped:
                 state.modalOffset = State.SheetType.scrollUp.offset
-                state.baseOffset = State.SheetType.scrollUp.offset
                 return .none
 
             case let .peepScrollUpdated(offset):
