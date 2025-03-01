@@ -11,27 +11,45 @@ struct ThumbnailProfile: View {
     let peep: Peep
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            // TODO: 이미지로 변경
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
+        ZStack {
+            Image("SampleImage")
+                .resizable()
 
             ThumbnailLayer.primary()
 
             ThumbnailLayer.secondary()
 
-            if let reaction = peep.reaction, !peep.isMine {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 8.37)
-                        .fill(Color.coreLimeOp)
-                        .frame(width: 35, height: 35)
+            VStack {
+                if let reaction = peep.reaction, !peep.isMine {
+                    HStack {
+                        Spacer()
 
-                    Text(reaction)
-                        .font(.system(size: 16))
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 8.37)
+                                .fill(Color.coreLimeOp)
+                                .frame(width: 35, height: 35)
+
+                            Text(reaction)
+                                .font(.system(size: 16))
+                        }
+                    }
                 }
-                .padding(.top, 9)
-                .padding(.trailing, 8)
+
+                Spacer()
+
+                if peep.isVideo {
+                    HStack {
+                        Image("IconVideo")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                        Spacer()
+                    }
+                }
             }
+            .padding(.top, 8.5)
+            .padding(.bottom, 7.5)
+            .padding(.leading, 8)
+            .padding(.trailing, 7)
 
             RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(
@@ -39,6 +57,7 @@ struct ThumbnailProfile: View {
                     lineWidth: peep.isActive ? 1 : 0
                 )
         }
+        .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(
             width: Constant.isSmallDevice ? 108 : 113,
             height: Constant.isSmallDevice ? 148 : 155
