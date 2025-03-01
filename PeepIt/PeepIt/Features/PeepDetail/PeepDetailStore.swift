@@ -57,7 +57,7 @@ struct PeepDetailStore {
         enum EntryType {
             case peepPreview
             case townPeep
-            case notification
+            case others
         }
     }
 

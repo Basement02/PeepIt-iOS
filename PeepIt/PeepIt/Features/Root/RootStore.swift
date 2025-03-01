@@ -183,13 +183,39 @@ struct RootStore {
                 case let .element(_, action: .notification(.activePeepCellTapped(selectedPeep))):
                     state.path.append(
                         .peepDetail(PeepDetailStore.State(
-                            entryType: .notification,
+                            entryType: .others,
                             peepList: [selectedPeep],
                             currentIdx: 0,
                             showPeepDetailObject: true,
                             showPeepDetailBg: true
                         ))
                     )
+                    return .none
+
+                case let .element(_, action: .myProfile(.peepCellTapped(selectedPeep))):
+                    state.path.append(
+                        .peepDetail(PeepDetailStore.State(
+                            entryType: .others,
+                            peepList: [selectedPeep],
+                            currentIdx: 0,
+                            showPeepDetailObject: true,
+                            showPeepDetailBg: true
+                        ))
+                    )
+
+                    return .none
+
+                case let .element(_, action: .otherProfile(.peepCellTapped(selectedPeep))):
+                    state.path.append(
+                        .peepDetail(PeepDetailStore.State(
+                            entryType: .others,
+                            peepList: [selectedPeep],
+                            currentIdx: 0,
+                            showPeepDetailObject: true,
+                            showPeepDetailBg: true
+                        ))
+                    )
+
                     return .none
 
                 default:

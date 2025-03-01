@@ -28,7 +28,7 @@ struct PeepPreviewModalView: View {
                         .allowsHitTesting(false)
 
                     /// 핍 미리보기 모달
-                    BackdropBlurView(bgColor: .blur1, radius: 1)
+                    BackdropBlurView(bgColor: .base.opacity(0.9), radius: 1)
                         .roundedCorner(20, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack(spacing: 0) {
@@ -71,7 +71,7 @@ struct PeepPreviewModalView: View {
 
     private var scrollIndicator: some View {
         RoundedRectangle(cornerRadius: 100)
-            .fill(Color.gray400)
+            .fill(Color.gray600)
             .frame(width: 60, height: 5)
     }
 
@@ -147,7 +147,7 @@ fileprivate struct PeepPreviewCell: View {
     let peep: Peep
 
     var body: some View {
-        ZStack {
+        ZStack(alignment: .leading) {
             Image("SampleImage")
                 .resizable()
                 .scaledToFill()
@@ -166,20 +166,20 @@ fileprivate struct PeepPreviewCell: View {
                     Spacer()
                     hotLabel
                 }
-                .pretendard(.caption01)
+                .pretendard(.body05)
                 .foregroundStyle(Color.white)
 
                 Spacer()
 
                 profileView
             }
-            .padding(.top, 21)
-            .padding(.bottom, 19.85.adjustedH)
-            .padding(.horizontal, 18)
-
+            .padding(.top, 19)
+            .padding(.bottom, 20)
+            .frame(width: 250)
+            .padding(.leading, 16)
             // TODO: - 활성화 핍 border
         }
-        .frame(width: 281, height: 383)
+        .frame(width: 281, height: 384)
         .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 
@@ -203,7 +203,7 @@ fileprivate struct PeepPreviewCell: View {
         HStack {
             Image("ProfileSample")
                 .resizable()
-                .frame(width: 30, height: 30)
+                .frame(width: 25, height: 25)
 
             Text("hyerim")
                 .pretendard(.body02)
@@ -211,8 +211,7 @@ fileprivate struct PeepPreviewCell: View {
             Spacer()
 
             Text("3분 전")
-                .pretendard(.caption02)
-                .offset(y: 1)
+                .pretendard(.caption04)
         }
         .foregroundStyle(Color.white)
     }

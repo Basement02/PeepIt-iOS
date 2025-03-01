@@ -164,34 +164,46 @@ fileprivate struct ThumbnailPeep: View {
     let peep: Peep
 
     var body: some View {
-        ZStack(alignment: .top) {
-
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundStyle(Color.white)
+        ZStack {
+            Image("SampleImage")
+                .resizable()
 
             ThumbnailLayer.primary()
 
             ThumbnailLayer.secondary()
 
-            HStack(spacing: 0) {
-                Image("IconCommentBoldFrame")
+            VStack {
+                HStack(spacing: 0) {
+                    Image("IconCommentBoldFrame")
 
-                Text("00")
-                    .pretendard(.body02)
-                    .foregroundStyle(Color.white)
-                    .padding(.trailing, 5)
+                    Text("00")
+                        .pretendard(.body02)
+                        .foregroundStyle(Color.white)
+                        .padding(.trailing, 5)
 
-                Image("IconReactionBoldFrame")
-                
-                Text("00")
-                    .pretendard(.body02)
-                    .foregroundStyle(Color.white)
+                    Image("IconReactionBoldFrame")
+
+                    Text("00")
+                        .pretendard(.body02)
+                        .foregroundStyle(Color.white)
+
+                    Spacer()
+                }
 
                 Spacer()
+
+                if peep.isVideo {
+                    HStack {
+                        Image("IconVideo")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Spacer()
+                    }
+                }
             }
-            .padding(.top, 12)
-            .padding(.leading, 15)
+            .frame(width: 151, height: 218)
         }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .frame(
             width: Constant.isSmallDevice ? 167 : 175,
             height: Constant.isSmallDevice ? 229 : 240

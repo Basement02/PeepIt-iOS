@@ -11,31 +11,45 @@ struct ThumbnailAlarm: View {
     let peep: Peep
 
     var body: some View {
-        ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: 8)
-                .fill(Color.white)
+        ZStack {
+            Image("SampleImage")
+                .resizable()
 
             ThumbnailLayer.primary()
-
             ThumbnailLayer.secondary()
 
-            HStack(spacing: 1) {
-                Image("IconCommentBoldFrame")
+            VStack {
+                HStack(spacing: 1) {
+                    Image("IconCommentBoldFrame")
+                    Text("00")
+                        .pretendard(.body01)
+                    Spacer()
+                }
 
-                Text("00")
-                    .pretendard(.body01)
+                Spacer()
+
+                if peep.isVideo {
+                    HStack {
+                        Image("IconVideo")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                        Spacer()
+                    }
+                }
             }
-            .frame(height: 22)
-            .padding(.top, 10.8)
-            .padding(.leading, 12)
+            .frame(width: 94, height: 134)
 
             RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(Color.coreLime, lineWidth: 1)
         }
-        .frame(width: 110.4, height: 151.2)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .frame(width: 110, height: 150)
     }
 }
 
 #Preview {
-    ThumbnailAlarm(peep: .stubPeep0)
+    HStack {
+        ThumbnailAlarm(peep: .stubPeep0)
+        ThumbnailAlarm(peep: .stubPeep1)
+    }
 }

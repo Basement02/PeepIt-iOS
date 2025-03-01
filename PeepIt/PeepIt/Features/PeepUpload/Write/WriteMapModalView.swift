@@ -15,7 +15,7 @@ struct WriteMapModalView: View {
         ZStack(alignment: .bottom) {
             Color.clear
 
-            BackdropBlurView(bgColor: .blur1, radius: 4)
+            BackdropBlurView(bgColor: .base.opacity(0.9), radius: 1)
                 .frame(width: 393, height: 457)
                 .roundedCorner(20, corners: [.topLeft, .topRight])
                 .overlay {

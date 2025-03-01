@@ -163,6 +163,9 @@ struct OtherProfileView: View {
                             store.uploadedPeeps
                         ) { peep in
                             ThumbnailProfile(peep: peep)
+                                .onTapGesture {
+                                    store.send(.peepCellTapped(peep: peep))
+                                }
                         }
                     }
                     .padding(.bottom, 38)

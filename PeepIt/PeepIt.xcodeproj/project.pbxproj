@@ -594,8 +594,8 @@
 		AB71E1D02CBC244900D2D3D9 /* StickerModal */ = {
 			isa = PBXGroup;
 			children = (
-				AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */,
 				AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */,
+				AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */,
 			);
 			path = StickerModal;
 			sourceTree = "<group>";
