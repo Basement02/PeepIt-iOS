@@ -42,6 +42,7 @@ struct MyProfileStore {
         case loadActivityPeeps
         case uploadButtonTapped
         case watchButtonTapped
+        case peepCellTapped(peep: Peep)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -92,6 +93,9 @@ struct MyProfileStore {
                 return .none
 
             case .watchButtonTapped:
+                return .none
+
+            case .peepCellTapped:
                 return .none
             }
         }

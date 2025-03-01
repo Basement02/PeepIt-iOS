@@ -53,6 +53,8 @@ struct OtherProfileStore {
         case viewTapped
         /// 공유하기 버튼 탭
         case shareButtonTapped
+        /// 핍 셀 선택
+        case peepCellTapped(peep: Peep)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -128,6 +130,9 @@ struct OtherProfileStore {
                 state.showShareSheet.toggle()
                 return .none
 
+            case .peepCellTapped:
+                return .none
+                
             default:
                 return .none
             }

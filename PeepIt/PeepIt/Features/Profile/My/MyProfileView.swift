@@ -227,6 +227,9 @@ struct MyProfileView: View {
                                 uploadButtonThumbnail
                             } else {
                                 ThumbnailProfile(peep: store.uploadedPeeps[idx-1])
+                                    .onTapGesture {
+                                        store.send(.peepCellTapped(peep: store.uploadedPeeps[idx-1]))
+                                    }
                             }
                         }
                         .padding(.bottom, spacing)
@@ -274,6 +277,9 @@ struct MyProfileView: View {
                             id: \.self
                         ) { peep in
                             ThumbnailProfile(peep: peep)
+                                .onTapGesture {
+                                    store.send(.peepCellTapped(peep: peep))
+                                }
                         }
                         .padding(.bottom, spacing)
                     }
