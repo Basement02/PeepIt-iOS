@@ -20,7 +20,7 @@ struct StickerModalView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                Color.blur1
+                BackdropBlurView(bgColor: .base.opacity(0.9), radius: 1)
                     .ignoresSafeArea()
 
                 ScrollView {

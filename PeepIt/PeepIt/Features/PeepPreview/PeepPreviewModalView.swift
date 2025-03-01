@@ -28,7 +28,7 @@ struct PeepPreviewModalView: View {
                         .allowsHitTesting(false)
 
                     /// 핍 미리보기 모달
-                    BackdropBlurView(bgColor: .blur1, radius: 1)
+                    BackdropBlurView(bgColor: .base.opacity(0.9), radius: 1)
                         .roundedCorner(20, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack(spacing: 0) {
@@ -71,7 +71,7 @@ struct PeepPreviewModalView: View {
 
     private var scrollIndicator: some View {
         RoundedRectangle(cornerRadius: 100)
-            .fill(Color.gray400)
+            .fill(Color.gray600)
             .frame(width: 60, height: 5)
     }
 
