@@ -16,16 +16,8 @@ struct PeepModalStore {
         var isSheetScrolledDown: Bool {
             return modalOffset == SheetType.scrollDown.offset
         }
-
         var modalOffset = CGFloat(SheetType.scrollDown.offset)
-
-        var scrollOffsetX: CGFloat = .zero
-        var dragEndedOffset: CGFloat = .zero
-        var isScrolling = true
-        var isAutoScroll = false
-
         var showPeepDetail = false
-
         var currentIdx = 0
         var peeps: [Peep] = []
 
@@ -59,11 +51,6 @@ struct PeepModalStore {
         case modalDragEnded(dragHeight: CGFloat)
         case peepCellTapped(idx: Int, peeps: [Peep])
         case scrollUpButtonTapped
-        case peepScrollUpdated(CGFloat)
-        case peepScrollEnded
-        case autoScrollStarted
-        case autoScrollEnded
-        case setPeepScrollOffset(CGFloat)
         case showPeepDetail
         case onAppear
     }
@@ -117,27 +104,6 @@ struct PeepModalStore {
 
             case .scrollUpButtonTapped:
                 state.modalOffset = State.SheetType.scrollUp.offset
-                return .none
-
-            case let .peepScrollUpdated(offset):
-                state.dragEndedOffset = offset
-                state.isScrolling = true
-                return .none
-
-            case .peepScrollEnded:
-                state.isScrolling = false
-                return .none
-
-            case .autoScrollStarted:
-                state.isAutoScroll = true
-                return .none
-
-            case .autoScrollEnded:
-                state.isAutoScroll = false
-                return .none
-
-            case let .setPeepScrollOffset(offset):
-                state.scrollOffsetX = offset
                 return .none
 
             case .showPeepDetail:

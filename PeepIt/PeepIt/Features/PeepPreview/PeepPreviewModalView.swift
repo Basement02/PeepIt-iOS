@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
@@ -37,10 +38,10 @@ struct PeepPreviewModalView: View {
 
                                 if store.isSheetScrolledDown {
                                     scrollUpLabel
-                                        .padding(.top, 15.21)
+                                        .padding(.top, 15)
                                 } else {
                                     peepScrollView
-                                        .padding(.top, 24.21)
+                                        .padding(.top, 24)
                                 }
 
                                 Spacer()
@@ -75,52 +76,9 @@ struct PeepPreviewModalView: View {
             .frame(width: 60, height: 5)
     }
 
-    private var hiddenView: some View {
-        GeometryReader { proxy in
-            let offsetX = proxy.frame(in: .global).origin.x
-            Color.clear
-                .preference(
-                    key: ScrollOffsetKey.self,
-                    value: offsetX
-                )
-                .onAppear {
-                    store.send(.setPeepScrollOffset(offsetX))
-                }
-        }
-        .frame(height: 0)
-    }
-
     private var peepScrollView: some View {
-        ScrollViewReader { proxy in
-            ScrollView(.horizontal, showsIndicators: false) {
-                hiddenView
-                LazyHStack(spacing: 10) {
-                    ForEach(0..<store.peeps.count, id: \.self) { idx in
-                        PeepPreviewCell(peep: store.peeps[idx])
-                            .id(idx)
-                            .onTapGesture {
-                                store.send(
-                                    .peepCellTapped(idx: idx, peeps: store.peeps),
-                                    animation: .linear(duration: 0.1)
-                                )
-                            }
-                            .background {
-                                if !store.showPeepDetail {
-                                    Image("SampleImage")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 280, height: 383)
-                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                                        .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
-                                        .transition(.scale(scale: 1))
-                                }
-                            }
-                    }
-                }
-                .padding(.horizontal, 18)
-            }
-            .frame(height: 383)
-        }
+        PeepPreviewCollectionView(peeps: store.peeps)
+            .frame(height: 384)
     }
 
     private var scrollUpLabel: some View {
@@ -143,77 +101,18 @@ struct PeepPreviewModalView: View {
     }
 }
 
-fileprivate struct PeepPreviewCell: View {
-    let peep: Peep
+fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
+    var peeps: [Peep]
 
-    var body: some View {
-        ZStack(alignment: .leading) {
-            Image("SampleImage")
-                .resizable()
-                .scaledToFill()
-                .foregroundStyle(Color.white)
-
-            ThumbnailLayer.primary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            ThumbnailLayer.secondary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            VStack(alignment: .leading) {
-                HStack(spacing: 2) {
-                    Image("IconPeep")
-                    Text("현재 위치에서 4km")
-                    Spacer()
-                    hotLabel
-                }
-                .pretendard(.body05)
-                .foregroundStyle(Color.white)
-
-                Spacer()
-
-                profileView
-            }
-            .padding(.top, 19)
-            .padding(.bottom, 20)
-            .frame(width: 250)
-            .padding(.leading, 16)
-            // TODO: - 활성화 핍 border
-        }
-        .frame(width: 281, height: 384)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
+    func makeUIViewController(context: Context) -> PeepModalCollectionViewController {
+        let viewController = PeepModalCollectionViewController()
+        viewController.peeps = peeps
+        return viewController
     }
 
-    private var hotLabel: some View {
-        HStack(spacing: 0) {
-            Image("IconPopular")
-            Text("인기")
-                .pretendard(.caption02)
-                .foregroundStyle((Color(hex: 0x202020)))
-        }
-        .padding(.leading, 6)
-        .padding(.trailing, 10)
-        .padding(.vertical, 3)
-        .background(
-            RoundedRectangle(cornerRadius: 100)
-                .fill(Color.coreLime)
-        )
-    }
-
-    private var profileView: some View {
-        HStack {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 25, height: 25)
-
-            Text("hyerim")
-                .pretendard(.body02)
-
-            Spacer()
-
-            Text("3분 전")
-                .pretendard(.caption04)
-        }
-        .foregroundStyle(Color.white)
+    func updateUIViewController(_ uiViewController: PeepModalCollectionViewController, context: Context) {
+        uiViewController.peeps = peeps
+        uiViewController.collectionView.reloadData()
     }
 }
 

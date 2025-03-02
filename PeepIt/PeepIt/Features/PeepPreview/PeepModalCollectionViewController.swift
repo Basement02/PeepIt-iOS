@@ -1,0 +1,97 @@
+//
+//  PeepModalCollectionViewController.swift
+//  PeepIt
+//
+//  Created by 김민 on 3/2/25.
+//
+
+import UIKit
+import SwiftUI
+
+/// 미리보기 핍 모달의 CollectionView를 구성할 셀
+class PeepCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "PeepPreviewCell"
+
+    func configure(with peep: Peep) {
+        contentConfiguration = UIHostingConfiguration {
+            PeepPreviewThumbnail(peep: peep)
+        }
+    }
+}
+
+/// 미리보기 핍 모달의 UICollectionView
+class PeepModalCollectionViewController: UICollectionViewController {
+    var peeps: [Peep] = []
+
+    init() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 281, height: 384)
+        layout.minimumLineSpacing = 10
+        super.init(collectionViewLayout: layout)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        collectionView.register(
+            PeepCollectionViewCell.self,
+            forCellWithReuseIdentifier: PeepCollectionViewCell.reuseIdentifier
+        )
+
+        collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return peeps.count
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: PeepCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as! PeepCollectionViewCell
+
+        cell.configure(with: peeps[indexPath.item])
+        
+        return cell
+    }
+
+    override func scrollViewWillEndDragging(
+        _ scrollView: UIScrollView,
+        withVelocity velocity: CGPoint,
+        targetContentOffset: UnsafeMutablePointer<CGPoint>
+    ) {
+        guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        let cellWidth = layout.itemSize.width + layout.minimumInteritemSpacing
+
+        let estimatedIndex = scrollView.contentOffset.x / cellWidth
+
+        var index: Int
+
+        if velocity.x > 0 {
+            index = Int(ceil(estimatedIndex))
+        } else if velocity.x < 0 {
+            index = Int(floor(estimatedIndex))
+        } else {
+            index = Int(round(estimatedIndex))
+        }
+
+        index = max(min(collectionView.numberOfItems(inSection: 0) - 1, index), 0)
+
+        let newOffsetX = CGFloat(index) * cellWidth - (scrollView.bounds.width - cellWidth) / 2
+        targetContentOffset.pointee = CGPoint(x: newOffsetX, y: 0)
+    }
+}
