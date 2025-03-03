@@ -46,7 +46,7 @@ struct HomeView: View {
                                         .bottom,
                                         PeepModalStore.State.SheetType.scrollUp.height - store.peepPreviewModal.modalOffset + 24
                                     )
-                                    .animation(.easeInOut(duration: 0.2), value: store.peepPreviewModal.modalOffset )
+                                    .animation(.linear(duration: 0.2), value: store.peepPreviewModal.modalOffset)
                                 }
 
                                 /// 핍 미리보기 모달

@@ -46,7 +46,7 @@ struct PeepPreviewModalView: View {
                         .offset(y: store.modalOffset)
                         .animation(.linear(duration: 0.2), value: store.modalOffset)
                         .gesture(
-                            DragGesture()
+                            DragGesture(minimumDistance: 60)
                                 .onChanged { value in
                                     store.send(
                                         .modalDragged(dragHeight: value.translation.height)

@@ -13,7 +13,9 @@ struct PeepModalStore {
 
     @ObservableState
     struct State: Equatable {
-        var isSheetScrolledDown = true
+        var isSheetScrolledDown: Bool {
+            return modalOffset > 0
+        }
         var modalOffset = CGFloat(SheetType.scrollDown.offset)
         var showPeepDetail = false
         var currentIdx = 0
@@ -107,12 +109,10 @@ struct PeepModalStore {
                 return .none
 
             case .modalScrollUp:
-                state.isSheetScrolledDown = false
                 state.modalOffset = State.SheetType.scrollUp.offset
                 return .none
 
             case .modalScrollDown:
-                state.isSheetScrolledDown = true
                 state.modalOffset = State.SheetType.scrollDown.offset
                 return .none
 
