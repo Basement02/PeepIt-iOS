@@ -120,6 +120,7 @@ class PeepModalCollectionViewController: UICollectionViewController {
     func scrollToItem(at index: Int, animated: Bool = true) {
         guard index >= 0, index < peeps.count else { return }
         let indexPath = IndexPath(item: index, section: 0)
+        centerIdx = indexPath.item
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
     }
 }
