@@ -103,7 +103,7 @@ struct PeepPreviewModalView: View {
             if idx == 0 {
                 return -30
             } else if idx == store.peeps.count - 1 {
-                return 100
+                return 30
             } else {
                 return .zero
             }
