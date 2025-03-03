@@ -13,9 +13,7 @@ struct PeepModalStore {
 
     @ObservableState
     struct State: Equatable {
-        var isSheetScrolledDown: Bool {
-            return modalOffset == SheetType.scrollDown.offset
-        }
+        var isSheetScrolledDown = true
         var modalOffset = CGFloat(SheetType.scrollDown.offset)
         var showPeepDetail = false
         var currentIdx = 0
@@ -53,6 +51,8 @@ struct PeepModalStore {
         case scrollUpButtonTapped
         case showPeepDetail
         case onAppear
+        case modalScrollUp
+        case modalScrollDown
     }
 
     var body: some Reducer<State, Action> {
@@ -80,19 +80,17 @@ struct PeepModalStore {
                 // 모달 올림 드래그
                 if dragHeight < 0 {
                     if dragHeight < -60 {
-                        state.modalOffset = State.SheetType.scrollUp.offset
+                        return .send(.modalScrollUp)
                     } else {
-                        state.modalOffset = State.SheetType.scrollDown.offset
+                        return .send(.modalScrollDown)
                     }
                 } else { // 모달 내림 드래그
                     if dragHeight > 60 {
-                        state.modalOffset = State.SheetType.scrollDown.offset
+                        return .send(.modalScrollDown)
                     } else {
-                        state.modalOffset = State.SheetType.scrollUp.offset
+                        return .send(.modalScrollUp)
                     }
                 }
-
-                return .none
 
             case .peepCellTapped:
                 state.showPeepDetail = true
@@ -103,10 +101,19 @@ struct PeepModalStore {
                 }
 
             case .scrollUpButtonTapped:
+                return .send(.modalScrollUp)
+
+            case .showPeepDetail:
+                return .none
+
+            case .modalScrollUp:
+                state.isSheetScrolledDown = false
                 state.modalOffset = State.SheetType.scrollUp.offset
                 return .none
 
-            case .showPeepDetail:
+            case .modalScrollDown:
+                state.isSheetScrolledDown = true
+                state.modalOffset = State.SheetType.scrollDown.offset
                 return .none
 
             default:

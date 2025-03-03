@@ -46,6 +46,7 @@ class PeepModalCollectionViewController: UICollectionViewController {
         collectionView.contentInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.decelerationRate = .fast
+        collectionView.backgroundColor = .clear
     }
 
     override func collectionView(

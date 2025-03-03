@@ -13,11 +13,6 @@ struct PeepPreviewModalView: View {
     @Perception.Bindable var store: StoreOf<PeepModalStore>
     let namespace: Namespace.ID
 
-    @State private var offsetX: CGFloat = .zero
-
-    @State private var isDragging: Bool = false
-    @State private var totalDrag: CGFloat = 0.0
-
     var body: some View {
         WithPerceptionTracking {
             ZStack {
