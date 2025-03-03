@@ -78,7 +78,7 @@ struct HomeStore {
         Reduce { state, action in
             switch action {
 
-            case let .peepPreviewModal(.peepCellTapped(idx, peeps)):
+            case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
                 state.selectedPeepIndex = idx
                 state.peepDetail.peepList = peeps
@@ -102,6 +102,8 @@ struct HomeStore {
                 state.showPeepDetail = false
                 state.selectedPeepIndex = nil
                 state.peepPreviewModal.showPeepDetail = false
+                state.peepPreviewModal.selectedIdx = nil
+                state.peepPreviewModal.selectedPosition = nil
                 return .none
 
             case let .townVerification(.modalDragOnChanged(height)):

@@ -10,7 +10,7 @@ import UIKit
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
-    @Perception.Bindable var store: StoreOf<PeepModalStore>
+    let store: StoreOf<PeepModalStore>
     let namespace: Namespace.ID
 
     var body: some View {
@@ -72,8 +72,46 @@ struct PeepPreviewModalView: View {
     }
 
     private var peepScrollView: some View {
-        PeepPreviewCollectionView(peeps: store.peeps)
-            .frame(height: 384)
+        PeepPreviewCollectionView(peeps: store.peeps) { idx, pos in
+            store.send(
+                .peepCellTapped(idx: idx, position: pos)
+            )
+        }
+        .background {
+            if !store.showPeepDetail,
+               let pos = store.selectedPosition,
+               let idx = store.selectedIdx {
+                backgroundImageForAnimation()
+                    .offset(x: offsetForPosition(idx: idx, position: pos))
+            }
+        }
+    }
+
+    private func backgroundImageForAnimation(image: String = "SampleImage") -> some View {
+        Image(image)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 260, height: 350)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .matchedGeometryEffect(id: "peep", in: namespace)
+            .transition(.scale(scale: 1))
+    }
+
+    private func offsetForPosition(idx: Int, position: CellPosition) -> CGFloat {
+        switch position {
+        case .center:
+            if idx == 0 {
+                return -50
+            } else if idx == store.peeps.count - 1 {
+                return 100
+            } else {
+                return .zero
+            }
+        case .left:
+            return -300
+        case .right:
+            return 300
+        }
     }
 
     private var scrollUpLabel: some View {
@@ -98,10 +136,12 @@ struct PeepPreviewModalView: View {
 
 fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
     var peeps: [Peep]
+    var onSelect: (Int, CellPosition) -> Void
 
     func makeUIViewController(context: Context) -> PeepModalCollectionViewController {
         let viewController = PeepModalCollectionViewController()
         viewController.peeps = peeps
+        viewController.onSelect = onSelect
         return viewController
     }
 

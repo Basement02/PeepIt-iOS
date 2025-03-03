@@ -80,7 +80,7 @@ struct HomeView: View {
                             PeepDetailView(
                                 store: store.scope(state: \.peepDetail, action: \.peepDetail)
                             )
-                            .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
+                            .matchedGeometryEffect(id: "peep", in: namespace)
                             .transition(.scale(scale: 1))
                         }
                     }

@@ -22,12 +22,15 @@ class PeepCollectionViewCell: UICollectionViewCell {
 /// 미리보기 핍 모달의 UICollectionView
 class PeepModalCollectionViewController: UICollectionViewController {
     var peeps: [Peep] = []
+    var centerIdx = 0
+    var onSelect: ((Int, CellPosition) -> Void)?
 
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 281, height: 384)
         layout.minimumLineSpacing = 10
+
         super.init(collectionViewLayout: layout)
     }
 
@@ -91,8 +94,33 @@ class PeepModalCollectionViewController: UICollectionViewController {
         }
 
         index = max(min(collectionView.numberOfItems(inSection: 0) - 1, index), 0)
+        centerIdx = index
 
         let newOffsetX = CGFloat(index) * cellWidth - (scrollView.bounds.width - cellWidth) / 2
         targetContentOffset.pointee = CGPoint(x: newOffsetX, y: 0)
     }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let position: CellPosition
+
+        if indexPath.item == centerIdx {
+            position = .center
+        } else if indexPath.item < centerIdx {
+            position = .left
+        } else {
+            position = .right
+        }
+
+        onSelect?(indexPath.item, position)
+    }
+}
+
+/// 셀 위치
+enum CellPosition {
+    case left
+    case center
+    case right
 }
