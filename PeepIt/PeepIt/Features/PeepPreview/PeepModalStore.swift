@@ -14,19 +14,10 @@ struct PeepModalStore {
     @ObservableState
     struct State: Equatable {
         var isSheetScrolledDown: Bool {
-            return modalOffset == SheetType.scrollDown.offset
+            return modalOffset > 0
         }
-
         var modalOffset = CGFloat(SheetType.scrollDown.offset)
-
-        var scrollOffsetX: CGFloat = .zero
-        var dragEndedOffset: CGFloat = .zero
-        var isScrolling = true
-        var isAutoScroll = false
-
         var showPeepDetail = false
-
-        var currentIdx = 0
         var peeps: [Peep] = []
 
         enum SheetType: CaseIterable {
@@ -51,21 +42,23 @@ struct PeepModalStore {
             }
         }
 
+        var selectedIdx: Int? = nil
+        var selectedPosition: CellPosition? = nil
+        var scrollToIdx: Int? = nil
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded(dragHeight: CGFloat)
-        case peepCellTapped(idx: Int, peeps: [Peep])
+        case peepCellTapped(idx: Int, position: CellPosition)
         case scrollUpButtonTapped
-        case peepScrollUpdated(CGFloat)
-        case peepScrollEnded
-        case autoScrollStarted
-        case autoScrollEnded
-        case setPeepScrollOffset(CGFloat)
         case showPeepDetail
         case onAppear
+        case modalScrollUp
+        case modalScrollDown
+        case startEntryAnimation(idx: Int, peeps: [Peep])
+        case scrollToItem(idx: Int)
     }
 
     var body: some Reducer<State, Action> {
@@ -73,7 +66,7 @@ struct PeepModalStore {
 
         Reduce { state, action in
             switch action {
-            case .binding(\.currentIdx):
+            case .binding(\.scrollToIdx):
                 return .none
 
             case .onAppear:
@@ -93,21 +86,32 @@ struct PeepModalStore {
                 // 모달 올림 드래그
                 if dragHeight < 0 {
                     if dragHeight < -60 {
-                        state.modalOffset = State.SheetType.scrollUp.offset
+                        return .send(.modalScrollUp)
                     } else {
-                        state.modalOffset = State.SheetType.scrollDown.offset
+                        return .send(.modalScrollDown)
                     }
                 } else { // 모달 내림 드래그
                     if dragHeight > 60 {
-                        state.modalOffset = State.SheetType.scrollDown.offset
+                        return .send(.modalScrollDown)
                     } else {
-                        state.modalOffset = State.SheetType.scrollUp.offset
+                        return .send(.modalScrollUp)
                     }
                 }
 
-                return .none
+            case let .peepCellTapped(idx, position):
+                state.selectedIdx = idx
+                state.selectedPosition = position
+                let peeps = state.peeps
+                
+                return .run { send in
+                    try await Task.sleep(for: .seconds(0.05))
+                    await send(
+                        .startEntryAnimation(idx: idx, peeps: peeps),
+                        animation: .linear(duration: 0.1)
+                    )
+                }
 
-            case .peepCellTapped:
+            case .startEntryAnimation:
                 state.showPeepDetail = true
 
                 return .run { send in
@@ -116,31 +120,20 @@ struct PeepModalStore {
                 }
 
             case .scrollUpButtonTapped:
+                return .send(.modalScrollUp)
+
+            case .showPeepDetail:
+                return .none
+
+            case .modalScrollUp:
                 state.modalOffset = State.SheetType.scrollUp.offset
                 return .none
 
-            case let .peepScrollUpdated(offset):
-                state.dragEndedOffset = offset
-                state.isScrolling = true
+            case .modalScrollDown:
+                state.modalOffset = State.SheetType.scrollDown.offset
                 return .none
 
-            case .peepScrollEnded:
-                state.isScrolling = false
-                return .none
-
-            case .autoScrollStarted:
-                state.isAutoScroll = true
-                return .none
-
-            case .autoScrollEnded:
-                state.isAutoScroll = false
-                return .none
-
-            case let .setPeepScrollOffset(offset):
-                state.scrollOffsetX = offset
-                return .none
-
-            case .showPeepDetail:
+            case let .scrollToItem(idx):
                 return .none
 
             default:

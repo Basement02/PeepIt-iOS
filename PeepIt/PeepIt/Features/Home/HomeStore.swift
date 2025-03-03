@@ -56,6 +56,8 @@ struct HomeStore {
         case showSideMenu
         /// 핍 상세에서 오브젝트 보여주기 (애니메이션)
         case showDetailObject
+
+        case peepTapped(idx: Int)
     }
 
     var body: some Reducer<State, Action> {
@@ -78,7 +80,7 @@ struct HomeStore {
         Reduce { state, action in
             switch action {
 
-            case let .peepPreviewModal(.peepCellTapped(idx, peeps)):
+            case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
                 state.selectedPeepIndex = idx
                 state.peepDetail.peepList = peeps
@@ -102,6 +104,8 @@ struct HomeStore {
                 state.showPeepDetail = false
                 state.selectedPeepIndex = nil
                 state.peepPreviewModal.showPeepDetail = false
+                state.peepPreviewModal.selectedIdx = nil
+                state.peepPreviewModal.selectedPosition = nil
                 return .none
 
             case let .townVerification(.modalDragOnChanged(height)):
@@ -137,6 +141,10 @@ struct HomeStore {
             case .showSideMenu:
                 state.sideMenu.sideMenuOffset = 0
                 state.mainViewOffset = CGFloat(318)
+                return .none
+
+            case let .peepTapped(idx):
+                state.peepPreviewModal.scrollToIdx = idx
                 return .none
 
             default:

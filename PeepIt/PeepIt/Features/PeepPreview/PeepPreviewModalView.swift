@@ -6,16 +6,12 @@
 //
 
 import SwiftUI
+import UIKit
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
     @Perception.Bindable var store: StoreOf<PeepModalStore>
     let namespace: Namespace.ID
-
-    @State private var offsetX: CGFloat = .zero
-
-    @State private var isDragging: Bool = false
-    @State private var totalDrag: CGFloat = 0.0
 
     var body: some View {
         WithPerceptionTracking {
@@ -37,10 +33,10 @@ struct PeepPreviewModalView: View {
 
                                 if store.isSheetScrolledDown {
                                     scrollUpLabel
-                                        .padding(.top, 15.21)
+                                        .padding(.top, 15)
                                 } else {
                                     peepScrollView
-                                        .padding(.top, 24.21)
+                                        .padding(.top, 24)
                                 }
 
                                 Spacer()
@@ -50,7 +46,7 @@ struct PeepPreviewModalView: View {
                         .offset(y: store.modalOffset)
                         .animation(.linear(duration: 0.2), value: store.modalOffset)
                         .gesture(
-                            DragGesture()
+                            DragGesture(minimumDistance: 60)
                                 .onChanged { value in
                                     store.send(
                                         .modalDragged(dragHeight: value.translation.height)
@@ -75,51 +71,46 @@ struct PeepPreviewModalView: View {
             .frame(width: 60, height: 5)
     }
 
-    private var hiddenView: some View {
-        GeometryReader { proxy in
-            let offsetX = proxy.frame(in: .global).origin.x
-            Color.clear
-                .preference(
-                    key: ScrollOffsetKey.self,
-                    value: offsetX
-                )
-                .onAppear {
-                    store.send(.setPeepScrollOffset(offsetX))
-                }
+    private var peepScrollView: some View {
+        PeepPreviewCollectionView(peeps: store.peeps, scrollToIndex: $store.scrollToIdx) { idx, pos in
+            store.send(
+                .peepCellTapped(idx: idx, position: pos)
+            )
         }
-        .frame(height: 0)
+        .background {
+            if !store.showPeepDetail,
+               let pos = store.selectedPosition,
+               let idx = store.selectedIdx {
+                backgroundImageForAnimation()
+                    .offset(x: offsetForPosition(idx: idx, position: pos))
+            }
+        }
     }
 
-    private var peepScrollView: some View {
-        ScrollViewReader { proxy in
-            ScrollView(.horizontal, showsIndicators: false) {
-                hiddenView
-                LazyHStack(spacing: 10) {
-                    ForEach(0..<store.peeps.count, id: \.self) { idx in
-                        PeepPreviewCell(peep: store.peeps[idx])
-                            .id(idx)
-                            .onTapGesture {
-                                store.send(
-                                    .peepCellTapped(idx: idx, peeps: store.peeps),
-                                    animation: .linear(duration: 0.1)
-                                )
-                            }
-                            .background {
-                                if !store.showPeepDetail {
-                                    Image("SampleImage")
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 280, height: 383)
-                                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                                        .matchedGeometryEffect(id: "peep\(idx)", in: namespace)
-                                        .transition(.scale(scale: 1))
-                                }
-                            }
-                    }
-                }
-                .padding(.horizontal, 18)
+    private func backgroundImageForAnimation(image: String = "SampleImage") -> some View {
+        Image(image)
+            .resizable()
+            .scaledToFill()
+            .frame(width: 260, height: 350)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .matchedGeometryEffect(id: "peep", in: namespace)
+            .transition(.scale(scale: 1))
+    }
+
+    private func offsetForPosition(idx: Int, position: CellPosition) -> CGFloat {
+        switch position {
+        case .center:
+            if idx == 0 {
+                return -50
+            } else if idx == store.peeps.count - 1 {
+                return 100
+            } else {
+                return .zero
             }
-            .frame(height: 383)
+        case .left:
+            return -300
+        case .right:
+            return 300
         }
     }
 
@@ -143,77 +134,29 @@ struct PeepPreviewModalView: View {
     }
 }
 
-fileprivate struct PeepPreviewCell: View {
-    let peep: Peep
+fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
+    var peeps: [Peep]
+    @Binding var scrollToIndex: Int?
+    
+    var onSelect: (Int, CellPosition) -> Void
 
-    var body: some View {
-        ZStack(alignment: .leading) {
-            Image("SampleImage")
-                .resizable()
-                .scaledToFill()
-                .foregroundStyle(Color.white)
+    func makeUIViewController(context: Context) -> PeepModalCollectionViewController {
+        let viewController = PeepModalCollectionViewController()
+        viewController.peeps = peeps
+        viewController.onSelect = onSelect
+        return viewController
+    }
 
-            ThumbnailLayer.primary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+    func updateUIViewController(_ uiViewController: PeepModalCollectionViewController, context: Context) {
+        uiViewController.peeps = peeps
+        uiViewController.collectionView.reloadData()
 
-            ThumbnailLayer.secondary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            VStack(alignment: .leading) {
-                HStack(spacing: 2) {
-                    Image("IconPeep")
-                    Text("현재 위치에서 4km")
-                    Spacer()
-                    hotLabel
-                }
-                .pretendard(.body05)
-                .foregroundStyle(Color.white)
-
-                Spacer()
-
-                profileView
+        if let index = scrollToIndex {
+            uiViewController.scrollToItem(at: index)
+            DispatchQueue.main.async {
+                scrollToIndex = nil
             }
-            .padding(.top, 19)
-            .padding(.bottom, 20)
-            .frame(width: 250)
-            .padding(.leading, 16)
-            // TODO: - 활성화 핍 border
         }
-        .frame(width: 281, height: 384)
-        .clipShape(RoundedRectangle(cornerRadius: 20))
-    }
-
-    private var hotLabel: some View {
-        HStack(spacing: 0) {
-            Image("IconPopular")
-            Text("인기")
-                .pretendard(.caption02)
-                .foregroundStyle((Color(hex: 0x202020)))
-        }
-        .padding(.leading, 6)
-        .padding(.trailing, 10)
-        .padding(.vertical, 3)
-        .background(
-            RoundedRectangle(cornerRadius: 100)
-                .fill(Color.coreLime)
-        )
-    }
-
-    private var profileView: some View {
-        HStack {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 25, height: 25)
-
-            Text("hyerim")
-                .pretendard(.body02)
-
-            Spacer()
-
-            Text("3분 전")
-                .pretendard(.caption04)
-        }
-        .foregroundStyle(Color.white)
     }
 }
 
