@@ -101,7 +101,7 @@ struct PeepPreviewModalView: View {
         switch position {
         case .center:
             if idx == 0 {
-                return -50
+                return -30
             } else if idx == store.peeps.count - 1 {
                 return 100
             } else {
