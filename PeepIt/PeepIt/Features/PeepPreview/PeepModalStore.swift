@@ -44,9 +44,11 @@ struct PeepModalStore {
 
         var selectedIdx: Int? = nil
         var selectedPosition: CellPosition? = nil
+        var scrollToIdx: Int? = nil
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case modalDragged(dragHeight: CGFloat)
         case modalDragEnded(dragHeight: CGFloat)
         case peepCellTapped(idx: Int, position: CellPosition)
@@ -56,11 +58,16 @@ struct PeepModalStore {
         case modalScrollUp
         case modalScrollDown
         case startEntryAnimation(idx: Int, peeps: [Peep])
+        case scrollToItem(idx: Int)
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+
         Reduce { state, action in
             switch action {
+            case .binding(\.scrollToIdx):
+                return .none
 
             case .onAppear:
                 state.peeps.append(contentsOf: [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5])
@@ -124,6 +131,12 @@ struct PeepModalStore {
 
             case .modalScrollDown:
                 state.modalOffset = State.SheetType.scrollDown.offset
+                return .none
+
+            case let .scrollToItem(idx):
+                return .none
+
+            default:
                 return .none
             }
         }

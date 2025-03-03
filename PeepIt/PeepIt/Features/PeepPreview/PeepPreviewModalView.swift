@@ -10,7 +10,7 @@ import UIKit
 import ComposableArchitecture
 
 struct PeepPreviewModalView: View {
-    let store: StoreOf<PeepModalStore>
+    @Perception.Bindable var store: StoreOf<PeepModalStore>
     let namespace: Namespace.ID
 
     var body: some View {
@@ -72,7 +72,7 @@ struct PeepPreviewModalView: View {
     }
 
     private var peepScrollView: some View {
-        PeepPreviewCollectionView(peeps: store.peeps) { idx, pos in
+        PeepPreviewCollectionView(peeps: store.peeps, scrollToIndex: $store.scrollToIdx) { idx, pos in
             store.send(
                 .peepCellTapped(idx: idx, position: pos)
             )
@@ -136,6 +136,8 @@ struct PeepPreviewModalView: View {
 
 fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
     var peeps: [Peep]
+    @Binding var scrollToIndex: Int?
+    
     var onSelect: (Int, CellPosition) -> Void
 
     func makeUIViewController(context: Context) -> PeepModalCollectionViewController {
@@ -148,6 +150,13 @@ fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: PeepModalCollectionViewController, context: Context) {
         uiViewController.peeps = peeps
         uiViewController.collectionView.reloadData()
+
+        if let index = scrollToIndex {
+            uiViewController.scrollToItem(at: index)
+            DispatchQueue.main.async {
+                scrollToIndex = nil
+            }
+        }
     }
 }
 

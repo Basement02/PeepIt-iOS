@@ -56,6 +56,8 @@ struct HomeStore {
         case showSideMenu
         /// 핍 상세에서 오브젝트 보여주기 (애니메이션)
         case showDetailObject
+
+        case peepTapped(idx: Int)
     }
 
     var body: some Reducer<State, Action> {
@@ -139,6 +141,10 @@ struct HomeStore {
             case .showSideMenu:
                 state.sideMenu.sideMenuOffset = 0
                 state.mainViewOffset = CGFloat(318)
+                return .none
+
+            case let .peepTapped(idx):
+                state.peepPreviewModal.scrollToIdx = idx
                 return .none
 
             default:

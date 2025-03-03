@@ -116,6 +116,12 @@ class PeepModalCollectionViewController: UICollectionViewController {
 
         onSelect?(indexPath.item, position)
     }
+
+    func scrollToItem(at index: Int, animated: Bool = true) {
+        guard index >= 0, index < peeps.count else { return }
+        let indexPath = IndexPath(item: index, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: animated)
+    }
 }
 
 /// 셀 위치

@@ -29,6 +29,33 @@ struct HomeView: View {
                             .allowsHitTesting(false)
                             .ignoresSafeArea()
 
+                            // TODO: - 삭제 후 지도와 연결
+                            Group {
+                                HStack {
+                                    Button {
+                                        store.send(.peepTapped(idx: 0))
+                                    } label: {
+                                        Text("0번")
+                                            .foregroundStyle(Color.red)
+                                    }
+
+                                    Button {
+                                        store.send(.peepTapped(idx: 3))
+                                    } label: {
+                                        Text("3번")
+                                            .foregroundStyle(Color.red)
+                                    }
+
+                                    Button {
+                                        store.send(.peepTapped(idx: 5))
+                                    } label: {
+                                        Text("5번")
+                                            .foregroundStyle(Color.red)
+                                    }
+                                }
+                            }
+                            .offset(y: -200)
+
                             if !store.showTownVeriModal {
                                 VStack {
                                     topBar
@@ -76,7 +103,7 @@ struct HomeView: View {
                     .toolbar(.hidden, for: .navigationBar)
                     .overlay {
                         /// 핍 상세
-                        if store.showPeepDetail, let idx = store.selectedPeepIndex {
+                        if store.showPeepDetail {
                             PeepDetailView(
                                 store: store.scope(state: \.peepDetail, action: \.peepDetail)
                             )
