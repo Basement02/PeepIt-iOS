@@ -21,44 +21,29 @@ struct TownRegisterModalView: View {
                 VStack {
                     Spacer()
 
-                    BackdropBlurView(bgColor: .blur1, radius: 4)
+                    BackdropBlurView(bgColor: .base, radius: 4)
                         .roundedCorner(20, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack(spacing: 0) {
-                                RoundedRectangle(cornerRadius: 100)
-                                    .fill(Color.gray600)
-                                    .frame(width: 60, height: 5)
+                                scrollIndicator
                                     .padding(.top, 10)
                                     .padding(.bottom, 41)
 
-                                Text("현재 설정된 동네")
-                                    .pretendard(.foodnote)
-                                    .foregroundStyle(Color.gray300)
+                                townLabel
                                     .padding(.bottom, 26)
 
-                                HStack(spacing: 0) {
-                                    Image("IconLocation")
-                                        .resizable()
-                                        .frame(width: 33.6, height: 33.6)
-                                    Text("OO구 OO동")
-                                        .pretendard(.title03)
-                                }
-                                .frame(width: 181, height: 52)
-                                .padding(.bottom, 26)
+                                Text("현재 설정된 동네")
+                                    .pretendard(.body04)
+                                    .foregroundStyle(Color.gray300)
+                                    .padding(.bottom, 20)
 
                                 ZStack {
                                     HomeMapView()
                                     BackMapLayer.secondary()
-                                    Circle()
-                                        .fill(Color.coreLimeOp)
-                                        .frame(width: 127, height: 126)
-                                    Circle()
-                                        .stroke(Color.coreLimeClick, lineWidth: 2)
-                                        .frame(width: 127, height: 126)
                                 }
-                                .frame(width: 327, height: 350)
+                                .frame(width: 356, height: 369)
                                 .clipShape(RoundedRectangle(cornerRadius: 14))
-                                .padding(.bottom, 67)
+                                .padding(.bottom, 57)
 
                                 Text("새로운 동네를 인증하시겠어요?")
                                     .pretendard(.body04)
@@ -98,6 +83,25 @@ struct TownRegisterModalView: View {
                 transaction.disablesAnimations = true
             })
         }
+    }
+
+    private var scrollIndicator: some View {
+        RoundedRectangle(cornerRadius: 100)
+            .fill(Color.gray600)
+            .frame(width: 60, height: 5)
+    }
+
+    private var townLabel: some View {
+        HStack(spacing: 0) {
+            Image("IconLocation")
+                .resizable()
+                .frame(width: 30, height: 30)
+            Text("구/읍면동")
+                .pretendard(.foodnote)
+        }
+        .padding(.vertical, 9)
+        .padding(.leading, 25)
+        .padding(.trailing, 30)
     }
 
     private var registerButton: some View {

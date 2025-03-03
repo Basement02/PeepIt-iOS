@@ -14,26 +14,35 @@ struct TownVerificationView: View {
     var body: some View {
         WithPerceptionTracking {
             ZStack {
-                HomeMapView()
-                    .ignoresSafeArea()
-
-                Group {
-                    BackMapLayer.secondary()
-                    PolygonLayer()
-                }
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
+                Color.base.ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    topBar
-                        .padding(.bottom, 73)
+                    PeepItNavigationBar(
+                        leading: BackButton { store.send(.backButtonTapped) },
+                        title: "동네 등록하기",
+                        trailing: DismissButton { store.send(.dismissButtonTapped) }
+                    )
+                    .padding(.bottom, 30)
 
                     townLabel
+                        .padding(.bottom, 26)
+
+                    Text("지금 나의 위치")
+                        .pretendard(.body04)
+                        .foregroundStyle(Color.gray300)
+                        .padding(.bottom, 20)
+
+                    ZStack(alignment: .bottom) {
+                        HomeMapView()
+                        BackMapLayer.secondary()
+                            .allowsHitTesting(false)
+                        toCurrentLocationButton
+                            .padding(.bottom, 30)
+                    }
+                    .frame(width: 356, height: 369)
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
 
                     Spacer()
-
-                    toCurrentLocationButton
-                        .padding(.bottom, 20)
 
                     verifyButton
                         .padding(.bottom, 84)
@@ -43,61 +52,19 @@ struct TownVerificationView: View {
         }
     }
 
-    private var topBar: some View {
-        ZStack {
-            HStack {
-                Button {
-                    store.send(.backButtonTapped)
-                } label: {
-                    Image("IconBack")
-                        .renderingMode(.template)
-                        .resizable()
-                        .foregroundStyle(Color.base)
-                        .frame(width: 33.6, height: 33.6)
-                }
-
-                Spacer()
-            }
-
-            Text("지금 나의 위치")
-                .pretendard(.subhead)
-                .foregroundStyle(Color.base)
-
-            HStack {
-                Spacer()
-                Button {
-                    store.send(.dismissButtonTapped)
-                } label: {
-                    Image("IconClose")
-                        .renderingMode(.template)
-                        .resizable()
-                        .foregroundStyle(Color.base)
-                        .frame(width: 33.6, height: 33.6)
-                }
-            }
-        }
-        .frame(height: 44)
-        .padding(.horizontal, 16)
-    }
-
     private var townLabel: some View {
         HStack(spacing: 0) {
             Image("IconLocation")
                 .resizable()
-                .frame(width: 33.6, height: 33.6)
-                .padding(.leading, 25)
-
-            Text("OO구 OO동")
-                .pretendard(.title03)
-
-            Spacer()
+                .frame(width: 30, height: 30)
+            Text("구/읍면동")
+                .pretendard(.foodnote)
         }
-        .frame(width: 181, height: 52)
-        .background(
-            BackdropBlurView(bgColor: .blur1, radius: 10)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .padding(.vertical, 9)
+        .padding(.leading, 25)
+        .padding(.trailing, 30)
     }
+    
 
     private var toCurrentLocationButton: some View {
         Button {
@@ -122,15 +89,16 @@ struct TownVerificationView: View {
         )
         .clipShape(RoundedRectangle(cornerRadius: 100))
     }
+    
 
     private var verifyButton: some View {
         Button {
         } label: {
             Text("현재 위치로 인증하기")
                 .mainButtonStyle()
-                .foregroundStyle(Color.white)
+                .foregroundStyle(Color.gray800)
         }
-        .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
+        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .shadow(
             color: Color(hex: 0x202020, alpha: 0.15),
