@@ -335,9 +335,9 @@ fileprivate struct ChatTableView: UIViewControllerRepresentable {
     ) {
         uiViewController.chats = chats
         uiViewController.showMoreHandler = moreButtonTapped
-        uiViewController.tableView.reloadData()
 
         if let isSent = isChatSent, isSent {
+            uiViewController.tableView.reloadData()
             uiViewController.scrollToBottom()
             isChatSent = nil
         }

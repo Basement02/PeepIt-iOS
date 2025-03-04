@@ -75,7 +75,7 @@ struct ChatStore {
 
             case .onAppear:
                 let stubChats: [Chat] = [.chatStub1, .chatStub2, .chatStub3, .chatStub5, .chatStub6 , .chatStub7, .chatStub8]
-                state.chats.append(contentsOf: stubChats)
+                state.chats = stubChats
                 return .none
 
             case .binding(\.message):
