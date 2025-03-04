@@ -11,12 +11,12 @@ struct ChatBubbleView: View {
     let chat: Chat
     let showMoreButtonTapped: () -> Void
 
-    @State private var isTrunscated = false
+    @State private var isTruncated = false
 
     var body: some View {
         ZStack {
             /// 크기 측정 위한 뷰
-            if !isTrunscated {
+            if !isTruncated {
                 Text(chat.message.forceCharWrapping)
                     .lineLimit(nil)
                     .pretendard(.body04)
@@ -25,7 +25,7 @@ struct ChatBubbleView: View {
                             Color.clear
                                 .onAppear {
                                     if geo.size.height >= 101 {
-                                        isTrunscated = true
+                                        isTruncated = true
                                     }
                                 }
                         }
@@ -42,14 +42,14 @@ struct ChatBubbleView: View {
                     .lineLimit(5)
                     .padding(.horizontal, 14)
                     .padding(.top, 12)
-                    .padding(.bottom, isTrunscated ? 36 : 12)
+                    .padding(.bottom, isTruncated ? 36 : 12)
                     .background(
                         ZStack(alignment: .bottomTrailing) {
                             Rectangle()
                                 .fill(chat.type.backgroundColor)
                                 .makeCorner(of: chat.type)
 
-                            if isTrunscated {
+                            if isTruncated {
                                 Text("더보기")
                                     .pretendard(.caption02)
                                     .foregroundStyle(Color.nonOp)
@@ -65,5 +65,6 @@ struct ChatBubbleView: View {
             maxWidth: 225 + 14 * 2,
             alignment: chat.type == .mine ? .trailing : .leading
         )
+        .onAppear { isTruncated = false }
     }
 }

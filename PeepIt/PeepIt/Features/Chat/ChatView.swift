@@ -15,7 +15,7 @@ struct ChatView: View {
     @State private var sendButtonWidth: CGFloat = .zero
     @State private var enterFieldHorizontalInset: CGFloat = 14
     @State private var enterViewPadding: CGFloat = 16
-    @State private var enterFieldHeight: CGFloat = 44
+    @State private var uploaderBodyViewHeight: CGFloat = 0
 
     var body: some View {
         WithPerceptionTracking {
@@ -52,25 +52,37 @@ struct ChatView: View {
                         VStack(spacing: 0) {
                             topBar
                                 .padding(.bottom, 33)
+
                             uploaderBodyView
+                                .background(GeometryReader { proxy in
+                                    Color.clear
+                                        .onAppear {
+                                            uploaderBodyViewHeight = proxy.size.height
+                                        }
+                                })
                                 .padding(.bottom, 14)
-                            chatListView
-                                .padding(.bottom, keyboardHeight)
+
+                            ChatTableView(chats: store.chats)
+                                .frame(
+                                    height: keyboardHeight > 0 ?
+                                    Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
+                                    : nil
+                                )
+
+                            Rectangle()
+                                .frame(height: 78)
+                                .hidden()
 
                             Spacer()
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
 
                         VStack {
                             Spacer()
 
                             enterFieldView
                                 .padding(.bottom, keyboardHeight)
-                                .padding(.bottom, keyboardHeight > 0 ? 18 : Constant.safeAreaBottom)
-
-                            Spacer().frame(height:1)
+                                .padding(.bottom, keyboardHeight > 0 ? 18 : 34)
                         }
-                        .ignoresSafeArea(.keyboard, edges: .bottom)
                         .ignoresSafeArea()
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
@@ -214,14 +226,6 @@ struct ChatView: View {
             Spacer()
             sendButton
         }
-        .onChange(of: store.message) { newText in
-            GeometryReader { geo in
-                Color.clear
-                    .onAppear {
-                        enterFieldHeight = geo.size.height
-                    }
-            }
-        }
         .padding(.horizontal, enterViewPadding)
     }
 
@@ -229,7 +233,6 @@ struct ChatView: View {
     private var sendButton: some View {
         Button {
             store.send(.sendButtonTapped)
-            endTextEditing()
         } label: {
             Image("BoxBtnN")
                 .padding(.all, 7)
@@ -370,6 +373,23 @@ extension ChatView {
         )
         let lineHeight = PeepItFont.body04.lineHeight
         return Int(ceil(boundingBox.height / lineHeight))
+    }
+}
+
+fileprivate struct ChatTableView: UIViewControllerRepresentable {
+    var chats: [Chat]
+
+    func makeUIViewController(context: Context) -> ChatTableViewController {
+        let vc = ChatTableViewController()
+        vc.chats = chats
+        return vc
+    }
+
+    func updateUIViewController(
+        _ uiViewController: ChatTableViewController,
+        context: Context
+    ) {
+        uiViewController.chats = chats
     }
 }
 
