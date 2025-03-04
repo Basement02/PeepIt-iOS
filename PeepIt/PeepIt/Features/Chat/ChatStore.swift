@@ -74,7 +74,7 @@ struct ChatStore {
             switch action {
 
             case .onAppear:
-                let stubChats: [Chat] = [.chatStub1, .chatStub2, .chatStub3, .chatStub5, .chatStub6]
+                let stubChats: [Chat] = [.chatStub1, .chatStub2, .chatStub3, .chatStub5, .chatStub6 , .chatStub7, .chatStub8]
                 state.chats.append(contentsOf: stubChats)
                 return .none
 
