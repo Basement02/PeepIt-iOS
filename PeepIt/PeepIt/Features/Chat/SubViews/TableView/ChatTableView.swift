@@ -91,4 +91,10 @@ class ChatTableViewController: UITableViewController {
 
         return cell
     }
+
+    func scrollToBottom(animated: Bool = true) {
+        guard !chats.isEmpty else { return }
+        let lastIndexPath = IndexPath(row: chats.count - 1, section: 0)
+        tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: animated)
+    }
 }

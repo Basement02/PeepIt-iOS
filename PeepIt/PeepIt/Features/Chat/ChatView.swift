@@ -59,7 +59,8 @@ struct ChatView: View {
 
                             ChatTableView(
                                 chats: store.chats,
-                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) }
+                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) },
+                                isChatSent: $store.isChatSent
                             )
                             .frame(
                                 height: keyboardHeight > 0 ?
@@ -67,9 +68,6 @@ struct ChatView: View {
                                 : nil
                             )
                             .padding(.horizontal, 16)
-                            .onAppear {
-                                print(geo.size.height)
-                            }
 
                             Rectangle()
                                 .frame(height: 78)
@@ -231,15 +229,16 @@ struct ChatView: View {
 
 
     private var sendButton: some View {
-        Button {
-            store.send(.sendButtonTapped)
-        } label: {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.coreLime)
             Image("BoxBtnN")
-                .padding(.all, 7)
-                .frame(width: 44, height: 44)
         }
-        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .frame(width: 44, height: 44)
+        .onTapGesture {
+            store.send(.sendButtonTapped)
+            endTextEditing()
+        }
         .background(
             GeometryReader { geo in
                 Color.clear
@@ -321,6 +320,8 @@ fileprivate struct ChatTableView: UIViewControllerRepresentable {
     var chats: [Chat]
     var moreButtonTapped: ((Chat) -> Void)?
 
+    @Binding var isChatSent: Bool?
+
     func makeUIViewController(context: Context) -> ChatTableViewController {
         let vc = ChatTableViewController()
         vc.chats = chats
@@ -334,6 +335,12 @@ fileprivate struct ChatTableView: UIViewControllerRepresentable {
     ) {
         uiViewController.chats = chats
         uiViewController.showMoreHandler = moreButtonTapped
+        uiViewController.tableView.reloadData()
+
+        if let isSent = isChatSent, isSent {
+            uiViewController.scrollToBottom()
+            isChatSent = nil
+        }
     }
 }
 

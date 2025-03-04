@@ -32,7 +32,7 @@ struct ChatStore {
         /// 신고 상태 관리
         var report = ReportStore.State()
 
-        var sendButtonIsPressing = false
+        var isChatSent: Bool? = nil
     }
 
     enum Action: BindableAction {
@@ -92,20 +92,17 @@ struct ChatStore {
                 return .none
 
             case .sendButtonTapped:
-                state.sendButtonIsPressing = true
-
                 let newChat: Chat = .init(
                     id: UUID().uuidString,
                     user: .stubUser1,
                     message: state.message,
                     sendTime: "5분 전",
-                    type: .others
+                    type: .mine
                 )
 
                 state.chats.append(newChat)
                 state.message.removeAll()
-
-                state.sendButtonIsPressing = false
+                state.isChatSent = true
 
                 return .none
 
