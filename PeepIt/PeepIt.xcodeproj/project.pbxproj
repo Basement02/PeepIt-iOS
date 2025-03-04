@@ -392,6 +392,23 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
+		AB33E3BF2D771DFE00D0D7DD /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
+			isa = PBXGroup;
+			children = (
+				AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */,
+				AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */,
+				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
+			);
+			path = ChatBubbleView;
+			sourceTree = "<group>";
+		};
 		AB416D122CF2EEF20065BD09 /* Toggle */ = {
 			isa = PBXGroup;
 			children = (
@@ -555,9 +572,8 @@
 		AB53DE562CA02BC700D8DC1F /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */,
-				AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */,
-				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
+				AB33E3BF2D771DFE00D0D7DD /* TableView */,
+				AB33E3C02D771E0700D0D7DD /* ChatBubbleView */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
