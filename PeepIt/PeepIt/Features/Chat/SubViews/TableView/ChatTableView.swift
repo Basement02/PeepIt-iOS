@@ -11,9 +11,9 @@ import SwiftUI
 class ChatTableViewCell: UITableViewCell {
     static let reuseIdentifier = "ChatTableViewCell"
 
-    func configure(with chat: Chat) {
+    func configure(with chat: Chat, moreButtonTapped: ((Chat) -> Void)?) {
         contentConfiguration = UIHostingConfiguration {
-            ChatBubbleView(chat: chat) { }
+            ChatBubbleView(chat: chat, showMoreButtonTapped: moreButtonTapped)
         }
         .margins(.all, .zero)
         .margins(.bottom, 15)
@@ -27,6 +27,7 @@ class ChatTableViewCell: UITableViewCell {
 
 class ChatTableViewController: UITableViewController {
     var chats: [Chat] = []
+    var showMoreHandler: ((Chat) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,13 +45,19 @@ class ChatTableViewController: UITableViewController {
         return chats.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(
             withIdentifier: ChatTableViewCell.reuseIdentifier,
             for: indexPath
         ) as! ChatTableViewCell
 
-        cell.configure(with: chats[indexPath.row])
+        cell.configure(
+            with: chats[indexPath.row],
+            moreButtonTapped: showMoreHandler
+        )
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
 

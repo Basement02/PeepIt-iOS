@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatBubbleView: View {
     let chat: Chat
-    let showMoreButtonTapped: () -> Void
+    let showMoreButtonTapped: ((Chat) -> Void)?
 
     @State private var isTruncated = false
 
@@ -55,7 +55,7 @@ struct ChatBubbleView: View {
                                     .foregroundStyle(Color.nonOp)
                                     .padding(.bottom, 12)
                                     .padding(.trailing, 14)
-                                    .onTapGesture { showMoreButtonTapped() }
+                                    .onTapGesture { showMoreButtonTapped?(chat) }
                             }
                         }
                     )
@@ -66,5 +66,11 @@ struct ChatBubbleView: View {
             alignment: chat.type == .mine ? .trailing : .leading
         )
         .onAppear { isTruncated = false }
+        .gesture(
+            LongPressGesture(minimumDuration: 1.2)
+                .onEnded { isPressed in
+                    if isPressed { showMoreButtonTapped?(chat) }
+                }
+        )
     }
 }

@@ -62,12 +62,21 @@ struct ChatView: View {
                                 })
                                 .padding(.bottom, 14)
 
-                            ChatTableView(chats: store.chats)
-                                .frame(
-                                    height: keyboardHeight > 0 ?
-                                    Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
-                                    : nil
-                                )
+//                            ChatTableView(chats: store.chats)
+//                                .frame(
+//                                    height: keyboardHeight > 0 ?
+//                                    Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
+//                                    : nil
+//                                )
+                            ChatTableView(
+                                chats: store.chats,
+                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) }
+                            )
+                            .frame(
+                                height: keyboardHeight > 0 ?
+                                Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
+                                : nil
+                            )
 
                             Rectangle()
                                 .frame(height: 78)
@@ -127,7 +136,8 @@ struct ChatView: View {
 
             if let selectedChat = store.selectedChat {
                 VStack {
-                    originalChatCell(chat: selectedChat)
+//                    originalChatCell(chat: selectedChat)
+                    Text("Original")
 
                     Spacer()
 
@@ -173,19 +183,20 @@ struct ChatView: View {
     }
 
     private var uploaderBodyView: some View {
-        let chatCell = ChatBubbleView(
-            chat: store.peepBody,
-            showMoreButtonTapped: { store.send(.showMoreButtonTapped(chat: store.peepBody)) }
-        )
-
-        return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
-            .padding(.horizontal, 16)
-            .gesture(
-                LongPressGesture(minimumDuration: 1.2)
-                    .onEnded { isPressed in
-                        if isPressed { store.send(.chatLongTapped(chat: store.peepBody)) }
-                    }
-            )
+        return Text("UPloader")
+//        let chatCell = ChatBubbleView(
+//            chat: store.peepBody,
+//            showMoreButtonTapped: { store.send(.showMoreButtonTapped(chat: store.peepBody)) }, longTapped: { }
+//        )
+//
+//        return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
+//            .padding(.horizontal, 16)
+//            .gesture(
+//                LongPressGesture(minimumDuration: 1.2)
+//                    .onEnded { isPressed in
+//                        if isPressed { store.send(.chatLongTapped(chat: store.peepBody)) }
+//                    }
+//            )
     }
 
     private var enterFieldView: some View {
@@ -250,88 +261,50 @@ struct ChatView: View {
         )
     }
 
-    private var chatListView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(spacing: 15) {
-                    ForEach(store.chats, id: \.id) { chat in
-                        chatCell(chat: chat) {
-                            store.send(.showMoreButtonTapped(chat: chat))
-                        }
-                        .id(chat.id)
-                        .yieldTouches()
-                        .gesture(
-                            LongPressGesture(minimumDuration: 1.2)
-                                .onEnded { isPressed in
-                                    if isPressed { store.send(.chatLongTapped(chat: chat)) }
-                                }
-                        )
-                    }
-                }
-            }
-            .scrollIndicators(.hidden)
-            .padding(.horizontal, 16)
-        }
-    }
+//    private var chatListView: some View {
+//        ScrollViewReader { proxy in
+//            ScrollView {
+//                LazyVStack(spacing: 15) {
+//                    ForEach(store.chats, id: \.id) { chat in
+//                        chatCell(chat: chat) {
+//                            store.send(.showMoreButtonTapped(chat: chat))
+//                        }
+//                        .id(chat.id)
+//                        .yieldTouches()
+//                        .gesture(
+//                            LongPressGesture(minimumDuration: 1.2)
+//                                .onEnded { isPressed in
+//                                    if isPressed { store.send(.chatLongTapped(chat: chat)) }
+//                                }
+//                        )
+//                    }
+//                }
+//            }
+//            .scrollIndicators(.hidden)
+//            .padding(.horizontal, 16)
+//        }
+//    }
 
-    private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 40, height: 40)
-
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 7) {
-                    Text(chat.user.nickname)
-                        .pretendard(.caption03)
-                    Text(chat.sendTime)
-                        .pretendard(.caption04)
-                }
-
-                chatCell
-            }
-
-            Spacer()
-        }
-    }
-
-    @ViewBuilder
-    private func chatCell(
-        chat: Chat,
-        action: @escaping () -> Void
-    ) -> some View {
-        switch chat.type {
-
-        case .mine:
-            HStack {
-                Spacer()
-                ChatBubbleView(chat: chat, showMoreButtonTapped: action)
-            }
-
-        case .uploader, .others:
-            chatWithProfile(
-                chat: chat,
-                chatCell: ChatBubbleView(chat: chat, showMoreButtonTapped: action)
-            )
-        }
-    }
-
-    @ViewBuilder
-    private func originalChatCell(chat: Chat) -> some View {
-        switch chat.type {
-
-        case .mine:
-            OriginalChatBubbleView(chat: chat)
-                .padding(.top, 169)
-
-        case .uploader, .others:
-            chatWithProfile(
-                chat: chat,
-                chatCell: OriginalChatBubbleView(chat: chat)
-            )
-            .padding(.top, 136)
-        }
-    }
+//    private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
+//        HStack(alignment: .top, spacing: 10) {
+//            Image("ProfileSample")
+//                .resizable()
+//                .frame(width: 40, height: 40)
+//
+//            VStack(alignment: .leading, spacing: 12) {
+//                HStack(spacing: 7) {
+//                    Text(chat.user.nickname)
+//                        .pretendard(.caption03)
+//                    Text(chat.sendTime)
+//                        .pretendard(.caption04)
+//                }
+//
+//                chatCell
+//            }
+//
+//            Spacer()
+//        }
+//    }
 }
 
 extension ChatView {
@@ -378,10 +351,12 @@ extension ChatView {
 
 fileprivate struct ChatTableView: UIViewControllerRepresentable {
     var chats: [Chat]
+    var moreButtonTapped: ((Chat) -> Void)?
 
     func makeUIViewController(context: Context) -> ChatTableViewController {
         let vc = ChatTableViewController()
         vc.chats = chats
+        vc.showMoreHandler = moreButtonTapped
         return vc
     }
 
@@ -390,6 +365,7 @@ fileprivate struct ChatTableView: UIViewControllerRepresentable {
         context: Context
     ) {
         uiViewController.chats = chats
+        uiViewController.showMoreHandler = moreButtonTapped
     }
 }
 
