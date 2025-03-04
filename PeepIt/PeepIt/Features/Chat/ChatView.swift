@@ -15,7 +15,7 @@ struct ChatView: View {
     @State private var sendButtonWidth: CGFloat = .zero
     @State private var enterFieldHorizontalInset: CGFloat = 14
     @State private var enterViewPadding: CGFloat = 16
-    @State private var enterFieldHeight: CGFloat = 44
+    @State private var uploaderBodyViewHeight: CGFloat = .zero
 
     var body: some View {
         WithPerceptionTracking {
@@ -52,25 +52,37 @@ struct ChatView: View {
                         VStack(spacing: 0) {
                             topBar
                                 .padding(.bottom, 33)
+
                             uploaderBodyView
+                                .padding(.horizontal, 16)
                                 .padding(.bottom, 14)
-                            chatListView
-                                .padding(.bottom, keyboardHeight)
+
+                            ChatTableView(
+                                chats: store.chats,
+                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) },
+                                isChatSent: $store.isChatSent
+                            )
+                            .frame(
+                                height: keyboardHeight > 0 ?
+                                geo.size.height - (keyboardHeight+uploaderBodyViewHeight+50)
+                                : nil
+                            )
+                            .padding(.horizontal, 16)
+
+                            Rectangle()
+                                .frame(height: 78)
+                                .hidden()
 
                             Spacer()
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
 
                         VStack {
                             Spacer()
 
                             enterFieldView
                                 .padding(.bottom, keyboardHeight)
-                                .padding(.bottom, keyboardHeight > 0 ? 18 : Constant.safeAreaBottom)
-
-                            Spacer().frame(height:1)
+                                .padding(.bottom, keyboardHeight > 0 ? 18 : 34)
                         }
-                        .ignoresSafeArea(.keyboard, edges: .bottom)
                         .ignoresSafeArea()
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
@@ -115,7 +127,8 @@ struct ChatView: View {
 
             if let selectedChat = store.selectedChat {
                 VStack {
-                    originalChatCell(chat: selectedChat)
+                    originalBubbleView(chat: selectedChat)
+                        .padding(.top, 136)
 
                     Spacer()
 
@@ -136,7 +149,7 @@ struct ChatView: View {
                                 .fill(Color.gray600)
                         )
                     }
-                    .padding(.bottom, 78.12)
+                    .padding(.bottom, 78)
                 }
                 .padding(.horizontal, 16)
             }
@@ -161,19 +174,16 @@ struct ChatView: View {
     }
 
     private var uploaderBodyView: some View {
-        let chatCell = ChatBubbleView(
+        UploaderBubbleView(
             chat: store.peepBody,
-            showMoreButtonTapped: { store.send(.showMoreButtonTapped(chat: store.peepBody)) }
+            showMoreButtonTapped: { _ in store.send(.showMoreButtonTapped(chat: store.peepBody)) }
         )
-
-        return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
-            .padding(.horizontal, 16)
-            .gesture(
-                LongPressGesture(minimumDuration: 1.2)
-                    .onEnded { isPressed in
-                        if isPressed { store.send(.chatLongTapped(chat: store.peepBody)) }
-                    }
-            )
+        .background(GeometryReader { proxy in
+            Color.clear
+                .onAppear {
+                    uploaderBodyViewHeight = proxy.size.height
+                }
+        })
     }
 
     private var enterFieldView: some View {
@@ -214,29 +224,21 @@ struct ChatView: View {
             Spacer()
             sendButton
         }
-        .onChange(of: store.message) { newText in
-            GeometryReader { geo in
-                Color.clear
-                    .onAppear {
-                        enterFieldHeight = geo.size.height
-                    }
-            }
-        }
         .padding(.horizontal, enterViewPadding)
     }
 
 
     private var sendButton: some View {
-        Button {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.coreLime)
+            Image("BoxBtnN")
+        }
+        .frame(width: 44, height: 44)
+        .onTapGesture {
             store.send(.sendButtonTapped)
             endTextEditing()
-        } label: {
-            Image("BoxBtnN")
-                .padding(.all, 7)
-                .frame(width: 44, height: 44)
         }
-        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
         .background(
             GeometryReader { geo in
                 Color.clear
@@ -247,86 +249,27 @@ struct ChatView: View {
         )
     }
 
-    private var chatListView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(spacing: 15) {
-                    ForEach(store.chats, id: \.id) { chat in
-                        chatCell(chat: chat) {
-                            store.send(.showMoreButtonTapped(chat: chat))
-                        }
-                        .id(chat.id)
-                        .yieldTouches()
-                        .gesture(
-                            LongPressGesture(minimumDuration: 1.2)
-                                .onEnded { isPressed in
-                                    if isPressed { store.send(.chatLongTapped(chat: chat)) }
-                                }
-                        )
-                    }
-                }
-            }
-            .scrollIndicators(.hidden)
-            .padding(.horizontal, 16)
-        }
-    }
-
-    private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 40, height: 40)
-
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 7) {
-                    Text(chat.user.nickname)
-                        .pretendard(.caption03)
-                    Text(chat.sendTime)
-                        .pretendard(.caption04)
-                }
-
-                chatCell
-            }
-
-            Spacer()
-        }
-    }
-
     @ViewBuilder
-    private func chatCell(
-        chat: Chat,
-        action: @escaping () -> Void
-    ) -> some View {
-        switch chat.type {
-
-        case .mine:
-            HStack {
-                Spacer()
-                ChatBubbleView(chat: chat, showMoreButtonTapped: action)
-            }
-
-        case .uploader, .others:
-            chatWithProfile(
-                chat: chat,
-                chatCell: ChatBubbleView(chat: chat, showMoreButtonTapped: action)
-            )
-        }
-    }
-
-    @ViewBuilder
-    private func originalChatCell(chat: Chat) -> some View {
-        switch chat.type {
-
-        case .mine:
+    private func originalBubbleView(chat: Chat) -> some View {
+        if chat.type == .mine {
             OriginalChatBubbleView(chat: chat)
-                .padding(.top, 169)
+        } else {
+            HStack(alignment: .top, spacing: 10) {
+                Image("ProfileSample")
+                    .resizable()
+                    .frame(width: 40, height: 40)
 
-        case .uploader, .others:
-            chatWithProfile(
-                chat: chat,
-                chatCell: OriginalChatBubbleView(chat: chat)
-            )
-            .padding(.top, 136)
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 7) {
+                        Text(chat.user.nickname)
+                            .pretendard(.caption03)
+                        Text("0분 전")
+                            .pretendard(.caption04)
+                    }
+                    OriginalChatBubbleView(chat: chat)
+                }
+                Spacer()
+            }
         }
     }
 }
@@ -370,6 +313,34 @@ extension ChatView {
         )
         let lineHeight = PeepItFont.body04.lineHeight
         return Int(ceil(boundingBox.height / lineHeight))
+    }
+}
+
+fileprivate struct ChatTableView: UIViewControllerRepresentable {
+    var chats: [Chat]
+    var moreButtonTapped: ((Chat) -> Void)?
+
+    @Binding var isChatSent: Bool?
+
+    func makeUIViewController(context: Context) -> ChatTableViewController {
+        let vc = ChatTableViewController()
+        vc.chats = chats
+        vc.showMoreHandler = moreButtonTapped
+        return vc
+    }
+
+    func updateUIViewController(
+        _ uiViewController: ChatTableViewController,
+        context: Context
+    ) {
+        uiViewController.chats = chats
+        uiViewController.showMoreHandler = moreButtonTapped
+
+        if let isSent = isChatSent, isSent {
+            uiViewController.tableView.reloadData()
+            uiViewController.scrollToBottom()
+            isChatSent = nil
+        }
     }
 }
 
