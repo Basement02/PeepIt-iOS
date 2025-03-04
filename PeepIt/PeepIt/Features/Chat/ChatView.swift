@@ -15,7 +15,7 @@ struct ChatView: View {
     @State private var sendButtonWidth: CGFloat = .zero
     @State private var enterFieldHorizontalInset: CGFloat = 14
     @State private var enterViewPadding: CGFloat = 16
-    @State private var uploaderBodyViewHeight: CGFloat = 0
+    @State private var uploaderBodyViewHeight: CGFloat = .zero
 
     var body: some View {
         WithPerceptionTracking {
@@ -54,29 +54,22 @@ struct ChatView: View {
                                 .padding(.bottom, 33)
 
                             uploaderBodyView
-                                .background(GeometryReader { proxy in
-                                    Color.clear
-                                        .onAppear {
-                                            uploaderBodyViewHeight = proxy.size.height
-                                        }
-                                })
+                                .padding(.horizontal, 16)
                                 .padding(.bottom, 14)
 
-//                            ChatTableView(chats: store.chats)
-//                                .frame(
-//                                    height: keyboardHeight > 0 ?
-//                                    Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
-//                                    : nil
-//                                )
                             ChatTableView(
                                 chats: store.chats,
                                 moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) }
                             )
                             .frame(
                                 height: keyboardHeight > 0 ?
-                                Constant.screenHeight - (152+keyboardHeight+uploaderBodyViewHeight)
+                                geo.size.height - (keyboardHeight+uploaderBodyViewHeight+50)
                                 : nil
                             )
+                            .padding(.horizontal, 16)
+                            .onAppear {
+                                print(geo.size.height)
+                            }
 
                             Rectangle()
                                 .frame(height: 78)
@@ -183,20 +176,16 @@ struct ChatView: View {
     }
 
     private var uploaderBodyView: some View {
-        return Text("UPloader")
-//        let chatCell = ChatBubbleView(
-//            chat: store.peepBody,
-//            showMoreButtonTapped: { store.send(.showMoreButtonTapped(chat: store.peepBody)) }, longTapped: { }
-//        )
-//
-//        return chatWithProfile(chat: store.peepBody, chatCell: chatCell)
-//            .padding(.horizontal, 16)
-//            .gesture(
-//                LongPressGesture(minimumDuration: 1.2)
-//                    .onEnded { isPressed in
-//                        if isPressed { store.send(.chatLongTapped(chat: store.peepBody)) }
-//                    }
-//            )
+        UploaderBubbleView(
+            chat: store.peepBody,
+            showMoreButtonTapped: { _ in store.send(.showMoreButtonTapped(chat: store.peepBody))}
+        )
+        .background(GeometryReader { proxy in
+            Color.red
+                .onAppear {
+                    uploaderBodyViewHeight = proxy.size.height
+                }
+        })
     }
 
     private var enterFieldView: some View {
@@ -260,51 +249,6 @@ struct ChatView: View {
             }
         )
     }
-
-//    private var chatListView: some View {
-//        ScrollViewReader { proxy in
-//            ScrollView {
-//                LazyVStack(spacing: 15) {
-//                    ForEach(store.chats, id: \.id) { chat in
-//                        chatCell(chat: chat) {
-//                            store.send(.showMoreButtonTapped(chat: chat))
-//                        }
-//                        .id(chat.id)
-//                        .yieldTouches()
-//                        .gesture(
-//                            LongPressGesture(minimumDuration: 1.2)
-//                                .onEnded { isPressed in
-//                                    if isPressed { store.send(.chatLongTapped(chat: chat)) }
-//                                }
-//                        )
-//                    }
-//                }
-//            }
-//            .scrollIndicators(.hidden)
-//            .padding(.horizontal, 16)
-//        }
-//    }
-
-//    private func chatWithProfile(chat: Chat, chatCell: some View) -> some View {
-//        HStack(alignment: .top, spacing: 10) {
-//            Image("ProfileSample")
-//                .resizable()
-//                .frame(width: 40, height: 40)
-//
-//            VStack(alignment: .leading, spacing: 12) {
-//                HStack(spacing: 7) {
-//                    Text(chat.user.nickname)
-//                        .pretendard(.caption03)
-//                    Text(chat.sendTime)
-//                        .pretendard(.caption04)
-//                }
-//
-//                chatCell
-//            }
-//
-//            Spacer()
-//        }
-//    }
 }
 
 extension ChatView {

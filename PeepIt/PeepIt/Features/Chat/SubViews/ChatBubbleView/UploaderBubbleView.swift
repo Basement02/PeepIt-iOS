@@ -1,13 +1,13 @@
 //
-//  ChatBubbleView.swift
+//  UploaderBubbleView.swift
 //  PeepIt
 //
-//  Created by 김민 on 9/22/24.
+//  Created by 김민 on 3/5/25.
 //
 
 import SwiftUI
 
-struct ChatBubbleView: View {
+struct UploaderBubbleView: View {
     let chat: Chat
     let showMoreButtonTapped: ((Chat) -> Void)?
 
@@ -26,7 +26,12 @@ struct ChatBubbleView: View {
                     Text("0분 전")
                         .pretendard(.caption04)
                 }
-                chatBubbleView
+                HStack(alignment: .top, spacing: 0) {
+                    chatBubbleView
+                    Image("IconBookmark")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                }
             }
             Spacer()
         }
@@ -92,8 +97,5 @@ struct ChatBubbleView: View {
 }
 
 #Preview {
-    VStack {
-        ChatBubbleView(chat: .chatStub1, showMoreButtonTapped: { _ in })
-        ChatBubbleView(chat: .chatStub4, showMoreButtonTapped: { _ in })
-    }
+    UploaderBubbleView(chat: .chatStub4, showMoreButtonTapped: { _ in })
 }

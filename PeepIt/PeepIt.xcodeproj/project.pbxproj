@@ -30,6 +30,8 @@
 		AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */; };
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C22D771F2E00D0D7DD /* ChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C12D771F2800D0D7DD /* ChatTableView.swift */; };
+		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
+		AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C52D77592000D0D7DD /* UploaderBubbleView.swift */; };
 		AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D132CF2EF040065BD09 /* TagTab.swift */; };
 		AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */; };
 		AB416D1A2CF309750065BD09 /* ElseMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D192CF309750065BD09 /* ElseMenuView.swift */; };
@@ -189,6 +191,8 @@
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C12D771F2800D0D7DD /* ChatTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableView.swift; sourceTree = "<group>"; };
+		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
+		AB33E3C52D77592000D0D7DD /* UploaderBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploaderBubbleView.swift; sourceTree = "<group>"; };
 		AB416D132CF2EF040065BD09 /* TagTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTab.swift; sourceTree = "<group>"; };
 		AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProfile.swift; sourceTree = "<group>"; };
 		AB416D192CF309750065BD09 /* ElseMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElseMenuView.swift; sourceTree = "<group>"; };
@@ -405,6 +409,8 @@
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
 			isa = PBXGroup;
 			children = (
+				AB33E3C52D77592000D0D7DD /* UploaderBubbleView.swift */,
+				AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */,
 				AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */,
 				AB23E3012D39406D003660F8 /* OriginalChatBubbleView.swift */,
 				AB53DE592CA02D1F00D8DC1F /* ChatType.swift */,
@@ -1171,6 +1177,7 @@
 				AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */,
 				ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */,
 				AB416D1A2CF309750065BD09 /* ElseMenuView.swift in Sources */,
+				AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */,
 				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
@@ -1210,6 +1217,7 @@
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
+				AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				AB0FBF212D4FC8F7003D8372 /* TownRegisterModalView.swift in Sources */,
 				AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */,

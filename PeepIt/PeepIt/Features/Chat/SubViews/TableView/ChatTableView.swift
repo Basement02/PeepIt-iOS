@@ -8,8 +8,8 @@
 import UIKit
 import SwiftUI
 
-class ChatTableViewCell: UITableViewCell {
-    static let reuseIdentifier = "ChatTableViewCell"
+class OtherChatTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "OtherChatTableViewCell"
 
     func configure(with chat: Chat, moreButtonTapped: ((Chat) -> Void)?) {
         contentConfiguration = UIHostingConfiguration {
@@ -24,6 +24,17 @@ class ChatTableViewCell: UITableViewCell {
     }
 }
 
+class MyChatTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "MyChatTableViewCell"
+
+    func configure(with chat: Chat, moreButtonTapped: ((Chat) -> Void)?) {
+        contentConfiguration = UIHostingConfiguration {
+            MyChatBubbleView(chat: chat, showMoreButtonTapped: moreButtonTapped)
+        }
+        .margins(.all, .zero)
+        .margins(.bottom, 15)
+    }
+}
 
 class ChatTableViewController: UITableViewController {
     var chats: [Chat] = []
@@ -32,9 +43,15 @@ class ChatTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(
-            ChatTableViewCell.self,
-            forCellReuseIdentifier: ChatTableViewCell.reuseIdentifier
+            OtherChatTableViewCell.self,
+            forCellReuseIdentifier: OtherChatTableViewCell.reuseIdentifier
         )
+
+        tableView.register(
+            MyChatTableViewCell.self,
+            forCellReuseIdentifier: MyChatTableViewCell.reuseIdentifier
+        )
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
@@ -49,15 +66,26 @@ class ChatTableViewController: UITableViewController {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: ChatTableViewCell.reuseIdentifier,
-            for: indexPath
-        ) as! ChatTableViewCell
+        let chat = chats[indexPath.row]
 
-        cell.configure(
-            with: chats[indexPath.row],
-            moreButtonTapped: showMoreHandler
-        )
+        let cell: UITableViewCell
+
+        if chat.type == .mine {
+            let myCell = tableView.dequeueReusableCell(
+                withIdentifier: MyChatTableViewCell.reuseIdentifier,
+                for: indexPath
+            ) as! MyChatTableViewCell
+            myCell.configure(with: chat, moreButtonTapped: showMoreHandler)
+            cell = myCell
+        } else {
+            let otherCell = tableView.dequeueReusableCell(
+                withIdentifier: OtherChatTableViewCell.reuseIdentifier,
+                for: indexPath
+            ) as! OtherChatTableViewCell
+            otherCell.configure(with: chat, moreButtonTapped: showMoreHandler)
+            cell = otherCell
+        }
+
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
 
