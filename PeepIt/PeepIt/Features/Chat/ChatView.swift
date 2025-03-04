@@ -129,8 +129,8 @@ struct ChatView: View {
 
             if let selectedChat = store.selectedChat {
                 VStack {
-//                    originalChatCell(chat: selectedChat)
-                    Text("Original")
+                    originalBubbleView(chat: selectedChat)
+                        .padding(.top, 136)
 
                     Spacer()
 
@@ -151,7 +151,7 @@ struct ChatView: View {
                                 .fill(Color.gray600)
                         )
                     }
-                    .padding(.bottom, 78.12)
+                    .padding(.bottom, 78)
                 }
                 .padding(.horizontal, 16)
             }
@@ -178,10 +178,10 @@ struct ChatView: View {
     private var uploaderBodyView: some View {
         UploaderBubbleView(
             chat: store.peepBody,
-            showMoreButtonTapped: { _ in store.send(.showMoreButtonTapped(chat: store.peepBody))}
+            showMoreButtonTapped: { _ in store.send(.showMoreButtonTapped(chat: store.peepBody)) }
         )
         .background(GeometryReader { proxy in
-            Color.red
+            Color.clear
                 .onAppear {
                     uploaderBodyViewHeight = proxy.size.height
                 }
@@ -248,6 +248,30 @@ struct ChatView: View {
                     }
             }
         )
+    }
+
+    @ViewBuilder
+    private func originalBubbleView(chat: Chat) -> some View {
+        if chat.type == .mine {
+            OriginalChatBubbleView(chat: chat)
+        } else {
+            HStack(alignment: .top, spacing: 10) {
+                Image("ProfileSample")
+                    .resizable()
+                    .frame(width: 40, height: 40)
+
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack(spacing: 7) {
+                        Text(chat.user.nickname)
+                            .pretendard(.caption03)
+                        Text("0분 전")
+                            .pretendard(.caption04)
+                    }
+                    OriginalChatBubbleView(chat: chat)
+                }
+                Spacer()
+            }
+        }
     }
 }
 
