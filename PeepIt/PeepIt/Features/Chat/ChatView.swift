@@ -57,23 +57,14 @@ struct ChatView: View {
                                 .padding(.horizontal, 16)
                                 .padding(.bottom, 14)
 
-                            ChatTableView(
-                                chats: store.chats,
-                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) },
-                                isChatSent: $store.isChatSent
-                            )
-                            .frame(
-                                height: keyboardHeight > 0 ?
-                                geo.size.height - (keyboardHeight+uploaderBodyViewHeight+50)
-                                : nil
-                            )
-                            .padding(.horizontal, 16)
+                            chatList
 
                             Rectangle()
-                                .frame(height: 78)
+                                .frame(
+                                    height: keyboardHeight > 0 ?
+                                    keyboardHeight + 18 : 78
+                                )
                                 .hidden()
-
-                            Spacer()
                         }
 
                         VStack {
@@ -272,6 +263,33 @@ struct ChatView: View {
             }
         }
     }
+
+    private var chatList: some View {
+        ScrollView {
+            ForEach(store.chats, id: \.id) { chat in
+                switch chat.type {
+                case .mine:
+                    MyChatBubbleView(
+                        chat: chat,
+                        showMoreButtonTapped: { _ in
+                            endTextEditing()
+                            store.send(.showMoreButtonTapped(chat: chat))
+                        }
+                    )
+                default:
+                    ChatBubbleView(
+                        chat: chat,
+                        showMoreButtonTapped: { _ in
+                            endTextEditing()
+                            store.send(.showMoreButtonTapped(chat: chat))
+                        }
+                    )
+                }
+            }
+        }
+        .padding(.horizontal)
+        .scrollIndicators(.never)
+    }
 }
 
 extension ChatView {
@@ -313,34 +331,6 @@ extension ChatView {
         )
         let lineHeight = PeepItFont.body04.lineHeight
         return Int(ceil(boundingBox.height / lineHeight))
-    }
-}
-
-fileprivate struct ChatTableView: UIViewControllerRepresentable {
-    var chats: [Chat]
-    var moreButtonTapped: ((Chat) -> Void)?
-
-    @Binding var isChatSent: Bool?
-
-    func makeUIViewController(context: Context) -> ChatTableViewController {
-        let vc = ChatTableViewController()
-        vc.chats = chats
-        vc.showMoreHandler = moreButtonTapped
-        return vc
-    }
-
-    func updateUIViewController(
-        _ uiViewController: ChatTableViewController,
-        context: Context
-    ) {
-        uiViewController.chats = chats
-        uiViewController.showMoreHandler = moreButtonTapped
-
-        if let isSent = isChatSent, isSent {
-            uiViewController.tableView.reloadData()
-            uiViewController.scrollToBottom()
-            isChatSent = nil
-        }
     }
 }
 
