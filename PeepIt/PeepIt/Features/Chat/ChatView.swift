@@ -15,7 +15,6 @@ struct ChatView: View {
     @State private var sendButtonWidth: CGFloat = .zero
     @State private var enterFieldHorizontalInset: CGFloat = 14
     @State private var enterViewPadding: CGFloat = 16
-    @State private var uploaderBodyViewHeight: CGFloat = .zero
 
     var body: some View {
         WithPerceptionTracking {
@@ -57,45 +56,43 @@ struct ChatView: View {
                                 .padding(.horizontal, 16)
                                 .padding(.bottom, 14)
 
-                            ChatTableView(
-                                chats: store.chats,
-                                moreButtonTapped: { chat in store.send(.showMoreButtonTapped(chat: chat)) },
-                                isChatSent: $store.isChatSent
-                            )
-                            .frame(
-                                height: keyboardHeight > 0 ?
-                                geo.size.height - (keyboardHeight+uploaderBodyViewHeight+50)
-                                : nil
-                            )
-                            .padding(.horizontal, 16)
+                            chatList
+                                .padding(.bottom, keyboardHeight == 0 ? 21 : 0)
 
                             Rectangle()
-                                .frame(height: 78)
+                                .frame(
+                                    height: keyboardHeight > 0 ?
+                                    keyboardHeight + 18 : Constant.safeAreaBottom + 44
+                                )
                                 .hidden()
-
-                            Spacer()
                         }
+                        .ignoresSafeArea(.all, edges: .bottom)
 
                         VStack {
                             Spacer()
 
                             enterFieldView
-                                .padding(.bottom, keyboardHeight)
-                                .padding(.bottom, keyboardHeight > 0 ? 18 : 34)
+                                .padding(.bottom,
+                                         keyboardHeight > 0 ?
+                                         keyboardHeight + 18 : Constant.safeAreaBottom
+                                )
                         }
                         .ignoresSafeArea()
                     }
-                    .ignoresSafeArea(.all, edges: .bottom)
+                    .animation(.linear(duration: 0.1), value: keyboardHeight)
+                    .ignoresSafeArea(.keyboard)
                     .onTapGesture { endTextEditing() }
                     .onAppear(perform: addKeyboardObserver)
                     .onDisappear(perform: removeKeyboardObserver)
                     .onAppear { store.send(.onAppear) }
-                    .overlay { /// 채팅 상세
+                    /// 채팅 상세
+                    .overlay {
                         if store.showChatDetail {
                             chatDetail
                         }
                     }
-                    .overlay(alignment: .bottom) { /// 채팅 신고
+                    /// 채팅 신고
+                    .overlay(alignment: .bottom) {
                         if store.showReportModal {
                             Color.op.ignoresSafeArea()
                                 .onTapGesture { store.send(.closeReportModal) }
@@ -178,12 +175,6 @@ struct ChatView: View {
             chat: store.peepBody,
             showMoreButtonTapped: { _ in store.send(.showMoreButtonTapped(chat: store.peepBody)) }
         )
-        .background(GeometryReader { proxy in
-            Color.clear
-                .onAppear {
-                    uploaderBodyViewHeight = proxy.size.height
-                }
-        })
     }
 
     private var enterFieldView: some View {
@@ -199,6 +190,7 @@ struct ChatView: View {
                     size: PeepItFont.body04.size
                 )
             )
+            .autocorrectionDisabled(true)
             .tint(Color.coreLime)
             .lineLimit(5)
             .frame(minHeight: 20)
@@ -272,6 +264,35 @@ struct ChatView: View {
             }
         }
     }
+
+    private var chatList: some View {
+        ScrollView {
+            VStack(spacing: 15) {
+                ForEach(store.chats, id: \.id) { chat in
+                    switch chat.type {
+                    case .mine:
+                        MyChatBubbleView(
+                            chat: chat,
+                            showMoreButtonTapped: { _ in
+                                endTextEditing()
+                                store.send(.showMoreButtonTapped(chat: chat))
+                            }
+                        )
+                    default:
+                        ChatBubbleView(
+                            chat: chat,
+                            showMoreButtonTapped: { _ in
+                                endTextEditing()
+                                store.send(.showMoreButtonTapped(chat: chat))
+                            }
+                        )
+                    }
+                }
+
+            }        }
+        .padding(.horizontal)
+        .scrollIndicators(.never)
+    }
 }
 
 extension ChatView {
@@ -313,34 +334,6 @@ extension ChatView {
         )
         let lineHeight = PeepItFont.body04.lineHeight
         return Int(ceil(boundingBox.height / lineHeight))
-    }
-}
-
-fileprivate struct ChatTableView: UIViewControllerRepresentable {
-    var chats: [Chat]
-    var moreButtonTapped: ((Chat) -> Void)?
-
-    @Binding var isChatSent: Bool?
-
-    func makeUIViewController(context: Context) -> ChatTableViewController {
-        let vc = ChatTableViewController()
-        vc.chats = chats
-        vc.showMoreHandler = moreButtonTapped
-        return vc
-    }
-
-    func updateUIViewController(
-        _ uiViewController: ChatTableViewController,
-        context: Context
-    ) {
-        uiViewController.chats = chats
-        uiViewController.showMoreHandler = moreButtonTapped
-
-        if let isSent = isChatSent, isSent {
-            uiViewController.tableView.reloadData()
-            uiViewController.scrollToBottom()
-            isChatSent = nil
-        }
     }
 }
 

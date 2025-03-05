@@ -97,7 +97,6 @@ struct HomeView: View {
                         )
                         .offset(x: store.sideMenu.sideMenuOffset)
                     }
-                    .ignoresSafeArea(.keyboard)
                     .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
