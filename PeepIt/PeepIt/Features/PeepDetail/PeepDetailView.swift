@@ -23,7 +23,7 @@ struct PeepDetailView: View {
                         }
 
                         TabView(selection: $store.currentIdx) {
-                            ForEach(0..<store.peepList.count, id: \.self) { idx in
+                            ForEach(store.peepList, id: \.self) { peep in
                                 WithPerceptionTracking {
                                     ZStack {
                                         /// 뒷 배경 사진 레이아웃
@@ -41,14 +41,14 @@ struct PeepDetailView: View {
                                             /// 앞 오브젝트
                                             VStack {
                                                 Spacer()
-                                                detailView
+                                                detailView(peep: peep)
                                                     .padding(.horizontal, 16)
                                                     .padding(.bottom, 84)
                                             }
                                             .ignoresSafeArea()
                                         }
                                     }
-                                    .tag(idx)
+                                    .tag(peep.id)
                                 }
                             }
                         }
@@ -225,16 +225,35 @@ extension PeepDetailView {
             .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 
-    private var detailView: some View {
+    private func detailView(peep: Peep) -> some View {
         HStack(alignment: .bottom, spacing: 12) {
             VStack(spacing: 9) {
-                nameView
+                NavigationLink(
+                    state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
+                ) {
+                    HStack {
+                        Image("ProfileSample")
+                            .resizable()
+                            .frame(width: 37.62, height: 37.62)
+                        Text("hyerim")
+                            .pretendard(.headline)
+                        Text("3분 전")
+                            .pretendard(.caption04)
 
-                Text("한 문장은 몇 자까지일까? 어쨋든 말줄임표를 두 문장까지? 문장 끝까지 보이면 안될 것 같지 않아?".forceCharWrapping)
-                    .pretendard(.body03)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .truncationMode(.tail)
+                        Spacer()
+                    }
+                    .foregroundStyle(Color.white)
+                }
+
+                HStack {
+                    Text(peep.content.forceCharWrapping)
+                        .pretendard(.body03)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                        .truncationMode(.tail)
+                    Spacer()
+                }
+                .frame(height: 50, alignment: .topLeading)
             }
 
             VStack(spacing: 15) {
@@ -249,28 +268,9 @@ extension PeepDetailView {
         }
     }
 
-    private var nameView: some View {
-        NavigationLink(
-            state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
-        ) {
-            HStack {
-                Image("ProfileSample")
-                    .resizable()
-                    .frame(width: 37.62, height: 37.62)
-                Text("hyerim")
-                    .pretendard(.headline)
-                Text("3분 전")
-                    .pretendard(.caption04)
-
-                Spacer()
-            }
-            .foregroundStyle(Color.white)
-        }
-    }
-
     private var chattingButton: some View {
         Button {
-            store.send(.showChat)
+
         } label: {
             Image("IconMessage")
                 .resizable()
@@ -279,6 +279,10 @@ extension PeepDetailView {
         .frame(width: 50, height: 50)
         .background(Color.blur1)
         .clipShape(RoundedRectangle(cornerRadius: 14))
+        .highPriorityGesture(
+            TapGesture()
+                .onEnded { store.send(.showChat) }
+        )
     }
 
     @ViewBuilder
