@@ -29,7 +29,7 @@ extension Peep {
         return .init(
             peepId: 0,
             data: "",
-            content: "본문본문0",
+            content: "한 문장은 몇 자까지일까? 어쨋든 말줄임표를 두 문장까지? 문장 끝까지 보이면 안될 것 같지 않아?0",
             writerId: "1",
             isActive: true,
             reaction: "😥",
@@ -41,7 +41,7 @@ extension Peep {
         return .init(
             peepId: 1,
             data: "",
-            content: "본문본문1",
+            content: "본문본문111111111",
             writerId: "1",
             isActive: false,
             reaction: "🤔",
@@ -53,7 +53,7 @@ extension Peep {
         return .init(
             peepId: 2,
             data: "",
-            content: "본문본문2",
+            content: "본문본문2222kjkjsdlkjalsdkjfasdf",
             writerId: "2",
             isActive: true,
             isVideo: true
