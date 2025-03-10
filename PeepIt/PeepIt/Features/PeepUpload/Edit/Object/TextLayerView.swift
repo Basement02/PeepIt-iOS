@@ -16,17 +16,17 @@ struct TextLayerView: View {
             WithPerceptionTracking {
                 ForEach(store.textItems, id: \.id) { textItem in
                     WithPerceptionTracking {
-//                        let scale = (
-//                            store.textInDeleteArea.contains(textItem.id) ?
-//                            textItem.fontSize * 0.6 : textItem.fontSize
-//                        )
+                        let scale = (
+                            store.textInDeleteArea.contains(textItem.id) ?
+                            textItem.scale * 0.6 : textItem.scale
+                        )
 
                         Text(textItem.text)
                             .opacity(
                                 store.selectedTextId == textItem.id ? 0 : 1
                             )
                             .font(.system(size: textItem.fontSize))
-                            .scaleEffect(textItem.scale)
+                            .scaleEffect(scale)
                             .fontWeight(.bold)
                             .foregroundStyle(textItem.color)
                             .multilineTextAlignment(.center)

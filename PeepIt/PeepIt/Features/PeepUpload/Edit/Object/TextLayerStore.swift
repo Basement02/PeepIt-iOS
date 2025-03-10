@@ -54,7 +54,15 @@ struct TextLayerStore {
         Reduce { state, action in
             switch action {
             case let .setInitialTextPosition(id, position):
-                return .send(.updateTextPosition(id: id, position: position))
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+                let textItem = state.textItems[idx]
+
+                return .concatenate(
+                    .send(.setTextSize(id: id, size: textItem.textSize)),
+                    .send(.updateTextPosition(id: id, position: position))
+                )
 
             case let .updateTextPosition(id, position):
                 guard let idx = state.textItems.firstIndex(
@@ -63,25 +71,23 @@ struct TextLayerStore {
 
                 state.textItems[idx].position = position
 
-//                guard let textSize = state.textSize[id] else { return .none }
-//
-//                let (w, h) = (textSize.width, textSize.height)
-//
-//                let textRect = CGRect(
-//                    x: position.x - w/2,
-//                    y: position.y - h/2,
-//                    width: w,
-//                    height: h
-//                )
-//
-//                if textRect.intersects(state.deleteRect) {
-//                    state.textInDeleteArea.insert(id)
-//                    state.isDeleteAreaActive = true
-//                } else {
-//                    state.textInDeleteArea.remove(id)
-//                    state.isDeleteAreaActive = false
-//                }
+                guard let textSize = state.textSize[id] else { return .none }
 
+                let (w, h) = (textSize.width, textSize.height)
+
+                let textRect = CGRect(
+                    x: position.x - w/2,
+                    y: position.y - h/2,
+                    width: w,
+                    height: h
+                )
+                if textRect.intersects(state.deleteRect) {
+                    state.textInDeleteArea.insert(id)
+                    state.isDeleteAreaActive = true
+                } else {
+                    state.textInDeleteArea.remove(id)
+                    state.isDeleteAreaActive = false
+                }
 
                 return .none
 
@@ -122,9 +128,11 @@ struct TextLayerStore {
                     where: { $0.id == id }
                 ) else { return .none }
 
-//                state.textItems[idx].textSize.width *= scale
-//                state.textItems[idx].textSize.height *= scale
-                
+                let newW = state.textItems[idx].textSize.width * scale
+                let newH = state.textItems[idx].textSize.height * scale
+
+                state.textSize[id] = .init(width: newW, height: newH)
+
                 return .none
             }
         }
