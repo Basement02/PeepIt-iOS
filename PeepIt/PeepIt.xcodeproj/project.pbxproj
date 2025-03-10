@@ -144,6 +144,7 @@
 		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
+		ABD639D72D7EE73A0062A60C /* NeworkEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD639D62D7EE7340062A60C /* NeworkEnvironment.swift */; };
 		ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
 		ABE581BB2CCA6F01003366DC /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */; };
@@ -165,6 +166,20 @@
 		ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF72EB02CBE5FD500629E9C /* TextItem.swift */; };
 		ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		ABD639D32D7EE5D30062A60C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXBuildRule section */
 
 /* Begin PBXFileReference section */
 		AB07781D2CE7307E00E4F226 /* EnterAuthCodeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterAuthCodeStore.swift; sourceTree = "<group>"; };
@@ -304,6 +319,7 @@
 		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
+		ABD639D62D7EE7340062A60C /* NeworkEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeworkEnvironment.swift; sourceTree = "<group>"; };
 		ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackImageLayer.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
 		ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
@@ -747,6 +763,7 @@
 				ABC305EF2C95A4BF003B00FE /* Models */,
 				ABC305E72C933EF3003B00FE /* Components */,
 				ABC305DA2C932514003B00FE /* Resources */,
+				ABD639D42D7EE7260062A60C /* Network */,
 				AB53DE4F2CA00FD100D8DC1F /* Utils */,
 				ABC305C92C932341003B00FE /* PeepItApp.swift */,
 			);
@@ -975,6 +992,22 @@
 			path = Chat;
 			sourceTree = "<group>";
 		};
+		ABD639D42D7EE7260062A60C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				ABD639D52D7EE7300062A60C /* Base */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		ABD639D52D7EE7300062A60C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				ABD639D62D7EE7340062A60C /* NeworkEnvironment.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		ABE3DB1C2CA976B30090243C /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1100,7 @@
 				ABC305C42C932341003B00FE /* Resources */,
 			);
 			buildRules = (
+				ABD639D32D7EE5D30062A60C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -1185,6 +1219,7 @@
 				AB468D162CA9401600C1E430 /* TownPeepsStore.swift in Sources */,
 				AB094DE32CC6266C0091E9FB /* SliderStore.swift in Sources */,
 				AB468D2B2CA94A2E00C1E430 /* ProfileModifyStore.swift in Sources */,
+				ABD639D72D7EE73A0062A60C /* NeworkEnvironment.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
 				AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */,
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
@@ -1415,6 +1450,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "https://basement02.site/api";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
@@ -1454,6 +1490,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BASE_URL = "https://basement02.site/api";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
