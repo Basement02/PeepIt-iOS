@@ -173,13 +173,13 @@ struct EditStore {
                 if let selectedTextId = state.selectedText?.id,
                    let index = state.textState.textItems.firstIndex(where: { $0.id == selectedTextId }) {
                     state.textState.textItems[index].text = state.inputText
-                    state.textState.textItems[index].scale = state.inputTextSize
+                    state.textState.textItems[index].fontSize = state.inputTextSize
                     state.textState.textItems[index].color = state.inputTextColor
                     state.textState.textItems[index].textHeight = state.currentTextHeight
                 } else {
                     let newText: TextItem = .init(
                         text: state.inputText,
-                        scale: state.inputTextSize,
+                        fontSize: state.inputTextSize,
                         color: state.inputTextColor,
                         textHeight: state.currentTextHeight
                     )
@@ -202,7 +202,7 @@ struct EditStore {
                     where: { $0.id == textId }
                 ) else { return .none }
 
-                state.texts[index].scale = scale
+                state.texts[index].fontSize = scale
                 state.editMode = .original
 
                 return .none
@@ -214,8 +214,8 @@ struct EditStore {
 
                 state.selectedText = text
                 state.inputText = text.text
-                state.inputTextSize = text.scale
-                state.sliderState.sliderValue = text.scale
+                state.inputTextSize = text.fontSize
+                state.sliderState.sliderValue = text.fontSize
                 state.inputTextColor = text.color
                 state.editMode = .textInputMode
                 state.currentTextHeight = text.textHeight

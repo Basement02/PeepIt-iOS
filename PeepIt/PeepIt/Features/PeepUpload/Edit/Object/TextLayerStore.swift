@@ -44,6 +44,10 @@ struct TextLayerStore {
         case textLongerTapEnded
         /// 텍스트 탭했을 때 -> 텍스트 수정 모드 진입
         case textTapped(textItem: TextItem)
+
+        case updateTextScale(id: UUID, scale: CGFloat)
+
+        case updateTextScaleEnded(id: UUID, scale: CGFloat)
     }
 
     var body: some Reducer<State, Action> {
@@ -59,24 +63,25 @@ struct TextLayerStore {
 
                 state.textItems[idx].position = position
 
-                guard let textSize = state.textSize[id] else { return .none }
+//                guard let textSize = state.textSize[id] else { return .none }
+//
+//                let (w, h) = (textSize.width, textSize.height)
+//
+//                let textRect = CGRect(
+//                    x: position.x - w/2,
+//                    y: position.y - h/2,
+//                    width: w,
+//                    height: h
+//                )
+//
+//                if textRect.intersects(state.deleteRect) {
+//                    state.textInDeleteArea.insert(id)
+//                    state.isDeleteAreaActive = true
+//                } else {
+//                    state.textInDeleteArea.remove(id)
+//                    state.isDeleteAreaActive = false
+//                }
 
-                let (w, h) = (textSize.width, textSize.height)
-
-                let textRect = CGRect(
-                    x: position.x - w/2,
-                    y: position.y - h/2,
-                    width: w,
-                    height: h
-                )
-
-                if textRect.intersects(state.deleteRect) {
-                    state.textInDeleteArea.insert(id)
-                    state.isDeleteAreaActive = true
-                } else {
-                    state.textInDeleteArea.remove(id)
-                    state.isDeleteAreaActive = false
-                }
 
                 return .none
 
@@ -101,6 +106,18 @@ struct TextLayerStore {
 
             case let .textTapped(textItem):
                 state.selectedTextId = textItem.id
+                return .none
+
+            case let .updateTextScale(id, scale):
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+
+                state.textItems[idx].scale = scale
+
+                return .none
+
+            case let .updateTextScaleEnded(id, scale):
                 return .none
             }
         }

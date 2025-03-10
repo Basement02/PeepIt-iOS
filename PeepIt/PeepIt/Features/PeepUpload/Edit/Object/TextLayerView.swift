@@ -16,16 +16,17 @@ struct TextLayerView: View {
             WithPerceptionTracking {
                 ForEach(store.textItems, id: \.id) { textItem in
                     WithPerceptionTracking {
-                        let scale = (
-                            store.textInDeleteArea.contains(textItem.id) ?
-                            textItem.scale * 0.6 : textItem.scale
-                        )
+//                        let scale = (
+//                            store.textInDeleteArea.contains(textItem.id) ?
+//                            textItem.fontSize * 0.6 : textItem.fontSize
+//                        )
 
                         Text(textItem.text)
                             .opacity(
                                 store.selectedTextId == textItem.id ? 0 : 1
                             )
-                            .font(.system(size: scale))
+                            .font(.system(size: textItem.fontSize))
+                            .scaleEffect(textItem.scale)
                             .fontWeight(.bold)
                             .foregroundStyle(textItem.color)
                             .multilineTextAlignment(.center)
@@ -54,6 +55,16 @@ struct TextLayerView: View {
                                     }
                                     .onEnded { _ in
                                         store.send(.textDragEnded(id: textItem.id))
+                                    }
+                            )
+                            /// 스티커 확대/축소 제스처
+                            .gesture(
+                                MagnificationGesture()
+                                    .onChanged { scale in
+                                        store.send(.updateTextScale(id: textItem.id, scale: scale))
+                                    }
+                                    .onEnded { scale in
+                                        store.send(.updateTextScaleEnded(id: textItem.id, scale: scale))
                                     }
                             )
                             /// 텍스트  롱탭 제스처
