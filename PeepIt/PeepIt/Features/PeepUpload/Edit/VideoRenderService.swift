@@ -226,7 +226,7 @@ final class VideoRenderService: VideoRenderServiceProtocol {
         to layer: CALayer,
         videoSize: CGSize
     ) {
-        let adjustedFontSize = text.scale * videoSize.height / (Constant.screenWidth * (16 / 9))
+        let adjustedFontSize = text.fontSize * videoSize.height / (Constant.screenWidth * (16 / 9))
 
         let attributedText = NSAttributedString(
             string: text.text,
@@ -238,7 +238,10 @@ final class VideoRenderService: VideoRenderServiceProtocol {
 
         // (1) 텍스트의 크기 계산
         let textSize = attributedText.boundingRect(
-            with: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude),
+            with: CGSize(
+                width: CGFloat.greatestFiniteMagnitude,
+                height: CGFloat.greatestFiniteMagnitude
+            ),
             options: [.usesLineFragmentOrigin, .usesFontLeading],
             context: nil
         ).size

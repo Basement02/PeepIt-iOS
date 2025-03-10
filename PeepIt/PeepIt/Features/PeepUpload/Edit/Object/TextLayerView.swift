@@ -25,21 +25,12 @@ struct TextLayerView: View {
                             .opacity(
                                 store.selectedTextId == textItem.id ? 0 : 1
                             )
-                            .font(.system(size: scale))
+                            .font(.system(size: textItem.fontSize))
+                            .scaleEffect(scale)
                             .fontWeight(.bold)
                             .foregroundStyle(textItem.color)
                             .multilineTextAlignment(.center)
                             .fixedSize()
-                            .background(
-                                GeometryReader { textGeo in
-                                    Color.clear
-                                        .onAppear {
-                                            store.send(
-                                                .setTextSize(id: textItem.id, size: textGeo.size)
-                                            )
-                                        }
-                                }
-                            )
                             .position(textItem.position)
                             /// 텍스트 드래그 제스처
                             .gesture(
@@ -56,6 +47,19 @@ struct TextLayerView: View {
                                         store.send(.textDragEnded(id: textItem.id))
                                     }
                             )
+                            /// 스티커 확대/축소 제스처
+                            .gesture(
+                                MagnificationGesture()
+                                    .onChanged { scale in
+                                        store.send(.updateTextScale(id: textItem.id, scale: scale))
+                                    }
+                                    .onEnded { scale in
+                                        store.send(.updateTextScaleEnded(id: textItem.id, scale: scale))
+                                    }
+                            )
+                            .onTapGesture {
+                                store.send(.textTapped(textItem: textItem))
+                            }
                             /// 텍스트  롱탭 제스처
                             .onLongPressGesture(
                                 minimumDuration: 1,
@@ -68,9 +72,6 @@ struct TextLayerView: View {
                                     }
                                 }
                             )
-                            .onTapGesture {
-                                store.send(.textTapped(textItem: textItem))
-                            }
                             .onAppear {
                                 if textItem.position == .zero {
                                     let initPosition = CGPoint(

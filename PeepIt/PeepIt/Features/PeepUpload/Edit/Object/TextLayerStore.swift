@@ -44,13 +44,25 @@ struct TextLayerStore {
         case textLongerTapEnded
         /// 텍스트 탭했을 때 -> 텍스트 수정 모드 진입
         case textTapped(textItem: TextItem)
+        /// 텍스트 줌 제스처 수행
+        case updateTextScale(id: UUID, scale: CGFloat)
+        /// 텍스트 줌 제스처 끝남
+        case updateTextScaleEnded(id: UUID, scale: CGFloat)
     }
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .setInitialTextPosition(id, position):
-                return .send(.updateTextPosition(id: id, position: position))
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+                let textItem = state.textItems[idx]
+
+                return .concatenate(
+                    .send(.setTextSize(id: id, size: textItem.textSize)),
+                    .send(.updateTextPosition(id: id, position: position))
+                )
 
             case let .updateTextPosition(id, position):
                 guard let idx = state.textItems.firstIndex(
@@ -69,7 +81,6 @@ struct TextLayerStore {
                     width: w,
                     height: h
                 )
-
                 if textRect.intersects(state.deleteRect) {
                     state.textInDeleteArea.insert(id)
                     state.isDeleteAreaActive = true
@@ -101,6 +112,27 @@ struct TextLayerStore {
 
             case let .textTapped(textItem):
                 state.selectedTextId = textItem.id
+                return .none
+
+            case let .updateTextScale(id, scale):
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+
+                state.textItems[idx].scale = scale
+
+                return .none
+
+            case let .updateTextScaleEnded(id, scale):
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+
+                let newW = state.textItems[idx].textSize.width * scale
+                let newH = state.textItems[idx].textSize.height * scale
+
+                state.textSize[id] = .init(width: newW, height: newH)
+
                 return .none
             }
         }

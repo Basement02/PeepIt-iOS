@@ -226,36 +226,29 @@ struct EditView: View {
 
             TextEditor(text: $store.inputText)
                 .focused($isFocused)
-                .frame(height: store.currentTextHeight)
+                .frame(height: store.currentTextSize.height)
                 .frame(minHeight: 34)
-                .frame(
-                    maxHeight: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
-                )
+                .frame(maxHeight: Constant.screenHeight - keyboardHeight - Constant.safeAreaTop - 66)
                 .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
-                .font(.system(size: store.inputTextSize, weight: .bold))
-                .foregroundStyle(store.inputTextColor)
+                .font(.system(size: store.currentTextItem?.fontSize ?? 28, weight: .bold))
+                .foregroundStyle(store.currentTextItem?.color ?? .white)
                 .tint(Color.coreLime)
                 .scrollContentBackground(.hidden)
                 .multilineTextAlignment(.center)
-                .background(
-                    GeometryReader { geo in
-                        Color.clear
-                            .onChange(of: store.inputText) { _ in
-                                DispatchQueue.main.async {
-                                    adjustTextEditorHeight()
-                                }
-                            }
-                            .onChange(of: store.inputTextSize) { _ in
-                                DispatchQueue.main.async {
-                                    adjustTextEditorHeight()
-                                }
-                            }
-                    }
-                )
-                .onAppear { isFocused = true }
                 .offset(x: store.inputText.isEmpty ? -30 : 0)
                 .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
+                .onAppear { isFocused = true }
+                .onChange(of: store.inputText) { _ in
+                    DispatchQueue.main.async {
+                        adjustTextEditorHeight()
+                    }
+                }
+                .onChange(of: store.currentTextItem?.fontSize) { _ in
+                    DispatchQueue.main.async {
+                        adjustTextEditorHeight()
+                    }
+                }
 
             HStack {
                 fontSlider
@@ -394,8 +387,15 @@ extension EditView {
         // 키보드가 올라와 있을 때만 실행함
         guard isFocused else { return }
 
-        let font = UIFont.systemFont(ofSize: store.inputTextSize, weight: .bold)
-        let maxHeight = CGFloat(Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22)
+        let font = UIFont.systemFont(
+            ofSize: store.currentTextItem?.fontSize ?? 24,
+            weight: .bold
+        )
+        let maxHeight = CGFloat(
+            Constant.screenHeight - 44
+            - keyboardHeight
+            - Constant.safeAreaTop - 22
+        )
         let minHeight = font.lineHeight
 
         /// 자동 줄바꿈 계산 위한 로직
@@ -411,12 +411,15 @@ extension EditView {
             )
 
         let lineCount = max(1, store.inputText.filter { $0 == "\n" }.count + 1)
-        let calculatedHeight =  max(font.lineHeight * CGFloat(lineCount), textSize.height) + 18
+        let calculatedHeight = max(font.lineHeight * CGFloat(lineCount), textSize.height) + 18
 
         let newHeight = min(max(minHeight, calculatedHeight), maxHeight)
 
-        if newHeight != store.currentTextHeight {
-            store.send(.changeEditTextHeight(height: newHeight))
+        if newHeight != store.currentTextSize.height {
+            store.send(.setTextSize(size: .init(
+                width: textSize.width,
+                height: newHeight))
+            )
         }
     }
 }

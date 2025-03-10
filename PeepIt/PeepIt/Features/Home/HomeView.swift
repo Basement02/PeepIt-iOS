@@ -45,13 +45,6 @@ struct HomeView: View {
                                         Text("3번")
                                             .foregroundStyle(Color.red)
                                     }
-
-                                    Button {
-                                        store.send(.peepTapped(idx: 5))
-                                    } label: {
-                                        Text("5번")
-                                            .foregroundStyle(Color.red)
-                                    }
                                 }
                             }
                             .offset(y: -200)
