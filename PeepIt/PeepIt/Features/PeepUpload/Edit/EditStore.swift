@@ -25,12 +25,8 @@ struct EditStore {
         var editMode = ViewEditMode.original
         /// 기존 텍스트가 선택되었을 때
         var selectedText: TextItem?
-        /// 현재 입력 중인 text size
-        var inputTextSize: CGFloat = 24
         /// 현재 입력 테스트
         var inputText = ""
-        /// 현재 입력 테스트 색
-        var inputTextColor: Color = .white
         /// 캡처 시 back image layer 숨기기 여부
         var isCapturing = false
         /// slider state 관련
@@ -41,8 +37,10 @@ struct EditStore {
         var isVideoPlaying = true
         /// 이미지인지 영상인지 체크
         var dataType = DataType.image
-
-        var currentTextHeight = CGFloat.zero
+        /// 현재 텍스트 사이즈
+        var currentTextSize: CGSize = .zero
+        /// 현재 선택된(편집 중인( 텍스트
+        var currentTextItem: TextItem? = nil
 
         /// 편집 모드 - 기본, 텍스트 입력 모드, 편집 모드(스티커, 텍스트 확대 및 드래그)
         enum ViewEditMode {
@@ -59,9 +57,7 @@ struct EditStore {
 
         /// 스티커 모달 관련
         @Presents var stickerModalState: StickerModalStore.State?
-
         var stickerState = StickerLayerStore.State()
-
         var textState = TextLayerStore.State()
     }
 
@@ -88,8 +84,6 @@ struct EditStore {
         case textInputCompleteButtonTapped
         /// 텍스트 확대/축소 스케일 업데이트
         case updateTextScale(textId: UUID, scale: CGFloat)
-        /// 텍스트 선택
-        case textFieldTapped(textId: UUID)
         /// 텍스트 색 선택
         case textColorTapped(newColor: Color)
         /// Slider action 관련
@@ -113,7 +107,7 @@ struct EditStore {
         /// 자식 뷰 - 텍스트 관련
         case textAction(TextLayerStore.Action)
         /// 편집 텍스트 크기 변경
-        case changeEditTextHeight(height: CGFloat)
+        case setTextSize(size: CGSize)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -154,7 +148,9 @@ struct EditStore {
 
             case .textButtonTapped:
                 state.editMode = .textInputMode
-                state.currentTextHeight = 30
+                state.currentTextSize = .init(width: 0, height: 30)
+                state.currentTextItem = .init()
+
                 return .none
 
             case .uploadButtonTapped:
@@ -170,30 +166,32 @@ struct EditStore {
                 return .send(.doneButtonTapped)
 
             case .textInputCompleteButtonTapped:
-                if let selectedTextId = state.selectedText?.id,
-                   let index = state.textState.textItems.firstIndex(where: { $0.id == selectedTextId }) {
-                    state.textState.textItems[index].text = state.inputText
-                    state.textState.textItems[index].fontSize = state.inputTextSize
-                    state.textState.textItems[index].color = state.inputTextColor
-                    state.textState.textItems[index].textHeight = state.currentTextHeight
+                if var selectedText = state.selectedText,
+                   let idx = state.textState.textItems.firstIndex(where: { $0.id == selectedText.id }) {
+
+                    selectedText = state.currentTextItem ?? TextItem()
+                    selectedText.text = state.inputText
+                    selectedText.textSize = state.currentTextSize
+                    state.textState.textItems[idx] = selectedText
+
                 } else {
                     let newText: TextItem = .init(
                         text: state.inputText,
-                        fontSize: state.inputTextSize,
-                        color: state.inputTextColor,
-                        textHeight: state.currentTextHeight
+                        fontSize: state.currentTextItem?.fontSize ?? 24,
+                        color: state.currentTextItem?.color ?? Color.white,
+                        textSize: state.currentTextSize
                     )
 
                     state.textState.textItems.append(newText)
                 }
 
-                state.inputText = ""
                 state.editMode = .original
+                state.inputText = ""
+                state.currentTextItem = nil
+                state.currentTextSize = .zero
                 state.selectedText = nil
-                state.inputTextSize = 24.0
-                state.inputTextColor = .white
-                state.sliderState.sliderValue = 24.0
                 state.textState.selectedTextId = nil
+                state.sliderState.sliderValue = CGFloat(24)
 
                 return .none
 
@@ -207,23 +205,8 @@ struct EditStore {
 
                 return .none
 
-            case let .textFieldTapped(textId):
-                guard let text = state.textState.textItems.first(
-                    where: { $0.id == textId }
-                ) else { return .none }
-
-                state.selectedText = text
-                state.inputText = text.text
-                state.inputTextSize = text.fontSize
-                state.sliderState.sliderValue = text.fontSize
-                state.inputTextColor = text.color
-                state.editMode = .textInputMode
-                state.currentTextHeight = text.textHeight
-
-                return .none
-
             case let .textColorTapped(newColor):
-                state.inputTextColor = newColor
+                state.currentTextItem?.color = newColor
                 return .none
 
             case .doneButtonTapped:
@@ -235,7 +218,9 @@ struct EditStore {
                 return .none
 
             case .sliderAction(.dragSlider):
-                state.inputTextSize = state.sliderState.sliderValue
+                let sliderValue = state.sliderState.sliderValue
+                state.currentTextItem?.fontSize = sliderValue
+
                 return .none
 
             case .onAppear:
@@ -301,10 +286,16 @@ struct EditStore {
 
             case let .textAction(.textTapped(textItem)):
                 state.selectedText = textItem
-                return .send(.textFieldTapped(textId: textItem.id))
+                state.currentTextItem = textItem
+                state.inputText = textItem.text
+                state.editMode = .textInputMode
+                state.currentTextSize = textItem.textSize
+                state.sliderState.sliderValue = textItem.fontSize
 
-            case let .changeEditTextHeight(height):
-                state.currentTextHeight = height
+                return .none
+
+            case let .setTextSize(size):
+                state.currentTextSize = size
                 return .none
 
             default:

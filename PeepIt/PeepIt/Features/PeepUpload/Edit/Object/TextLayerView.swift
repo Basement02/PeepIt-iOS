@@ -31,16 +31,6 @@ struct TextLayerView: View {
                             .foregroundStyle(textItem.color)
                             .multilineTextAlignment(.center)
                             .fixedSize()
-                            .background(
-                                GeometryReader { textGeo in
-                                    Color.clear
-                                        .onAppear {
-                                            store.send(
-                                                .setTextSize(id: textItem.id, size: textGeo.size)
-                                            )
-                                        }
-                                }
-                            )
                             .position(textItem.position)
                             /// 텍스트 드래그 제스처
                             .gesture(
@@ -67,6 +57,9 @@ struct TextLayerView: View {
                                         store.send(.updateTextScaleEnded(id: textItem.id, scale: scale))
                                     }
                             )
+                            .onTapGesture {
+                                store.send(.textTapped(textItem: textItem))
+                            }
                             /// 텍스트  롱탭 제스처
                             .onLongPressGesture(
                                 minimumDuration: 1,
@@ -79,9 +72,6 @@ struct TextLayerView: View {
                                     }
                                 }
                             )
-                            .onTapGesture {
-                                store.send(.textTapped(textItem: textItem))
-                            }
                             .onAppear {
                                 if textItem.position == .zero {
                                     let initPosition = CGPoint(

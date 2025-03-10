@@ -118,6 +118,13 @@ struct TextLayerStore {
                 return .none
 
             case let .updateTextScaleEnded(id, scale):
+                guard let idx = state.textItems.firstIndex(
+                    where: { $0.id == id }
+                ) else { return .none }
+
+//                state.textItems[idx].textSize.width *= scale
+//                state.textItems[idx].textSize.height *= scale
+                
                 return .none
             }
         }
