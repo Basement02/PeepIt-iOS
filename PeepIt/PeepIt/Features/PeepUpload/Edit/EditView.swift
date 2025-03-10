@@ -228,9 +228,7 @@ struct EditView: View {
                 .focused($isFocused)
                 .frame(height: store.currentTextSize.height)
                 .frame(minHeight: 34)
-                .frame(
-                    maxHeight: Constant.screenHeight - 44 - keyboardHeight - Constant.safeAreaTop - 22
-                )
+                .frame(maxHeight: Constant.screenHeight - keyboardHeight - Constant.safeAreaTop - 66)
                 .frame(width: Constant.screenWidth)
                 .fixedSize(horizontal: false, vertical: true)
                 .font(.system(size: store.currentTextItem?.fontSize ?? 28, weight: .bold))
@@ -238,24 +236,19 @@ struct EditView: View {
                 .tint(Color.coreLime)
                 .scrollContentBackground(.hidden)
                 .multilineTextAlignment(.center)
-                .background(
-                    GeometryReader { geo in
-                        Color.clear
-                            .onChange(of: store.inputText) { _ in
-                                DispatchQueue.main.async {
-                                    adjustTextEditorHeight()
-                                }
-                            }
-                            .onChange(of: store.currentTextItem?.fontSize) { _ in
-                                DispatchQueue.main.async {
-                                    adjustTextEditorHeight()
-                                }
-                            }
-                    }
-                )
-                .onAppear { isFocused = true }
                 .offset(x: store.inputText.isEmpty ? -30 : 0)
                 .simultaneousGesture(DragGesture().onChanged { _ in }) /// TextEditor 스크롤해도 키보드 닫히지 않도록
+                .onAppear { isFocused = true }
+                .onChange(of: store.inputText) { _ in
+                    DispatchQueue.main.async {
+                        adjustTextEditorHeight()
+                    }
+                }
+                .onChange(of: store.currentTextItem?.fontSize) { _ in
+                    DispatchQueue.main.async {
+                        adjustTextEditorHeight()
+                    }
+                }
 
             HStack {
                 fontSlider
