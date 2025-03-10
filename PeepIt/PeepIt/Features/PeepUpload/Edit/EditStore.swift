@@ -106,7 +106,7 @@ struct EditStore {
         case stickerAction(StickerLayerStore.Action)
         /// 자식 뷰 - 텍스트 관련
         case textAction(TextLayerStore.Action)
-        /// 편집 텍스트 크기 변경
+        /// 편집 중인 텍스트 크기 변경
         case setTextSize(size: CGSize)
     }
 

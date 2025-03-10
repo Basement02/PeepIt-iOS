@@ -44,9 +44,9 @@ struct TextLayerStore {
         case textLongerTapEnded
         /// 텍스트 탭했을 때 -> 텍스트 수정 모드 진입
         case textTapped(textItem: TextItem)
-
+        /// 텍스트 줌 제스처 수행
         case updateTextScale(id: UUID, scale: CGFloat)
-
+        /// 텍스트 줌 제스처 끝남
         case updateTextScaleEnded(id: UUID, scale: CGFloat)
     }
 
