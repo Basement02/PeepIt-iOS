@@ -22,8 +22,13 @@ struct PeepDetailView: View {
                             Color.clear.ignoresSafeArea()
                         }
 
+                        /// 페이징되는 요소들
                         TabView(selection: $store.currentIdx) {
-                            ForEach(store.peepList, id: \.self) { peep in
+                            ForEach(
+                                Array(
+                                    zip(store.peepList.indices,
+                                        store.peepList)
+                                ), id: \.0) { idx, peep in
                                 WithPerceptionTracking {
                                     ZStack {
                                         /// 뒷 배경 사진 레이아웃
@@ -48,7 +53,7 @@ struct PeepDetailView: View {
                                             .ignoresSafeArea()
                                         }
                                     }
-                                    .tag(peep.id)
+                                    .tag(idx)
                                 }
                             }
                         }
@@ -260,7 +265,7 @@ extension PeepDetailView {
                 if store.showReactionList {
                     reactionListView
                 } else {
-                    initialReactionView
+                    initialReactionView(peep: peep)
                 }
 
                 chattingButton
@@ -285,14 +290,13 @@ extension PeepDetailView {
         )
     }
 
-    @ViewBuilder
-    private var initialReactionView: some View {
-        if let selectedReaction = store.selectedReaction {
+    private func initialReactionView(peep: Peep) -> some View {
+        if let selectedReaction = peep.reaction {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.coreLimeOp)
                 .frame(width: 50, height: 50)
                 .overlay {
-                    Text(selectedReaction.rawValue)
+                    Text(selectedReaction)
                         .font(.system(size: 24))
                 }
                 .onTapGesture {
@@ -314,7 +318,7 @@ extension PeepDetailView {
 
     private var reactionListView: some View {
         ZStack {
-            BackdropBlurView(bgColor: .blur2, radius: 5.19)
+            BackdropBlurView(bgColor: .blur2, radius: 5)
                 .frame(width: 50, height: 250)
 
             VStack(spacing: 0) {
@@ -329,24 +333,24 @@ extension PeepDetailView {
                         if idx < store.reactionList.count - 1 {
                             Rectangle()
                                 .fill(Color.op)
-                                .frame(width: 33.9, height: 0.42)
+                                .frame(width: 34, height: 0.5)
                         }
                     }
                 }
             }
         }
-        .clipShape(RoundedRectangle(cornerRadius: 11.82))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
     @ViewBuilder
     private func reactionCell(
         reaction: PeepDetailStore.State.ReactionType
     ) -> some View{
-        if store.selectedReaction == reaction {
+        if store.peepList[store.currentIdx].reaction == reaction.rawValue {
             Button {
                 store.send(.selectReaction(reaction: reaction))
             } label: {
-                RoundedRectangle(cornerRadius: 11.82)
+                RoundedRectangle(cornerRadius: 12)
                     .fill(Color.coreLimeOp)
                     .frame(width: 50, height: 50)
                     .overlay {
@@ -356,9 +360,7 @@ extension PeepDetailView {
             }
         } else {
             Button {
-                store.send(
-                    .selectReaction(reaction: reaction)
-                )
+                store.send(.selectReaction(reaction: reaction))
             } label: {
                 Rectangle()
                     .frame(width: 50, height: 50)
@@ -366,9 +368,9 @@ extension PeepDetailView {
             }
             .buttonStyle(
                 PressableViewButtonStyle(
-                    normalView: RoundedRectangle(cornerRadius: 11.82)
+                    normalView: RoundedRectangle(cornerRadius: 12)
                         .fill(Color.clear).contentShape(Rectangle()),
-                    pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
+                    pressedView: RoundedRectangle(cornerRadius: 12).fill(Color.blur1)
                 )
             )
             .frame(width: 50, height: 50)
@@ -377,27 +379,6 @@ extension PeepDetailView {
             }
         }
     }
-
-    private func unselectedReactionCell(
-        reaction: PeepDetailStore.State.ReactionType
-    ) -> some View {
-        Button {
-        } label: {
-            Rectangle().hidden()
-        }
-        .buttonStyle(
-            PressableViewButtonStyle(
-                normalView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur2),
-                pressedView: RoundedRectangle(cornerRadius: 11.82).fill(Color.blur1)
-            )
-        )
-        .frame(width: 50, height: 50)
-        .overlay {
-            Text(reaction.rawValue)
-                .font(.system(size: 24))
-        }
-    }
-
 }
 
 #Preview {

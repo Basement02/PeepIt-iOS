@@ -20,8 +20,6 @@ struct PeepDetailStore {
         var currentIdx = 0
         /// 반응 리스트
         var reactionList = ReactionType.allCases
-        /// 선택된 반응
-        var selectedReaction: ReactionType?
         /// 반응 리스트 뷰에 보여주기 여부
         var showReactionList = false
         /// 더보기 메뉴 보여주기 여부
@@ -91,6 +89,8 @@ struct PeepDetailStore {
         case viewTapped
         /// 공유하기
         case shareButtonTapped
+        /// 리액션 설정
+        case setReaction
 
         /// 타이머
         case setTimer
@@ -119,13 +119,25 @@ struct PeepDetailStore {
             switch action {
 
             case .binding(\.currentIdx):
-                return .none
-                
+                return .concatenate(
+                    .send(.stopTimer),
+                    .send(.setReaction)
+                )
+
             case .binding(\.showShareSheet):
                 return .none
 
             case .onAppear:
-                return .send(.setTimer)
+                return .send(.setReaction)
+
+            case .setReaction:
+                guard let reactionStr = state.peepList[state.currentIdx].reaction else {
+                    state.peepList[state.currentIdx].reaction = nil
+                    return .send(.setTimer)
+                }
+
+                state.peepList[state.currentIdx].reaction = reactionStr
+                return .none
 
             case .initialReactionButtonTapped:
                 state.showReactionList = true
@@ -146,17 +158,19 @@ struct PeepDetailStore {
                 }
 
             case let .selectReaction(selectedReaction):
-                if state.selectedReaction == selectedReaction { return .send(.unselectReaction) }
-
-                state.selectedReaction = selectedReaction
                 state.showReactionList = false
 
-                return .send(.stopTimer)
+                guard let reactionStr = state.peepList[state.currentIdx].reaction,
+                      reactionStr == selectedReaction.rawValue else {
+                    state.peepList[state.currentIdx].reaction = selectedReaction.rawValue
+                    return .send(.stopTimer)
+                }
+
+                return .send(.unselectReaction)
 
             case .unselectReaction:
                 state.reactionList = PeepDetailStore.State.ReactionType.allCases
-                state.selectedReaction = nil
-                state.showReactionList = false
+                state.peepList[state.currentIdx].reaction = nil
                 return .send(.setTimer)
 
             case let .setShowingElseMenu(newState):
@@ -187,8 +201,8 @@ struct PeepDetailStore {
                 return .none
 
             case .setTimer:
-                guard state.selectedReaction == nil else { return .none }
-                
+                guard state.peepList[state.currentIdx].reaction == nil else { return .none }
+
                 return .run { send in
                     while true {
                         try await Task.sleep(for: .seconds(0.75))
