@@ -162,6 +162,7 @@ struct ChatView: View {
                 Spacer()
 
                 DismissButton {
+                    endTextEditing()
                     store.send(.closeChatButtonTapped)
                 }
             }
