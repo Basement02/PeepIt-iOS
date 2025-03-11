@@ -22,7 +22,7 @@ struct WithdrawModal: View {
     }
 
     private var slideBar: some View {
-        BackdropBlurView(bgColor: .base, radius: 1)
+        Color.base
             .frame(height: 64)
             .roundedCorner(20, corners: [.topLeft, .topRight])
             .overlay(alignment: .top) {
@@ -45,7 +45,7 @@ struct WithdrawModal: View {
     }
 
     private var content: some View {
-        BackdropBlurView(bgColor: .base, radius: 1)
+        Color.base
             .overlay {
                 ScrollView {
                     VStack(spacing: 50) {
