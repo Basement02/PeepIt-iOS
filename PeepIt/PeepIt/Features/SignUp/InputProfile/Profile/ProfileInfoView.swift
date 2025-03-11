@@ -54,6 +54,9 @@ struct ProfileInfoView: View {
                             store.send(.tfNotFocusing)
                         }
                     }
+                    .onChange(of: store.endEdit) { newValue in
+                        if newValue { isFocused = false }
+                    }
                 }
             }
         }
