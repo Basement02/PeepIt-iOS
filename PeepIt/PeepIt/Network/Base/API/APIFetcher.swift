@@ -31,9 +31,8 @@ final class APIFetcher {
                 return result
             }
 
-            if let errorCode = decodedResponse.error?.code,
-                let peepItError = PeepItError(rawValue: errorCode) {
-                throw peepItError
+            if let serverException = decodedResponse.error {
+                throw NetworkError.serverError(serverException)
             }
 
             throw NetworkError.unknown

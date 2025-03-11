@@ -13,4 +13,5 @@ enum NetworkError: Error {
     case invalidResponse
     case decodingFailed
     case unknown
+    case serverError(ExceptionDTO)
 }
