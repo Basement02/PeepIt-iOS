@@ -31,6 +31,7 @@
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
 		AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C52D77592000D0D7DD /* UploaderBubbleView.swift */; };
+		AB3704912D7FCDF700EBBC85 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = AB3704902D7FCDF700EBBC85 /* Alamofire */; };
 		AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D132CF2EF040065BD09 /* TagTab.swift */; };
 		AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D162CF2F7C10065BD09 /* ThumbnailProfile.swift */; };
 		AB416D1A2CF309750065BD09 /* ElseMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB416D192CF309750065BD09 /* ElseMenuView.swift */; };
@@ -349,6 +350,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABC305DD2C9328B1003B00FE /* ComposableArchitecture in Frameworks */,
+				AB3704912D7FCDF700EBBC85 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1107,6 +1109,7 @@
 			name = PeepIt;
 			packageProductDependencies = (
 				ABC305DC2C9328B1003B00FE /* ComposableArchitecture */,
+				AB3704902D7FCDF700EBBC85 /* Alamofire */,
 			);
 			productName = PeepIt;
 			productReference = ABC305C62C932341003B00FE /* PeepIt.app */;
@@ -1138,6 +1141,7 @@
 			mainGroup = ABC305BD2C932341003B00FE;
 			packageReferences = (
 				ABC305DB2C9328B1003B00FE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				AB37048F2D7FCDF700EBBC85 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = ABC305C72C932341003B00FE /* Products */;
 			projectDirPath = "";
@@ -1549,6 +1553,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		AB37048F2D7FCDF700EBBC85 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
 		ABC305DB2C9328B1003B00FE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
@@ -1560,6 +1572,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		AB3704902D7FCDF700EBBC85 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AB37048F2D7FCDF700EBBC85 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		ABC305DC2C9328B1003B00FE /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ABC305DB2C9328B1003B00FE /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
