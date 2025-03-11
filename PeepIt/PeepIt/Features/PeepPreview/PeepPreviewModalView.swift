@@ -72,11 +72,15 @@ struct PeepPreviewModalView: View {
     }
 
     private var peepScrollView: some View {
-        PeepPreviewCollectionView(peeps: store.peeps, scrollToIndex: $store.scrollToIdx) { idx, pos in
+        PeepPreviewCollectionView(
+            peeps: store.peeps,
+            scrollToIndex: $store.scrollToIdx
+        ) { idx, pos in
             store.send(
                 .peepCellTapped(idx: idx, position: pos)
             )
         }
+        .frame(height: 384)
         .background {
             if !store.showPeepDetail,
                let pos = store.selectedPosition,

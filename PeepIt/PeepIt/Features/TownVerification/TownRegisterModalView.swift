@@ -21,7 +21,7 @@ struct TownRegisterModalView: View {
                 VStack {
                     Spacer()
 
-                    BackdropBlurView(bgColor: .base, radius: 4)
+                    Color.base
                         .roundedCorner(20, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack(spacing: 0) {

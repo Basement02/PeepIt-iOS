@@ -28,6 +28,7 @@ struct ProfileInfoStore {
         var isMonthValid = true
         var isDayValid = true
         var isLengthValid = false
+        var endEdit = false
     }
 
     enum Action: BindableAction {
@@ -130,9 +131,12 @@ struct ProfileInfoStore {
                     }
 
                     state.isDayValid = true
+                    state.endEdit = true
 
                 default: // 8자 초과 방지
-                    guard date.count < 8 else {
+                    let originDate = state.date.replacingOccurrences(of: ".", with: "")
+
+                    guard originDate.count < 8 else {
                         state.date = String(state.date.prefix(8))
                         return .none
                     }
@@ -150,7 +154,7 @@ struct ProfileInfoStore {
                 let day = state.date.suffix(2)
 
                 state.date = "\(year).\(month).\(day)"
-                
+
                 return .none
 
             case .tfNotFocusing:
