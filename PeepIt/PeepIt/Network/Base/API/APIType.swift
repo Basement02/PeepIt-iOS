@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-protocol TargetType {
+protocol APIType {
     var baseURL: URL { get }
     var path: String { get }
     var method: HTTPMethod { get }
@@ -16,13 +16,13 @@ protocol TargetType {
     var header: HTTPHeaders? { get }
 }
 
-extension TargetType {
+extension APIType {
 
     var baseURL: URL {
-        return URL(string: NetworkEnvironment.baseURL)!
+        return URL(string: Environment.baseURL)!
     }
 
     var header: HTTPHeaders? {
-        return nil
+        return ["Authorization": "Bearer JWT_TOKEN"] // TODO: JWT 토큰 수정
     }
 }
