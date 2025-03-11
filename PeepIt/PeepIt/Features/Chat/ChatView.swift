@@ -57,16 +57,16 @@ struct ChatView: View {
                                 .padding(.bottom, 14)
 
                             chatList
-                                .padding(.bottom, keyboardHeight == 0 ? 21 : 0)
 
                             Rectangle()
                                 .frame(
                                     height: keyboardHeight > 0 ?
-                                    keyboardHeight + 18 : Constant.safeAreaBottom + 44
+                                    keyboardHeight - 18 : 0
                                 )
                                 .hidden()
+
+                            Spacer(minLength: 1)
                         }
-                        .ignoresSafeArea(.all, edges: .bottom)
 
                         VStack {
                             Spacer()
@@ -74,7 +74,7 @@ struct ChatView: View {
                             enterFieldView
                                 .padding(.bottom,
                                          keyboardHeight > 0 ?
-                                         keyboardHeight + 18 : Constant.safeAreaBottom
+                                         keyboardHeight + 16 : Constant.safeAreaBottom
                                 )
                         }
                         .ignoresSafeArea()
@@ -268,29 +268,35 @@ struct ChatView: View {
 
     private var chatList: some View {
         ScrollView {
-            VStack(spacing: 15) {
-                ForEach(store.chats, id: \.id) { chat in
-                    switch chat.type {
-                    case .mine:
-                        MyChatBubbleView(
-                            chat: chat,
-                            showMoreButtonTapped: { _ in
-                                endTextEditing()
-                                store.send(.showMoreButtonTapped(chat: chat))
-                            }
-                        )
-                    default:
-                        ChatBubbleView(
-                            chat: chat,
-                            showMoreButtonTapped: { _ in
-                                endTextEditing()
-                                store.send(.showMoreButtonTapped(chat: chat))
-                            }
-                        )
+            VStack(spacing: 0) {
+                ForEach(
+                    Array(zip(store.chats.indices, store.chats)),
+                    id: \.0
+                ) { idx, chat in
+                    Group {
+                        switch chat.type {
+                        case .mine:
+                            MyChatBubbleView(
+                                chat: chat,
+                                showMoreButtonTapped: { _ in
+                                    endTextEditing()
+                                    store.send(.showMoreButtonTapped(chat: chat))
+                                }
+                            )
+                        default:
+                            ChatBubbleView(
+                                chat: chat,
+                                showMoreButtonTapped: { _ in
+                                    endTextEditing()
+                                    store.send(.showMoreButtonTapped(chat: chat))
+                                }
+                            )
+                        }
                     }
+                    .padding(.bottom, idx == store.chats.count - 1 ? 65 : 15)
                 }
-
-            }        }
+            }
+        }
         .padding(.horizontal)
         .scrollIndicators(.never)
     }
