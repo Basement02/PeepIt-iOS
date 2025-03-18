@@ -17,8 +17,7 @@ struct MyProfileView: View {
 
                 PeepItNavigationBar(
                     leading: backButton,
-                    title: "@아이디",
-                    trailing: shareButton
+                    title: "@아이디"
                 )
 
                 ScrollView {
@@ -52,15 +51,7 @@ struct MyProfileView: View {
             store.send(.backButtonTapped)
         }
     }
-
-    private var shareButton: some View {
-        Button {
-            // TODO:
-        } label: {
-            Image("IconUpload")
-        }
-    }
-
+    
     private var profileView: some View {
         VStack(spacing: 26) {
             Image("ProfileSample")
