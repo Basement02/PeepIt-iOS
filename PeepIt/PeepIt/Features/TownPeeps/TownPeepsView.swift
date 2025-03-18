@@ -96,6 +96,38 @@ struct TownPeepsView: View {
         .frame(height: 0)
     }
 
+    private var emptyView: some View {
+        VStack(spacing: 20) {
+            Spacer()
+            
+            Text("새로운 소식이 없어요.")
+                .pretendard(.body04)
+                .foregroundStyle(Color.nonOp)
+
+            Button {
+                store.send(.uploadButtonTapped)
+            } label: {
+                Rectangle()
+                    .frame(width: 140, height: 42)
+                    .hidden()
+            }
+            .buttonStyle(
+                PressableViewButtonStyle(
+                    normalView: MiniBtn(
+                        title: "업로드하러 가기"
+                    ),
+                    pressedView: MiniBtn(
+                        title: "업로드하러 가기",
+                        bg: Color.gray900
+                    )
+                )
+            )
+
+            Spacer()
+        }
+        .frame(height: 480)
+    }
+
     private var scrollView: some View {
         ZStack(alignment: .top) {
             Rectangle()
@@ -126,23 +158,27 @@ struct TownPeepsView: View {
                 }
                 .padding(.bottom, 25)
 
-                LazyVGrid(
-                    columns: [GridItem(.flexible()), GridItem(.flexible())],
-                    alignment: .center,
-                    spacing: 8
-                ) {
-                    ForEach(0..<store.peeps.count, id: \.self) { idx in
-                        WithPerceptionTracking {
-                            ThumbnailPeep(peep: store.peeps[idx])
-                                .onTapGesture {
-                                    store.send(
-                                        .peepCellTapped(idx: idx, peeps: store.peeps)
-                                    )
-                                }
+                if store.peeps.isEmpty {
+                    emptyView
+                } else {
+                    LazyVGrid(
+                        columns: [GridItem(.flexible()), GridItem(.flexible())],
+                        alignment: .center,
+                        spacing: 8
+                    ) {
+                        ForEach(0..<store.peeps.count, id: \.self) { idx in
+                            WithPerceptionTracking {
+                                ThumbnailPeep(peep: store.peeps[idx])
+                                    .onTapGesture {
+                                        store.send(
+                                            .peepCellTapped(idx: idx, peeps: store.peeps)
+                                        )
+                                    }
+                            }
                         }
                     }
+                    .padding(.bottom, 11)
                 }
-                .padding(.bottom, 11)
             }
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
                 if newOffset >= 140 && !store.isRefreshing {
