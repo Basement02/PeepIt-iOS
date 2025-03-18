@@ -213,10 +213,12 @@ extension HomeView {
             store.send(.uploadButtonTapped)
         } label: {
             Image("PeepUploadSubtract")
+                .renderingMode(.template)
+                .foregroundStyle(Color.white)
                 .padding(.all, 13.3)
         }
         .frame(width: 56, height: 56)
-        .buttonStyle(PressableButtonStyle(colorStyle: .lime))
+        .buttonStyle(PressableButtonStyle(colorStyle: .base))
         .clipShape(Circle())
         .shadow(
             color: Color(hex: 0x202020, alpha: 0.15),
