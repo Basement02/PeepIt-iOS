@@ -29,30 +29,13 @@ struct HomeView: View {
                             .allowsHitTesting(false)
                             .ignoresSafeArea()
 
-                            // TODO: - 삭제 후 지도와 연결
-                            Group {
-                                HStack {
-                                    Button {
-                                        store.send(.peepTapped(idx: 0))
-                                    } label: {
-                                        Text("0번")
-                                            .foregroundStyle(Color.red)
-                                    }
-
-                                    Button {
-                                        store.send(.peepTapped(idx: 3))
-                                    } label: {
-                                        Text("3번")
-                                            .foregroundStyle(Color.red)
-                                    }
-                                }
-                            }
-                            .offset(y: -200)
-
                             if !store.showTownVeriModal {
-                                VStack {
+                                VStack(spacing: 0) {
                                     topBar
                                         .padding(.horizontal, 16)
+
+                                    searchThisMapButton
+                                        .padding(.top, 15)
 
                                     Spacer()
 
@@ -183,7 +166,31 @@ extension HomeView {
         .buttonStyle(PressableOpacityButtonStyle())
         .clipShape(RoundedRectangle(cornerRadius: 13))
     }
-    
+
+    private var searchThisMapButton: some View {
+        Button {
+
+        } label: {
+            HStack(spacing: 1) {
+                Image("IconSearchStar")
+                Text("이 동네에서 검색")
+                    .pretendard(.body04)
+                    .foregroundStyle(Color.base)
+            }
+            .padding(.leading, 15)
+            .padding(.trailing, 20)
+            .padding(.vertical, 8)
+        }
+        .buttonStyle(PressableButtonStyle(colorStyle: .white))
+        .clipShape(RoundedRectangle(cornerRadius: 100))
+        .shadow(
+            color: .base.opacity(0.15),
+            radius: 5,
+            x: 0,
+            y: 4
+        )
+    }
+
     private var currentLocationButton: some View {
         Button {
             // TODO:
