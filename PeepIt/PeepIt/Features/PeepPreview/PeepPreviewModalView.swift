@@ -28,15 +28,21 @@ struct PeepPreviewModalView: View {
                         .roundedCorner(20, corners: [.topLeft, .topRight])
                         .overlay {
                             VStack(spacing: 0) {
-                                scrollIndicator
-                                    .padding(.top, 10)
-
-                                if store.isSheetScrolledDown {
-                                    scrollUpLabel
-                                        .padding(.top, 15)
+                                if store.peeps.isEmpty {
+                                    emptyScrollLabel
+                                        .padding(.top, 30)
+                                    Spacer()
                                 } else {
-                                    peepScrollView
-                                        .padding(.top, 24)
+                                    scrollIndicator
+                                        .padding(.top, 10)
+
+                                    if store.isSheetScrolledDown {
+                                        scrollUpLabel
+                                            .padding(.top, 15)
+                                    } else {
+                                        peepScrollView
+                                            .padding(.top, 24)
+                                    }
                                 }
 
                                 Spacer()
@@ -48,14 +54,18 @@ struct PeepPreviewModalView: View {
                         .gesture(
                             DragGesture(minimumDistance: 60)
                                 .onChanged { value in
-                                    store.send(
-                                        .modalDragged(dragHeight: value.translation.height)
-                                    )
+                                    if store.peeps.count > 0 {
+                                        store.send(
+                                            .modalDragged(dragHeight: value.translation.height)
+                                        )
+                                    }
                                 }
                                 .onEnded { value in
-                                    store.send(
-                                        .modalDragEnded(dragHeight: value.translation.height)
-                                    )
+                                    if store.peeps.count > 0 {
+                                        store.send(
+                                            .modalDragEnded(dragHeight: value.translation.height)
+                                        )
+                                    }
                                 }
                         )
                 }
@@ -69,6 +79,17 @@ struct PeepPreviewModalView: View {
         RoundedRectangle(cornerRadius: 100)
             .fill(Color.gray600)
             .frame(width: 60, height: 5)
+    }
+
+    private var emptyScrollLabel: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 100)
+                .fill(Color.base)
+                .frame(width: 165, height: 36)
+
+            Text("아직 새로운 핍이 없어요")
+                .pretendard(.body04)
+        }
     }
 
     private var peepScrollView: some View {
