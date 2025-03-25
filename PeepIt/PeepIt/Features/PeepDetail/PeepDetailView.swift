@@ -70,7 +70,10 @@ struct PeepDetailView: View {
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
                     .onAppear { store.send(.onAppear) }
-                    .onTapGesture { store.send(.viewTapped) }
+                    .highPriorityGesture(
+                        TapGesture()
+                            .onEnded {store.send(.viewTapped) }
+                    )
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -299,9 +302,10 @@ extension PeepDetailView {
                     Text(selectedReaction)
                         .font(.system(size: 24))
                 }
-                .onTapGesture {
-                    store.send(.initialReactionButtonTapped)
-                }
+                .highPriorityGesture(
+                    TapGesture()
+                        .onEnded { store.send(.initialReactionButtonTapped) }
+                )
         } else {
             RoundedRectangle(cornerRadius: 12)
                 .fill(Color.blur2)
@@ -310,9 +314,10 @@ extension PeepDetailView {
                     Text(store.reactionList[store.showingReactionIdx].rawValue)
                         .font(.system(size: 24))
                 }
-                .onTapGesture {
-                    store.send(.initialReactionButtonTapped)
-                }
+                .highPriorityGesture(
+                    TapGesture()
+                        .onEnded { store.send(.initialReactionButtonTapped) }
+                )
         }
     }
 
@@ -348,7 +353,7 @@ extension PeepDetailView {
     ) -> some View{
         if store.peepList[store.currentIdx].reaction == reaction.rawValue {
             Button {
-                store.send(.selectReaction(reaction: reaction))
+
             } label: {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.coreLimeOp)
@@ -358,9 +363,13 @@ extension PeepDetailView {
                             .font(.system(size: 24))
                     }
             }
+            .highPriorityGesture(
+                TapGesture()
+                    .onEnded { store.send(.selectReaction(reaction: reaction)) }
+            )
         } else {
             Button {
-                store.send(.selectReaction(reaction: reaction))
+
             } label: {
                 Rectangle()
                     .frame(width: 50, height: 50)
@@ -377,6 +386,10 @@ extension PeepDetailView {
             .overlay {
                 Text(reaction.rawValue).font(.system(size: 24))
             }
+            .highPriorityGesture(
+                TapGesture()
+                    .onEnded { store.send(.selectReaction(reaction: reaction)) }
+            )
         }
     }
 }
