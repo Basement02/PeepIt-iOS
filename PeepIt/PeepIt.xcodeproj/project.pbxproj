@@ -72,6 +72,14 @@
 		AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB47D6E22D6B836100934A0F /* CameraServiceKey.swift */; };
 		AB4A28C72D3FCA9B007E8383 /* BackdropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */; };
 		AB4A28C92D3FD31A007E8383 /* HomeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */; };
+		AB4BEDDF2D926EF600CA3936 /* CommonPeepDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDDE2D926EF200CA3936 /* CommonPeepDto.swift */; };
+		AB4BEDE42D92717200CA3936 /* PeepAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */; };
+		AB4BEDE72D9277F100CA3936 /* PeepAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */; };
+		AB4BEDEB2D9278A000CA3936 /* PeepDetailRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDEA2D92789C00CA3936 /* PeepDetailRequestDto.swift */; };
+		AB4BEDED2D9279DF00CA3936 /* Encodable+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */; };
+		AB4BEDEF2D92880B00CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDEE2D92880300CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift */; };
+		AB4BEDF12D9288B900CA3936 /* PageRequestDtao.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDF02D9288B500CA3936 /* PageRequestDtao.swift */; };
+		AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */; };
 		AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
@@ -253,6 +261,14 @@
 		AB47D6E22D6B836100934A0F /* CameraServiceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraServiceKey.swift; sourceTree = "<group>"; };
 		AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackdropView.swift; sourceTree = "<group>"; };
 		AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapView.swift; sourceTree = "<group>"; };
+		AB4BEDDE2D926EF200CA3936 /* CommonPeepDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonPeepDto.swift; sourceTree = "<group>"; };
+		AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAPIClient.swift; sourceTree = "<group>"; };
+		AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAPI.swift; sourceTree = "<group>"; };
+		AB4BEDEA2D92789C00CA3936 /* PeepDetailRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailRequestDto.swift; sourceTree = "<group>"; };
+		AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extension.swift"; sourceTree = "<group>"; };
+		AB4BEDEE2D92880300CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonResponsePagedResponseCommonPeepDto.swift; sourceTree = "<group>"; };
+		AB4BEDF02D9288B500CA3936 /* PageRequestDtao.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageRequestDtao.swift; sourceTree = "<group>"; };
+		AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequest.swift; sourceTree = "<group>"; };
 		AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
@@ -399,6 +415,7 @@
 		AB094DE62CC76EB10091E9FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
 				AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */,
@@ -596,6 +613,60 @@
 				AB468D122CA93F7D00C1E430 /* SideMenuType.swift */,
 			);
 			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		AB4BEDDC2D926E9A00CA3936 /* Peep */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDDD2D926EDA00CA3936 /* Dto */,
+				AB4BEDE22D92716800CA3936 /* Client */,
+				AB4BEDE52D9277DB00CA3936 /* API */,
+			);
+			path = Peep;
+			sourceTree = "<group>";
+		};
+		AB4BEDDD2D926EDA00CA3936 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDE92D92789600CA3936 /* Request */,
+				AB4BEDE82D92789000CA3936 /* Response */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		AB4BEDE22D92716800CA3936 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		AB4BEDE52D9277DB00CA3936 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		AB4BEDE82D92789000CA3936 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDEE2D92880300CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift */,
+				AB4BEDDE2D926EF200CA3936 /* CommonPeepDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		AB4BEDE92D92789600CA3936 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */,
+				AB4BEDF02D9288B500CA3936 /* PageRequestDtao.swift */,
+				AB4BEDEA2D92789C00CA3936 /* PeepDetailRequestDto.swift */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 		AB5159772CA97C9C0043AA0A /* Constant */ = {
@@ -1038,6 +1109,7 @@
 			isa = PBXGroup;
 			children = (
 				ABD639D52D7EE7300062A60C /* Base */,
+				AB4BEDDC2D926E9A00CA3936 /* Peep */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1255,6 +1327,7 @@
 				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
 				AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */,
 				AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */,
+				AB4BEDE42D92717200CA3936 /* PeepAPIClient.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
 				ABA67D4E2D2AE9090018EC92 /* LoopingVideoPlayerView.swift in Sources */,
@@ -1274,6 +1347,7 @@
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
 				AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */,
+				AB4BEDEF2D92880B00CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
 				AB468D272CA943E500C1E430 /* CameraView.swift in Sources */,
@@ -1282,6 +1356,7 @@
 				AB416D1F2CF329590065BD09 /* MiniBtn.swift in Sources */,
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
+				AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
@@ -1325,6 +1400,7 @@
 				AB416D362CF5F4D20065BD09 /* BlockListView.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
+				AB4BEDEB2D9278A000CA3936 /* PeepDetailRequestDto.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
@@ -1346,6 +1422,7 @@
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
+				AB4BEDE72D9277F100CA3936 /* PeepAPI.swift in Sources */,
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
@@ -1353,8 +1430,10 @@
 				AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */,
 				AB416D222CF34B880065BD09 /* NotificationSettingView.swift in Sources */,
 				AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */,
+				AB4BEDF12D9288B900CA3936 /* PageRequestDtao.swift in Sources */,
 				ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */,
 				AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */,
+				AB4BEDED2D9279DF00CA3936 /* Encodable+Extension.swift in Sources */,
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB1E17B52D5392EA00653C74 /* KeyboardHeightDetector.swift in Sources */,
@@ -1367,6 +1446,7 @@
 				AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
 				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
+				AB4BEDDF2D926EF600CA3936 /* CommonPeepDto.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				AB4A28C92D3FD31A007E8383 /* HomeMapView.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
