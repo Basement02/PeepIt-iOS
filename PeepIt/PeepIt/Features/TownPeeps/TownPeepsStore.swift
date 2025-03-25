@@ -26,6 +26,7 @@ struct TownPeepsStore {
         case refreshEnded
         case onAppear
         case peepCellTapped(idx: Int, peeps: [Peep])
+        case uploadButtonTapped
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -34,8 +35,6 @@ struct TownPeepsStore {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                // TODO: - API 연결
-                state.peeps = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7]
                 return .none
 
             case .backButtonTapped:
@@ -60,10 +59,15 @@ struct TownPeepsStore {
                 }
                 
             case .refreshEnded:
+//                state.peeps = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7]
+
                 state.isRefreshing = false
                 return .none
 
             case .peepCellTapped:
+                return .none
+
+            case .uploadButtonTapped:
                 return .none
             }
         }

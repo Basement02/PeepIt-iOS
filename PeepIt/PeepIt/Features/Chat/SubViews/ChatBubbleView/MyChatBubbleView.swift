@@ -66,7 +66,7 @@ struct MyChatBubbleView: View {
             .frame(maxWidth: 225 + 14 * 2, alignment: .trailing)
             .onAppear { isTruncated = false }
             .gesture(
-                LongPressGesture(minimumDuration: 1.2)
+                LongPressGesture(minimumDuration: 0.4)
                     .onEnded { isPressed in
                         if isPressed { showMoreButtonTapped?(chat) }
                     }
