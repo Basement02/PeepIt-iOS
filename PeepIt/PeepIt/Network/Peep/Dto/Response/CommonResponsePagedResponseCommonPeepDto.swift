@@ -18,7 +18,14 @@ struct PagedResponsePeepDto: Decodable {
 
 extension PagedResponsePeepDto {
 
-    func toModel() -> [Peep] {
-        return content.map { $0.toModel() }
+    func toModel() -> PagedPeeps {
+        return .init(
+            content: content.map { $0.toModel() },
+            page: page,
+            size: size,
+            totalPages: totalPages,
+            totalElements: totalElements,
+            hasNext: hasNext
+        )
     }
 }
