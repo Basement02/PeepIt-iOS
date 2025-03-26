@@ -8,8 +8,11 @@
 import Foundation
 import ComposableArchitecture
 
+/// 핍 관련 API
 struct PeepAPIClient {
     var fetchUploadedPeeps: (Int, Int) async throws -> PagedPeeps
+    var fetchReactedPeeps: (Int, Int) async throws -> PagedPeeps
+    var fetchChattedPeeps: (Int, Int) async throws -> PagedPeeps
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -18,6 +21,18 @@ extension PeepAPIClient: DependencyKey {
         fetchUploadedPeeps: { page, size in
             let requestDto: PageRequestDto = .init(page: page, size: size)
             let requestAPI = PeepAPI.getMyUploadedPeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchReactedPeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getReactedPeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchChattedPeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getChattedPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
         }

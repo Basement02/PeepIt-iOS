@@ -129,18 +129,22 @@ struct MyProfileView: View {
             .background(Color.base)
 
         case .myActivity:
+            let cnt = switch store.myTabFilter {
+            case .all: store.allCnt
+            case .chat: store.chattedCnt
+            case .react: store.reactedCnt
+            }
+
             HStack(spacing: 5) {
                 ForEach(
                     MyProfileStore.State.MyActivityType.allCases,
                     id: \.self
                 ) { tab in
                     TagTab(
-                        title: "\(tab.rawValue) \(store.activityPeeps.count)",
+                        title: "\(tab.rawValue) \(cnt)",
                         isSelected: tab == store.myTabFilter
                     )
-                    .onTapGesture {
-                        store.send(.myTabTapped(selection: tab))
-                    }
+                    .onTapGesture { store.send(.myTabTapped(selection: tab)) }
                 }
 
                 Spacer()
@@ -218,9 +222,7 @@ struct MyProfileView: View {
                                 uploadButtonThumbnail
                             } else {
                                 ThumbnailProfile(peep: store.uploadedPeeps[idx-1])
-                                    .onTapGesture {
-                                        store.send(.peepCellTapped(peep: store.uploadedPeeps[idx-1]))
-                                    }
+                                    .onTapGesture {  store.send(.peepCellTapped(peep: store.uploadedPeeps[idx-1])) }
                                     .onAppear { /// 페이지네이션
                                         if store.uploadedPeepHasNext &&
                                             idx == store.uploadedPeeps.count - 4 {
@@ -270,12 +272,18 @@ struct MyProfileView: View {
                 ) {
                     Section(header: header) {
                         ForEach(
-                            store.activityPeeps,
+                            0..<store.activityPeeps.count,
                             id: \.self
-                        ) { peep in
+                        ) { idx in
+                            let peep = store.activityPeeps[idx]
+                            
                             ThumbnailProfile(peep: peep)
-                                .onTapGesture {
-                                    store.send(.peepCellTapped(peep: peep))
+                                .onTapGesture { store.send(.peepCellTapped(peep: peep)) }
+                                .onAppear { /// 페이지네이션
+                                    if store.activityPeepHasNext &&
+                                        idx == store.activityPeeps.count - 4 {
+                                        store.send(.fetchMoreActivityPeeps)
+                                    }
                                 }
                         }
                         .padding(.bottom, spacing)
