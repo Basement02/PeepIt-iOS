@@ -18,7 +18,7 @@ final class APIFetcher {
         let request = createDataRequest(for: api)
         let response = await request.serializingData().response
 
-        guard let httpResponse = response.response,
+        guard let _ = response.response,
               let data = response.data else {
             throw NetworkError.noResponse
         }
@@ -37,7 +37,7 @@ final class APIFetcher {
 
             throw NetworkError.unknown
 
-        } catch let decodingError as DecodingError {
+        } catch _ as DecodingError {
             throw NetworkError.decodingFailed
         } catch {
             throw error
