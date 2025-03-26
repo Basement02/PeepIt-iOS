@@ -13,6 +13,7 @@ struct PeepAPIClient {
     var fetchUploadedPeeps: (Int, Int) async throws -> PagedPeeps
     var fetchReactedPeeps: (Int, Int) async throws -> PagedPeeps
     var fetchChattedPeeps: (Int, Int) async throws -> PagedPeeps
+    var fetchUserActivePeeps: (Int, Int) async throws -> PagedPeeps
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -33,6 +34,12 @@ extension PeepAPIClient: DependencyKey {
         fetchChattedPeeps: { page, size in
             let requestDto: PageRequestDto = .init(page: page, size: size)
             let requestAPI = PeepAPI.getChattedPeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchUserActivePeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getActivePeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
         }

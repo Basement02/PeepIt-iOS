@@ -63,10 +63,15 @@ struct NotificationView: View {
         if store.activePeeps.count > 0 {
             ScrollView(.horizontal) {
                 HStack {
-                    ForEach(store.activePeeps, id: \.self) { peep in
+                    ForEach(0..<store.activePeeps.count, id: \.self) { idx in
+                        let peep = store.activePeeps[idx]
+
                         ThumbnailAlarm(peep: peep)
-                            .onTapGesture {
-                                store.send(.activePeepCellTapped(selectedPeep: peep))
+                            .onTapGesture { store.send(.activePeepCellTapped(selectedPeep: peep)) }
+                            .onAppear {
+                                if store.hasNext && idx == store.activePeeps.count - 4 {
+                                    store.send(.fetchActivePeeps)
+                                }
                             }
                     }
                 }
