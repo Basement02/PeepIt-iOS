@@ -221,6 +221,12 @@ struct MyProfileView: View {
                                     .onTapGesture {
                                         store.send(.peepCellTapped(peep: store.uploadedPeeps[idx-1]))
                                     }
+                                    .onAppear { /// 페이지네이션
+                                        if store.uploadedPeepHasNext &&
+                                            idx == store.uploadedPeeps.count - 4 {
+                                            store.send(.fetchUploadedPeeps)
+                                        }
+                                    }
                             }
                         }
                         .padding(.bottom, spacing)

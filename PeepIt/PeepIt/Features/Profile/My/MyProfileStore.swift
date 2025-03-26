@@ -16,9 +16,6 @@ struct MyProfileStore {
         /// 나의 핍, 나의 활동 탭 선택
         var peepTabSelection = PeepTabType.uploaded
 
-        /// 업로드한 핍들
-        var uploadedPeeps: [Peep] = []
-
         /// 나의 활동 핍들
         var activityPeeps: [Peep] = []
 
@@ -30,6 +27,14 @@ struct MyProfileStore {
             case chat = "참여한 핍"
             case react = "반응한 핍"
         }
+
+        /// 업로드한 핍 관리
+        var uploadedPeeps: [Peep] = []
+        var uploadedPeepPage = 0
+        var uploadedPeepHasNext = true
+
+        /// 핍 페이지네이션 사이즈
+        var size = 15
     }
 
     enum Action {
@@ -43,9 +48,9 @@ struct MyProfileStore {
         case watchButtonTapped
         case peepCellTapped(peep: Peep)
 
-        /// api
-        case fetchUploadedPeeps(page: Int, size: Int)
-        case fetchUploadedPeepsResponse(Result<[Peep], Error>)
+        /// 사용자가 업로드한 핍 조회 API
+        case fetchUploadedPeeps
+        case fetchUploadedPeepsResponse(Result<PagedPeeps, Error>)
     }
 
     @Dependency(\.peepAPIClient) var peepAPIClient
@@ -56,7 +61,9 @@ struct MyProfileStore {
             switch action {
 
             case .onAppear:
-                return .send(.fetchUploadedPeeps(page: 0, size: 10))
+                state.uploadedPeepPage = 0
+                state.uploadedPeepHasNext = true
+                return .send(.fetchUploadedPeeps)
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
@@ -69,7 +76,10 @@ struct MyProfileStore {
 
                 switch selection {
                 case .uploaded:
-                    return .none
+                    state.uploadedPeepPage = 0
+                    state.uploadedPeepHasNext = true
+                    state.uploadedPeeps = .init()
+                    return .send(.fetchUploadedPeeps)
                 case .myActivity:
                     return .send(.loadActivityPeeps)
                 }
@@ -95,7 +105,10 @@ struct MyProfileStore {
             case .peepCellTapped:
                 return .none
 
-            case let .fetchUploadedPeeps(page, size):
+            case .fetchUploadedPeeps:
+                let page = state.uploadedPeepPage
+                let size = state.size
+
                 return .run { send in
                     await send(
                         .fetchUploadedPeepsResponse(
@@ -107,8 +120,10 @@ struct MyProfileStore {
             case let .fetchUploadedPeepsResponse(result):
                 switch result {
 
-                case let .success(peeps):
-                    state.uploadedPeeps = peeps
+                case let .success(pagedPeeps):
+                    state.uploadedPeeps.append(contentsOf: pagedPeeps.content)
+                    state.uploadedPeepHasNext = pagedPeeps.hasNext
+                    state.uploadedPeepPage += 1
                     return .none
 
                 case .failure:

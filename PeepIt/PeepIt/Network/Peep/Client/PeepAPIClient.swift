@@ -9,8 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct PeepAPIClient {
-    var fetchUploadedPeeps: (Int, Int) async throws -> [Peep]
-    var fetchTownPeeps: (Int, Int) async throws -> [Peep]
+    var fetchUploadedPeeps: (Int, Int) async throws -> PagedPeeps
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -19,12 +18,6 @@ extension PeepAPIClient: DependencyKey {
         fetchUploadedPeeps: { page, size in
             let requestDto: PageRequestDto = .init(page: page, size: size)
             let requestAPI = PeepAPI.getMyUploadedPeeps(requestDto)
-            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
-            return response.toModel()
-        },
-        fetchTownPeeps: { page, size in
-            let requestDto: PageRequestDto = .init(page: page, size: size)
-            let requestAPI = PeepAPI.getRecentTownPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
         }
