@@ -63,7 +63,7 @@ extension PeepAPI: APIType {
             let .getActivePeeps(requestDto),
             let .getRecentTownPeeps(requestDto),
             let .getHotPeeps(requestDto):
-            return .requestJSONEncodable(body: requestDto)
+            return .requestParameters(parameters: requestDto.toDictionary())
 
         case let .getOtherPeeps(requestDto):
             return .requestJSONEncodable(body: requestDto)

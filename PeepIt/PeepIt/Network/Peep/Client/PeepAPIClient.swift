@@ -9,16 +9,24 @@ import Foundation
 import ComposableArchitecture
 
 struct PeepAPIClient {
-    var fetchPeepDetail: (Int) async throws -> CommonPeepDto
+    var fetchUploadedPeeps: (Int, Int) async throws -> [Peep]
+    var fetchTownPeeps: (Int, Int) async throws -> [Peep]
 }
 
 extension PeepAPIClient: DependencyKey {
 
     static let liveValue: PeepAPIClient = PeepAPIClient(
-        fetchPeepDetail: { peepId in
-            let requestDto = PeepDetailRequestDto(peepId: peepId)
-            let requestAPI = PeepAPI.getPeepDetail(requestDto)
-            return try await APIFetcher.shared.fetch(of: requestAPI)
+        fetchUploadedPeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getMyUploadedPeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchTownPeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getRecentTownPeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
         }
     )
 }
