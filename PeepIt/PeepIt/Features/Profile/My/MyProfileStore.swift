@@ -38,13 +38,17 @@ struct MyProfileStore {
         case modifyButtonTapped
         case peepTabTapped(selection: PeepTabType)
         case myTabTapped(selection: MyProfileStore.State.MyActivityType)
-        case loadUploadedPeeps
         case loadActivityPeeps
         case uploadButtonTapped
         case watchButtonTapped
         case peepCellTapped(peep: Peep)
+
+        /// api
+        case fetchUploadedPeeps(page: Int, size: Int)
+        case fetchUploadedPeepsResponse(Result<[Peep], Error>)
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action>  {
@@ -52,7 +56,7 @@ struct MyProfileStore {
             switch action {
 
             case .onAppear:
-                return .send(.loadUploadedPeeps)
+                return .send(.fetchUploadedPeeps(page: 0, size: 10))
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
@@ -65,7 +69,7 @@ struct MyProfileStore {
 
                 switch selection {
                 case .uploaded:
-                    return .send(.loadUploadedPeeps)
+                    return .none
                 case .myActivity:
                     return .send(.loadActivityPeeps)
                 }
@@ -73,13 +77,6 @@ struct MyProfileStore {
             case let .myTabTapped(selection):
                 state.myTabFilter = selection
                 
-                return .none
-
-            case .loadUploadedPeeps:
-                let random = Bool.random()
-                if random {
-                    state.uploadedPeeps = [.stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7, .stubPeep8, .stubPeep9, .stubPeep10, .stubPeep11]
-                }
                 return .none
 
             case .loadActivityPeeps:
@@ -97,6 +94,27 @@ struct MyProfileStore {
 
             case .peepCellTapped:
                 return .none
+
+            case let .fetchUploadedPeeps(page, size):
+                return .run { send in
+                    await send(
+                        .fetchUploadedPeepsResponse(
+                            Result { try await peepAPIClient.fetchUploadedPeeps(page, size) }
+                        )
+                    )
+                }
+
+            case let .fetchUploadedPeepsResponse(result):
+                switch result {
+
+                case let .success(peeps):
+                    state.uploadedPeeps = peeps
+                    return .none
+
+                case .failure:
+                    // TODO: 에러 처리
+                    return .none
+                }
             }
         }
     }
