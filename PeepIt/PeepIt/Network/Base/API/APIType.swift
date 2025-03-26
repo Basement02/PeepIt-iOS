@@ -23,6 +23,6 @@ extension APIType {
     }
 
     var header: HTTPHeaders? {
-        return ["Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJzYW1wbGVfdXNlcnVzZXJ1c2VyIiwicm9sZSI6IlVOQ0VSVCIsImlzcyI6Imh0dHBzOi8vYXV0aC5wZWVwaXQuY29tIiwiaWF0IjoxNzQyODg5OTM1LCJleHAiOjE3NDU0ODE5MzV9.gPrFBI3EfnaPED6rsZHNM2vCQSD8dDg9pQ5tjJZAXuc"] // TODO: JWT 토큰 수정
+        return ["Authorization": ""] // TODO: JWT 토큰 수정
     }
 }
