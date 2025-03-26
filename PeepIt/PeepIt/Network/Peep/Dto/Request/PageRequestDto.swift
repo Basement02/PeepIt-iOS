@@ -8,12 +8,12 @@
 import Foundation
 
 struct PageRequestDto: Encodable {
-    let page: Int = 0
-    let size: Int = 10
+    var page: Int = 0
+    var size: Int = 10
 }
 
 struct PageAndIdRequestDto: Encodable {
-    let memberId: String
-    let page: Int = 0
-    let size: Int = 10
+    var memberId: String
+    var page: Int = 0
+    var size: Int = 10
 }
