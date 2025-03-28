@@ -81,6 +81,10 @@
 		AB4BEDF12D9288B900CA3936 /* PageRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDF02D9288B500CA3936 /* PageRequestDto.swift */; };
 		AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */; };
 		AB4BEDF52D93C1B500CA3936 /* PagedPeeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */; };
+		AB4BEDFD2D967FB600CA3936 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDFC2D967FB200CA3936 /* AuthAPI.swift */; };
+		AB4BEE002D967FDA00CA3936 /* CheckPhoneRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */; };
+		AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */; };
+		AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */; };
 		AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
@@ -271,6 +275,10 @@
 		AB4BEDF02D9288B500CA3936 /* PageRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageRequestDto.swift; sourceTree = "<group>"; };
 		AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequest.swift; sourceTree = "<group>"; };
 		AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedPeeps.swift; sourceTree = "<group>"; };
+		AB4BEDFC2D967FB200CA3936 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPhoneRequestDto.swift; sourceTree = "<group>"; };
+		AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdCheckRequestDto.swift; sourceTree = "<group>"; };
+		AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPIClient.swift; sourceTree = "<group>"; };
 		AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
@@ -669,6 +677,49 @@
 				AB4BEDEA2D92789C00CA3936 /* PeepDetailRequestDto.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		AB4BEDF62D967F8900CA3936 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDF92D967F9C00CA3936 /* Dto */,
+				AB4BEDFA2D967FA000CA3936 /* Client */,
+				AB4BEDFB2D967FAA00CA3936 /* API */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		AB4BEDF92D967F9C00CA3936 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDFE2D967FD400CA3936 /* Reqeust */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		AB4BEDFA2D967FA000CA3936 /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */,
+			);
+			path = Client;
+			sourceTree = "<group>";
+		};
+		AB4BEDFB2D967FAA00CA3936 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEDFC2D967FB200CA3936 /* AuthAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		AB4BEDFE2D967FD400CA3936 /* Reqeust */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */,
+				AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */,
+			);
+			path = Reqeust;
 			sourceTree = "<group>";
 		};
 		AB5159772CA97C9C0043AA0A /* Constant */ = {
@@ -1112,6 +1163,7 @@
 			isa = PBXGroup;
 			children = (
 				ABD639D52D7EE7300062A60C /* Base */,
+				AB4BEDF62D967F8900CA3936 /* Auth */,
 				AB4BEDDC2D926E9A00CA3936 /* Peep */,
 			);
 			path = Network;
@@ -1311,6 +1363,7 @@
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
 				AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */,
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
+				AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */,
 				AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */,
@@ -1351,6 +1404,7 @@
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
 				AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */,
+				AB4BEE002D967FDA00CA3936 /* CheckPhoneRequestDto.swift in Sources */,
 				AB4BEDEF2D92880B00CA3936 /* CommonResponsePagedResponseCommonPeepDto.swift in Sources */,
 				AB468D182CA9403700C1E430 /* TownPeepsView.swift in Sources */,
 				ABD3CAA32CA08D4C00438747 /* MyProfileView.swift in Sources */,
@@ -1365,6 +1419,7 @@
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
+				AB4BEDFD2D967FB600CA3936 /* AuthAPI.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */,
@@ -1422,6 +1477,7 @@
 				AB3704A02D7FFE3900EBBC85 /* BaseResponse.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
+				AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
