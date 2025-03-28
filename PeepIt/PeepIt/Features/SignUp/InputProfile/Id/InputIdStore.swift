@@ -70,8 +70,15 @@ struct InputIdStore {
         case backButtonTapped
         /// 하위뷰 액션 연결
         case enterFieldAction(CheckEnterFieldStore.Action)
+        /// 가이드라인 메세지 & 입력 상태 세팅
+        case setEnterField
+
+        /// id 중복 체크 api
+        case checkIdDuplication(id: String)
+        case fetchIdCheckResult(Result<Void, Error>)
     }
 
+    @Dependency(\.authAPIClient) var authAPIClient
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
@@ -92,33 +99,57 @@ struct InputIdStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
-            case .enterFieldAction(.binding(\.text)):
-                let text = state.enterFieldState.text
+            case let .enterFieldAction(.debouncedText(newText)):
                 let regex = try! NSRegularExpression(pattern: "^[A-Za-z0-9._]+$")
-                let range = NSRange(location: 0, length: state.enterFieldState.text.utf16.count)
-                let isFormatValid = regex.firstMatch(in: state.enterFieldState.text, options: [], range: range) != nil
+                let range = NSRange(location: 0, length: newText.utf16.count)
+                let isFormatValid = regex.firstMatch(in: newText, options: [], range: range) != nil
 
-
-                if text.count == 0 {
+                if newText.count == 0 {
                     state.idValidation = .empty
                 } else if !isFormatValid {
                     state.idValidation = .wrongWord
-                } else if text.count < 10 {
+                } else if newText.count < 10 {
                     state.idValidation = .minCount
-                } else if text.count > 20 {
+                } else if newText.count >= 10 && newText.count <= 20 {
+                    return .send(.checkIdDuplication(id: newText))
+                } else if newText.count > 20 {
                     state.idValidation = .maxCount
-                } else {
-                    // TODO: 중복 조건 추가
-                    state.idValidation = .validated
                 }
 
+                return .send(.setEnterField)
+
+            case let .checkIdDuplication(newText):
+                return .run { send in
+                    await send(
+                        .fetchIdCheckResult(
+                            Result { try await authAPIClient.checkIdDuplicate(newText) }
+                        )
+                    )
+                }
+
+            case let .fetchIdCheckResult(result):
+                switch result {
+                
+                case .success:
+                    state.idValidation = .validated
+
+                case let .failure(error):
+                    guard
+                        let networkError = error as? NetworkError,
+                        case let .serverError(exception) = networkError,
+                        let errorCase = PeepItError(rawValue: exception.code)
+                    else { return .none }
+
+                    if errorCase == .duplicateId { state.idValidation = .duplicated }
+                }
+
+                return .send(.setEnterField)
+
+            case .setEnterField:
                 state.enterFieldState.enterState = state.idValidation.enterState
                 state.enterFieldState.message = state.idValidation.message
-
                 return .none
 
             default:
@@ -127,4 +158,3 @@ struct InputIdStore {
         }
     }
 }
-

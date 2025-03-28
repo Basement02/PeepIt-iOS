@@ -30,3 +30,5 @@ struct BaseResponse<T: Decodable>: Decodable {
         error = (try? container.decode(ExceptionDTO.self, forKey: .error)) ?? nil
     }
 }
+
+struct EmptyDecodable: Decodable {}

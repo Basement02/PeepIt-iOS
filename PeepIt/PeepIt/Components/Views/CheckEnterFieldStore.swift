@@ -71,14 +71,34 @@ struct CheckEnterFieldStore {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        case debouncedText(newText: String)
     }
-    
+
+    enum ID: Hashable {
+        case debounce
+    }
+
     var body: some Reducer<State, Action> {
         BindingReducer()
+            .onChange(of: \.text) { oldValue, newValue in
+                Reduce { state, action in
+                    return .run(operation: { send in
+                        await send(.debouncedText(newText: newValue))
+                    })
+                    .debounce(
+                        id: ID.debounce,
+                        for: 0.5,
+                        scheduler: DispatchQueue.main
+                    )
+                }
+            }
 
         Reduce { state, action in
             switch action {
             case .binding(\.text):
+                return .none
+
+            case .debouncedText:
                 return .none
 
             default:
