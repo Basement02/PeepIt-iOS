@@ -40,8 +40,13 @@ struct AuthenticationStore {
         case skipButtonTapped
         case nextButtonTapped
         case backButtonTapped
+
+        /// 전화번호 중복체크 api
+        case checkPhoneNumberDuplicated
+        case fetchPhoneNumberCheckResponse(Result<Void, Error>)
     }
 
+    @Dependency(\.authAPIClient) var authAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
@@ -50,7 +55,7 @@ struct AuthenticationStore {
         Reduce { state, action in
             switch action {
             case .binding(\.phoneNumber):
-                state.phoneNumberValid = isValidPhoneNumber(of: state.phoneNumber)
+
                 return .none
                 
             case .skipButtonTapped:
@@ -61,9 +66,22 @@ struct AuthenticationStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
+                return .run { _ in await self.dismiss() }
+
+            case .checkPhoneNumberDuplicated:
+                let phoneNumber = state.phoneNumber
+
+                return .run { send in
+                    await send(
+                        .fetchPhoneNumberCheckResponse(
+                            Result { try await authAPIClient.checkPhoneDuplicated(phoneNumber) }
+                        )
+                    )
                 }
+
+            case let .fetchPhoneNumberCheckResponse(result):
+                print(result)
+                return .none
 
             default:
                 return .none

@@ -10,13 +10,19 @@ import ComposableArchitecture
 
 /// 인증 관련 API
 struct AuthAPIClient {
-    var checkIdDuplicate: (String) async throws -> ()
+    var checkPhoneDuplicated: (String) async throws -> ()
+    var checkIdDuplicated: (String) async throws -> ()
 }
 
 extension AuthAPIClient: DependencyKey {
 
     static let liveValue: AuthAPIClient = AuthAPIClient(
-        checkIdDuplicate: { id in
+        checkPhoneDuplicated: { phoneNumber in
+            let requestDto: PhoneCheckRequestDto = .init(phone: phoneNumber)
+            let requestAPI = AuthAPI.getPhoneCheckResult(requestDto)
+            let response: EmptyDecodable =  try await APIFetcher.shared.fetch(of: requestAPI)
+        },
+        checkIdDuplicated: { id in
             let requestDto: IdCheckRequestDto = .init(id: id)
             let requestAPI = AuthAPI.getIdCheckResult(requestDto)
             let response: EmptyDecodable =  try await APIFetcher.shared.fetch(of: requestAPI)
