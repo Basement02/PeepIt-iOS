@@ -124,7 +124,7 @@ struct InputIdStore {
                 return .run { send in
                     await send(
                         .fetchIdCheckResult(
-                            Result { try await authAPIClient.checkIdDuplicate(newText) }
+                            Result { try await authAPIClient.checkIdDuplicated(newText) }
                         )
                     )
                 }
