@@ -24,7 +24,7 @@ struct PopUpBView: View {
                         Text(title)
                             .pretendard(.title03)
 
-                        Text(description)
+                        Text(description.forceCharWrapping)
                             .pretendard(.body03)
                             .frame(height: 71, alignment: .topLeading)
                     }
@@ -54,9 +54,9 @@ struct PopUpBView: View {
 
 #Preview {
     PopUpBView(
-        title: "알림 제목",
-        description: "알림 내용",
-        buttonLabel: "텍스트",
-        action: { print("hello") }
+        title: "이미 사용 중인 번호입니다.",
+        description: "입력된 전화번호가 올바른지 다시 한 번 확인해주세요.",
+        buttonLabel: "네",
+        action: { }
     )
 }
