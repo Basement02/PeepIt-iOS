@@ -16,6 +16,9 @@ struct AuthenticationStore {
         /// 휴대폰 번호 바인딩
         var phoneNumber = ""
 
+        /// 휴대폰 번호 중복 여부
+        var isDuplicated = false
+
         /// 휴대폰 번호 유효성 판단
         var phoneNumberValid = PhoneNumberValidation.base
 
@@ -40,10 +43,15 @@ struct AuthenticationStore {
         case skipButtonTapped
         case nextButtonTapped
         case backButtonTapped
+        case debouncedText(newText: String)
 
         /// 전화번호 중복체크 api
         case checkPhoneNumberDuplicated
         case fetchPhoneNumberCheckResponse(Result<Void, Error>)
+    }
+
+    enum ID: Hashable {
+        case debounce
     }
 
     @Dependency(\.authAPIClient) var authAPIClient
@@ -51,13 +59,38 @@ struct AuthenticationStore {
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        
+            .onChange(of: \.phoneNumber) { oldValue, newValue in
+                Reduce { state, action in
+                    return .run { send in
+                        await send(.debouncedText(newText: newValue))
+                    }
+                    .debounce(
+                        id: ID.debounce,
+                        for: 0.5,
+                        scheduler: DispatchQueue.main
+                    )
+                }
+            }
+
         Reduce { state, action in
             switch action {
             case .binding(\.phoneNumber):
-
                 return .none
-                
+
+            case let .debouncedText(phoneNumber):
+                guard !phoneNumber.isEmpty else {
+                    state.phoneNumberValid = .base
+                    return .none
+                }
+
+                guard phoneNumber.count == 11 &&
+                        phoneNumber.hasPrefix("010") else {
+                    state.phoneNumberValid = .formatError
+                    return .none
+                }
+
+                return .send(.checkPhoneNumberDuplicated)
+
             case .skipButtonTapped:
                 return .none
 
@@ -80,7 +113,6 @@ struct AuthenticationStore {
                 }
 
             case let .fetchPhoneNumberCheckResponse(result):
-                print(result)
                 return .none
 
             default:
