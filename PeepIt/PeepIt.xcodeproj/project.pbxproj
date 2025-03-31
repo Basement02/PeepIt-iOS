@@ -85,6 +85,7 @@
 		AB4BEE002D967FDA00CA3936 /* CheckPhoneRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */; };
 		AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */; };
 		AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */; };
+		AB4BEE0B2D9A945900CA3936 /* PopUpBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */; };
 		AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
@@ -279,6 +280,7 @@
 		AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPhoneRequestDto.swift; sourceTree = "<group>"; };
 		AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPIClient.swift; sourceTree = "<group>"; };
+		AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpBView.swift; sourceTree = "<group>"; };
 		AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
@@ -722,6 +724,22 @@
 			path = Reqeust;
 			sourceTree = "<group>";
 		};
+		AB4BEE062D9A941700CA3936 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEE072D9A944200CA3936 /* PopUp */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
+		AB4BEE072D9A944200CA3936 /* PopUp */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */,
+			);
+			path = PopUp;
+			sourceTree = "<group>";
+		};
 		AB5159772CA97C9C0043AA0A /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -1009,6 +1027,7 @@
 				AB416D152CF2F7AF0065BD09 /* Video */,
 				AB416D182CF309620065BD09 /* Interface */,
 				AB416D1D2CF329490065BD09 /* Text */,
+				AB4BEE062D9A941700CA3936 /* Alarm */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1505,6 +1524,7 @@
 				ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */,
 				AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,
+				AB4BEE0B2D9A945900CA3936 /* PopUpBView.swift in Sources */,
 				AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */,
 				AB4BEDDF2D926EF600CA3936 /* CommonPeepDto.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,

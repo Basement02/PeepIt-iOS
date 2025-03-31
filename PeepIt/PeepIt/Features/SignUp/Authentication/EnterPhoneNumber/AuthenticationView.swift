@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct AuthenticationView: View {
     @Perception.Bindable var store: StoreOf<AuthenticationStore>
 
+    @State private var keyboardHeight: CGFloat = 0
     @FocusState var isFocused: Bool
 
     var body: some View {
@@ -48,6 +49,17 @@ struct AuthenticationView: View {
                 .padding(.bottom, 36)
             }
             .background(Color.base)
+            .overlay {
+                if store.isDuplicated {
+                    PopUpBView(
+                        title: "이미 사용 중인 번호입니다.",
+                        description: "입력된 전화번호가 올바른지 다시 한 번 확인해주세요.",
+                        buttonLabel: "네",
+                        action: { store.send(.popButtonTapped) }
+                    )
+                    .offset(y: 100)
+                }
+            }
             .toolbar(.hidden, for: .navigationBar)
             .onAppear {
                 isFocused = true
