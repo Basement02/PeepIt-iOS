@@ -87,7 +87,7 @@ struct CheckEnterFieldStore {
                     })
                     .debounce(
                         id: ID.debounce,
-                        for: 0.5,
+                        for: 0.2,
                         scheduler: DispatchQueue.main
                     )
                 }
