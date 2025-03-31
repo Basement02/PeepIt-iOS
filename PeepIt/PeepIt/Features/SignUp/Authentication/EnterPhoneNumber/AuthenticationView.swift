@@ -48,6 +48,16 @@ struct AuthenticationView: View {
                 .padding(.bottom, 36)
             }
             .background(Color.base)
+            .overlay {
+                if store.isDuplicated {
+                    PopUpBView(
+                        title: "이미 사용 중인 번호입니다.",
+                        description: "입력된 전화번호가 올바른지 다시 한 번 확인해주세요.",
+                        buttonLabel: "네",
+                        action: { store.send(.popButtonTapped) }
+                    )
+                }
+            }
             .toolbar(.hidden, for: .navigationBar)
             .onAppear {
                 isFocused = true

@@ -44,6 +44,7 @@ struct AuthenticationStore {
         case nextButtonTapped
         case backButtonTapped
         case debouncedText(newText: String)
+        case popButtonTapped
 
         /// 전화번호 중복체크 api
         case checkPhoneNumberDuplicated
@@ -66,7 +67,7 @@ struct AuthenticationStore {
                     }
                     .debounce(
                         id: ID.debounce,
-                        for: 0.5,
+                        for: 0.2,
                         scheduler: DispatchQueue.main
                     )
                 }
@@ -113,6 +114,12 @@ struct AuthenticationStore {
                 }
 
             case let .fetchPhoneNumberCheckResponse(result):
+                // TODO: 입력받은 result 기반으로 변경
+                state.isDuplicated = true
+                return .none
+
+            case .popButtonTapped:
+                state.isDuplicated = false
                 return .none
 
             default:
