@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct AuthenticationView: View {
     @Perception.Bindable var store: StoreOf<AuthenticationStore>
 
+    @State private var keyboardHeight: CGFloat = 0
     @FocusState var isFocused: Bool
 
     var body: some View {
@@ -56,6 +57,7 @@ struct AuthenticationView: View {
                         buttonLabel: "네",
                         action: { store.send(.popButtonTapped) }
                     )
+                    .offset(y: 100)
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
