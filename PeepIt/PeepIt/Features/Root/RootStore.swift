@@ -59,7 +59,7 @@ struct RootStore {
         var path = StackState<Path.State>()
 
         var isLoading = true
-        var authState = AuthState.authorized
+        var authState = AuthState.unAuthorized
 
         var login = LoginStore.State()
         var home = HomeStore.State()
@@ -85,10 +85,6 @@ struct RootStore {
 
             case .finishLoading:
                 state.isLoading = false
-                return .none
-
-            case .login(.loginButtonTapped):
-                state.path.append(.term(.init()))
                 return .none
 
             case .home(.profileButtonTapped):

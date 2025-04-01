@@ -6,14 +6,26 @@
 //
 
 import SwiftUI
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 @main
 struct PeepItApp: App {
+
+    init() {
+        KakaoSDK.initSDK(appKey: Environment.kakaoAppKey)
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView(
                 store: .init(initialState: RootStore.State()) { RootStore() }
             )
+            .onOpenURL { url in
+                if AuthApi.isKakaoTalkLoginUrl(url) {
+                    _ = AuthController.handleOpenUrl(url: url)
+                }
+            }
         }
     }
 }
