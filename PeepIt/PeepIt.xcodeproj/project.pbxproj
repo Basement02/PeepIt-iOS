@@ -238,6 +238,7 @@
 		AB26A8242CB2DF26007D432E /* InputIdStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputIdStore.swift; sourceTree = "<group>"; };
 		AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoStore.swift; sourceTree = "<group>"; };
+		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
@@ -992,6 +993,7 @@
 		ABC305C82C932341003B00FE /* PeepIt */ = {
 			isa = PBXGroup;
 			children = (
+				AB3388862D9C606500316D4B /* PeepIt.entitlements */,
 				ABE581C42CCA6F20003366DC /* Info.plist */,
 				ABC305D72C9324CC003B00FE /* Features */,
 				ABC305EF2C95A4BF003B00FE /* Models */,
@@ -1730,6 +1732,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "https://basement02.site/api";
+				CODE_SIGN_ENTITLEMENTS = PeepIt/PeepIt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";
@@ -1771,6 +1774,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BASE_URL = "https://basement02.site/api";
+				CODE_SIGN_ENTITLEMENTS = PeepIt/PeepIt.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"PeepIt/Resources/Preview Content\"";

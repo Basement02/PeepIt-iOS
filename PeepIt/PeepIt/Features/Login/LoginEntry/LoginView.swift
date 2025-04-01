@@ -5,6 +5,7 @@
 //  Created by 김민 on 10/1/24.
 //
 
+import AuthenticationServices
 import SwiftUI
 import ComposableArchitecture
 
@@ -69,24 +70,51 @@ struct LoginView: View {
     private var loginButtons: some View {
         HStack(spacing: 21) {
             ForEach(LoginType.allCases, id: \.self) { type in
-                Button {
-                    store.send(.loginButtonTapped(type: type))
-                } label: {
-                    Group {
-                        switch type {
-                        case .kakao:
-                            Image("KakaoLogo").resizable()
-                        case .naver:
-                            Image("NaverLogo").resizable()
-                        case .apple:
-                            Image("AppleLogo").resizable()
-                        }
+                Group {
+                    switch type {
+                    case .kakao:
+                        loginIcon("KakaoLogo")
+                            .onTapGesture {
+                                store.send(.loginButtonTapped(type: .kakao))
+                            }
+                    case .naver:
+                        loginIcon("NaverLogo")
+                            .onTapGesture {
+                                store.send(.loginButtonTapped(type: .naver))
+                            }
+                    case .apple:
+                        loginIcon("AppleLogo")
+                            .overlay {
+                                defaultAppleLoginButton
+                                    .frame(width: 140, height: 64)
+                                    .scaleEffect(74 / 64) // 기본 애플로그인 버튼 최대 높이 64
+                                    .clipShape(Circle())
+                                    .contentShape(Circle())
+                                    .blendMode(.overlay)
+                            }
                     }
-                    .frame(width: 74, height: 74)
                 }
             }
         }
     }
+
+    private func loginIcon(_ imageName: String) -> some View {
+        Image(imageName)
+            .resizable()
+            .frame(width: 74, height: 74)
+    }
+
+    private var defaultAppleLoginButton: some View {
+          SignInWithAppleButton { request in
+              store.send(
+                .appleLoginAction(.appleLoginRequest(request: request))
+              )
+          } onCompletion: { result in
+              store.send(
+                .appleLoginAction(.appleLoginCompletion(result: result))
+              )
+          }
+      }
 }
 
 #Preview {

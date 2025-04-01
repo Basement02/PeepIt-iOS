@@ -16,17 +16,23 @@ struct LoginStore {
         var currentTab = 0
 
         var kakaoLoginState = KakaoLoginStore.State()
+        var appleLoginState = AppleLoginStore.State()
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case loginButtonTapped(type: LoginType)
         case kakaoLoginAction(KakaoLoginStore.Action)
+        case appleLoginAction(AppleLoginStore.Action)
     }
 
     var body: some Reducer<State, Action> {
         Scope(state: \.kakaoLoginState, action: \.kakaoLoginAction) {
             KakaoLoginStore()
+        }
+
+        Scope(state: \.appleLoginState, action: \.appleLoginAction) {
+            AppleLoginStore()
         }
 
         Reduce { state, action in
