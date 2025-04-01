@@ -75,7 +75,7 @@ struct LoginView: View {
                     Group {
                         switch type {
                         case .kakao:
-                            Circle()
+                            Image("KakaoLogo").resizable()
                         case .naver:
                             Image("NaverLogo").resizable()
                         case .apple:
