@@ -72,9 +72,17 @@ struct LoginView: View {
                 Button {
                     store.send(.loginButtonTapped(type: type))
                 } label: {
-                    Circle()
-                        .frame(width: 74, height: 74)
-                        .foregroundStyle(Color.gray400)
+                    Group {
+                        switch type {
+                        case .kakao:
+                            Circle()
+                        case .naver:
+                            Image("NaverLogo").resizable()
+                        case .apple:
+                            Image("AppleLogo").resizable()
+                        }
+                    }
+                    .frame(width: 74, height: 74)
                 }
             }
         }
