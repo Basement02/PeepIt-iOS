@@ -49,28 +49,13 @@ struct AuthenticationView: View {
                 .padding(.bottom, 36)
             }
             .background(Color.base)
-            .overlay {
-                if store.isDuplicated {
-                    PopUpBView(
-                        title: "이미 사용 중인 번호입니다.",
-                        description: "입력된 전화번호가 올바른지 다시 한 번 확인해주세요.",
-                        buttonLabel: "네",
-                        action: { store.send(.popButtonTapped) }
-                    )
-                    .offset(y: 100)
-                }
-            }
             .toolbar(.hidden, for: .navigationBar)
-            .onAppear {
-                isFocused = true
-            }
+            .onAppear { isFocused = true }
         }
     }
 
     private var backButton: some View {
-        BackButton {
-            store.send(.backButtonTapped)
-        }
+        BackButton { store.send(.backButtonTapped) }
     }
 
     private var title: some View {
@@ -126,8 +111,8 @@ struct AuthenticationView: View {
 
                 Rectangle()
                     .foregroundStyle(
-                        store.phoneNumberValid == .formatError
-                        ? Color.coreRed : Color.white
+                        store.isPhoneNumberValid
+                        ? Color.coreRed : Color.gray100
                     )
                     .frame(height: 1)
                     .padding(.top, 10)
@@ -137,7 +122,7 @@ struct AuthenticationView: View {
             Text(store.phoneNumberValid.message)
                 .pretendard(.caption03)
                 .foregroundStyle(
-                    store.phoneNumberValid == .formatError
+                    store.isPhoneNumberValid
                     ? Color.coreRed : Color.gray100
                 )
                 .padding(.top, 10)
