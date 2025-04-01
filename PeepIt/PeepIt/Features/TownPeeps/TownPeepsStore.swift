@@ -55,16 +55,17 @@ struct TownPeepsStore {
 
             case .refresh:
                 state.isRefreshing = true
+                state.page = 0
+                state.hasNext = true
+                state.peeps.removeAll()
+
+                let (page, size) = (state.page, state.size)
 
                 return .run { send in
-                    let startTime = Date()
-                    while Date().timeIntervalSince(startTime) < 3 { 
-//                        await send(.updateRotation)
-                        print("새로고침 중...")
-                    }
-                    await send(.refreshEnded, animation: .linear)
+                    let result = await Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                    await send(.fetchTownPeepsResponse(result))
                 }
-                
+
             case .refreshEnded:
                 state.isRefreshing = false
                 return .none
@@ -89,11 +90,15 @@ struct TownPeepsStore {
                     state.peeps.append(contentsOf: pagedPeeps.content)
                     state.hasNext = pagedPeeps.hasNext
                     state.page += 1
+
                 case let .failure(error):
                     // TODO: - 에러 처리
                     print(error)
                 }
-                return .none
+
+                /// 새로고침 중이라면 새로고침 끝내기
+                guard state.isRefreshing else { return .none }
+                return .send(.refreshEnded, animation: .linear)
             }
         }
     }
