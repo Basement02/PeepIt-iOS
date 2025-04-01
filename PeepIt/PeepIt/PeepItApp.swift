@@ -6,9 +6,16 @@
 //
 
 import SwiftUI
+import KakaoSDKCommon
+import KakaoSDKAuth
 
 @main
 struct PeepItApp: App {
+
+    init() {
+        KakaoSDK.initSDK(appKey: Environment.kakaoAppKey)
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView(
