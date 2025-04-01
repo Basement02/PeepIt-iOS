@@ -174,6 +174,11 @@ struct TownPeepsView: View {
                                             .peepCellTapped(idx: idx, peeps: store.peeps)
                                         )
                                     }
+                                    .onAppear {
+                                        if idx == store.peeps.count - 2 && store.hasNext {
+                                            store.send(.fetchTownPeeps)
+                                        }
+                                    }
                             }
                         }
                     }

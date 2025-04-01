@@ -18,6 +18,8 @@ struct PeepAPIClient {
     var fetchChattedPeeps: (Int, Int) async throws -> PagedPeeps
     /// 사용자가 업로드한 실시간 핍 리스트 조회
     var fetchUserActivePeeps: (Int, Int) async throws -> PagedPeeps
+    /// 동네 핍 리스트 조회(최신순)
+    var fetchTownPeeps: (Int, Int) async throws -> PagedPeeps
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -44,6 +46,12 @@ extension PeepAPIClient: DependencyKey {
         fetchUserActivePeeps: { page, size in
             let requestDto: PageRequestDto = .init(page: page, size: size)
             let requestAPI = PeepAPI.getActivePeeps(requestDto)
+            let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchTownPeeps: { page, size in
+            let requestDto: PageRequestDto = .init(page: page, size: size)
+            let requestAPI = PeepAPI.getRecentTownPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
         }

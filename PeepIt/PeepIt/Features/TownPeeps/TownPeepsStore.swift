@@ -17,6 +17,10 @@ struct TownPeepsStore {
         var isRefreshing = false
         var rotateAngle = Double.zero
         var peeps: [Peep] = []
+
+        var page = 0
+        var size = 10
+        var hasNext = true
     }
 
     enum Action {
@@ -27,20 +31,23 @@ struct TownPeepsStore {
         case onAppear
         case peepCellTapped(idx: Int, peeps: [Peep])
         case uploadButtonTapped
+
+        /// 동네 핍 조회 api
+        case fetchTownPeeps
+        case fetchTownPeepsResponse(Result<PagedPeeps, Error>)
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
-                return .none
+                return .send(.fetchTownPeeps)
 
             case .backButtonTapped:
-                return .run { _ in
-                     await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             case let .setInitialOffsetY(offsetY):
                 state.offsetY = offsetY
@@ -59,15 +66,33 @@ struct TownPeepsStore {
                 }
                 
             case .refreshEnded:
-//                state.peeps = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7]
-
                 state.isRefreshing = false
                 return .none
 
-            case .peepCellTapped:
+            case .peepCellTapped, .uploadButtonTapped:
                 return .none
 
-            case .uploadButtonTapped:
+            case .fetchTownPeeps:
+                let (page, size) = (state.page, state.size)
+
+                return .run { send in
+                    await send(
+                        .fetchTownPeepsResponse(
+                            Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                        )
+                    )
+                }
+
+            case let .fetchTownPeepsResponse(result):
+                switch result {
+                case let .success(pagedPeeps):
+                    state.peeps.append(contentsOf: pagedPeeps.content)
+                    state.hasNext = pagedPeeps.hasNext
+                    state.page += 1
+                case let .failure(error):
+                    // TODO: - 에러 처리
+                    print(error)
+                }
                 return .none
             }
         }
