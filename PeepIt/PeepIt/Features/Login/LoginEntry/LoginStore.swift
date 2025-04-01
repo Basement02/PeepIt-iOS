@@ -27,6 +27,8 @@ struct LoginStore {
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Scope(state: \.kakaoLoginState, action: \.kakaoLoginAction) {
             KakaoLoginStore()
         }
