@@ -775,7 +775,6 @@
 			children = (
 				AB51597E2CAAFA670043AA0A /* LoginView.swift */,
 				AB5159802CAAFA730043AA0A /* LoginStore.swift */,
-				AB5159822CAAFCA40043AA0A /* LoginType.swift */,
 			);
 			path = LoginEntry;
 			sourceTree = "<group>";
@@ -783,6 +782,7 @@
 		AB4BEE0F2D9BC0BB00CA3936 /* SocialLogin */ = {
 			isa = PBXGroup;
 			children = (
+				AB5159822CAAFCA40043AA0A /* LoginType.swift */,
 				AB4BEE102D9BC0E000CA3936 /* KakaoLoginStore.swift */,
 				AB4BEE122D9BC0E700CA3936 /* NaverLoginStore.swift */,
 				AB4BEE142D9BC0EE00CA3936 /* AppleLoginStore.swift */,

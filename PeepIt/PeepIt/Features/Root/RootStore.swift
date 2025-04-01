@@ -87,10 +87,6 @@ struct RootStore {
                 state.isLoading = false
                 return .none
 
-            case .login(.loginButtonTapped):
-                state.path.append(.term(.init()))
-                return .none
-
             case .home(.profileButtonTapped):
                 state.path.append(.myProfile(.init()))
                 return .none

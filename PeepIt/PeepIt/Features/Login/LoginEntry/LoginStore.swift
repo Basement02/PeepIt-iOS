@@ -14,24 +14,34 @@ struct LoginStore {
     @ObservableState
     struct State: Equatable {
         var currentTab = 0
+
+        var kakaoLoginState = KakaoLoginStore.State()
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         case loginButtonTapped(type: LoginType)
+        case kakaoLoginAction(KakaoLoginStore.Action)
     }
 
     var body: some Reducer<State, Action> {
-        BindingReducer()
+        Scope(state: \.kakaoLoginState, action: \.kakaoLoginAction) {
+            KakaoLoginStore()
+        }
 
         Reduce { state, action in
             switch action {
             case .binding(\.currentTab):
                 return .none
 
-            case .loginButtonTapped:
-                return .none
+            case let .loginButtonTapped(type):
 
+                switch type {
+                case .kakao:
+                    return .send(.kakaoLoginAction(.kakaoLoginTapped))
+                case .naver, .apple:
+                    return .none
+                }
             default:
                 return .none
             }

@@ -21,6 +21,11 @@ struct PeepItApp: App {
             RootView(
                 store: .init(initialState: RootStore.State()) { RootStore() }
             )
+            .onOpenURL { url in
+                if AuthApi.isKakaoTalkLoginUrl(url) {
+                    _ = AuthController.handleOpenUrl(url: url)
+                }
+            }
         }
     }
 }
