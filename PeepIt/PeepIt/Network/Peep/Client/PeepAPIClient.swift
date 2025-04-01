@@ -10,9 +10,13 @@ import ComposableArchitecture
 
 /// 핍 관련 API
 struct PeepAPIClient {
+    /// 사용자가 업로드한 핍 리스트 조회
     var fetchUploadedPeeps: (Int, Int) async throws -> PagedPeeps
+    /// 사용자가 반응한 핍 리스트 조회
     var fetchReactedPeeps: (Int, Int) async throws -> PagedPeeps
+    /// 사용자가 댓글 단 핍 리스트 조회
     var fetchChattedPeeps: (Int, Int) async throws -> PagedPeeps
+    /// 사용자가 업로드한 실시간 핍 리스트 조회
     var fetchUserActivePeeps: (Int, Int) async throws -> PagedPeeps
 }
 
