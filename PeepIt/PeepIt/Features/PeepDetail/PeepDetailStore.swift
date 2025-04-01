@@ -224,6 +224,7 @@ struct PeepDetailStore {
 
             case .viewTapped:
                 state.showElseMenu = false
+                state.showReactionList = false
                 return .none
 
             case .shareButtonTapped:

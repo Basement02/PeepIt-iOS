@@ -16,15 +16,13 @@ struct AuthenticationStore {
         /// 휴대폰 번호 바인딩
         var phoneNumber = ""
 
-        /// 휴대폰 번호 중복 여부
-        var isDuplicated = false
-
         /// 휴대폰 번호 유효성 판단
         var phoneNumberValid = PhoneNumberValidation.base
 
         enum PhoneNumberValidation {
             case base
             case formatError
+            case duplicated
             case valid
 
             var message: String {
@@ -33,8 +31,14 @@ struct AuthenticationStore {
                     return "SMS 전송으로 본인 인증을 진행합니다."
                 case .formatError:
                     return "입력된 전화번호가 올바른지 다시 한 번 확인해주세요."
+                case .duplicated:
+                    return "이미 사용 중인 번호입니다."
                 }
             }
+        }
+
+        var isPhoneNumberValid: Bool {
+            return phoneNumberValid == .base || phoneNumberValid == .valid
         }
     }
 
@@ -44,7 +48,6 @@ struct AuthenticationStore {
         case nextButtonTapped
         case backButtonTapped
         case debouncedText(newText: String)
-        case popButtonTapped
 
         /// 전화번호 중복체크 api
         case checkPhoneNumberDuplicated
@@ -115,34 +118,12 @@ struct AuthenticationStore {
 
             case let .fetchPhoneNumberCheckResponse(result):
                 // TODO: 입력받은 result 기반으로 변경
-                state.isDuplicated = true
-                return .none
-
-            case .popButtonTapped:
-                state.isDuplicated = false
+                state.phoneNumberValid = .duplicated
                 return .none
 
             default:
                 return .none
             }
         }
-    }
-
-    /// 유효성 판단 함수
-    func isValidPhoneNumber(of phoneNumber: String)
-    -> AuthenticationStore.State.PhoneNumberValidation {
-        guard !phoneNumber.isEmpty else {
-            return .base
-        }
-
-        guard phoneNumber.count == 11 else {
-            return .formatError
-        }
-
-        guard phoneNumber.hasPrefix("010") else {
-            return .formatError
-        }
-
-        return .valid
     }
 }
