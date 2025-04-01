@@ -740,6 +740,16 @@
 			path = PopUp;
 			sourceTree = "<group>";
 		};
+		AB4BEE0D2D9BC05500CA3936 /* LoginEntry */ = {
+			isa = PBXGroup;
+			children = (
+				AB51597E2CAAFA670043AA0A /* LoginView.swift */,
+				AB5159802CAAFA730043AA0A /* LoginStore.swift */,
+				AB5159822CAAFCA40043AA0A /* LoginType.swift */,
+			);
+			path = LoginEntry;
+			sourceTree = "<group>";
+		};
 		AB5159772CA97C9C0043AA0A /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -751,9 +761,7 @@
 		AB51597D2CAAFA5D0043AA0A /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				AB51597E2CAAFA670043AA0A /* LoginView.swift */,
-				AB5159802CAAFA730043AA0A /* LoginStore.swift */,
-				AB5159822CAAFCA40043AA0A /* LoginType.swift */,
+				AB4BEE0D2D9BC05500CA3936 /* LoginEntry */,
 			);
 			path = Login;
 			sourceTree = "<group>";
