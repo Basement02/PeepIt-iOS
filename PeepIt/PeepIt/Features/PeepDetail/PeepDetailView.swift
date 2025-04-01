@@ -33,14 +33,21 @@ struct PeepDetailView: View {
                                     ZStack {
                                         /// 뒷 배경 사진 레이아웃
                                         VStack(spacing: 11) {
-                                            topBar
-                                                .opacity(0)
+                                            Spacer().frame(height: 44)
+
                                             peepView
+                                                .highPriorityGesture(
+                                                    TapGesture()
+                                                        .onEnded {store.send(.viewTapped) }
+                                                )
+
                                             Spacer()
                                         }
                                         .ignoresSafeArea(.all, edges: .bottom)
 
-                                        BackImageLayer.secondary().ignoresSafeArea()
+                                        BackImageLayer.secondary()
+                                            .ignoresSafeArea()
+                                            .allowsHitTesting(false)
 
                                         if store.showPeepDetailObject {
                                             /// 앞 오브젝트
@@ -70,10 +77,10 @@ struct PeepDetailView: View {
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
                     .onAppear { store.send(.onAppear) }
-                    .highPriorityGesture(
-                        TapGesture()
-                            .onEnded {store.send(.viewTapped) }
-                    )
+//                    .highPriorityGesture(
+//                        TapGesture()
+//                            .onEnded {store.send(.viewTapped) }
+//                    )
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
