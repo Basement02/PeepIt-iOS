@@ -10,8 +10,7 @@ import ComposableArchitecture
 
 struct AuthenticationView: View {
     @Perception.Bindable var store: StoreOf<AuthenticationStore>
-
-    @State private var keyboardHeight: CGFloat = 0
+    
     @FocusState var isFocused: Bool
 
     var body: some View {
@@ -112,7 +111,7 @@ struct AuthenticationView: View {
                 Rectangle()
                     .foregroundStyle(
                         store.isPhoneNumberValid
-                        ? Color.coreRed : Color.gray100
+                        ? Color.gray100 : Color.coreRed
                     )
                     .frame(height: 1)
                     .padding(.top, 10)
@@ -123,7 +122,7 @@ struct AuthenticationView: View {
                 .pretendard(.caption03)
                 .foregroundStyle(
                     store.isPhoneNumberValid
-                    ? Color.coreRed : Color.gray100
+                    ? Color.gray100 : Color.coreRed
                 )
                 .padding(.top, 10)
         }
