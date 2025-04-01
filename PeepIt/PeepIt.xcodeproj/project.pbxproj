@@ -86,6 +86,9 @@
 		AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */; };
 		AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */; };
 		AB4BEE0B2D9A945900CA3936 /* PopUpBView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */; };
+		AB4BEE112D9BC0E300CA3936 /* KakaoLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE102D9BC0E000CA3936 /* KakaoLoginStore.swift */; };
+		AB4BEE132D9BC0E900CA3936 /* NaverLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE122D9BC0E700CA3936 /* NaverLoginStore.swift */; };
+		AB4BEE152D9BC0F100CA3936 /* AppleLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4BEE142D9BC0EE00CA3936 /* AppleLoginStore.swift */; };
 		AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */; };
 		AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB51597E2CAAFA670043AA0A /* LoginView.swift */; };
 		AB5159812CAAFA730043AA0A /* LoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5159802CAAFA730043AA0A /* LoginStore.swift */; };
@@ -281,6 +284,9 @@
 		AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPIClient.swift; sourceTree = "<group>"; };
 		AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpBView.swift; sourceTree = "<group>"; };
+		AB4BEE102D9BC0E000CA3936 /* KakaoLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginStore.swift; sourceTree = "<group>"; };
+		AB4BEE122D9BC0E700CA3936 /* NaverLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaverLoginStore.swift; sourceTree = "<group>"; };
+		AB4BEE142D9BC0EE00CA3936 /* AppleLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginStore.swift; sourceTree = "<group>"; };
 		AB4F35BE2D6238AF00F799ED /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		AB51597E2CAAFA670043AA0A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AB5159802CAAFA730043AA0A /* LoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginStore.swift; sourceTree = "<group>"; };
@@ -750,6 +756,16 @@
 			path = LoginEntry;
 			sourceTree = "<group>";
 		};
+		AB4BEE0F2D9BC0BB00CA3936 /* SocialLogin */ = {
+			isa = PBXGroup;
+			children = (
+				AB4BEE102D9BC0E000CA3936 /* KakaoLoginStore.swift */,
+				AB4BEE122D9BC0E700CA3936 /* NaverLoginStore.swift */,
+				AB4BEE142D9BC0EE00CA3936 /* AppleLoginStore.swift */,
+			);
+			path = SocialLogin;
+			sourceTree = "<group>";
+		};
 		AB5159772CA97C9C0043AA0A /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +778,7 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEE0D2D9BC05500CA3936 /* LoginEntry */,
+				AB4BEE0F2D9BC0BB00CA3936 /* SocialLogin */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1376,6 +1393,7 @@
 			files = (
 				AB97881A2D192F25007E73B6 /* CameraService.swift in Sources */,
 				ABA11E8E2D1D439400C181DC /* ColorChip.swift in Sources */,
+				AB4BEE132D9BC0E900CA3936 /* NaverLoginStore.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
@@ -1489,9 +1507,11 @@
 				AB4BEDEB2D9278A000CA3936 /* PeepDetailRequestDto.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
+				AB4BEE112D9BC0E300CA3936 /* KakaoLoginStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
 				AB468D202CA9428700C1E430 /* AnnounceStore.swift in Sources */,
+				AB4BEE152D9BC0F100CA3936 /* AppleLoginStore.swift in Sources */,
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB3704952D7FCF2000EBBC85 /* APITask.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
