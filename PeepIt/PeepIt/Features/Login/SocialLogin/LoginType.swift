@@ -25,7 +25,7 @@ enum LoginType: CaseIterable, Hashable {
 }
 
 enum LoginErrorType: Error {
-    case idTokenMissing
+    case invalidResponse
     case cancelled
     case unknown(Error)
 }

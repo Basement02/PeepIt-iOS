@@ -37,7 +37,7 @@ struct KakaoLoginStore {
                                     } else if let idToken = oauthToken?.idToken {
                                         continuation.resume(returning: idToken)
                                     } else {
-                                        continuation.resume(throwing: LoginErrorType.idTokenMissing)
+                                        continuation.resume(throwing: LoginErrorType.invalidResponse)
                                     }
                                 }
                             } else {
@@ -48,7 +48,7 @@ struct KakaoLoginStore {
                                     } else if let idToken = oauthToken?.idToken {
                                         continuation.resume(returning: idToken)
                                     } else {
-                                        continuation.resume(throwing: LoginErrorType.idTokenMissing)
+                                        continuation.resume(throwing: LoginErrorType.invalidResponse)
                                     }
                                 }
                             }
