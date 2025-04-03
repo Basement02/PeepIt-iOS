@@ -38,10 +38,17 @@ struct EnterAuthCodeStore {
             case success /// 인증 성공
             case fail /// 인증 실패
         }
+
+        /// 인증 시간(5분으로 시작)
+        var time = 300
+        var isTimerRunning = false
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+
+        /// 뷰 나타날 때
+        case onAppear
         /// 인증 확인
         case checkAuthCode(code: String)
         /// 뒤로가기 버튼 탭
@@ -50,6 +57,14 @@ struct EnterAuthCodeStore {
         case pushToWelcomeView
         /// 스킵 버튼
         case skipButtonTapped
+
+        /// 타이머
+        case startTimer
+        case timerTicked
+    }
+
+    enum CancelId {
+        case timer
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -79,14 +94,16 @@ struct EnterAuthCodeStore {
 
                 return .none
 
+            case .onAppear:
+                return .send(.startTimer)
+
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             case .checkAuthCode:
                 // TODO: 인증 API 호출
                 state.authCodeState = .success
+                state.isTimerRunning = false
 
                 if state.authCodeState == .success {
                     return .run { send in
@@ -97,10 +114,27 @@ struct EnterAuthCodeStore {
                     return .none
                 }
 
-            case .pushToWelcomeView:
+            case .pushToWelcomeView, .skipButtonTapped:
                 return .none
 
-            case .skipButtonTapped:
+            case .startTimer:
+                state.isTimerRunning = true
+
+                return .run { send in
+                    while true {
+                        try await Task.sleep(for: .seconds(1))
+                        await send(.timerTicked)
+                    }
+                }
+                .cancellable(id: CancelId.timer)
+
+            case .timerTicked:
+                guard state.time > 0 else {
+                    state.isTimerRunning = false
+                    return .cancel(id: CancelId.timer)
+                }
+
+                state.time -= 1
                 return .none
 
             default:

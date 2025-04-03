@@ -42,6 +42,7 @@ struct EnterAuthCodeView: View {
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
             .bind($store.focusField, to: self.$focusedField)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -97,10 +98,16 @@ struct EnterAuthCodeView: View {
             Group {
                 switch store.authCodeState {
                 case .none:
-                    Text("")
+                    let minutes = store.time / 60
+                    let seconds = store.time % 60
+
+                    Text(String(format: "남은시간 %02d:%02d", minutes, seconds))
+                        .foregroundStyle(Color.coreRed)
+
                 case .success:
                     Text("인증이 완료되었습니다.")
                         .foregroundStyle(Color.coreLime)
+
                 case .fail:
                     Text("코드가 일치하지 않습니다.")
                         .foregroundStyle(Color.coreRed)
