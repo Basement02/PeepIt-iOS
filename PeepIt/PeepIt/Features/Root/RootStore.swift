@@ -87,6 +87,10 @@ struct RootStore {
                 state.isLoading = false
                 return .none
 
+            case .login(.loginButtonTapped(type: .naver)):
+                state.path.append(.term(.init()))
+                return .none
+
             case .home(.profileButtonTapped):
                 state.path.append(.myProfile(.init()))
                 return .none
@@ -129,6 +133,12 @@ struct RootStore {
 
                 case .element(_, action: .inputPhoneNumber(.skipButtonTapped)):
                     state.path.append(.welcome(.init()))
+                    return .none
+
+                case let .element(_, action: .inputPhoneNumber(.moveToEnterCode(phone))):
+                    state.path.append(
+                        .inputAuthCode(.init(phoneNumber: phone))
+                    )
                     return .none
 
                 case .element(_, action: .welcome(.goToHomeButtonTapped)):

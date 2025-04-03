@@ -48,10 +48,15 @@ struct AuthenticationStore {
         case nextButtonTapped
         case backButtonTapped
         case debouncedText(newText: String)
+        case moveToEnterCode(phone: String)
 
         /// 전화번호 중복체크 api
         case checkPhoneNumberDuplicated
         case fetchPhoneNumberCheckResponse(Result<Void, Error>)
+
+        /// 인증번호 요청 api
+        case requestSMSCode
+        case fetchRequestSMSCodeResponse(Result<Void, Error>)
     }
 
     enum ID: Hashable {
@@ -78,6 +83,7 @@ struct AuthenticationStore {
 
         Reduce { state, action in
             switch action {
+
             case .binding(\.phoneNumber):
                 return .none
 
@@ -95,12 +101,8 @@ struct AuthenticationStore {
 
                 return .send(.checkPhoneNumberDuplicated)
 
-            case .skipButtonTapped:
-                return .none
-
             case .nextButtonTapped:
-                // TODO: 중복된 번호인지 검사
-                return .none
+                return .send(.requestSMSCode)
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
@@ -117,8 +119,38 @@ struct AuthenticationStore {
                 }
 
             case let .fetchPhoneNumberCheckResponse(result):
-                // TODO: 입력받은 result 기반으로 변경
-                state.phoneNumberValid = .duplicated
+                switch result {
+
+                case .success:
+                    return .send(.requestSMSCode)
+
+                case .failure:
+                    // TODO: 중복처리
+                    return .none
+                }
+
+            case .requestSMSCode:
+                let phoneNumber = state.phoneNumber
+
+                return .run { send in
+                    await send(
+                        .fetchRequestSMSCodeResponse(
+                            Result { try await authAPIClient.sendSMSCode(phoneNumber) }
+                        )
+                    )
+                }
+
+            case let .fetchRequestSMSCodeResponse(result):
+                switch result {
+                case .success:
+                    return .send(.moveToEnterCode(phone: state.phoneNumber))
+
+                case .failure:
+                    // TODO: 중복 에러 처리
+                    return .none
+                }
+
+            case .moveToEnterCode, .skipButtonTapped:
                 return .none
 
             default:

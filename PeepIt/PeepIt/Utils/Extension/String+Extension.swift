@@ -23,4 +23,14 @@ extension String {
     var forceCharWrapping: Self {
         self.map({ String($0) }).joined(separator: "\u{200B}")
     }
+
+    var phoneFormatted: String {
+        guard self.count == 11 else { return self }
+
+        let start = self.prefix(3)
+        let middle = self.dropFirst(3).prefix(4)
+        let end = self.suffix(4)
+
+        return "\(start)-\(middle)-\(end)"
+    }
 }

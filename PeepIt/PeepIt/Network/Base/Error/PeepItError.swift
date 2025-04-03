@@ -15,4 +15,20 @@ enum PeepItError: String, Error {
     case duplicatePhoneNumber = "40902"       // 40902 - 이미 사용 중인 전화번호
     case internalServerError = "50000"        // 50000 - 서버 내부 오류
     case verificationCodeFailure = "50001"    // 50001 - 인증 번호 전송 실패
+    case smsCodeFailed = "41001" // 41001 - 인증번호 관련 오류
+}
+
+extension Error {
+
+    func asPeepItError() -> PeepItError? {
+        guard
+            let networkError = self as? NetworkError,
+            case let .serverError(exception) = networkError,
+            let errorCase = PeepItError(rawValue: exception.code)
+        else {
+            return nil
+        }
+        
+        return errorCase
+    }
 }
