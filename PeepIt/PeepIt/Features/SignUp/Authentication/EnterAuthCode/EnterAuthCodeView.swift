@@ -53,7 +53,7 @@ struct EnterAuthCodeView: View {
     }
 
     private var title: some View {
-        Text("010-XXXX-XXXX로\n인증 코드를 전송했어요.")
+        Text("\(store.phoneNumber.phoneFormatted)로\n인증 코드를 전송했어요.")
             .pretendard(.title02)
     }
 

@@ -48,7 +48,7 @@ struct AuthenticationStore {
         case nextButtonTapped
         case backButtonTapped
         case debouncedText(newText: String)
-        case moveToEnterCode
+        case moveToEnterCode(phone: String)
 
         /// 전화번호 중복체크 api
         case checkPhoneNumberDuplicated
@@ -143,7 +143,7 @@ struct AuthenticationStore {
             case let .fetchRequestSMSCodeResponse(result):
                 switch result {
                 case .success:
-                    return .send(.moveToEnterCode)
+                    return .send(.moveToEnterCode(phone: state.phoneNumber))
 
                 case .failure:
                     // TODO: 중복 에러 처리

@@ -135,8 +135,10 @@ struct RootStore {
                     state.path.append(.welcome(.init()))
                     return .none
 
-                case .element(_, action: .inputPhoneNumber(.moveToEnterCode)):
-                    state.path.append(.inputAuthCode(.init()))
+                case let .element(_, action: .inputPhoneNumber(.moveToEnterCode(phone))):
+                    state.path.append(
+                        .inputAuthCode(.init(phoneNumber: phone))
+                    )
                     return .none
 
                 case .element(_, action: .welcome(.goToHomeButtonTapped)):

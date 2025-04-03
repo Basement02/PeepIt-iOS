@@ -13,6 +13,8 @@ struct EnterAuthCodeStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 이전 뷰에서 넘어온 전화번호
+        var phoneNumber = ""
         /// focus되는 field - 초기: 첫 번째 tf로 설정
         var focusField: Field? = .first
         /// 인증 코드를 저장할 배열
