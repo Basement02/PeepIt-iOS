@@ -100,7 +100,6 @@ struct EnterAuthCodeStore {
                     return .send(.checkSMSCodeVerified)
                 }
 
-
                 return .none
 
             case .onAppear:
@@ -134,7 +133,7 @@ struct EnterAuthCodeStore {
                 return .none
 
             case .checkSMSCodeVerified:
-                let phoneNumber = "01063084319"
+                let phoneNumber = state.phoneNumber
                 let code = state.fields.joined()
 
                 return .run { send in
@@ -147,6 +146,7 @@ struct EnterAuthCodeStore {
 
             case let .fetchCodeVerifiedResult(result):
                 switch result {
+
                 case .success:
                     state.authCodeState = .success
                     state.isTimerRunning = false
@@ -157,13 +157,14 @@ struct EnterAuthCodeStore {
                     }
 
                 case let .failure(error):
-                    if error.asPeepItError() == .smsCodeFailed {
+                    if error.asPeepItError() == .smsCodeFailed
+                        || error.asPeepItError() == .smsCodeInvalidate {
                         state.authCodeState = .fail
-                        state.isTimerRunning = false
                     }
-                }
 
-                return .none
+                    return .none
+
+                }
 
             default:
                 return .none

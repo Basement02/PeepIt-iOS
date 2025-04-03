@@ -146,7 +146,7 @@ struct AuthenticationStore {
                     return .send(.moveToEnterCode(phone: state.phoneNumber))
 
                 case .failure:
-                    // TODO: 중복 에러 처리
+                    // TODO: 전송 실패 처리
                     return .none
                 }
 

@@ -17,13 +17,14 @@ struct EnterAuthCodeView: View {
         WithPerceptionTracking {
             VStack(alignment: .leading, spacing: 0) {
 
-                PeepItNavigationBar(leading: backButton)
-                    .padding(.bottom, 23)
+                PeepItNavigationBar(
+                    leading: BackButton { store.send(.backButtonTapped) }
+                )
+                .padding(.bottom, 23)
 
                 Group {
                     title
                         .padding(.bottom, 50)
-
                     enterNumberField
                 }
                 .padding(.leading, 20)
@@ -33,7 +34,12 @@ struct EnterAuthCodeView: View {
                 if store.authCodeState != .success {
                     HStack {
                         Spacer()
-                        skipButton
+
+                        VStack(spacing: 15) {
+                            timer
+                            skipButton
+                        }
+
                         Spacer()
                     }
                     .padding(.bottom, 36)
@@ -43,12 +49,6 @@ struct EnterAuthCodeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .bind($store.focusField, to: self.$focusedField)
             .onAppear { store.send(.onAppear) }
-        }
-    }
-
-    private var backButton: some View {
-        BackButton {
-            store.send(.backButtonTapped)
         }
     }
 
@@ -98,11 +98,7 @@ struct EnterAuthCodeView: View {
             Group {
                 switch store.authCodeState {
                 case .none, .check:
-                    let minutes = store.time / 60
-                    let seconds = store.time % 60
-
-                    Text(String(format: "남은시간 %02d:%02d", minutes, seconds))
-                        .foregroundStyle(Color.coreRed)
+                    Text("")
 
                 case .success:
                     Text("인증이 완료되었습니다.")
@@ -147,11 +143,21 @@ struct EnterAuthCodeView: View {
         .buttonStyle(PressableButtonStyle(colorStyle: .gray900))
         .clipShape(RoundedRectangle(cornerRadius: 16))
     }
+
+    private var timer: some View {
+        let minutes = store.time / 60
+        let seconds = store.time % 60
+
+        return Text(String(format: "남은 시간 %02d:%02d", minutes, seconds))
+            .pretendard(.caption01)
+            .foregroundStyle(Color.white)
+    }
 }
 
 #Preview {
     EnterAuthCodeView(
-        store: .init(initialState: EnterAuthCodeStore.State()) { EnterAuthCodeStore()
+        store: .init(initialState: EnterAuthCodeStore.State()) {
+            EnterAuthCodeStore()
         }
     )
 }
