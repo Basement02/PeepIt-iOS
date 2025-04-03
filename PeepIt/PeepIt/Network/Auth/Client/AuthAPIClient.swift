@@ -13,6 +13,7 @@ struct AuthAPIClient {
     var checkPhoneDuplicated: (String) async throws -> ()
     var checkIdDuplicated: (String) async throws -> ()
     var sendSMSCode: (String) async throws -> ()
+    var checkSMSCodeVerified: (String, String) async throws -> ()
 }
 
 extension AuthAPIClient: DependencyKey {
@@ -31,6 +32,11 @@ extension AuthAPIClient: DependencyKey {
         sendSMSCode: { phoneNumber in
             let requestDto: PhoneNumberRequest = .init(phone: phoneNumber)
             let requestAPI = AuthAPI.requestSMSCode(requestDto)
+            let response: EmptyDecodable =  try await APIFetcher.shared.fetch(of: requestAPI)
+        },
+        checkSMSCodeVerified: { phoneNumber, code in
+            let requestDto: CodeCheckRequestDto = .init(phone: phoneNumber, code: code)
+            let requestAPI = AuthAPI.getSMSCodeVerifyResult(requestDto)
             let response: EmptyDecodable =  try await APIFetcher.shared.fetch(of: requestAPI)
         }
     )

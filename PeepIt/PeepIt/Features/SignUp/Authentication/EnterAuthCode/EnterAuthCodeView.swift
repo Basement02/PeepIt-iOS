@@ -97,7 +97,7 @@ struct EnterAuthCodeView: View {
 
             Group {
                 switch store.authCodeState {
-                case .none:
+                case .none, .check:
                     let minutes = store.time / 60
                     let seconds = store.time % 60
 
@@ -122,7 +122,7 @@ struct EnterAuthCodeView: View {
             .fill(Color.gray500)
             .overlay {
                 switch store.authCodeState {
-                case .none:
+                case .none, .check:
                     RoundedRectangle(cornerRadius: 10)
                         .strokeBorder(Color.clear, lineWidth: 1)
                 case .success:

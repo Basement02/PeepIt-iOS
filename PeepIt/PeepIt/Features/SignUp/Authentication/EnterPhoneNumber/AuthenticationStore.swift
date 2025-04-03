@@ -119,9 +119,15 @@ struct AuthenticationStore {
                 }
 
             case let .fetchPhoneNumberCheckResponse(result):
-                // TODO: 입력받은 result 기반으로 변경
-                state.phoneNumberValid = .duplicated
-                return .none
+                switch result {
+
+                case .success:
+                    return .send(.requestSMSCode)
+
+                case .failure:
+                    // TODO: 중복처리
+                    return .none
+                }
 
             case .requestSMSCode:
                 let phoneNumber = state.phoneNumber
@@ -138,8 +144,9 @@ struct AuthenticationStore {
                 switch result {
                 case .success:
                     return .send(.moveToEnterCode)
+
                 case .failure:
-                    // TODO: 에러 처리
+                    // TODO: 중복 에러 처리
                     return .none
                 }
 

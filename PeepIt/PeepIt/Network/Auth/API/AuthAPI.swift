@@ -12,6 +12,7 @@ enum AuthAPI {
     case getPhoneCheckResult(PhoneNumberRequest)
     case getIdCheckResult(IdCheckRequestDto)
     case requestSMSCode(PhoneNumberRequest)
+    case getSMSCodeVerifyResult(CodeCheckRequestDto)
 }
 
 extension AuthAPI: APIType {
@@ -24,12 +25,14 @@ extension AuthAPI: APIType {
             return "/v1/auth/check/id"
         case .requestSMSCode:
             return "/v1/auth/send/sms-code"
+        case .getSMSCodeVerifyResult:
+            return "/v1/auth/verify/sms-code"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .requestSMSCode:
+        case .requestSMSCode, .getSMSCodeVerifyResult:
             return .post
         default:
             return .get
@@ -43,6 +46,8 @@ extension AuthAPI: APIType {
         case let .getIdCheckResult(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
         case let .requestSMSCode(requestDto):
+            return .requestParameters(parameters: requestDto.toDictionary())
+        case let .getSMSCodeVerifyResult(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
         }
     }
