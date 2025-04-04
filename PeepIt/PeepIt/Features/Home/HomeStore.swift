@@ -34,6 +34,8 @@ struct HomeStore {
         var selectedPeepIndex: Int? = nil
         /// 드래그 여부 파악(이 동네에서 검색 버튼 띄움)
         var isDragged = false
+        /// 현재 위치로 이동
+        var moveToCurrentLocation = false
     }
 
     enum Action: BindableAction {
@@ -60,6 +62,8 @@ struct HomeStore {
         case showDetailObject
         /// 이 동네에서 검색 버튼 탭
         case searchButtonTapped
+        /// 현재 위치 버튼 탭
+        case locationButtonTapped
 
         case peepTapped(idx: Int)
     }
@@ -90,6 +94,9 @@ struct HomeStore {
                 guard state.isDragged else { return .none }
 
                 return .send(.peepPreviewModal(.modalScrollDown))
+
+            case .binding(\.moveToCurrentLocation):
+                return .none
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
@@ -158,6 +165,10 @@ struct HomeStore {
             case .searchButtonTapped:
                 state.isDragged = false
                 // TODO: 검색 api 호출
+                return .none
+
+            case .locationButtonTapped:
+                state.moveToCurrentLocation = true
                 return .none
 
             default:
