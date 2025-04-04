@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct HomeView: View {
-    var store: StoreOf<HomeStore>
+    @Perception.Bindable var store: StoreOf<HomeStore>
 
     @Namespace private var namespace
 
@@ -19,7 +19,7 @@ struct HomeView: View {
                 WithPerceptionTracking {
                     ZStack {
                         Group {
-                            HomeMapView()
+                            HomeMapView(isDragged: $store.isDragged)
                                 .ignoresSafeArea()
 
                             Group {
@@ -34,8 +34,10 @@ struct HomeView: View {
                                     topBar
                                         .padding(.horizontal, 16)
 
-                                    searchThisMapButton
-                                        .padding(.top, 15)
+                                    if store.isDragged {
+                                        searchThisMapButton
+                                            .padding(.top, 15)
+                                    }
 
                                     Spacer()
 
@@ -169,7 +171,7 @@ extension HomeView {
 
     private var searchThisMapButton: some View {
         Button {
-
+            store.send(.searchButtonTapped)
         } label: {
             HStack(spacing: 1) {
                 Image("IconSearchStar")

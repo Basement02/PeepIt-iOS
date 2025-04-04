@@ -26,17 +26,19 @@ struct HomeStore {
         var townVerificationModalOffset = Constant.screenHeight
         /// 동네 등록 모달 보여줄지 여부
         var showTownVeriModal = false
-
         /// 사이드 메뉴 등장 시 홈뷰 offsetX 관리
         var mainViewOffset = CGFloat.zero
         /// 홈뷰 offsetX 움직일 때, 색 깔기 위한 변수
         var mainViewMoved = false
-
         /// 선택된 핍 인덱스 저장
         var selectedPeepIndex: Int? = nil
+        /// 드래그 여부 파악(이 동네에서 검색 버튼 띄움)
+        var isDragged = false
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
+
         case peepDetail(PeepDetailStore.Action)
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
@@ -56,11 +58,15 @@ struct HomeStore {
         case showSideMenu
         /// 핍 상세에서 오브젝트 보여주기 (애니메이션)
         case showDetailObject
+        /// 이 동네에서 검색 버튼 탭
+        case searchButtonTapped
 
         case peepTapped(idx: Int)
     }
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Scope(state: \.peepPreviewModal, action: \.peepPreviewModal) {
             PeepModalStore()
         }
@@ -79,6 +85,11 @@ struct HomeStore {
 
         Reduce { state, action in
             switch action {
+
+            case .binding(\.isDragged):
+                guard state.isDragged else { return .none }
+
+                return .send(.peepPreviewModal(.modalScrollDown))
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
@@ -126,10 +137,7 @@ struct HomeStore {
                 state.mainViewMoved = true
                 return .none
 
-            case .profileButtonTapped:
-                return .none
-
-            case .uploadButtonTapped:
+            case .profileButtonTapped, .uploadButtonTapped:
                 return .none
 
             case .dismissSideMenu:
@@ -145,6 +153,11 @@ struct HomeStore {
 
             case let .peepTapped(idx):
                 state.peepPreviewModal.scrollToIdx = idx
+                return .none
+
+            case .searchButtonTapped:
+                state.isDragged = false
+                // TODO: 검색 api 호출
                 return .none
 
             default:
