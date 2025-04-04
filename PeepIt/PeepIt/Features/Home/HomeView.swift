@@ -19,8 +19,11 @@ struct HomeView: View {
                 WithPerceptionTracking {
                     ZStack {
                         Group {
-                            HomeMapView(isDragged: $store.isDragged)
-                                .ignoresSafeArea()
+                            HomeMapView(
+                                isDragged: $store.isDragged,
+                                moveToCurrentLocation: $store.moveToCurrentLocation
+                            )
+                            .ignoresSafeArea()
 
                             Group {
                                 BackMapLayer.teriary()
@@ -195,7 +198,7 @@ extension HomeView {
 
     private var currentLocationButton: some View {
         Button {
-            // TODO:
+            store.send(.locationButtonTapped)
         } label: {
             Image("IconNavigationTarget")
                 .frame(width: 44, height: 44)

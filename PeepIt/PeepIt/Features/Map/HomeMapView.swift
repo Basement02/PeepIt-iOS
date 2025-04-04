@@ -11,6 +11,7 @@ import CoreLocation
 
 struct HomeMapView: UIViewRepresentable {
     @Binding var isDragged: Bool
+    @Binding var moveToCurrentLocation: Bool
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -30,7 +31,12 @@ struct HomeMapView: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ uiView: MKMapView, context: Context) { }
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        guard moveToCurrentLocation else { return }
+        
+        context.coordinator.focusToCurrentLocation()
+        moveToCurrentLocation = false
+    }
 
     class Coordinator: NSObject,
                        CLLocationManagerDelegate,
@@ -97,6 +103,17 @@ struct HomeMapView: UIViewRepresentable {
             shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
         ) -> Bool {
             return true
+        }
+
+        func focusToCurrentLocation() {
+            guard let location = locationManager.location else { return }
+
+            let region = MKCoordinateRegion(
+                center: location.coordinate,
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+            )
+
+            mapView?.setRegion(region, animated: true)
         }
     }
 }
