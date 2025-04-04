@@ -38,7 +38,7 @@ struct TownRegisterModalView: View {
                                     .padding(.bottom, 20)
 
                                 ZStack {
-                                    HomeMapView()
+                                    MapView()
                                     BackMapLayer.secondary()
                                 }
                                 .frame(width: 356, height: 369)

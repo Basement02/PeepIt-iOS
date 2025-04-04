@@ -33,7 +33,7 @@ struct TownVerificationView: View {
                         .padding(.bottom, 20)
 
                     ZStack(alignment: .bottom) {
-                        HomeMapView()
+                        MapView()
                         BackMapLayer.secondary()
                             .allowsHitTesting(false)
                         toCurrentLocationButton
