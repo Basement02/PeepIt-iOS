@@ -488,6 +488,14 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
+		AB33888B2DA02D3400316D4B /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1023,6 +1031,7 @@
 				ABB444972CA8451D00C1EE67 /* Root */,
 				AB51597D2CAAFA5D0043AA0A /* Login */,
 				ABC171E82CAB183600370901 /* SignUp */,
+				AB33888B2DA02D3400316D4B /* Map */,
 				ABC305D82C9324E2003B00FE /* Home */,
 				AB0FBF1F2D4FC8E0003D8372 /* TownVerification */,
 				AB469C6F2C9FED5E00DC7B8A /* SideMenu */,
@@ -1046,7 +1055,6 @@
 			children = (
 				ABC305CB2C932341003B00FE /* HomeView.swift */,
 				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
-				AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
