@@ -1746,6 +1746,7 @@
 				INFOPLIST_FILE = PeepIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 지도에 표시하기 위해 사용합니다.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 권한";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -1788,6 +1789,7 @@
 				INFOPLIST_FILE = PeepIt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Peep It";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 권한";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "현재 위치를 지도에 표시하기 위해 사용합니다.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "마이크 권한";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "앨범 권한";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
