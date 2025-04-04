@@ -10,6 +10,7 @@ import MapKit
 import CoreLocation
 
 struct HomeMapView: UIViewRepresentable {
+    @Binding var isDragged: Bool
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -24,16 +25,20 @@ struct HomeMapView: UIViewRepresentable {
 
         context.coordinator.mapView = mapView
         context.coordinator.setupLocation()
+        context.coordinator.setupDragGesture()
 
         return mapView
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) { }
 
-    class Coordinator: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
+    class Coordinator: NSObject,
+                       CLLocationManagerDelegate,
+                       MKMapViewDelegate,
+                       UIGestureRecognizerDelegate {
         var parent: HomeMapView
         var mapView: MKMapView?
-        
+
         private let locationManager = CLLocationManager()
         private var hasCentered = false
 
@@ -71,6 +76,27 @@ struct HomeMapView: UIViewRepresentable {
 
         func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
             setupLocation()
+        }
+
+        func setupDragGesture() {
+            let panGesture = UIPanGestureRecognizer(
+                target: self,
+                action: #selector(mapDragged(_:))
+            )
+
+            panGesture.delegate = self
+            mapView?.addGestureRecognizer(panGesture)
+        }
+
+        @objc func mapDragged(_ gesture: UIPanGestureRecognizer) {
+            parent.isDragged = true
+        }
+
+        func gestureRecognizer(
+            _ gestureRecognizer: UIGestureRecognizer,
+            shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+        ) -> Bool {
+            return true
         }
     }
 }
