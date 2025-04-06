@@ -29,6 +29,8 @@
 		AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
+		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
+		AB3388922DA2DC3700316D4B /* LoginResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */; };
 		AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */; };
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
@@ -243,6 +245,8 @@
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDto.swift; sourceTree = "<group>"; };
+		AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDto.swift; sourceTree = "<group>"; };
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
@@ -499,6 +503,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		AB3388902DA2DC2A00316D4B /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -739,6 +751,7 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEDFE2D967FD400CA3936 /* Reqeust */,
+				AB3388902DA2DC2A00316D4B /* Response */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -765,6 +778,7 @@
 				AB4BEE012D96802100CA3936 /* IdCheckRequestDto.swift */,
 				AB4BEDFF2D967FD800CA3936 /* CheckPhoneRequestDto.swift */,
 				AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */,
+				AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */,
 			);
 			path = Reqeust;
 			sourceTree = "<group>";
@@ -1470,6 +1484,7 @@
 				AB9788142D114B84007E73B6 /* BlockDescriptionModal.swift in Sources */,
 				AB3704992D7FFA2400EBBC85 /* PeepItError.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
+				AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
 				AB26A8252CB2DF26007D432E /* InputIdStore.swift in Sources */,
 				AB4BEDF52D93C1B500CA3936 /* PagedPeeps.swift in Sources */,
@@ -1571,6 +1586,7 @@
 				ABE8A0C52CEAE61800AFBEAE /* ThumbnailLayer.swift in Sources */,
 				AB3704952D7FCF2000EBBC85 /* APITask.swift in Sources */,
 				AB468D362CA9574700C1E430 /* NicknameModifyView.swift in Sources */,
+				AB3388922DA2DC3700316D4B /* LoginResponseDto.swift in Sources */,
 				ABE581C82CCA99FC003366DC /* FontModifier.swift in Sources */,
 				AB37049E2D7FFDCF00EBBC85 /* NetworkError.swift in Sources */,
 				AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */,
