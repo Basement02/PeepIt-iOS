@@ -18,7 +18,7 @@ struct LoginStore {
         var kakaoLoginState = KakaoLoginStore.State()
         var appleLoginState = AppleLoginStore.State()
 
-        @Shared(.appStorage("register")) var registerToken = ""
+        @Shared(.inMemory("register")) var registerToken = ""
     }
 
     enum Action: BindableAction {
