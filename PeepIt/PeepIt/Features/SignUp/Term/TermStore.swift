@@ -52,6 +52,7 @@ struct TermStore {
         var isAllAgreed = false
 
         @Presents var idState: InputIdStore.State?
+        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
     }
 
     enum Action {
@@ -71,12 +72,16 @@ struct TermStore {
 
             case .nextButtonTapped:
                 state.idState = InputIdStore.State()
+
+                guard state.marcketingTermAgreed else { return .none }
+                state.userInfo.isAgree = true
+
                 return .none
 
             case .allAgreeButtonTapped:
                 TermType.allCases.forEach { state[$0] = !state.isAllAgreed }
                 state.isAllAgreed.toggle()
-                
+
                 return .none
 
             case let .termToggled(term):
@@ -84,9 +89,7 @@ struct TermStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                     await self.dismiss()
-                 }
+                return .run { _ in await self.dismiss() }
 
             default:
                 return .none

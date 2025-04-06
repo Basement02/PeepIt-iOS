@@ -21,6 +21,8 @@ struct NicknameStore {
 
         /// 입력창 히위 뷰 State
         var enterFieldState = CheckEnterFieldStore.State()
+
+        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
     }
 
     enum Action {
@@ -52,6 +54,7 @@ struct NicknameStore {
                 return .none
                 
             case .nextButtonTapped:
+                state.userInfo.nickname = state.enterFieldState.text
                 return .none
 
             case .onAppeared:
@@ -61,9 +64,7 @@ struct NicknameStore {
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                     await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             default:
                 return .none

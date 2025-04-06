@@ -29,6 +29,8 @@ struct ProfileInfoStore {
         var isDayValid = true
         var isLengthValid = false
         var endEdit = false
+
+        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
     }
 
     enum Action: BindableAction {
@@ -72,12 +74,12 @@ struct ProfileInfoStore {
                 return .none
 
             case .nextButtonTapped:
+                state.userInfo.birth = state.date.replacingOccurrences(of: ".", with: "-")
+                state.userInfo.gender = state.selectedGender ?? .notSelected
                 return .none
 
             case .backButtonTapped:
-                return .run { _ in
-                    await self.dismiss()
-                }
+                return .run { _ in await self.dismiss() }
 
             case let .dateDebounced(date):
                 var year = 0

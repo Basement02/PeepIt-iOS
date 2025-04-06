@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GenderType: CaseIterable, Hashable {
+enum GenderType: CaseIterable, Hashable, Codable {
     case woman
     case man
     case notSelected
