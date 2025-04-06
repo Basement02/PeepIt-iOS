@@ -33,6 +33,8 @@
 		AB3388922DA2DC3700316D4B /* LoginResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */; };
 		AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388952DA2DCAD00316D4B /* SignUpDto.swift */; };
 		AB33889E2DA2DFDE00316D4B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33889D2DA2DFDB00316D4B /* Token.swift */; };
+		AB3388A32DA2F83D00316D4B /* MemberAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388A22DA2F83A00316D4B /* MemberAPI.swift */; };
+		AB3388A52DA2F9A500316D4B /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388A42DA2F9A000316D4B /* KeychainHelper.swift */; };
 		AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */; };
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
@@ -251,6 +253,8 @@
 		AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDto.swift; sourceTree = "<group>"; };
 		AB3388952DA2DCAD00316D4B /* SignUpDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDto.swift; sourceTree = "<group>"; };
 		AB33889D2DA2DFDB00316D4B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		AB3388A22DA2F83A00316D4B /* MemberAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAPI.swift; sourceTree = "<group>"; };
+		AB3388A42DA2F9A000316D4B /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
@@ -519,6 +523,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388942DA2DCA500316D4B /* Dto */,
+				AB3388A12DA2F83200316D4B /* API */,
 			);
 			path = Memeber;
 			sourceTree = "<group>";
@@ -545,6 +550,14 @@
 				AB33889D2DA2DFDB00316D4B /* Token.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		AB3388A12DA2F83200316D4B /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AB3388A22DA2F83A00316D4B /* MemberAPI.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
@@ -945,6 +958,7 @@
 		ABA11E8A2D1D3F8600C181DC /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				AB3388A42DA2F9A000316D4B /* KeychainHelper.swift */,
 				AB4A28C62D3FCA9B007E8383 /* BackdropView.swift */,
 				AB653BDC2D395E330002F04F /* YieldTouches.swift */,
 				ABA11E8B2D1D3F9C00C181DC /* KeyboardToolbarView.swift */,
@@ -1573,6 +1587,7 @@
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
+				AB3388A32DA2F83D00316D4B /* MemberAPI.swift in Sources */,
 				AB4BEDFD2D967FB600CA3936 /* AuthAPI.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
@@ -1611,6 +1626,7 @@
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
 				AB416D172CF2F7C10065BD09 /* ThumbnailProfile.swift in Sources */,
+				AB3388A52DA2F9A500316D4B /* KeychainHelper.swift in Sources */,
 				AB416D362CF5F4D20065BD09 /* BlockListView.swift in Sources */,
 				AB51597F2CAAFA670043AA0A /* LoginView.swift in Sources */,
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,

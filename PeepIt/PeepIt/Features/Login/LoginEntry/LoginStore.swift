@@ -17,8 +17,6 @@ struct LoginStore {
 
         var kakaoLoginState = KakaoLoginStore.State()
         var appleLoginState = AppleLoginStore.State()
-
-        @Shared(.inMemory("register")) var registerToken = ""
     }
 
     enum Action: BindableAction {
@@ -38,6 +36,7 @@ struct LoginStore {
         case moveToHome
     }
 
+    @Dependency(\.keychain) var keychain
     @Dependency(\.authAPIClient) var authAPIClient
 
     var body: some Reducer<State, Action> {
@@ -83,10 +82,11 @@ struct LoginStore {
 
                 case let .success(res):
                     if res.isNewMember {
-                        state.registerToken = res.registerToken
+                        _ = keychain.save(TokenType.register.rawValue, res.registerToken)
                         return .send(.moveToTerm)
                     } else {
-                        // TODO: 키체인에 access, refresh 토큰 저장 및 홈으로 이동
+                        _ = keychain.save(TokenType.access.rawValue, res.accessToken)
+                        _ = keychain.save(TokenType.refresh.rawValue, res.refreshToken)
                         return .send(.moveToHome)
                     }
 

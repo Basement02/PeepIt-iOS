@@ -35,7 +35,8 @@ extension MemberAPI: APIType {
     var header: HTTPHeaders? {
         switch self {
         case .signUp:
-            return ["Authorization": "Register "]
+            let registerToken = KeychainHelper().load(forKey: TokenType.register.rawValue) ?? ""
+            return ["Authorization": "Register \(registerToken)"]
         }
     }
 }
