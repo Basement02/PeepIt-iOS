@@ -31,6 +31,7 @@
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
 		AB3388922DA2DC3700316D4B /* LoginResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */; };
+		AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388952DA2DCAD00316D4B /* SignUpDto.swift */; };
 		AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */; };
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
@@ -247,6 +248,7 @@
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDto.swift; sourceTree = "<group>"; };
 		AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDto.swift; sourceTree = "<group>"; };
+		AB3388952DA2DCAD00316D4B /* SignUpDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDto.swift; sourceTree = "<group>"; };
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
@@ -509,6 +511,30 @@
 				AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		AB3388932DA2DC8F00316D4B /* Memeber */ = {
+			isa = PBXGroup;
+			children = (
+				AB3388942DA2DCA500316D4B /* Dto */,
+			);
+			path = Memeber;
+			sourceTree = "<group>";
+		};
+		AB3388942DA2DCA500316D4B /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				AB3388972DA2DE0200316D4B /* Common */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		AB3388972DA2DE0200316D4B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AB3388952DA2DCAD00316D4B /* SignUpDto.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
@@ -1263,6 +1289,7 @@
 			children = (
 				ABD639D52D7EE7300062A60C /* Base */,
 				AB4BEDF62D967F8900CA3936 /* Auth */,
+				AB3388932DA2DC8F00316D4B /* Memeber */,
 				AB4BEDDC2D926E9A00CA3936 /* Peep */,
 			);
 			path = Network;
@@ -1482,6 +1509,7 @@
 				AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */,
 				AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */,
 				AB9788142D114B84007E73B6 /* BlockDescriptionModal.swift in Sources */,
+				AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */,
 				AB3704992D7FFA2400EBBC85 /* PeepItError.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */,
