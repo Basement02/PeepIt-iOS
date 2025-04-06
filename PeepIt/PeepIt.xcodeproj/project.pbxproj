@@ -32,6 +32,7 @@
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
 		AB3388922DA2DC3700316D4B /* LoginResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */; };
 		AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388952DA2DCAD00316D4B /* SignUpDto.swift */; };
+		AB33889E2DA2DFDE00316D4B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33889D2DA2DFDB00316D4B /* Token.swift */; };
 		AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */; };
 		AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */; };
 		AB33E3C42D77522300D0D7DD /* MyChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */; };
@@ -249,6 +250,7 @@
 		AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDto.swift; sourceTree = "<group>"; };
 		AB3388912DA2DC3700316D4B /* LoginResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDto.swift; sourceTree = "<group>"; };
 		AB3388952DA2DCAD00316D4B /* SignUpDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDto.swift; sourceTree = "<group>"; };
+		AB33889D2DA2DFDB00316D4B /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		AB33E3B92D747AE200D0D7DD /* PeepModalCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepModalCollectionViewController.swift; sourceTree = "<group>"; };
 		AB33E3BB2D747B5100D0D7DD /* PeepPreviewThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewThumbnail.swift; sourceTree = "<group>"; };
 		AB33E3C32D77521B00D0D7DD /* MyChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyChatBubbleView.swift; sourceTree = "<group>"; };
@@ -535,6 +537,14 @@
 				AB3388952DA2DCAD00316D4B /* SignUpDto.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		AB33889C2DA2DFD700316D4B /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				AB33889D2DA2DFDB00316D4B /* Token.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		AB33E3C02D771E0700D0D7DD /* ChatBubbleView */ = {
@@ -1141,6 +1151,7 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AB33889C2DA2DFD700316D4B /* Auth */,
 				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
 				ABF72EAF2CBE5FC100629E9C /* Edit */,
 				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
@@ -1642,6 +1653,7 @@
 				AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */,
 				AB4BEDED2D9279DF00CA3936 /* Encodable+Extension.swift in Sources */,
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,
+				AB33889E2DA2DFDE00316D4B /* Token.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB1E17B52D5392EA00653C74 /* KeyboardHeightDetector.swift in Sources */,
 				ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */,

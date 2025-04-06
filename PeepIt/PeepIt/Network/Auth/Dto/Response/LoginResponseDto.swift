@@ -15,3 +15,14 @@ struct LoginResponseDto: Decodable {
     var name: String
     var id: String
 }
+
+extension LoginResponseDto {
+
+    func toModel() -> Token {
+        return .init(
+            registerToken: registerToken,
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        )
+    }
+}
