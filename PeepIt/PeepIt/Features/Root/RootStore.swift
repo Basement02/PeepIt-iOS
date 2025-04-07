@@ -128,7 +128,7 @@ struct RootStore {
                     state.path.append(.inputProfle(.init()))
                     return .none
 
-                case .element(_, action: .inputProfle(.nextButtonTapped)):
+                case .element(_, action: .inputProfle(.moveToSMSAuth)):
                     state.path.append(.inputPhoneNumber(.init()))
                     return .none
 
