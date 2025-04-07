@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum MemberAPI {
-    case signUp(SignUpDto)
+    case signUp(SignUpDto, String)
 }
 
 extension MemberAPI: APIType {
@@ -27,15 +27,14 @@ extension MemberAPI: APIType {
     
     var task: APITask {
         switch self {
-        case let .signUp(requestDto):
+        case let .signUp(requestDto, _):
             return .requestJSONEncodable(body: requestDto)
         }
     }
 
     var header: HTTPHeaders? {
         switch self {
-        case .signUp:
-            let registerToken = KeychainHelper().load(forKey: TokenType.register.rawValue) ?? ""
+        case let .signUp(_, registerToken):
             return ["Authorization": "Register \(registerToken)"]
         }
     }

@@ -22,4 +22,15 @@ enum GenderType: CaseIterable, Hashable, Codable {
             return "기타"
         }
     }
+
+    var type: String {
+        switch self {
+        case .woman:
+            return "female"
+        case .man:
+            return "male"
+        case .notSelected:
+            return "other"
+        }
+    }
 }

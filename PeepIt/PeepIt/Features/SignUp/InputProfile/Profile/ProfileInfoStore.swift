@@ -47,12 +47,21 @@ struct ProfileInfoStore {
         case tfFocusing
         /// 텍스트 필드 포커스 해제됐을 때
         case tfNotFocusing
+
+        /// 화면 전환
+        case moveToSMSAuth
+
+        /// 계정 생성 api
+        case createAccount
+        case fetchCreateAccountResponse(Result<Token, Error>)
     }
 
     enum ID: Hashable {
         case debounce
     }
 
+    @Dependency(\.keychain) var keychain
+    @Dependency(\.memberAPIClient) var memberAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
@@ -76,7 +85,7 @@ struct ProfileInfoStore {
             case .nextButtonTapped:
                 state.userInfo.birth = state.date.replacingOccurrences(of: ".", with: "-")
                 state.userInfo.gender = state.selectedGender ?? .notSelected
-                return .none
+                return .send(.createAccount)
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
@@ -161,6 +170,33 @@ struct ProfileInfoStore {
 
             case .tfNotFocusing:
                 state.date = state.date.replacingOccurrences(of: ".", with: "")
+                return .none
+
+            case .createAccount:
+                let profile = state.userInfo
+                let registerToken = keychain.load(TokenType.register.rawValue) ?? ""
+
+                return .run { send in
+                    await send(
+                        .fetchCreateAccountResponse(
+                            Result { try await memberAPIClient.signUp(profile, registerToken) }
+                        )
+                    )
+                }
+
+            case let .fetchCreateAccountResponse(result):
+                switch result {
+                case let .success(token):
+                    _ = keychain.save(TokenType.access.rawValue, token.accessToken)
+                    _ = keychain.save(TokenType.refresh.rawValue, token.refreshToken)
+                    return .send(.moveToSMSAuth)
+
+                case .failure:
+                    // TODO: 에러 처리
+                    return .none
+                }
+
+            case .moveToSMSAuth:
                 return .none
 
             default:
