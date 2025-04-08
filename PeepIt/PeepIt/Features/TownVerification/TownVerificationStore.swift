@@ -27,6 +27,8 @@ struct TownVerificationStore {
         case viewTapped
     }
 
+    @Dependency(\.townAPIClient) var townAPIClient
+
     var body: some Reducer<State, Action> {
         BindingReducer()
 

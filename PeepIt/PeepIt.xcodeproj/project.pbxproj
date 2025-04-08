@@ -32,7 +32,9 @@
 		AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33401A2DA4DB7A007C31FC /* UserProfile.swift */; };
 		AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */; };
 		AB3340292DA4FB8A007C31FC /* LegalCodeResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */; };
-		AB33402B2DA4FBC6007C31FC /* LegalCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402A2DA4FBC2007C31FC /* LegalCode.swift */; };
+		AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402A2DA4FBC2007C31FC /* Location.swift */; };
+		AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402D2DA4FE80007C31FC /* TownAPI.swift */; };
+		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -257,7 +259,9 @@
 		AB33401A2DA4DB7A007C31FC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeRequestDto.swift; sourceTree = "<group>"; };
 		AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeResponseDto.swift; sourceTree = "<group>"; };
-		AB33402A2DA4FBC2007C31FC /* LegalCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCode.swift; sourceTree = "<group>"; };
+		AB33402A2DA4FBC2007C31FC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		AB33402D2DA4FE80007C31FC /* TownAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPI.swift; sourceTree = "<group>"; };
+		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -526,6 +530,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3340232DA4FB04007C31FC /* Dto */,
+				AB33402C2DA4FD9F007C31FC /* API */,
 			);
 			path = Town;
 			sourceTree = "<group>";
@@ -553,6 +558,15 @@
 				AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		AB33402C2DA4FD9F007C31FC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AB33402D2DA4FE80007C31FC /* TownAPI.swift */,
+				AB33402F2DA50041007C31FC /* TownAPIClient.swift */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		AB33888B2DA02D3400316D4B /* Map */ = {
@@ -1204,7 +1218,7 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AB33402A2DA4FBC2007C31FC /* LegalCode.swift */,
+				AB33402A2DA4FBC2007C31FC /* Location.swift */,
 				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
 				AB33889C2DA2DFD700316D4B /* Auth */,
 				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
@@ -1611,6 +1625,7 @@
 				ABD639D72D7EE73A0062A60C /* Environment.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
 				AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */,
+				AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */,
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
@@ -1663,7 +1678,7 @@
 				ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */,
 				AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
-				AB33402B2DA4FBC6007C31FC /* LegalCode.swift in Sources */,
+				AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
@@ -1707,6 +1722,7 @@
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
+				AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 				AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */,
 				AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */,
