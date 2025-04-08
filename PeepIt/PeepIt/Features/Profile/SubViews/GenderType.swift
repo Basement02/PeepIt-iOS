@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GenderType: CaseIterable, Hashable {
+enum GenderType: CaseIterable, Hashable, Codable {
     case woman
     case man
     case notSelected
@@ -20,6 +20,33 @@ enum GenderType: CaseIterable, Hashable {
             return "남성"
         case .notSelected:
             return "기타"
+        }
+    }
+
+    var type: String {
+        switch self {
+        case .woman:
+            return "female"
+        case .man:
+            return "male"
+        case .notSelected:
+            return "other"
+        }
+    }
+}
+
+extension GenderType {
+
+    init(type: String) {
+        switch type {
+        case "female":
+            self = .woman
+        case "male":
+            self = .man
+        case "other":
+            self = .notSelected
+        default:
+            self = .notSelected 
         }
     }
 }

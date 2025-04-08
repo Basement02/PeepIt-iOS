@@ -14,6 +14,7 @@ struct AuthAPIClient {
     var checkIdDuplicated: (String) async throws -> ()
     var sendSMSCode: (String) async throws -> ()
     var checkSMSCodeVerified: (String, String) async throws -> ()
+    var login: (String, String) async throws -> Token // 추후 로그인 타입으로 수정
 }
 
 extension AuthAPIClient: DependencyKey {
@@ -38,6 +39,12 @@ extension AuthAPIClient: DependencyKey {
             let requestDto: CodeCheckRequestDto = .init(phone: phoneNumber, code: code)
             let requestAPI = AuthAPI.getSMSCodeVerifyResult(requestDto)
             let response: EmptyDecodable =  try await APIFetcher.shared.fetch(of: requestAPI)
+        },
+        login: { provider, idToken in //
+            let requestDto: LoginRequestDto = .init(provider: provider, idToken: idToken)
+            let requestAPI = AuthAPI.loginWithSocialAccount(requestDto)
+            let response: LoginResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
         }
     )
 }

@@ -10,7 +10,7 @@ import Foundation
 struct PeepPreview {
     let peepData: String
     let distance: String
-    let profile: UserProfile
+    let profile: UserInfo
     let uploadTime: String
     let isHot: Bool
 }

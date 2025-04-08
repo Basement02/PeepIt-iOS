@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum LoginType: CaseIterable, Hashable {
-    case kakao
-    case naver
-    case apple
+enum LoginType: String, CaseIterable, Hashable {
+    case kakao = "KAKAO"
+    case naver = "NAVER"
+    case apple = "APPLE"
 
     var description: String {
         switch self {

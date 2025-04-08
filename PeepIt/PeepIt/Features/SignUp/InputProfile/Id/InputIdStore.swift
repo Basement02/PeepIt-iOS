@@ -59,6 +59,8 @@ struct InputIdStore {
 
         /// 입력창 히위 뷰 State
         var enterFieldState = CheckEnterFieldStore.State()
+
+        @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
     enum Action {
@@ -96,6 +98,7 @@ struct InputIdStore {
                 return .none
 
             case .nextButtonTapped:
+                state.userInfo.id = state.enterFieldState.text
                 return .none
 
             case .backButtonTapped:

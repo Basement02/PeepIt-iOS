@@ -68,7 +68,7 @@ struct ProfileInfoView: View {
 
     private var titleView: some View {
         HStack {
-            Text("닉네임님에 대해\n좀 더 알려주세요.")
+            Text("\(store.userInfo.nickname)님에 대해\n좀 더 알려주세요.")
                 .pretendard(.title02)
             Spacer()
         }

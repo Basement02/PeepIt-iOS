@@ -59,7 +59,7 @@ struct RootStore {
         var path = StackState<Path.State>()
 
         var isLoading = true
-        var authState = AuthState.authorized
+        var authState = AuthState.unAuthorized
 
         var login = LoginStore.State()
         var home = HomeStore.State()
@@ -87,8 +87,13 @@ struct RootStore {
                 state.isLoading = false
                 return .none
 
-            case .login(.loginButtonTapped(type: .naver)):
+            case .login(.moveToTerm):
                 state.path.append(.term(.init()))
+                return .none
+
+            case .login(.moveToHome):
+                state.authState = .authorized
+                state.path.removeAll()
                 return .none
 
             case .home(.profileButtonTapped):
@@ -123,7 +128,7 @@ struct RootStore {
                     state.path.append(.inputProfle(.init()))
                     return .none
 
-                case .element(_, action: .inputProfle(.nextButtonTapped)):
+                case .element(_, action: .inputProfle(.moveToSMSAuth)):
                     state.path.append(.inputPhoneNumber(.init()))
                     return .none
 
