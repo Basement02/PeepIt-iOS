@@ -26,6 +26,11 @@ struct WelcomeView: View {
 
                 Spacer()
 
+                if !store.isAuthorized {
+                    authToastMessage
+                        .padding(.bottom, 20)
+                }
+
                 goHomeButton
                     .padding(.bottom, 84)
             }
@@ -75,9 +80,11 @@ struct WelcomeView: View {
         VStack(spacing: 10) {
             Text(store.myProfile?.name ?? "")
                 .pretendard(.title02)
+                .frame(height: 30)
 
             Text("@\(store.myProfile?.id ?? "")")
                 .pretendard(.body02)
+                .frame(height: 20)
 
             if store.isAuthorized {
                 authLabel
@@ -112,6 +119,16 @@ struct WelcomeView: View {
                 .stroke(Color.coreLime, lineWidth: 1)
                 .foregroundStyle(.clear)
         )
+    }
+
+    private var authToastMessage: some View {
+        RoundedRectangle(cornerRadius: 100)
+            .fill(Color.elevated)
+            .frame(width: 293, height: 36)
+            .overlay {
+                Text("설정에서 언제든 휴대폰 번호를 인증할 수 있어요!")
+                    .pretendard(.body04)
+            }
     }
 }
 
