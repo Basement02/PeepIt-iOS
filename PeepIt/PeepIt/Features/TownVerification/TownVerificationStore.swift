@@ -15,6 +15,9 @@ struct TownVerificationStore {
     struct State: Equatable {
         var isSheetVisible = false
         var modalOffset = Constant.screenHeight
+
+        /// 지도의 중심 좌표
+        var centerLoc = Coordinate(x: 0, y: 0)
     }
 
     enum Action: BindableAction {
@@ -25,8 +28,12 @@ struct TownVerificationStore {
         case dismissButtonTapped
         case closeModal
         case viewTapped
-    }
 
+        /// 법정동 코드 조회 (카카오 로컬 api)
+        case getLegalCode(loc: Coordinate)
+        case fetchGetLegalCodeResult(Result<LegalCode?, Error>)
+    }
+    
     @Dependency(\.townAPIClient) var townAPIClient
 
     var body: some Reducer<State, Action> {
@@ -34,6 +41,8 @@ struct TownVerificationStore {
 
         Reduce { state, action in
             switch action {
+            case .binding(\.centerLoc):
+                return .none
 
             case .registerButtonTapped:
                 state.isSheetVisible = true
@@ -57,6 +66,22 @@ struct TownVerificationStore {
 
             case .viewTapped:
                 return .send(.closeModal)
+
+            case let .getLegalCode(loc):
+                print(loc)
+                
+                return .none
+
+            case let .fetchGetLegalCodeResult(result):
+                switch result {
+                case let .success(value):
+                    print(value)
+
+                case let .failure(error):
+                    print(error)
+                    // TODO: 에러 처리
+                }
+                return .none
 
             default:
                 return .none
