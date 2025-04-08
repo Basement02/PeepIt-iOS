@@ -508,14 +508,6 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
-		AB3340122DA425CA007C31FC /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB3340132DA425D3007C31FC /* MemberAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB3340152DA4D796007C31FC /* Response */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,7 +537,6 @@
 			isa = PBXGroup;
 			children = (
 				AB3388942DA2DCA500316D4B /* Dto */,
-				AB3340122DA425CA007C31FC /* Client */,
 				AB3388A12DA2F83200316D4B /* API */,
 			);
 			path = Memeber;
@@ -580,6 +571,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388A22DA2F83A00316D4B /* MemberAPI.swift */,
+				AB3340132DA425D3007C31FC /* MemberAPIClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -760,7 +752,6 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEDDD2D926EDA00CA3936 /* Dto */,
-				AB4BEDE22D92716800CA3936 /* Client */,
 				AB4BEDE52D9277DB00CA3936 /* API */,
 			);
 			path = Peep;
@@ -775,17 +766,10 @@
 			path = Dto;
 			sourceTree = "<group>";
 		};
-		AB4BEDE22D92716800CA3936 /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB4BEDE52D9277DB00CA3936 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
 				AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */,
 			);
 			path = API;
@@ -814,7 +798,6 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEDF92D967F9C00CA3936 /* Dto */,
-				AB4BEDFA2D967FA000CA3936 /* Client */,
 				AB4BEDFB2D967FAA00CA3936 /* API */,
 			);
 			path = Auth;
@@ -829,18 +812,11 @@
 			path = Dto;
 			sourceTree = "<group>";
 		};
-		AB4BEDFA2D967FA000CA3936 /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB4BEDFB2D967FAA00CA3936 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				AB4BEDFC2D967FB200CA3936 /* AuthAPI.swift */,
+				AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
