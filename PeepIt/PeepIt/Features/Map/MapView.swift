@@ -10,6 +10,7 @@ import MapKit
 import CoreLocation
 
 struct MapView: UIViewRepresentable {
+    @Binding var centerLoc: Coordinate
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -56,6 +57,7 @@ struct MapView: UIViewRepresentable {
 
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             guard let location = locations.last else { return }
+
             let region = MKCoordinateRegion(
                 center: location.coordinate,
                 span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
@@ -64,6 +66,11 @@ struct MapView: UIViewRepresentable {
             if let mapView = manager.delegate as? MKMapView {
                 mapView.setRegion(region, animated: true)
             }
+        }
+
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            let center = mapView.centerCoordinate
+            self.parent.centerLoc = .init(x: center.longitude, y: center.latitude)
         }
     }
 }

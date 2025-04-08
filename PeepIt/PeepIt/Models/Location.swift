@@ -11,7 +11,7 @@ struct LegalCode {
     let code: String
 }
 
-struct Coordinate {
+struct Coordinate: Equatable {
     let x: Double
     let y: Double
 }
