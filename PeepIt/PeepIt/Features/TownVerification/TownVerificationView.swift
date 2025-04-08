@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct TownVerificationView: View {
-    var store: StoreOf<TownVerificationStore>
+    @Perception.Bindable var store: StoreOf<TownVerificationStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -33,7 +33,7 @@ struct TownVerificationView: View {
                         .padding(.bottom, 20)
 
                     ZStack(alignment: .bottom) {
-                        MapView()
+                        MapView(centerLoc: $store.centerLoc)
                         BackMapLayer.secondary()
                             .allowsHitTesting(false)
                         toCurrentLocationButton
