@@ -60,7 +60,7 @@ struct InputIdStore {
         /// 입력창 히위 뷰 State
         var enterFieldState = CheckEnterFieldStore.State()
 
-        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
+        @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
     enum Action {

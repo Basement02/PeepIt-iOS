@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct MemberAPIClient {
-    var signUp: (UserProfile, String) async throws -> Token
+    var signUp: (UserInfo, String) async throws -> Token
 }
 
 extension MemberAPIClient: DependencyKey {

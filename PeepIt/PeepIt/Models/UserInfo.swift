@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserProfile: Equatable, Hashable, Codable {
+struct UserInfo: Equatable, Hashable, Codable {
     var id: String = ""
     var nickname: String = ""
     var profileImage: String = ""
@@ -17,9 +17,9 @@ struct UserProfile: Equatable, Hashable, Codable {
     var isAgree: Bool = false
 }
 
-extension UserProfile {
+extension UserInfo {
 
-    static var stubUser1: UserProfile {
+    static var stubUser1: UserInfo {
         return .init(
             id: "user1_id",
             nickname: "user1_nickname",
@@ -30,7 +30,7 @@ extension UserProfile {
         )
     }
 
-    static var stubUser2: UserProfile {
+    static var stubUser2: UserInfo {
         return .init(
             id: "user2_id",
             nickname: "user2_nickname",

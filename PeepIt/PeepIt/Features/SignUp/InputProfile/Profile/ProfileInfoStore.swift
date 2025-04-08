@@ -30,7 +30,7 @@ struct ProfileInfoStore {
         var isLengthValid = false
         var endEdit = false
 
-        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
+        @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
     enum Action: BindableAction {

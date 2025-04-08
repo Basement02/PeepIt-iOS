@@ -14,7 +14,7 @@ struct BlockListStore {
     @ObservableState
     struct State: Equatable {
         /// 차단 목록
-        var blockList: [UserProfile] = [.stubUser1, .stubUser2]
+        var blockList: [UserInfo] = [.stubUser1, .stubUser2]
     }
 
     enum Action {

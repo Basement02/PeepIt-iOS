@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    let profile: UserProfile
+    let profile: UserInfo
     let isMine: Bool
     let modifyButtonAction: (() -> ())?
 
     init(
-        profile: UserProfile,
+        profile: UserInfo,
         isMine: Bool = false,
         modifyButtonAction: (() -> Void)? = nil) {
         self.profile = profile

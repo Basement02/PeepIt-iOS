@@ -9,7 +9,7 @@ import Foundation
 
 struct Chat: Equatable, Hashable {
     let id: String
-    let user: UserProfile
+    let user: UserInfo
     let message: String
     let sendTime: String
     let type: ChatType

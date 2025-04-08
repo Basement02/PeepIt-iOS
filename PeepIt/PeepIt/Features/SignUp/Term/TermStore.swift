@@ -52,7 +52,7 @@ struct TermStore {
         var isAllAgreed = false
 
         @Presents var idState: InputIdStore.State?
-        @Shared(.inMemory("userInfo")) var userInfo: UserProfile = .init()
+        @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
     enum Action {
