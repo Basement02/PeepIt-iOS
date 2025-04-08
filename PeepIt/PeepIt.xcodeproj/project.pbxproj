@@ -30,6 +30,9 @@
 		AB3340142DA425D9007C31FC /* MemberAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340132DA425D3007C31FC /* MemberAPIClient.swift */; };
 		AB3340172DA4D7AB007C31FC /* MemberDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */; };
 		AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33401A2DA4DB7A007C31FC /* UserProfile.swift */; };
+		AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */; };
+		AB3340292DA4FB8A007C31FC /* LegalCodeResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */; };
+		AB33402B2DA4FBC6007C31FC /* LegalCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402A2DA4FBC2007C31FC /* LegalCode.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -252,6 +255,9 @@
 		AB3340132DA425D3007C31FC /* MemberAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAPIClient.swift; sourceTree = "<group>"; };
 		AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailResponseDto.swift; sourceTree = "<group>"; };
 		AB33401A2DA4DB7A007C31FC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeRequestDto.swift; sourceTree = "<group>"; };
+		AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeResponseDto.swift; sourceTree = "<group>"; };
+		AB33402A2DA4FBC2007C31FC /* LegalCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCode.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -512,6 +518,39 @@
 			isa = PBXGroup;
 			children = (
 				AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		AB3340222DA4FACC007C31FC /* Town */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340232DA4FB04007C31FC /* Dto */,
+			);
+			path = Town;
+			sourceTree = "<group>";
+		};
+		AB3340232DA4FB04007C31FC /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340262DA4FB56007C31FC /* Request */,
+				AB3340272DA4FB61007C31FC /* Response */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		AB3340262DA4FB56007C31FC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		AB3340272DA4FB61007C31FC /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1165,6 +1204,7 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AB33402A2DA4FBC2007C31FC /* LegalCode.swift */,
 				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
 				AB33889C2DA2DFD700316D4B /* Auth */,
 				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
@@ -1317,6 +1357,7 @@
 				AB4BEDF62D967F8900CA3936 /* Auth */,
 				AB3388932DA2DC8F00316D4B /* Memeber */,
 				AB4BEDDC2D926E9A00CA3936 /* Peep */,
+				AB3340222DA4FACC007C31FC /* Town */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1620,11 +1661,14 @@
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
 				AB0FBF1C2D4A2005003D8372 /* GuideDescriptionView.swift in Sources */,
 				ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */,
+				AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
+				AB33402B2DA4FBC6007C31FC /* LegalCode.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
 				ABCE97312D342A4E00A07962 /* TextLayerView.swift in Sources */,
+				AB3340292DA4FB8A007C31FC /* LegalCodeResponseDto.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
