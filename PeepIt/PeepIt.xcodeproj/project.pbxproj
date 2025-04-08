@@ -28,6 +28,8 @@
 		AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */; };
 		AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */; };
 		AB3340142DA425D9007C31FC /* MemberAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340132DA425D3007C31FC /* MemberAPIClient.swift */; };
+		AB3340172DA4D7AB007C31FC /* MemberDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */; };
+		AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33401A2DA4DB7A007C31FC /* UserProfile.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -163,7 +165,7 @@
 		ABC305E42C933A63003B00FE /* PeepPreviewModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */; };
 		ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */; };
 		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
-		ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserProfile.swift */; };
+		ABC305F32C95A567003B00FE /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserInfo.swift */; };
 		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
@@ -248,6 +250,8 @@
 		AB26A8262CB2ED90007D432E /* ProfileInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoView.swift; sourceTree = "<group>"; };
 		AB26A8282CB2ED99007D432E /* ProfileInfoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileInfoStore.swift; sourceTree = "<group>"; };
 		AB3340132DA425D3007C31FC /* MemberAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAPIClient.swift; sourceTree = "<group>"; };
+		AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailResponseDto.swift; sourceTree = "<group>"; };
+		AB33401A2DA4DB7A007C31FC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -372,7 +376,7 @@
 		ABC305E32C933A63003B00FE /* PeepPreviewModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreviewModalView.swift; sourceTree = "<group>"; };
 		ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearBackgroundViewModifier.swift; sourceTree = "<group>"; };
 		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
-		ABC305F22C95A567003B00FE /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		ABC305F22C95A567003B00FE /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
@@ -512,6 +516,14 @@
 			path = Client;
 			sourceTree = "<group>";
 		};
+		AB3340152DA4D796007C31FC /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,6 +555,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388972DA2DE0200316D4B /* Common */,
+				AB3340152DA4D796007C31FC /* Response */,
 			);
 			path = Dto;
 			sourceTree = "<group>";
@@ -1176,11 +1189,12 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
 				AB33889C2DA2DFD700316D4B /* Auth */,
 				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
 				ABF72EAF2CBE5FC100629E9C /* Edit */,
 				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
-				ABC305F22C95A567003B00FE /* UserProfile.swift */,
+				ABC305F22C95A567003B00FE /* UserInfo.swift */,
 				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
 				ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */,
 				ABD3CAAF2CA1B52000438747 /* Peep.swift */,
@@ -1559,7 +1573,7 @@
 				ABC171F12CAB198100370901 /* NicknameView.swift in Sources */,
 				AB469C732C9FF7F000DC7B8A /* SideMenuStore.swift in Sources */,
 				AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */,
-				ABC305F32C95A567003B00FE /* UserProfile.swift in Sources */,
+				ABC305F32C95A567003B00FE /* UserInfo.swift in Sources */,
 				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
 				AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */,
 				AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */,
@@ -1616,6 +1630,7 @@
 				AB71E1CD2CBC06D000D2D3D9 /* WriteView.swift in Sources */,
 				AB4A28C72D3FCA9B007E8383 /* BackdropView.swift in Sources */,
 				ABC171F52CAB199300370901 /* WelcomeView.swift in Sources */,
+				AB3340172DA4D7AB007C31FC /* MemberDetailResponseDto.swift in Sources */,
 				AB094DE12CC6257A0091E9FB /* SliderView.swift in Sources */,
 				ABEBFD842CEF550C00E392F3 /* HotLabel.swift in Sources */,
 				AB653BDD2D395E390002F04F /* YieldTouches.swift in Sources */,
@@ -1673,6 +1688,7 @@
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
+				AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */,
 				AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */,
 				AB416D222CF34B880065BD09 /* NotificationSettingView.swift in Sources */,
 				AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */,

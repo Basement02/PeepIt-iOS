@@ -32,6 +32,7 @@ struct WelcomeView: View {
             .toolbar(.hidden, for: .navigationBar)
             .ignoresSafeArea(.all, edges: .bottom)
             .background(Color.base)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
@@ -72,13 +73,15 @@ struct WelcomeView: View {
 
     private var nicknameView: some View {
         VStack(spacing: 10) {
-            Text("${닉네임}")
+            Text(store.myProfile?.name ?? "")
                 .pretendard(.title02)
 
-            Text("@shinhr1115")
+            Text("@\(store.myProfile?.id ?? "")")
                 .pretendard(.body02)
 
-            if store.isAuthorized { authLabel }
+            if store.isAuthorized {
+                authLabel
+            }
         }
     }
 

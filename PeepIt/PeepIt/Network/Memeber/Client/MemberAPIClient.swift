@@ -9,12 +9,18 @@ import Foundation
 import ComposableArchitecture
 
 struct MemberAPIClient {
+    var getMemberDetail: () async throws -> UserProfile
     var signUp: (UserInfo, String) async throws -> Token
 }
 
 extension MemberAPIClient: DependencyKey {
 
     static let liveValue: MemberAPIClient = MemberAPIClient(
+        getMemberDetail: { 
+            let requestAPI: MemberAPI = .getMemberDetail
+            let response: MemberDetailResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
         signUp: { user, registerToken in
             let requestDto: SignUpDto = .init(
                 id: user.id,
