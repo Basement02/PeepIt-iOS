@@ -21,7 +21,7 @@ struct WelcomeStore {
         /// 유저 프로필
         var myProfile: UserProfile?
         /// 인증 여부
-        var isAuthorized: Bool = false
+        var isAuthorized: Bool = true
     }
 
     enum Action: BindableAction {
