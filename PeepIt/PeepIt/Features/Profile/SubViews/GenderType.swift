@@ -34,3 +34,19 @@ enum GenderType: CaseIterable, Hashable, Codable {
         }
     }
 }
+
+extension GenderType {
+
+    init(type: String) {
+        switch type {
+        case "female":
+            self = .woman
+        case "male":
+            self = .man
+        case "other":
+            self = .notSelected
+        default:
+            self = .notSelected 
+        }
+    }
+}
