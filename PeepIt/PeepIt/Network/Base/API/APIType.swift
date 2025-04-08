@@ -23,6 +23,6 @@ extension APIType {
     }
 
     var header: HTTPHeaders? {
-        return ["Authorization": ""] // TODO: JWT 토큰 수정
+        return ["Authorization": "Bearer "] 
     }
 }

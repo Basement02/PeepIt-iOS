@@ -48,7 +48,7 @@ extension MemberAPI: APIType {
             // TODO: - interceptor에서 헤더 넣어주기
             return ["Authorization": "Register \(registerToken)"]
         default:
-            return ["Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJwZWVwaXRfdXNlcjgiLCJyb2xlIjoiVU5DRVJUIiwiaXNzIjoiaHR0cHM6Ly9hdXRoLnBlZXBpdC5jb20iLCJpYXQiOjE3NDQwODY3OTAsImV4cCI6MTc0NjY3ODc5MH0.2L9UdFoiSiZRGQnqcBSVGwSCjeOEynMUIMx8n9ZSeJw"]
+            return ["Authorization": "Bearer "]
         }
     }
 }
