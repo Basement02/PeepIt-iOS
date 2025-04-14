@@ -35,6 +35,7 @@
 		AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402A2DA4FBC2007C31FC /* Location.swift */; };
 		AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402D2DA4FE80007C31FC /* TownAPI.swift */; };
 		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
+		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -262,6 +263,7 @@
 		AB33402A2DA4FBC2007C31FC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		AB33402D2DA4FE80007C31FC /* TownAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPI.swift; sourceTree = "<group>"; };
 		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
+		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -547,6 +549,7 @@
 		AB3340262DA4FB56007C31FC /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */,
 				AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */,
 			);
 			path = Request;
@@ -1714,6 +1717,7 @@
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */,
+				AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,

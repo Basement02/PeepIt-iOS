@@ -93,6 +93,7 @@ struct TownVerificationView: View {
 
     private var verifyButton: some View {
         Button {
+            store.send(.townVerifyButtonTapped)
         } label: {
             Text("현재 위치로 인증하기")
                 .mainButtonStyle()

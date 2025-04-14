@@ -10,23 +10,36 @@ import Alamofire
 
 enum TownAPI {
     case getLegalCode(LegalCodeRequestDto)
+    case patchUserTown(ModifyTownRequestDto)
 }
 
 extension TownAPI: APIType {
 
     var baseURL: URL {
-        return URL(string: "https://dapi.kakao.com/v2/local/geo/coord2regioncode")!
+        switch self {
+        case .getLegalCode:
+            return URL(string: "https://dapi.kakao.com/v2/local/geo/coord2regioncode")!
+        default:
+            return URL(string: Environment.baseURL)!
+        }
     }
 
     var path: String {
-        return ""
+        switch self {
+        case .getLegalCode:
+            return ""
+        case .patchUserTown:
+            return "/v1/member/town"
+        }
     }
 
     var method: HTTPMethod {
         switch self {
-
-        default:
+        case .getLegalCode:
             return .get
+            
+        case .patchUserTown:
+            return .patch
         }
     }
 
@@ -34,10 +47,19 @@ extension TownAPI: APIType {
         switch self {
         case let .getLegalCode(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
+
+        case let .patchUserTown(requestDto):
+            return .requestJSONEncodable(body: requestDto)
         }
     }
 
     var header: HTTPHeaders? {
-        return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+        switch self {
+        case .getLegalCode:
+            return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+
+        case .patchUserTown:
+            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
+        }
     }
 }
