@@ -43,6 +43,25 @@ final class APIFetcher {
             throw error
         }
     }
+
+    func openAPIFetcher<T: Decodable>(of api: APIType) async throws -> T {
+        let request = createDataRequest(for: api)
+        let response = await request.serializingData().response
+
+        guard let _ = response.response,
+              let data = response.data else {
+            throw NetworkError.noResponse
+        }
+
+        do {
+            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+            return decodedResponse
+        } catch _ as DecodingError {
+            throw NetworkError.decodingFailed
+        } catch {
+            throw error
+        }
+    }
 }
 
 extension APIFetcher {
