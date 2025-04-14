@@ -11,6 +11,7 @@ import CoreLocation
 
 struct MapView: UIViewRepresentable {
     @Binding var centerLoc: Coordinate
+    @Binding var interactionState: MapInteractionState
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -29,7 +30,11 @@ struct MapView: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ uiView: MKMapView, context: Context) { }
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        guard interactionState == .resetRequested else { return }
+        context.coordinator.moveToCurrentLocation(on: uiView)
+        self.interactionState = .idle
+    }
 
     class Coordinator: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         var parent: MapView
@@ -65,7 +70,7 @@ struct MapView: UIViewRepresentable {
 
             let region = MKCoordinateRegion(
                 center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
 
             if let mapView = manager.delegate as? MKMapView {
@@ -97,6 +102,19 @@ struct MapView: UIViewRepresentable {
                     abs(newCoord.y - parent.centerLoc.y) > 0.0001 else { return }
 
             parent.centerLoc = newCoord
+            parent.interactionState = .moved
+        }
+
+        func moveToCurrentLocation(on mapView: MKMapView) {
+            guard let location = locationManager.location else { return }
+
+            let coordinate = location.coordinate
+            let currentSpan = mapView.region.span
+
+            let region = MKCoordinateRegion(center: coordinate, span: currentSpan)
+            mapView.setRegion(region, animated: true)
+
+            parent.centerLoc = Coordinate(x: coordinate.longitude, y: coordinate.latitude)
         }
     }
 }

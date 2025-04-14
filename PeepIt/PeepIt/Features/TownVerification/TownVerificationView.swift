@@ -33,11 +33,18 @@ struct TownVerificationView: View {
                         .padding(.bottom, 20)
 
                     ZStack(alignment: .bottom) {
-                        MapView(centerLoc: $store.centerLoc)
+                        MapView(
+                            centerLoc: $store.centerLoc,
+                            interactionState: $store.mapInteraction
+                        )
+
                         BackMapLayer.secondary()
                             .allowsHitTesting(false)
-                        toCurrentLocationButton
-                            .padding(.bottom, 30)
+
+                        if store.mapInteraction == .moved {
+                            toCurrentLocationButton
+                                .padding(.bottom, 30)
+                        }
                     }
                     .frame(width: 356, height: 369)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -68,7 +75,7 @@ struct TownVerificationView: View {
 
     private var toCurrentLocationButton: some View {
         Button {
-
+            store.send(.moveToCurrentButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("IconDirection")

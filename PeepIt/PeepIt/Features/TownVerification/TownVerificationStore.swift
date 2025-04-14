@@ -21,6 +21,8 @@ struct TownVerificationStore {
         var centerLoc = Coordinate(x: 0, y: 0)
         /// 현재 중심 좌표의 법정동 코드
         var currentBCode: String?
+        /// 맵 인터렉션 상태
+        var mapInteraction: MapInteractionState = .idle
     }
 
     enum Action: BindableAction {
@@ -32,6 +34,7 @@ struct TownVerificationStore {
         case closeModal
         case viewTapped
         case townVerifyButtonTapped
+        case moveToCurrentButtonTapped
 
         /// 법정동 코드 조회 (카카오 로컬 api)
         case getLegalCode(loc: Coordinate)
@@ -53,16 +56,21 @@ struct TownVerificationStore {
                 let newCoord = state.centerLoc
                 return .send(.getLegalCode(loc: newCoord))
 
+            case .binding(\.mapInteraction):
+                return .none
+
             case .registerButtonTapped:
                 state.isSheetVisible = true
                 return .none
 
             case .backButtonTapped:
                 state.isSheetVisible = false
+                state.mapInteraction = .idle
                 return .none
 
             case .dismissButtonTapped:
                 state.isSheetVisible = false
+                state.mapInteraction = .idle
                 return .send(.closeModal)
 
             case let .modalDragOnChanged(height):
@@ -79,6 +87,10 @@ struct TownVerificationStore {
             case .townVerifyButtonTapped:
                 guard let bCode = state.currentBCode else { return .none }
                 return .send(.modifyUserTown(bCode: bCode))
+
+            case .moveToCurrentButtonTapped:
+                state.mapInteraction = .resetRequested
+                return .none
 
             case let .getLegalCode(loc):
                 return .run { send in

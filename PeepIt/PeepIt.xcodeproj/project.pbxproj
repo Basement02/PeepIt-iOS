@@ -36,6 +36,7 @@
 		AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402D2DA4FE80007C31FC /* TownAPI.swift */; };
 		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
 		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
+		AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340332DAD7015007C31FC /* MapInteractionState.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -264,6 +265,7 @@
 		AB33402D2DA4FE80007C31FC /* TownAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPI.swift; sourceTree = "<group>"; };
 		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
 		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
+		AB3340332DAD7015007C31FC /* MapInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionState.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -575,6 +577,7 @@
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340332DAD7015007C31FC /* MapInteractionState.swift */,
 				AB33888C2DA02D6B00316D4B /* MapView.swift */,
 				AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */,
 			);
@@ -1683,6 +1686,7 @@
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
 				AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
+				AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
 				ABCE97312D342A4E00A07962 /* TextLayerView.swift in Sources */,
