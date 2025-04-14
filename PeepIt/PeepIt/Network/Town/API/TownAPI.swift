@@ -36,4 +36,8 @@ extension TownAPI: APIType {
             return .requestParameters(parameters: requestDto.toDictionary())
         }
     }
+
+    var header: HTTPHeaders? {
+        return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+    }
 }

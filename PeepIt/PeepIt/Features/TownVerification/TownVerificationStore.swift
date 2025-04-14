@@ -42,8 +42,8 @@ struct TownVerificationStore {
         Reduce { state, action in
             switch action {
             case .binding(\.centerLoc):
-                print(state.centerLoc)
-                return .none
+                let newCoord = state.centerLoc
+                return .send(.getLegalCode(loc: newCoord))
 
             case .registerButtonTapped:
                 state.isSheetVisible = true
@@ -69,20 +69,26 @@ struct TownVerificationStore {
                 return .send(.closeModal)
 
             case let .getLegalCode(loc):
-                print(loc)
-                
-                return .none
+                return .run { send in
+                    await send(
+                        .fetchGetLegalCodeResult(
+                            Result { try await townAPIClient.getTownLegalCode(loc) }
+                        )
+                    )
+                }
 
             case let .fetchGetLegalCodeResult(result):
                 switch result {
+
                 case let .success(value):
-                    print(value)
+                    guard let legalCode = value else { return .none }
+                    print(legalCode)
+                    return .none // TODO: 서비스 서버 법정동 코드 조회 api 호출
 
                 case let .failure(error):
-                    print(error)
-                    // TODO: 에러 처리
+                    // TODO: 에러처리
+                    return .none
                 }
-                return .none
 
             default:
                 return .none
