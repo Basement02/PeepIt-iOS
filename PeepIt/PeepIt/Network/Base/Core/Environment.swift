@@ -19,4 +19,12 @@ struct Environment {
     static let kakaoAppKey = (
         Bundle.main.infoDictionary?["KAKAO_APP_KEY"] as! String
     ).replacingOccurrences(of: " ", with: "")
+
+    static let kakaoRestAPIKey = (
+        Bundle.main.infoDictionary?["KAKAO_REST_API_KEY"] as! String
+    ).replacingOccurrences(of: " ", with: "")
+
+    static let jwtTokenTmp = (
+        Bundle.main.infoDictionary?["TMP_TOKEN"] as! String
+    ).replacingOccurrences(of: " ", with: "")
 }

@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct TownVerificationView: View {
-    var store: StoreOf<TownVerificationStore>
+    @Perception.Bindable var store: StoreOf<TownVerificationStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -33,11 +33,18 @@ struct TownVerificationView: View {
                         .padding(.bottom, 20)
 
                     ZStack(alignment: .bottom) {
-                        MapView()
+                        MapView(
+                            centerLoc: $store.centerLoc,
+                            interactionState: $store.mapInteraction
+                        )
+
                         BackMapLayer.secondary()
                             .allowsHitTesting(false)
-                        toCurrentLocationButton
-                            .padding(.bottom, 30)
+
+                        if store.mapInteraction == .moved {
+                            toCurrentLocationButton
+                                .padding(.bottom, 30)
+                        }
                     }
                     .frame(width: 356, height: 369)
                     .clipShape(RoundedRectangle(cornerRadius: 14))
@@ -68,7 +75,7 @@ struct TownVerificationView: View {
 
     private var toCurrentLocationButton: some View {
         Button {
-
+            store.send(.moveToCurrentButtonTapped)
         } label: {
             HStack(spacing: 3) {
                 Image("IconDirection")
@@ -93,6 +100,7 @@ struct TownVerificationView: View {
 
     private var verifyButton: some View {
         Button {
+            store.send(.townVerifyButtonTapped)
         } label: {
             Text("현재 위치로 인증하기")
                 .mainButtonStyle()

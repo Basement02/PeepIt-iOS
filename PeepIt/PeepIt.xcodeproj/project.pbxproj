@@ -30,6 +30,13 @@
 		AB3340142DA425D9007C31FC /* MemberAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340132DA425D3007C31FC /* MemberAPIClient.swift */; };
 		AB3340172DA4D7AB007C31FC /* MemberDetailResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */; };
 		AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33401A2DA4DB7A007C31FC /* UserProfile.swift */; };
+		AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */; };
+		AB3340292DA4FB8A007C31FC /* LegalCodeResponseDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */; };
+		AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402A2DA4FBC2007C31FC /* Location.swift */; };
+		AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402D2DA4FE80007C31FC /* TownAPI.swift */; };
+		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
+		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
+		AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340332DAD7015007C31FC /* MapInteractionState.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -252,6 +259,13 @@
 		AB3340132DA425D3007C31FC /* MemberAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberAPIClient.swift; sourceTree = "<group>"; };
 		AB3340162DA4D7A3007C31FC /* MemberDetailResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDetailResponseDto.swift; sourceTree = "<group>"; };
 		AB33401A2DA4DB7A007C31FC /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeRequestDto.swift; sourceTree = "<group>"; };
+		AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegalCodeResponseDto.swift; sourceTree = "<group>"; };
+		AB33402A2DA4FBC2007C31FC /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		AB33402D2DA4FE80007C31FC /* TownAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPI.swift; sourceTree = "<group>"; };
+		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
+		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
+		AB3340332DAD7015007C31FC /* MapInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionState.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -508,14 +522,6 @@
 			path = Report;
 			sourceTree = "<group>";
 		};
-		AB3340122DA425CA007C31FC /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB3340132DA425D3007C31FC /* MemberAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB3340152DA4D796007C31FC /* Response */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,9 +530,54 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		AB3340222DA4FACC007C31FC /* Town */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340232DA4FB04007C31FC /* Dto */,
+				AB33402C2DA4FD9F007C31FC /* API */,
+			);
+			path = Town;
+			sourceTree = "<group>";
+		};
+		AB3340232DA4FB04007C31FC /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340262DA4FB56007C31FC /* Request */,
+				AB3340272DA4FB61007C31FC /* Response */,
+			);
+			path = Dto;
+			sourceTree = "<group>";
+		};
+		AB3340262DA4FB56007C31FC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */,
+				AB3340242DA4FB0B007C31FC /* LegalCodeRequestDto.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		AB3340272DA4FB61007C31FC /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340282DA4FB8A007C31FC /* LegalCodeResponseDto.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		AB33402C2DA4FD9F007C31FC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				AB33402D2DA4FE80007C31FC /* TownAPI.swift */,
+				AB33402F2DA50041007C31FC /* TownAPIClient.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340332DAD7015007C31FC /* MapInteractionState.swift */,
 				AB33888C2DA02D6B00316D4B /* MapView.swift */,
 				AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */,
 			);
@@ -545,7 +596,6 @@
 			isa = PBXGroup;
 			children = (
 				AB3388942DA2DCA500316D4B /* Dto */,
-				AB3340122DA425CA007C31FC /* Client */,
 				AB3388A12DA2F83200316D4B /* API */,
 			);
 			path = Memeber;
@@ -580,6 +630,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388A22DA2F83A00316D4B /* MemberAPI.swift */,
+				AB3340132DA425D3007C31FC /* MemberAPIClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -760,7 +811,6 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEDDD2D926EDA00CA3936 /* Dto */,
-				AB4BEDE22D92716800CA3936 /* Client */,
 				AB4BEDE52D9277DB00CA3936 /* API */,
 			);
 			path = Peep;
@@ -775,17 +825,10 @@
 			path = Dto;
 			sourceTree = "<group>";
 		};
-		AB4BEDE22D92716800CA3936 /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB4BEDE52D9277DB00CA3936 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
 				AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */,
 			);
 			path = API;
@@ -814,7 +857,6 @@
 			isa = PBXGroup;
 			children = (
 				AB4BEDF92D967F9C00CA3936 /* Dto */,
-				AB4BEDFA2D967FA000CA3936 /* Client */,
 				AB4BEDFB2D967FAA00CA3936 /* API */,
 			);
 			path = Auth;
@@ -829,18 +871,11 @@
 			path = Dto;
 			sourceTree = "<group>";
 		};
-		AB4BEDFA2D967FA000CA3936 /* Client */ = {
-			isa = PBXGroup;
-			children = (
-				AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */,
-			);
-			path = Client;
-			sourceTree = "<group>";
-		};
 		AB4BEDFB2D967FAA00CA3936 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				AB4BEDFC2D967FB200CA3936 /* AuthAPI.swift */,
+				AB4BEE032D96813200CA3936 /* AuthAPIClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1189,6 +1224,7 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				AB33402A2DA4FBC2007C31FC /* Location.swift */,
 				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
 				AB33889C2DA2DFD700316D4B /* Auth */,
 				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
@@ -1341,6 +1377,7 @@
 				AB4BEDF62D967F8900CA3936 /* Auth */,
 				AB3388932DA2DC8F00316D4B /* Memeber */,
 				AB4BEDDC2D926E9A00CA3936 /* Peep */,
+				AB3340222DA4FACC007C31FC /* Town */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1594,6 +1631,7 @@
 				ABD639D72D7EE73A0062A60C /* Environment.swift in Sources */,
 				AB468D252CA943CA00C1E430 /* CameraStore.swift in Sources */,
 				AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */,
+				AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */,
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
@@ -1644,11 +1682,15 @@
 				ABC171FE2CAB1A2500370901 /* WelcomeStore.swift in Sources */,
 				AB0FBF1C2D4A2005003D8372 /* GuideDescriptionView.swift in Sources */,
 				ABA11E8C2D1D3F9C00C181DC /* KeyboardToolbarView.swift in Sources */,
+				AB3340252DA4FB0C007C31FC /* LegalCodeRequestDto.swift in Sources */,
 				ABC171FC2CAB1A0800370901 /* AuthenticationStore.swift in Sources */,
+				AB33402B2DA4FBC6007C31FC /* Location.swift in Sources */,
 				ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */,
+				AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */,
 				ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */,
 				ABE8A0C32CEAE61000AFBEAE /* DropShadowModifier.swift in Sources */,
 				ABCE97312D342A4E00A07962 /* TextLayerView.swift in Sources */,
+				AB3340292DA4FB8A007C31FC /* LegalCodeResponseDto.swift in Sources */,
 				ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */,
 				ABE8A0CD2CEAEFF100AFBEAE /* PressableButtonStyle.swift in Sources */,
 				AB26A8272CB2ED90007D432E /* ProfileInfoView.swift in Sources */,
@@ -1679,6 +1721,7 @@
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
 				AB468D2D2CA94A5400C1E430 /* ProfileModifyView.swift in Sources */,
 				AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */,
+				AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
@@ -1687,6 +1730,7 @@
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
+				AB33402E2DA4FE81007C31FC /* TownAPI.swift in Sources */,
 				ABC305CA2C932341003B00FE /* PeepItApp.swift in Sources */,
 				AB33401B2DA4DB7B007C31FC /* UserProfile.swift in Sources */,
 				AB33E3BC2D747B5900D0D7DD /* PeepPreviewThumbnail.swift in Sources */,

@@ -25,9 +25,9 @@ struct WriteMapModalView: View {
                             .frame(width: 60, height: 5)
                             .padding(.top, 10)
 
-                        MapView()
-                            .frame(width: 361, height: 387)
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
+//                        MapView(centerLoc: .constant(.init(x: 0, y: 0)))
+//                            .frame(width: 361, height: 387)
+//                            .clipShape(RoundedRectangle(cornerRadius: 14))
 
                         Spacer()
                     }

@@ -10,6 +10,8 @@ import MapKit
 import CoreLocation
 
 struct MapView: UIViewRepresentable {
+    @Binding var centerLoc: Coordinate
+    @Binding var interactionState: MapInteractionState
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(self)
@@ -28,11 +30,19 @@ struct MapView: UIViewRepresentable {
         return mapView
     }
 
-    func updateUIView(_ uiView: MKMapView, context: Context) { }
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        guard interactionState == .resetRequested else { return }
+        context.coordinator.moveToCurrentLocation(on: uiView)
+        self.interactionState = .idle
+    }
 
     class Coordinator: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         var parent: MapView
+
         let locationManager = CLLocationManager()
+
+        var isFirstLoad = true
+        var isUserInteracting = false
 
         init(_ parent: MapView) {
             self.parent = parent
@@ -55,15 +65,56 @@ struct MapView: UIViewRepresentable {
         }
 
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            guard isFirstLoad else { return }
             guard let location = locations.last else { return }
+
             let region = MKCoordinateRegion(
                 center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)
+                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             )
 
             if let mapView = manager.delegate as? MKMapView {
                 mapView.setRegion(region, animated: true)
             }
+
+            isFirstLoad = false
+            parent.centerLoc = .init(x: location.coordinate.longitude, y: location.coordinate.latitude)
+        }
+
+        func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+            guard let gestureRecognizers = mapView.subviews.first?.gestureRecognizers else { return }
+
+            let isTouching = gestureRecognizers.contains {
+                $0.state == .began || $0.state == .changed
+            }
+
+            isUserInteracting = isTouching
+        }
+
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            guard isUserInteracting else { return }
+            isUserInteracting = false
+
+            let center = mapView.centerCoordinate
+            let newCoord = Coordinate(x: center.longitude, y: center.latitude)
+
+            guard abs(newCoord.x - parent.centerLoc.x) > 0.0001 ||
+                    abs(newCoord.y - parent.centerLoc.y) > 0.0001 else { return }
+
+            parent.centerLoc = newCoord
+            parent.interactionState = .moved
+        }
+
+        func moveToCurrentLocation(on mapView: MKMapView) {
+            guard let location = locationManager.location else { return }
+
+            let coordinate = location.coordinate
+            let currentSpan = mapView.region.span
+
+            let region = MKCoordinateRegion(center: coordinate, span: currentSpan)
+            mapView.setRegion(region, animated: true)
+
+            parent.centerLoc = Coordinate(x: coordinate.longitude, y: coordinate.latitude)
         }
     }
 }
