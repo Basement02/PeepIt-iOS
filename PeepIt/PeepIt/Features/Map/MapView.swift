@@ -33,7 +33,11 @@ struct MapView: UIViewRepresentable {
 
     class Coordinator: NSObject, CLLocationManagerDelegate, MKMapViewDelegate {
         var parent: MapView
+
         let locationManager = CLLocationManager()
+
+        var isFirstLoad = true
+        var isUserInteracting = false
 
         init(_ parent: MapView) {
             self.parent = parent
@@ -56,6 +60,7 @@ struct MapView: UIViewRepresentable {
         }
 
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+            guard isFirstLoad else { return }
             guard let location = locations.last else { return }
 
             let region = MKCoordinateRegion(
@@ -66,11 +71,32 @@ struct MapView: UIViewRepresentable {
             if let mapView = manager.delegate as? MKMapView {
                 mapView.setRegion(region, animated: true)
             }
+
+            isFirstLoad = false
+            parent.centerLoc = .init(x: location.coordinate.longitude, y: location.coordinate.latitude)
+        }
+
+        func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
+            guard let gestureRecognizers = mapView.subviews.first?.gestureRecognizers else { return }
+
+            let isTouching = gestureRecognizers.contains {
+                $0.state == .began || $0.state == .changed
+            }
+
+            isUserInteracting = isTouching
         }
 
         func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            guard isUserInteracting else { return }
+            isUserInteracting = false
+
             let center = mapView.centerCoordinate
-            self.parent.centerLoc = .init(x: center.longitude, y: center.latitude)
+            let newCoord = Coordinate(x: center.longitude, y: center.latitude)
+
+            guard abs(newCoord.x - parent.centerLoc.x) > 0.0001 ||
+                    abs(newCoord.y - parent.centerLoc.y) > 0.0001 else { return }
+
+            parent.centerLoc = newCoord
         }
     }
 }

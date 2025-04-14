@@ -42,6 +42,7 @@ struct TownVerificationStore {
         Reduce { state, action in
             switch action {
             case .binding(\.centerLoc):
+                print(state.centerLoc)
                 return .none
 
             case .registerButtonTapped:
