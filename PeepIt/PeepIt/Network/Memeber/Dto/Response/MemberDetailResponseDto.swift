@@ -14,6 +14,7 @@ struct MemberDetailResponseDto: Decodable {
     let town: String
     let gender: String
     let profile: String
+    let isAgree: Bool?
 }
 
 extension MemberDetailResponseDto {
