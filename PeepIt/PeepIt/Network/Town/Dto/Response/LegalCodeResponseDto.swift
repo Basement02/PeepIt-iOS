@@ -47,11 +47,10 @@ struct RegionDocument: Decodable {
 
 extension LegalCodeResponseDto {
 
-    func toLegalCode() -> LegalCode? {
-        guard let code = documents.first(where: { $0.regionType == "B" })?.code else {
+    func toTownInfo() -> TownInfo? {
+        guard let document = documents.first(where: { $0.regionType == "B" }) else {
             return nil
         }
-
-        return LegalCode(code: code)
+        return TownInfo(address: document.addressName, bCode: document.code)
     }
 }

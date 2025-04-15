@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 struct TownAPIClient {
-    var getTownLegalCode: (Coordinate) async throws -> LegalCode?
+    var getTownLegalCode: (Coordinate) async throws -> TownInfo?
     var modifyUserTown: (String) async throws -> Void
 }
 
@@ -20,7 +20,7 @@ extension TownAPIClient: DependencyKey {
             let requestDto: LegalCodeRequestDto = .init(x: "\(coord.x)", y: "\(coord.y)")
             let requestAPI: TownAPI = .getLegalCode(requestDto)
             let response: LegalCodeResponseDto = try await APIFetcher.shared.openAPIFetcher(of: requestAPI)
-            return response.toLegalCode()
+            return response.toTownInfo()
         },
         modifyUserTown: { code in
             let requestDto: ModifyTownRequestDto = .init(legalDistrictCode: code)
