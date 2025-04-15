@@ -7,9 +7,10 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PhotosUI
 
 struct ProfileModifyView: View {
-    let store: StoreOf<ProfileModifyStore>
+    @Perception.Bindable var store: StoreOf<ProfileModifyStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -44,14 +45,12 @@ struct ProfileModifyView: View {
                 .frame(width: 114, height: 114)
                 .clipShape(RoundedRectangle(cornerRadius: 21))
 
-            Button {
-
-            } label: {
+            PhotosPicker(selection: $store.selectedPhotoItem) {
                 Text("수정")
-                    .tint(.white)
-                    .pretendard(.caption04)
                     .underline()
-                    .frame(width: 44, height: 44)
+                    .pretendard(.caption02)
+                    .frame(width: 43, height: 44)
+                    .foregroundStyle(Color.white)
             }
         }
     }
