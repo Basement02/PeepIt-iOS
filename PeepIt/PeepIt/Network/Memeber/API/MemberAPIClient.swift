@@ -12,7 +12,7 @@ struct MemberAPIClient {
     var getMemberDetail: () async throws -> UserProfile
     var signUp: (UserInfo, String) async throws -> Token
     var modifyUserProfileImage: (Data) async throws -> String
-    var modifyUserProfle: (UserProfile) async throws -> UserProfile
+    var modifyUserProfile: (UserProfile) async throws -> UserProfile
 }
 
 extension MemberAPIClient: DependencyKey {
@@ -42,7 +42,7 @@ extension MemberAPIClient: DependencyKey {
             let response: MemberDetailResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.profile
         },
-        modifyUserProfle: { profile in
+        modifyUserProfile: { profile in
             let requestDto: ModifyProfileRequestDto = .init(
                 nickname: profile.name,
                 birth: "", // TODO:

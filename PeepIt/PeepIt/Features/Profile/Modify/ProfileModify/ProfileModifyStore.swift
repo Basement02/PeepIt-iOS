@@ -52,6 +52,10 @@ struct ProfileModifyStore {
         /// 프로필 이미지 수정 api
         case modifyMyProfileImg(data: Data)
         case fetchModifyMyProfileImgResponse(Result<String, Error>)
+
+        // 프로필 수정 api
+        case modifyGender(newGender: GenderType)
+        case fetchModifyProfileResponse(Result<UserProfile, Error>)
     }
 
     @Dependency(\.dismiss) var dismiss
@@ -110,7 +114,8 @@ struct ProfileModifyStore {
                 return .none
 
             case .saveButtonTapped:
-                return .send(.dismiss)
+                guard let newGender = state.selectedGender else { return .none }
+                return .send(.modifyGender(newGender: newGender))
 
             case .dismiss:
                 return .run { _ in await self.dismiss() }
@@ -155,6 +160,33 @@ struct ProfileModifyStore {
                 }
 
                 return .none
+
+            case let .modifyGender(newGender):
+                var newProfile = state.userProfile
+                newProfile?.gender = newGender
+                guard let profile = newProfile else { return .none }
+
+                return .run { send in
+                    await send(
+                        .fetchModifyProfileResponse(
+                            Result { try await memberAPIClient.modifyUserProfile(profile) }
+                        )
+                    )
+                }
+
+            case let .fetchModifyProfileResponse(result):
+                switch result {
+
+                case let .success(value):
+                    return .run { send in
+                        try await userProfileStorage.save(value)
+                        await send(.dismiss)
+                    }
+
+                case .failure:
+                    // TODO: 에러 처리
+                    return .none
+                }
 
             default:
                 return .none
