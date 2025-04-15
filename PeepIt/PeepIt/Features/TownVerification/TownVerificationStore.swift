@@ -21,6 +21,8 @@ struct TownVerificationStore {
         var centerLoc = Coordinate(x: 0, y: 0)
         /// 현재 중심 좌표의 법정동 코드
         var currentBCode: String?
+        /// 현재 중심 좌표의 동네 이름
+        var townName: String?
         /// 맵 인터렉션 상태
         var mapInteraction: MapInteractionState = .idle
     }
@@ -38,7 +40,7 @@ struct TownVerificationStore {
 
         /// 법정동 코드 조회 (카카오 로컬 api)
         case getLegalCode(loc: Coordinate)
-        case fetchGetLegalCodeResult(Result<LegalCode?, Error>)
+        case fetchGetLegalCodeResult(Result<TownInfo?, Error>)
 
         /// 동네 등록 api
         case modifyUserTown(bCode: String)
@@ -105,8 +107,11 @@ struct TownVerificationStore {
                 switch result {
 
                 case let .success(value):
-                    guard let legalCode = value else { return .none }
-                    state.currentBCode = legalCode.code
+                    guard let townInfo = value else { return .none }
+                    
+                    state.currentBCode = townInfo.bCode
+                    state.townName = townInfo.address
+
                     return .none
 
                 case let .failure(error):
@@ -130,8 +135,12 @@ struct TownVerificationStore {
                 case .success:
                     return .send(.dismissButtonTapped)
 
-                case .failure:
-                    // TODO: 에러처리
+                case let .failure(error):
+                    if error.asPeepItError() == .bCodeError {
+                        print("법정동 오류")
+                        // TODO: - 오류 처리(UI 수정)
+                    }
+                    
                     return .none
                 }
 

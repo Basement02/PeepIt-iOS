@@ -17,6 +17,7 @@ enum PeepItError: String, Error {
     case verificationCodeFailure = "50001"    // 50001 - 인증 번호 전송 실패
     case smsCodeFailed = "41001"              // 41001 - 인증 번호 관련 오류
     case smsCodeInvalidate = "40103"          // 40103 - 유효하지 않은 인증 번호
+    case bCodeError = "40403"                 // 40403 - 법정동 관련 에러
 }
 
 extension Error {

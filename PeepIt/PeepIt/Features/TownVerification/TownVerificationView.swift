@@ -64,7 +64,7 @@ struct TownVerificationView: View {
             Image("IconLocation")
                 .resizable()
                 .frame(width: 30, height: 30)
-            Text("구/읍면동")
+            Text(store.townName?.components(separatedBy: " ").last ?? "")
                 .pretendard(.foodnote)
         }
         .padding(.vertical, 9)

@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct LegalCode {
-    let code: String
+struct TownInfo {
+    let address: String
+    let bCode: String
 }
 
 struct Coordinate: Equatable {
