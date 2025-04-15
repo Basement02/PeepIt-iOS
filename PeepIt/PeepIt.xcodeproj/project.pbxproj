@@ -40,6 +40,7 @@
 		AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340352DAE2282007C31FC /* UIImage+Extension.swift */; };
 		AB3340382DAE24F7007C31FC /* MultipartFormDataPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */; };
 		AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */; };
+		AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -272,6 +273,7 @@
 		AB3340352DAE2282007C31FC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataPart.swift; sourceTree = "<group>"; };
 		AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImgRequestDto.swift; sourceTree = "<group>"; };
+		AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileStorageClient.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -1060,6 +1062,7 @@
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
 				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
+				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -1667,6 +1670,7 @@
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */,
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,

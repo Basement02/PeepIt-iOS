@@ -39,6 +39,7 @@ struct WelcomeStore {
     }
 
     @Dependency(\.memberAPIClient) var memberAPIClient
+    @Dependency(\.userProfileStorage) var userProfileStorage
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -59,7 +60,11 @@ struct WelcomeStore {
                 return .send(.getMyProfile)
 
             case .goToHomeButtonTapped:
-                return .none
+                guard let profile = state.myProfile else { return .none }
+
+                return .run { _ in // 기기에 정보 저장
+                    try await userProfileStorage.save(profile)
+                }
 
             case .getMyProfile:
                 return .run { send in

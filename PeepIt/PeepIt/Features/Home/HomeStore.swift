@@ -68,6 +68,8 @@ struct HomeStore {
         case peepTapped(idx: Int)
     }
 
+    @Dependency(\.userProfileStorage) var userProfileStorage
+
     var body: some Reducer<State, Action> {
         BindingReducer()
         
