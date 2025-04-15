@@ -108,6 +108,27 @@ extension APIFetcher {
                 encoding: URLEncoding.queryString,
                 headers: endpoint.header
             )
+
+        case let .requestWithMultipartFormData(formData):
+            return AF.upload(
+                 multipartFormData: { multipart in
+                     for part in formData {
+                         if let filename = part.filename, let mimeType = part.mimeType {
+                             multipart.append(
+                                part.data,
+                                withName: part.name,
+                                fileName: filename,
+                                mimeType: mimeType
+                             )
+                         } else {
+                             multipart.append(part.data, withName: part.name)
+                         }
+                     }
+                 },
+                 to: url,
+                 method: endpoint.method,
+                 headers: endpoint.header
+             )
         }
     }
 }
