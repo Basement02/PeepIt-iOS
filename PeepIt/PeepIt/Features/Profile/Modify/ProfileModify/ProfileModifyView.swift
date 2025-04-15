@@ -94,7 +94,7 @@ struct ProfileModifyView: View {
         HStack(spacing: 23) {
             Text("성별")
                 .pretendard(.foodnote)
-            Text("선택된 성별")
+            Text(store.selectedGender?.title ?? "기타")
                 .pretendard(.body04)
 
             Spacer()

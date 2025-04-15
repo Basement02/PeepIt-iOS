@@ -97,6 +97,7 @@ struct ProfileModifyStore {
                 state.profileImgStr = profile.profile
                 state.nickname = profile.name
                 state.id = profile.id
+                state.selectedGender = profile.gender
                 return .none
 
             default:
