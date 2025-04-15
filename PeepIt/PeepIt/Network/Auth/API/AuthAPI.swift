@@ -60,6 +60,11 @@ extension AuthAPI: APIType {
     }
     
     var header: HTTPHeaders? {
-        return nil
+        switch self {
+        case .requestSMSCode, .getSMSCodeVerifyResult:
+            return ["Authorization": "Bearer "]
+        default:
+            return nil
+        }
     }
 }
