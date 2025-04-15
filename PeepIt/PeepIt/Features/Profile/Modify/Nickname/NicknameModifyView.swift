@@ -51,7 +51,7 @@ struct NicknameModifyView: View {
 
     private var saveButton: some View {
         Button {
-            store.send(.saveButtonTapped)
+            store.send(.nicknameSaveButtonTapped)
         } label: {
             Text("저장")
                 .mainButtonStyle()

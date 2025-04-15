@@ -14,7 +14,7 @@ struct MemberDetailResponseDto: Decodable {
     let town: String
     let gender: String
     let profile: String
-    let isAgree: Bool?
+    let isAgree: Bool
 }
 
 extension MemberDetailResponseDto {
@@ -26,7 +26,8 @@ extension MemberDetailResponseDto {
             town: town,
             profile: profile,
             gender: GenderType(type: gender),
-            isCertificated: role == "CERTIFICATED"
+            isCertificated: role == "CERTIFICATED",
+            isAgree: isAgree
         )
     }
 }

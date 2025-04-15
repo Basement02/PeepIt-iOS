@@ -42,6 +42,7 @@
 		AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */; };
 		AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */; };
 		AB3340442DAE34E4007C31FC /* AsyncProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340432DAE34E4007C31FC /* AsyncProfile.swift */; };
+		AB3340462DAE3ED2007C31FC /* ModifyProfileRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340452DAE3EC6007C31FC /* ModifyProfileRequestDto.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -276,6 +277,7 @@
 		AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImgRequestDto.swift; sourceTree = "<group>"; };
 		AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileStorageClient.swift; sourceTree = "<group>"; };
 		AB3340432DAE34E4007C31FC /* AsyncProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncProfile.swift; sourceTree = "<group>"; };
+		AB3340452DAE3EC6007C31FC /* ModifyProfileRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileRequestDto.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 		AB3340392DAE2615007C31FC /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340452DAE3EC6007C31FC /* ModifyProfileRequestDto.swift */,
 				AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */,
 			);
 			path = Request;
@@ -1619,6 +1622,7 @@
 				AB416D2F2CF5B6610065BD09 /* RoundedCorner.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
+				AB3340462DAE3ED2007C31FC /* ModifyProfileRequestDto.swift in Sources */,
 				AB23E3022D39406D003660F8 /* OriginalChatBubbleView.swift in Sources */,
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
 				AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */,
