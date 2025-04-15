@@ -7,9 +7,10 @@
 
 import SwiftUI
 import ComposableArchitecture
+import PhotosUI
 
 struct ProfileModifyView: View {
-    let store: StoreOf<ProfileModifyStore>
+    @Perception.Bindable var store: StoreOf<ProfileModifyStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -34,23 +35,22 @@ struct ProfileModifyView: View {
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
     private var profileView: some View {
         VStack(spacing: 0) {
-            Image("ProfileSample")
-                .resizable()
+            AsyncProfile(profileUrlStr: store.profileImgStr)
                 .frame(width: 114, height: 114)
+                .clipShape(RoundedRectangle(cornerRadius: 21))
 
-            Button {
-
-            } label: {
+            PhotosPicker(selection: $store.selectedPhotoItem) {
                 Text("수정")
-                    .tint(.white)
-                    .pretendard(.caption04)
                     .underline()
-                    .frame(width: 44, height: 44)
+                    .pretendard(.caption02)
+                    .frame(width: 43, height: 44)
+                    .foregroundStyle(Color.white)
             }
         }
     }
@@ -93,7 +93,7 @@ struct ProfileModifyView: View {
         HStack(spacing: 23) {
             Text("성별")
                 .pretendard(.foodnote)
-            Text("선택된 성별")
+            Text(store.selectedGender?.title ?? "기타")
                 .pretendard(.body04)
 
             Spacer()

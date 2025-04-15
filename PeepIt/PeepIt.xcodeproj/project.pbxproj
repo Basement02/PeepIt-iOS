@@ -37,6 +37,11 @@
 		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
 		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
 		AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340332DAD7015007C31FC /* MapInteractionState.swift */; };
+		AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340352DAE2282007C31FC /* UIImage+Extension.swift */; };
+		AB3340382DAE24F7007C31FC /* MultipartFormDataPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */; };
+		AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */; };
+		AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */; };
+		AB3340442DAE34E4007C31FC /* AsyncProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340432DAE34E4007C31FC /* AsyncProfile.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -266,6 +271,11 @@
 		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
 		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
 		AB3340332DAD7015007C31FC /* MapInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionState.swift; sourceTree = "<group>"; };
+		AB3340352DAE2282007C31FC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataPart.swift; sourceTree = "<group>"; };
+		AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImgRequestDto.swift; sourceTree = "<group>"; };
+		AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileStorageClient.swift; sourceTree = "<group>"; };
+		AB3340432DAE34E4007C31FC /* AsyncProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncProfile.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -494,6 +504,7 @@
 		AB094DE62CC76EB10091E9FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340352DAE2282007C31FC /* UIImage+Extension.swift */,
 				AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
@@ -574,6 +585,22 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		AB3340392DAE2615007C31FC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		AB33403E2DAE3480007C31FC /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340432DAE34E4007C31FC /* AsyncProfile.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -605,6 +632,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388972DA2DE0200316D4B /* Common */,
+				AB3340392DAE2615007C31FC /* Request */,
 				AB3340152DA4D796007C31FC /* Response */,
 			);
 			path = Dto;
@@ -652,6 +680,7 @@
 			children = (
 				ABD639D62D7EE7340062A60C /* Environment.swift */,
 				AB37049F2D7FFE2F00EBBC85 /* BaseResponse.swift */,
+				AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1043,6 +1072,7 @@
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
 				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
+				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -1217,6 +1247,7 @@
 				AB416D182CF309620065BD09 /* Interface */,
 				AB416D1D2CF329490065BD09 /* Text */,
 				AB4BEE062D9A941700CA3936 /* Alarm */,
+				AB33403E2DAE3480007C31FC /* UseCase */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1592,12 +1623,14 @@
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
 				AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */,
 				AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */,
+				AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */,
 				AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */,
 				AB9788142D114B84007E73B6 /* BlockDescriptionModal.swift in Sources */,
 				AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */,
 				AB3704992D7FFA2400EBBC85 /* PeepItError.swift in Sources */,
+				AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
@@ -1648,6 +1681,7 @@
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */,
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
@@ -1727,6 +1761,7 @@
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
 				AB4BEDE72D9277F100CA3936 /* PeepAPI.swift in Sources */,
+				AB3340382DAE24F7007C31FC /* MultipartFormDataPart.swift in Sources */,
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
@@ -1757,6 +1792,7 @@
 				AB4BEDDF2D926EF600CA3936 /* CommonPeepDto.swift in Sources */,
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				AB4A28C92D3FD31A007E8383 /* HomeMapView.swift in Sources */,
+				AB3340442DAE34E4007C31FC /* AsyncProfile.swift in Sources */,
 				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
 				ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */,
 				AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */,

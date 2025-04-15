@@ -11,6 +11,7 @@ import Alamofire
 enum MemberAPI {
     case getMemberDetail
     case signUp(SignUpDto, String)
+    case patchUserProfileImage(ProfileImgRequestDto)
 }
 
 extension MemberAPI: APIType {
@@ -21,6 +22,8 @@ extension MemberAPI: APIType {
             return "/v1/member/detail"
         case .signUp:
             return "/v1/member/sign-up"
+        case .patchUserProfileImage:
+            return "/v1/member/profile-img"
         }
     }
     
@@ -30,6 +33,8 @@ extension MemberAPI: APIType {
             return .get
         case .signUp:
             return .post
+        case .patchUserProfileImage:
+            return .patch
         }
     }
     
@@ -37,8 +42,23 @@ extension MemberAPI: APIType {
         switch self {
         case .getMemberDetail:
             return .requestPlain
+
         case let .signUp(requestDto, _):
             return .requestJSONEncodable(body: requestDto)
+
+        case let .patchUserProfileImage(requestDto):
+            var parts: [MultipartFormDataPart] = []
+
+            let part = MultipartFormDataPart(
+                name: "profileImg",
+                data: requestDto.profileImg,
+                filename: "profile.jpg",
+                mimeType: "image/jpeg"
+            )
+
+            parts.append(part)
+
+            return .requestWithMultipartFormData(formData: parts)
         }
     }
 

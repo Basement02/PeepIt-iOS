@@ -17,4 +17,6 @@ enum APITask {
     case requestParameters(parameters: Parameters)
     /// Interceptor를 포함하지 않는 request
     case requestWithoutInterceptor(parameters: Parameters)
+    /// multipart/form-data 요청
+    case requestWithMultipartFormData(formData: [MultipartFormDataPart])
 }

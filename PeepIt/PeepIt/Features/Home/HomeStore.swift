@@ -21,7 +21,6 @@ struct HomeStore {
 
         /// 핍 상세 보여주기 여부
         var showPeepDetail = false
-
         /// 동네 등록 모달 offsetY 관리
         var townVerificationModalOffset = Constant.screenHeight
         /// 동네 등록 모달 보여줄지 여부
@@ -36,6 +35,8 @@ struct HomeStore {
         var isDragged = false
         /// 현재 위치로 이동
         var moveToCurrentLocation = false
+        /// 프로필 정보
+        var userProfile: UserProfile?
     }
 
     enum Action: BindableAction {
@@ -46,6 +47,8 @@ struct HomeStore {
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
 
+        /// 뷰 등장
+        case onAppear
         /// 사이드메뉴 버튼 탭
         case sideMenuButtonTapped
         /// 프로필 버튼 탭
@@ -64,9 +67,13 @@ struct HomeStore {
         case searchButtonTapped
         /// 현재 위치 버튼 탭
         case locationButtonTapped
-
+        /// 핍 탭
         case peepTapped(idx: Int)
+        /// 프로필 정보 업데이트
+        case updateProfile(profile: UserProfile)
     }
+
+    @Dependency(\.userProfileStorage) var userProfileStorage
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -97,6 +104,13 @@ struct HomeStore {
 
             case .binding(\.moveToCurrentLocation):
                 return .none
+
+            case .onAppear:
+                return .run { send in
+                    if let savedProfile = try? await userProfileStorage.load() {
+                        await send(.updateProfile(profile: savedProfile))
+                    }
+                }
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
@@ -169,6 +183,10 @@ struct HomeStore {
 
             case .locationButtonTapped:
                 state.moveToCurrentLocation = true
+                return .none
+
+            case let .updateProfile(profile):
+                state.userProfile = profile
                 return .none
 
             default:

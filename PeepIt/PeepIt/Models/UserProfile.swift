@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserProfile: Equatable {
+struct UserProfile: Equatable, Codable {
     var id: String
     var name: String
     var town: String?

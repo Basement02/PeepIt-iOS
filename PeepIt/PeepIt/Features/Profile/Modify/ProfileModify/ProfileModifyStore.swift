@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import _PhotosUI_SwiftUI
 
 @Reducer
 struct ProfileModifyStore {
@@ -14,18 +15,25 @@ struct ProfileModifyStore {
     @ObservableState
     struct State: Equatable {
         /// 기존 아이디
-        var id = "id"
+        var id = ""
         /// 기존 닉네임
-        var nickname = "nickname"
+        var nickname = ""
         /// 기존 성별
         var selectedGender: GenderType? = nil
         /// 닉네임 유효성 검증 상태
         var nicknameValidation = NicknameValidation.base
         /// 입력창 히위 뷰 State
         var enterFieldState = CheckEnterFieldStore.State()
+        /// 프로필
+        var profileImgStr: String? = nil
+        /// PhotoPicker 변수
+        var selectedPhotoItem: PhotosPickerItem? = nil
+        /// 유저 프로필 정보
+        var userProfile: UserProfile?
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         /// 나타날 때
         case onAppear
         /// 이전 버튼 탭
@@ -38,11 +46,21 @@ struct ProfileModifyStore {
         case dismiss
         /// 하위뷰 액션 연결
         case enterFieldAction(CheckEnterFieldStore.Action)
+        /// 프로필 업데이트
+        case updateProfile(profile: UserProfile)
+
+        /// 프로필 이미지 수정 api
+        case modifyMyProfileImg(data: Data)
+        case fetchModifyMyProfileImgResponse(Result<String, Error>)
     }
 
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.userProfileStorage) var userProfileStorage
+    @Dependency(\.memberAPIClient) var memberAPIClient
 
     var body: some Reducer<State, Action> {
+        BindingReducer()
+        
         Scope(
             state: \.enterFieldState,
             action: \.enterFieldAction
@@ -53,10 +71,24 @@ struct ProfileModifyStore {
         Reduce { state, action in
             switch action {
 
+            case .binding(\.selectedPhotoItem):
+                guard let photoItem = state.selectedPhotoItem else { return .none }
+
+                return .run { send in
+                    if let data = try? await photoItem.loadTransferable(type: Data.self) {
+                        await send(.modifyMyProfileImg(data: data))
+                    }
+                }
+
             case .onAppear:
                 state.enterFieldState.fieldType = .nickname
                 state.enterFieldState.text = state.nickname
-                return .none
+
+                return .run { send in
+                    if let savedProfile = try? await userProfileStorage.load() {
+                        await send(.updateProfile(profile: savedProfile))
+                    }
+                }
 
             case .enterFieldAction(.binding(\.text)):
                 state.nicknameValidation = validateNickname(state.enterFieldState.text)
@@ -82,6 +114,47 @@ struct ProfileModifyStore {
 
             case .dismiss:
                 return .run { _ in await self.dismiss() }
+
+            case let .updateProfile(profile):
+                state.userProfile = profile
+
+                state.profileImgStr = profile.profile
+                state.nickname = profile.name
+                state.id = profile.id
+                state.selectedGender = profile.gender
+
+                return .none
+
+            case let .modifyMyProfileImg(data):
+                return .run { send in
+                    await send(
+                        .fetchModifyMyProfileImgResponse(
+                            Result { try await memberAPIClient.modifyUserProfileImage(data) }
+                        )
+                    )
+                }
+
+            case let .fetchModifyMyProfileImgResponse(result):
+                switch result {
+
+                case let .success(value):
+                    state.profileImgStr = value
+                    state.userProfile?.profile = value
+
+                    let newProfile = state.userProfile
+
+                    return .run { _ in
+                        if let newProfile = newProfile {
+                            try await userProfileStorage.save(newProfile)
+                        }
+                    }
+
+                case let .failure(error):
+                    // TODO: 오류
+                    print(error)
+                }
+
+                return .none
 
             default:
                 return .none

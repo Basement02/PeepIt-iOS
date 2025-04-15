@@ -54,10 +54,16 @@ struct WelcomeView: View {
     private var detailInfoView: some View {
         VStack(spacing: 0) {
             Group {
-                if let image = store.selectedImage {
-                    image
-                        .resizable()
-                        .scaledToFill()
+                if let str = store.myProfile?.profile,
+                   let url = URL(string: str) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+
+                    } placeholder: {
+                        ProgressView()
+                    }
                 } else {
                     Image("ProfileSample")
                         .resizable()
