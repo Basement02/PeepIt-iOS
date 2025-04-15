@@ -48,7 +48,7 @@ extension MemberAPI: APIType {
             // TODO: - interceptor에서 헤더 넣어주기
             return ["Authorization": "Register \(registerToken)"]
         default:
-            return ["Authorization": "Bearer "]
+            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
         }
     }
 }
