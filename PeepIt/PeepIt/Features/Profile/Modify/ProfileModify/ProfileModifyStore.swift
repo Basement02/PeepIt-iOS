@@ -56,6 +56,7 @@ struct ProfileModifyStore {
         case fetchModifyMyProfileImgResponse(Result<String, Error>)
 
         // 프로필 수정 api
+        case modifyNickname(newName: String)
         case modifyGender(newGender: GenderType)
         case fetchModifyProfileResponse(Result<UserProfile, Error>)
     }
@@ -101,6 +102,7 @@ struct ProfileModifyStore {
                 state.nicknameValidation = validateNickname(state.enterFieldState.text)
                 state.enterFieldState.enterState = state.nicknameValidation.enterState
                 state.enterFieldState.message = state.nicknameValidation.message
+                state.nickname = state.enterFieldState.text
 
                 return .none
 
@@ -121,7 +123,8 @@ struct ProfileModifyStore {
                 return .send(.modifyGender(newGender: newGender))
 
             case .nicknameSaveButtonTapped:
-                return .none
+                let newNickname = state.nickname
+                return .send(.modifyNickname(newName: newNickname))
 
             case .dismiss:
                 return .run { _ in await self.dismiss() }
@@ -166,6 +169,19 @@ struct ProfileModifyStore {
                 }
 
                 return .none
+
+            case let .modifyNickname(nickname):
+                var newProfile = state.userProfile
+                newProfile?.name = nickname
+                guard let profile = newProfile else { return .none }
+
+                return .run { send in
+                    await send(
+                        .fetchModifyProfileResponse(
+                            Result { try await memberAPIClient.modifyUserProfile(profile) }
+                        )
+                    )
+                }
 
             case let .modifyGender(newGender):
                 var newProfile = state.userProfile
