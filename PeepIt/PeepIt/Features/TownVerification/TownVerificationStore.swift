@@ -135,8 +135,12 @@ struct TownVerificationStore {
                 case .success:
                     return .send(.dismissButtonTapped)
 
-                case .failure:
-                    // TODO: 에러처리
+                case let .failure(error):
+                    if error.asPeepItError() == .bCodeError {
+                        print("법정동 오류")
+                        // TODO: - 오류 처리(UI 수정)
+                    }
+                    
                     return .none
                 }
 
