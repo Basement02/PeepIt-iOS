@@ -81,6 +81,7 @@ struct HomeView: View {
                     .animation(.easeInOut(duration: 0.3), value: store.mainViewOffset)
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
+                    .onAppear { store.send(.onAppear) }
                     .overlay {
                         /// 핍 상세
                         if store.showPeepDetail {
@@ -164,9 +165,23 @@ extension HomeView {
         Button {
             store.send(.profileButtonTapped)
         } label: {
-            Image("ProfileSample")
-                .resizable()
-                .frame(width: 45, height: 45)
+            Group {
+                if let str = store.userProfile?.profile,
+                   let url = URL(string: str) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFill()
+
+                    } placeholder: {
+                        ProgressView()
+                    }
+                } else {
+                    Image("ProfileSample")
+                        .resizable()
+                }
+            }
+            .frame(width: 45, height: 45)
         }
         .buttonStyle(PressableOpacityButtonStyle())
         .clipShape(RoundedRectangle(cornerRadius: 13))
