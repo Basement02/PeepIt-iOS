@@ -165,23 +165,8 @@ extension HomeView {
         Button {
             store.send(.profileButtonTapped)
         } label: {
-            Group {
-                if let str = store.userProfile?.profile,
-                   let url = URL(string: str) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-
-                    } placeholder: {
-                        ProgressView()
-                    }
-                } else {
-                    Image("ProfileSample")
-                        .resizable()
-                }
-            }
-            .frame(width: 45, height: 45)
+            AsyncProfile(profileUrlStr: store.userProfile?.profile)
+                .frame(width: 45, height: 45)
         }
         .buttonStyle(PressableOpacityButtonStyle())
         .clipShape(RoundedRectangle(cornerRadius: 13))
