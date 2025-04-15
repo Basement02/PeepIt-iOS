@@ -85,7 +85,7 @@ struct ModifyGenderView: View {
 
     private var saveButton: some View {
         Button {
-            store.send(.saveButtonTapped)
+            store.send(.genderSaveButtonTapped)
         } label: {
             Text("저장")
                 .mainButtonStyle()

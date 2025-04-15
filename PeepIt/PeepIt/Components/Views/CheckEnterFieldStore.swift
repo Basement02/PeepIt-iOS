@@ -52,7 +52,7 @@ struct CheckEnterFieldStore {
     @ObservableState
     struct State: Equatable {
         var text = ""
-        var message = "가이드 문구"
+        var message = " "
         var enterState = EnterState.base
         var fieldType = FieldType.id
 

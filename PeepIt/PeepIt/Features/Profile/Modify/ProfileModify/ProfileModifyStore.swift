@@ -38,8 +38,10 @@ struct ProfileModifyStore {
         case onAppear
         /// 이전 버튼 탭
         case backButtonTapped
-        /// 저장 버튼 탭
-        case saveButtonTapped
+        /// 성별 수정 버튼 탭
+        case genderSaveButtonTapped
+        /// 닉네임 수정 버튼 탭
+        case nicknameSaveButtonTapped
         /// 성별 선택 시
         case selectGender(GenderType)
         /// 뷰 닫기
@@ -60,6 +62,7 @@ struct ProfileModifyStore {
 
     @Dependency(\.dismiss) var dismiss
     @Dependency(\.userProfileStorage) var userProfileStorage
+    @Dependency(\.authAPIClient) var authAPIClient
     @Dependency(\.memberAPIClient) var memberAPIClient
 
     var body: some Reducer<State, Action> {
@@ -113,9 +116,12 @@ struct ProfileModifyStore {
 
                 return .none
 
-            case .saveButtonTapped:
+            case .genderSaveButtonTapped:
                 guard let newGender = state.selectedGender else { return .none }
                 return .send(.modifyGender(newGender: newGender))
+
+            case .nicknameSaveButtonTapped:
+                return .none
 
             case .dismiss:
                 return .run { _ in await self.dismiss() }
