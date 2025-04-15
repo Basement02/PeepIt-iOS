@@ -24,7 +24,7 @@ extension MemberDetailResponseDto {
             id: id,
             name: name,
             town: town,
-            profile: "",
+            profile: profile,
             gender: GenderType(type: gender),
             isCertificated: role == "CERTIFICATED"
         )

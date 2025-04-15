@@ -11,6 +11,7 @@ import ComposableArchitecture
 struct MemberAPIClient {
     var getMemberDetail: () async throws -> UserProfile
     var signUp: (UserInfo, String) async throws -> Token
+    var modifyUserProfileImage: (Data) async throws -> String
 }
 
 extension MemberAPIClient: DependencyKey {
@@ -33,6 +34,12 @@ extension MemberAPIClient: DependencyKey {
             let requestAPI: MemberAPI = .signUp(requestDto, registerToken)
             let response: LoginResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
+        },
+        modifyUserProfileImage: { data in
+            let requestDto: ProfileImgRequestDto = .init(profileImg: data)
+            let requestAPI: MemberAPI = .patchUserProfileImage(requestDto)
+            let response: MemberDetailResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.profile
         }
     )
 }

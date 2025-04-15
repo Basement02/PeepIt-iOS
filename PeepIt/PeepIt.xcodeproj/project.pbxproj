@@ -38,6 +38,8 @@
 		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
 		AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340332DAD7015007C31FC /* MapInteractionState.swift */; };
 		AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340352DAE2282007C31FC /* UIImage+Extension.swift */; };
+		AB3340382DAE24F7007C31FC /* MultipartFormDataPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */; };
+		AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -268,6 +270,8 @@
 		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
 		AB3340332DAD7015007C31FC /* MapInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionState.swift; sourceTree = "<group>"; };
 		AB3340352DAE2282007C31FC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipartFormDataPart.swift; sourceTree = "<group>"; };
+		AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImgRequestDto.swift; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -577,6 +581,14 @@
 			path = API;
 			sourceTree = "<group>";
 		};
+		AB3340392DAE2615007C31FC /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				AB33403A2DAE261E007C31FC /* ProfileImgRequestDto.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -608,6 +620,7 @@
 			isa = PBXGroup;
 			children = (
 				AB3388972DA2DE0200316D4B /* Common */,
+				AB3340392DAE2615007C31FC /* Request */,
 				AB3340152DA4D796007C31FC /* Response */,
 			);
 			path = Dto;
@@ -655,6 +668,7 @@
 			children = (
 				ABD639D62D7EE7340062A60C /* Environment.swift */,
 				AB37049F2D7FFE2F00EBBC85 /* BaseResponse.swift */,
+				AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -1602,6 +1616,7 @@
 				AB9788142D114B84007E73B6 /* BlockDescriptionModal.swift in Sources */,
 				AB3388962DA2DCB300316D4B /* SignUpDto.swift in Sources */,
 				AB3704992D7FFA2400EBBC85 /* PeepItError.swift in Sources */,
+				AB33403B2DAE2624007C31FC /* ProfileImgRequestDto.swift in Sources */,
 				ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */,
 				AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */,
 				ABC171EF2CAB193F00370901 /* TermView.swift in Sources */,
@@ -1731,6 +1746,7 @@
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
 				AB4BEDE72D9277F100CA3936 /* PeepAPI.swift in Sources */,
+				AB3340382DAE24F7007C31FC /* MultipartFormDataPart.swift in Sources */,
 				AB0778202CE730AA00E4F226 /* EnterAuthCodeView.swift in Sources */,
 				AB53DE552CA0289A00D8DC1F /* Chat.swift in Sources */,
 				AB47D6E32D6B836100934A0F /* CameraServiceKey.swift in Sources */,
