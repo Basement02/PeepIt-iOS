@@ -12,6 +12,7 @@ enum MemberAPI {
     case getMemberDetail
     case signUp(SignUpDto, String)
     case patchUserProfileImage(ProfileImgRequestDto)
+    case patchUserProfile(ModifyProfileRequestDto)
 }
 
 extension MemberAPI: APIType {
@@ -24,6 +25,8 @@ extension MemberAPI: APIType {
             return "/v1/member/sign-up"
         case .patchUserProfileImage:
             return "/v1/member/profile-img"
+        case .patchUserProfile:
+            return "/v1/member/detail"
         }
     }
     
@@ -33,7 +36,7 @@ extension MemberAPI: APIType {
             return .get
         case .signUp:
             return .post
-        case .patchUserProfileImage:
+        case .patchUserProfileImage, .patchUserProfile:
             return .patch
         }
     }
@@ -59,6 +62,9 @@ extension MemberAPI: APIType {
             parts.append(part)
 
             return .requestWithMultipartFormData(formData: parts)
+
+        case let .patchUserProfile(requestDto):
+            return .requestJSONEncodable(body: requestDto)
         }
     }
 

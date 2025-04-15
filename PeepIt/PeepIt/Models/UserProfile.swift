@@ -14,4 +14,5 @@ struct UserProfile: Equatable, Codable {
     var profile: String
     var gender: GenderType
     var isCertificated: Bool
+    var isAgree: Bool
 }
