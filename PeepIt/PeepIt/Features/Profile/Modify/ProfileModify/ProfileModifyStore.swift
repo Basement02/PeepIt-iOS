@@ -14,15 +14,17 @@ struct ProfileModifyStore {
     @ObservableState
     struct State: Equatable {
         /// 기존 아이디
-        var id = "id"
+        var id = ""
         /// 기존 닉네임
-        var nickname = "nickname"
+        var nickname = ""
         /// 기존 성별
         var selectedGender: GenderType? = nil
         /// 닉네임 유효성 검증 상태
         var nicknameValidation = NicknameValidation.base
         /// 입력창 히위 뷰 State
         var enterFieldState = CheckEnterFieldStore.State()
+        /// 프로필
+        var profileImgStr: String?
     }
 
     enum Action {
@@ -38,9 +40,12 @@ struct ProfileModifyStore {
         case dismiss
         /// 하위뷰 액션 연결
         case enterFieldAction(CheckEnterFieldStore.Action)
+
+        case updateProfile(profile: UserProfile)
     }
 
     @Dependency(\.dismiss) var dismiss
+    @Dependency(\.userProfileStorage) var userProfileStorage
 
     var body: some Reducer<State, Action> {
         Scope(
@@ -56,7 +61,12 @@ struct ProfileModifyStore {
             case .onAppear:
                 state.enterFieldState.fieldType = .nickname
                 state.enterFieldState.text = state.nickname
-                return .none
+
+                return .run { send in
+                    if let savedProfile = try? await userProfileStorage.load() {
+                        await send(.updateProfile(profile: savedProfile))
+                    }
+                }
 
             case .enterFieldAction(.binding(\.text)):
                 state.nicknameValidation = validateNickname(state.enterFieldState.text)
@@ -82,6 +92,12 @@ struct ProfileModifyStore {
 
             case .dismiss:
                 return .run { _ in await self.dismiss() }
+
+            case let .updateProfile(profile):
+                state.profileImgStr = profile.profile
+                state.nickname = profile.name
+                state.id = profile.id
+                return .none
 
             default:
                 return .none

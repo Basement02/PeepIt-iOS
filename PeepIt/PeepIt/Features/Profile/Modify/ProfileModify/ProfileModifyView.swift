@@ -34,14 +34,15 @@ struct ProfileModifyView: View {
             }
             .background(Color.base)
             .toolbar(.hidden, for: .navigationBar)
+            .onAppear { store.send(.onAppear) }
         }
     }
 
     private var profileView: some View {
         VStack(spacing: 0) {
-            Image("ProfileSample")
-                .resizable()
+            AsyncProfile(profileUrlStr: store.profileImgStr)
                 .frame(width: 114, height: 114)
+                .clipShape(RoundedRectangle(cornerRadius: 21))
 
             Button {
 
