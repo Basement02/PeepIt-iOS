@@ -17,7 +17,7 @@ struct WelcomeStore {
         /// PhotoPicker 변수
         var selectedPhotoItem: PhotosPickerItem? = nil
         /// 선택된 프로필 이미지
-        var selectedImage: Image? = nil
+        var selectedUIImage: UIImage? = nil
         /// 유저 프로필
         var myProfile: UserProfile?
         /// 인증 여부
@@ -31,7 +31,7 @@ struct WelcomeStore {
         /// 홈으로 버튼 탭
         case goToHomeButtonTapped
         /// 프로필 이미지 선택 시 설정
-        case updateSelectedImage(image: Image)
+        case updateSelectedImage(image: UIImage)
 
         /// 내 프로필 조회 api
         case getMyProfile
@@ -50,8 +50,9 @@ struct WelcomeStore {
                 guard let photoItem = state.selectedPhotoItem else { return .none }
                 
                 return .run { send in
-                    if let image = try? await photoItem.loadTransferable(type: Image.self) {
-                        await send(.updateSelectedImage(image: image))
+                    if let data = try? await photoItem.loadTransferable(type: Data.self),
+                       let uiImage = UIImage(data: data)?.fixedOrientation() {
+                        await send(.updateSelectedImage(image: uiImage))
                     }
                 }
 
@@ -62,7 +63,7 @@ struct WelcomeStore {
                 return .none
 
             case let .updateSelectedImage(image):
-                state.selectedImage = image
+                state.selectedUIImage = image
                 // TODO: 사진 api 호출
                 return .none
 

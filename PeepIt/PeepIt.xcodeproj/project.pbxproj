@@ -37,6 +37,7 @@
 		AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33402F2DA50041007C31FC /* TownAPIClient.swift */; };
 		AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */; };
 		AB3340342DAD701B007C31FC /* MapInteractionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340332DAD7015007C31FC /* MapInteractionState.swift */; };
+		AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3340352DAE2282007C31FC /* UIImage+Extension.swift */; };
 		AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */; };
 		AB33888D2DA02D6E00316D4B /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888C2DA02D6B00316D4B /* MapView.swift */; };
 		AB33888F2DA2DBFF00316D4B /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB33888E2DA2DBFF00316D4B /* LoginRequestDto.swift */; };
@@ -266,6 +267,7 @@
 		AB33402F2DA50041007C31FC /* TownAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TownAPIClient.swift; sourceTree = "<group>"; };
 		AB3340312DAD660C007C31FC /* ModifyTownRequestDTo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyTownRequestDTo.swift; sourceTree = "<group>"; };
 		AB3340332DAD7015007C31FC /* MapInteractionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapInteractionState.swift; sourceTree = "<group>"; };
+		AB3340352DAE2282007C31FC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		AB3388862D9C606500316D4B /* PeepIt.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PeepIt.entitlements; sourceTree = "<group>"; };
 		AB3388892D9EA87400316D4B /* CodeCheckRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeCheckRequestDto.swift; sourceTree = "<group>"; };
 		AB33888C2DA02D6B00316D4B /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 		AB094DE62CC76EB10091E9FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				AB3340352DAE2282007C31FC /* UIImage+Extension.swift */,
 				AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
 				ABF8E2EE2CD237780096A7EF /* UINavigationController+Extension.swift */,
@@ -1592,6 +1595,7 @@
 				AB5159832CAAFCA40043AA0A /* LoginType.swift in Sources */,
 				AB4BEE042D96813500CA3936 /* AuthAPIClient.swift in Sources */,
 				AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */,
+				AB3340362DAE2289007C31FC /* UIImage+Extension.swift in Sources */,
 				ABD3CAA52CA08D6C00438747 /* MyProfileStore.swift in Sources */,
 				AB416D342CF5F3890065BD09 /* BlockListStore.swift in Sources */,
 				AB416D242CF34B920065BD09 /* NotificationSettingStore.swift in Sources */,

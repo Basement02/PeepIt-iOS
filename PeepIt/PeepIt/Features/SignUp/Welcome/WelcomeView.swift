@@ -54,8 +54,8 @@ struct WelcomeView: View {
     private var detailInfoView: some View {
         VStack(spacing: 0) {
             Group {
-                if let image = store.selectedImage {
-                    image
+                if let uiImage = store.selectedUIImage {
+                    Image(uiImage: uiImage)
                         .resizable()
                         .scaledToFill()
                 } else {
