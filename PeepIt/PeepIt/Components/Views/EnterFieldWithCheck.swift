@@ -7,6 +7,24 @@
 
 import SwiftUI
 
+/// 입력창 enum 정의
+enum EnterState: Equatable {
+    case base
+    case completed
+    case error
+
+    var foregroundColor: Color {
+        switch self {
+        case .base:
+            return .white
+        case .completed:
+            return .coreLime
+        case .error:
+            return .coreRed
+        }
+    }
+}
+
 struct EnterFieldWithCheck: View {
     let obj: String
 
