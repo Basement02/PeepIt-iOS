@@ -59,12 +59,7 @@ struct EnterFieldWithCheck: View {
                 .pretendard(.caption03)
                 .foregroundStyle(validState.foregroundColor)
         }
-        .onAppear {
-            Task {
-                try? await Task.sleep(for: .seconds(0.5))
-                isFocused = true
-            }
-        }
+        .onAppear { isFocused = true }
     }
 }
 
