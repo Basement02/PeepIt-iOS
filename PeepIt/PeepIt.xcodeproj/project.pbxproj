@@ -1163,9 +1163,9 @@
 				ABE581C42CCA6F20003366DC /* Info.plist */,
 				ABC305D72C9324CC003B00FE /* Features */,
 				ABC305EF2C95A4BF003B00FE /* Models */,
+				ABD639D42D7EE7260062A60C /* Network */,
 				ABC305E72C933EF3003B00FE /* DesignSystem */,
 				ABC305DA2C932514003B00FE /* Resources */,
-				ABD639D42D7EE7260062A60C /* Network */,
 				AB53DE4F2CA00FD100D8DC1F /* Utils */,
 				ABC305C92C932341003B00FE /* PeepItApp.swift */,
 			);
@@ -1250,18 +1250,12 @@
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AB33402A2DA4FBC2007C31FC /* Location.swift */,
-				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
 				AB33889C2DA2DFD700316D4B /* Auth */,
-				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
+				ABCCB6E62DB1234F00A226C4 /* Member */,
+				ABCCB6E72DB1237100A226C4 /* Peep */,
+				ABCCB6E82DB1238F00A226C4 /* Announce */,
 				ABF72EAF2CBE5FC100629E9C /* Edit */,
-				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
-				ABC305F22C95A567003B00FE /* UserInfo.swift */,
-				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
-				ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */,
-				ABD3CAAF2CA1B52000438747 /* Peep.swift */,
-				ABCC50E82CF03081004AD297 /* Announce.swift */,
-				AB416D272CF37A950065BD09 /* Notification.swift */,
+				ABCCB6E92DB123ED00A226C4 /* Alert */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1367,6 +1361,44 @@
 				AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */,
 			);
 			path = Modifier;
+			sourceTree = "<group>";
+		};
+		ABCCB6E62DB1234F00A226C4 /* Member */ = {
+			isa = PBXGroup;
+			children = (
+				AB33402A2DA4FBC2007C31FC /* Location.swift */,
+				ABD3CAA62CA098EE00438747 /* MyActivityPeep.swift */,
+				ABC305F22C95A567003B00FE /* UserInfo.swift */,
+				AB33401A2DA4DB7A007C31FC /* UserProfile.swift */,
+			);
+			path = Member;
+			sourceTree = "<group>";
+		};
+		ABCCB6E72DB1237100A226C4 /* Peep */ = {
+			isa = PBXGroup;
+			children = (
+				ABD3CAAF2CA1B52000438747 /* Peep.swift */,
+				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
+				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
+				AB4BEDF42D93C1B200CA3936 /* PagedPeeps.swift */,
+			);
+			path = Peep;
+			sourceTree = "<group>";
+		};
+		ABCCB6E82DB1238F00A226C4 /* Announce */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Announce;
+			sourceTree = "<group>";
+		};
+		ABCCB6E92DB123ED00A226C4 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D272CF37A950065BD09 /* Notification.swift */,
+				ABCC50E82CF03081004AD297 /* Announce.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 		ABCE972D2D31203000A07962 /* Object */ = {
