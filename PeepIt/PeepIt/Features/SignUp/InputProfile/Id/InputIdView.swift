@@ -34,7 +34,7 @@ struct InputIdView: View {
 
                 Spacer()
 
-                if store.idValidation == .validated {
+                if store.enterState == .completed {
                     nextButton
                         .padding(.bottom, 18)
                 }
