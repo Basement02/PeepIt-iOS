@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct NicknameModifyView: View {
-    let store: StoreOf<ProfileModifyStore>
+    @Perception.Bindable var store: StoreOf<ProfileModifyStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -27,10 +27,11 @@ struct NicknameModifyView: View {
                         Spacer()
                     }
 
-                    CheckEnterField(
-                        store: store.scope(
-                            state: \.enterFieldState,
-                            action: \.enterFieldAction)
+                    EnterFieldWithCheck(
+                        obj: "닉네임",
+                        text: $store.nickname,
+                        validState: $store.nicknameEnterState,
+                        guideMessage: $store.nicknameMessage
                     )
                     .frame(width: 285)
 
@@ -38,7 +39,7 @@ struct NicknameModifyView: View {
                 }
                 .padding(.leading, 20)
 
-                if store.nicknameValidation == .validated {
+                if store.nicknameEnterState == .completed {
                     saveButton
                         .padding(.bottom, 18)
                 }
