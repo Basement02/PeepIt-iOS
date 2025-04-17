@@ -1161,13 +1161,13 @@
 			children = (
 				AB3388862D9C606500316D4B /* PeepIt.entitlements */,
 				ABE581C42CCA6F20003366DC /* Info.plist */,
+				ABC305C92C932341003B00FE /* PeepItApp.swift */,
 				ABC305D72C9324CC003B00FE /* Features */,
 				ABC305EF2C95A4BF003B00FE /* Models */,
 				ABD639D42D7EE7260062A60C /* Network */,
 				ABC305E72C933EF3003B00FE /* DesignSystem */,
 				ABC305DA2C932514003B00FE /* Resources */,
 				AB53DE4F2CA00FD100D8DC1F /* Utils */,
-				ABC305C92C932341003B00FE /* PeepItApp.swift */,
 			);
 			path = PeepIt;
 			sourceTree = "<group>";
