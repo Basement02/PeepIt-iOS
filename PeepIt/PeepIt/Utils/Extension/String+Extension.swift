@@ -10,15 +10,21 @@ import Foundation
 extension String {
 
     var isValidForAllowedCharacters: Bool {
-        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-.")
-            .union(CharacterSet(charactersIn: "\u{AC00}"..."\u{D7A3}"))
-        
-        return self.rangeOfCharacter(from: allowedCharacters.inverted) == nil
-    }
+        let englishAndSymbols = CharacterSet(
+            charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-."
+        )
 
-    var isValidForWords: Bool {
-        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-            .union(CharacterSet(charactersIn: "\u{AC00}"..."\u{D7A3}")) // 한글 범위 포함
+        let hangulSyllables = CharacterSet(charactersIn: "\u{AC00}"..."\u{D7A3}")
+
+        let choseongSet = CharacterSet(charactersIn: "ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ")
+        let jungseongSet = CharacterSet(charactersIn: "ㅏㅐㅑㅒㅓㅔㅕㅖㅗㅘㅙㅚㅛㅜㅝㅞㅟㅠㅡㅢㅣ")
+        let jongseongSet = CharacterSet(charactersIn: "ㄱㄲㄳㄴㄵㄶㄷㄹㄺㄻㄼㄽㄾㄿㅀㅁㅂㅄㅅㅆㅇㅈㅊㅋㅌㅍㅎ")
+        let hangulJamoOnly = choseongSet.union(jungseongSet).union(jongseongSet)
+
+        let allowedCharacters = englishAndSymbols
+            .union(hangulSyllables)
+            .union(hangulJamoOnly)
+
         return self.rangeOfCharacter(from: allowedCharacters.inverted) == nil
     }
 
