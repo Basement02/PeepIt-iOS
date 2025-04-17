@@ -15,17 +15,16 @@ struct NicknameStore {
     struct State: Equatable {
         /// 닉네임 바인딩 변수
         var nickname = ""
-
-        /// 닉네임 유효성 검증 상태
-        var nicknameValidation = NicknameValidation.base
-
-        /// 입력창 히위 뷰 State
-        var enterFieldState = CheckEnterFieldStore.State()
+        /// 입력창 상태
+        var enterState = EnterState.base
+        /// 가이드메세지
+        var guideMessage = NicknameValidation.base.message
 
         @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         /// 다음 버튼 탭
         case nextButtonTapped
         /// 하위뷰 액션 연결
@@ -34,37 +33,52 @@ struct NicknameStore {
         case onAppeared
         /// 뒤로가기 버튼 탭
         case backButtonTapped
+        /// 닉네임 텍스트 디바운싱
+        case debouncedText(newText: String)
+    }
+
+    enum ID: Hashable {
+        case debounce
     }
 
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
-        Scope(state: \.enterFieldState, action: \.enterFieldAction) {
-            CheckEnterFieldStore()
-        }
+        BindingReducer()
+            .onChange(of: \.nickname) { _, newValue in
+                Reduce { state, action in
+                    return .run { send in
+                        await send(.debouncedText(newText: newValue))
+                    }
+                    .debounce(
+                        id: ID.debounce,
+                        for: 0.2,
+                        scheduler: DispatchQueue.main
+                    )
+                }
+            }
 
         Reduce { state, action in
             switch action {
-            case .enterFieldAction(.binding(\.text)):
-                state.nicknameValidation = validateNickname(state.enterFieldState.text)
 
-                state.enterFieldState.enterState = state.nicknameValidation.enterState
-                state.enterFieldState.message = state.nicknameValidation.message
-
+            case .binding(\.nickname):
                 return .none
-                
+
             case .nextButtonTapped:
-                state.userInfo.nickname = state.enterFieldState.text
+                state.userInfo.nickname = state.nickname
                 return .none
 
             case .onAppeared:
-                state.enterFieldState.fieldType = CheckEnterFieldStore.State.FieldType.nickname
-                state.enterFieldState.message = state.nicknameValidation.message
-
                 return .none
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
+
+            case let .debouncedText(newText):
+                let validState = validateNickname(newText)
+                state.enterState = validState.enterState
+                state.guideMessage = validState.message
+                return .none
 
             default:
                 return .none
@@ -76,7 +90,7 @@ struct NicknameStore {
         switch true {
         case nickname.isEmpty:
             return .base
-        case !nickname.isValidForWords:
+        case !nickname.isValidForAllowedCharacters:
             return .wrongWord
         case nickname.count > 18:
             return .maxCount
