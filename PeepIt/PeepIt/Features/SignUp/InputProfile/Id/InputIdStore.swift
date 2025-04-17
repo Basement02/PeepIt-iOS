@@ -13,8 +13,14 @@ struct InputIdStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 입력 id
+        var id = ""
         /// 현재 입력된 Id의 상태
         var idValidation = IdValidation.empty
+        /// 입력창 상태
+        var enterState = EnterState.base
+        /// 가이드메세지
+        var guideMessage = IdValidation.empty.message
 
         /// id 유효성 검증 종류 enum
         enum IdValidation {
@@ -57,22 +63,20 @@ struct InputIdStore {
             return idValidation == .validated
         }
 
-        /// 입력창 히위 뷰 State
-        var enterFieldState = CheckEnterFieldStore.State()
-
         @Shared(.inMemory("userInfo")) var userInfo: UserInfo = .init()
     }
 
-    enum Action {
+    enum Action: BindableAction {
+        case binding(BindingAction<State>)
         /// 뷰 등장
         case onAppeared
         /// 다음 버튼 탭
         case nextButtonTapped
         /// 뒤로가기 버튼 탭
         case backButtonTapped
-        /// 하위뷰 액션 연결
-        case enterFieldAction(CheckEnterFieldStore.Action)
-        /// 가이드라인 메세지 & 입력 상태 세팅
+        /// id 필드 debounce
+        case debouncedText(newText: String)
+        /// enter field 속성 관리
         case setEnterField
 
         /// id 중복 체크 api
@@ -80,31 +84,42 @@ struct InputIdStore {
         case fetchIdCheckResult(Result<Void, Error>)
     }
 
+    enum ID: Hashable {
+        case debounce
+    }
+
     @Dependency(\.authAPIClient) var authAPIClient
     @Dependency(\.dismiss) var dismiss
     
     var body: some Reducer<State, Action> {
-
-        Scope(state: \.enterFieldState, action: \.enterFieldAction) {
-            CheckEnterFieldStore()
-        }
+        BindingReducer()
+            .onChange(of: \.id) { _, newValue in
+                Reduce { state, action in
+                    return .run { send in
+                        await send(.debouncedText(newText: newValue))
+                    }
+                    .debounce(
+                        id: ID.debounce,
+                        for: 0.2,
+                        scheduler: DispatchQueue.main
+                    )
+                }
+            }
 
         Reduce { state, action in
             switch action {
 
             case .onAppeared:
-                state.enterFieldState.fieldType = CheckEnterFieldStore.State.FieldType.id
-                state.enterFieldState.message = state.idValidation.message
                 return .none
 
             case .nextButtonTapped:
-                state.userInfo.id = state.enterFieldState.text
+                state.userInfo.id = state.id
                 return .none
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
 
-            case let .enterFieldAction(.debouncedText(newText)):
+            case let .debouncedText(newText):
                 let regex = try! NSRegularExpression(pattern: "^[A-Za-z0-9._]+$")
                 let range = NSRange(location: 0, length: newText.utf16.count)
                 let isFormatValid = regex.firstMatch(in: newText, options: [], range: range) != nil
@@ -151,8 +166,8 @@ struct InputIdStore {
                 return .send(.setEnterField)
 
             case .setEnterField:
-                state.enterFieldState.enterState = state.idValidation.enterState
-                state.enterFieldState.message = state.idValidation.message
+                state.enterState = state.idValidation.enterState
+                state.guideMessage = state.idValidation.message
                 return .none
 
             default:

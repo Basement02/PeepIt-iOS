@@ -135,7 +135,6 @@
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
 		AB653BDD2D395E390002F04F /* YieldTouches.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB653BDC2D395E330002F04F /* YieldTouches.swift */; };
-		AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */; };
 		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
 		AB71E1CA2CBC065E00D2D3D9 /* EditStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */; };
@@ -160,7 +159,7 @@
 		ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA9A2E12CCE932900AA605B /* Adjusted.swift */; };
 		ABB444962CA8451900C1EE67 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444952CA8451900C1EE67 /* RootView.swift */; };
 		ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB444982CA8452900C1EE67 /* RootStore.swift */; };
-		ABB96D252CD344D2003C6742 /* CheckEnterField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB96D242CD344D2003C6742 /* CheckEnterField.swift */; };
+		ABC05B672DB0F06C003EB650 /* EnterFieldWithCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC05B662DB0F063003EB650 /* EnterFieldWithCheck.swift */; };
 		ABC171EF2CAB193F00370901 /* TermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171EE2CAB193F00370901 /* TermView.swift */; };
 		ABC171F12CAB198100370901 /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F02CAB198100370901 /* NicknameView.swift */; };
 		ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC171F22CAB198C00370901 /* AuthenticationView.swift */; };
@@ -359,7 +358,6 @@
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		AB653BDC2D395E330002F04F /* YieldTouches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YieldTouches.swift; sourceTree = "<group>"; };
-		AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterFieldStore.swift; sourceTree = "<group>"; };
 		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
 		AB71E1C92CBC065E00D2D3D9 /* EditStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStore.swift; sourceTree = "<group>"; };
@@ -384,7 +382,7 @@
 		ABA9A2E12CCE932900AA605B /* Adjusted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Adjusted.swift; sourceTree = "<group>"; };
 		ABB444952CA8451900C1EE67 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		ABB444982CA8452900C1EE67 /* RootStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootStore.swift; sourceTree = "<group>"; };
-		ABB96D242CD344D2003C6742 /* CheckEnterField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckEnterField.swift; sourceTree = "<group>"; };
+		ABC05B662DB0F063003EB650 /* EnterFieldWithCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterFieldWithCheck.swift; sourceTree = "<group>"; };
 		ABC171EE2CAB193F00370901 /* TermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermView.swift; sourceTree = "<group>"; };
 		ABC171F02CAB198100370901 /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		ABC171F22CAB198C00370901 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
@@ -1083,8 +1081,7 @@
 		ABB96D212CD25145003C6742 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				ABB96D242CD344D2003C6742 /* CheckEnterField.swift */,
-				AB6B52572CD3478A00BDC985 /* CheckEnterFieldStore.swift */,
+				ABC05B662DB0F063003EB650 /* EnterFieldWithCheck.swift */,
 				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
 				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
@@ -1618,7 +1615,6 @@
 				AB3704972D7FD13700EBBC85 /* APIFetcher.swift in Sources */,
 				ABD3CAAE2CA1B32D00438747 /* MyProfileTabType.swift in Sources */,
 				AB468D0D2CA8821600C1E430 /* SettingStore.swift in Sources */,
-				ABB96D252CD344D2003C6742 /* CheckEnterField.swift in Sources */,
 				AB416D2F2CF5B6610065BD09 /* RoundedCorner.swift in Sources */,
 				ABC305CC2C932341003B00FE /* HomeView.swift in Sources */,
 				ABD631C62C97602500AFF299 /* ChatView.swift in Sources */,
@@ -1699,6 +1695,7 @@
 				AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */,
 				AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */,
 				AB3704932D7FCF1100EBBC85 /* APIType.swift in Sources */,
+				ABC05B672DB0F06C003EB650 /* EnterFieldWithCheck.swift in Sources */,
 				ABF72EB12CBE5FD500629E9C /* TextItem.swift in Sources */,
 				AB468D0B2CA8820A00C1E430 /* SettingView.swift in Sources */,
 				AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */,
@@ -1787,7 +1784,6 @@
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				ABCE972C2D31202C00A07962 /* StickerLayerView.swift in Sources */,
 				AB07781E2CE7307E00E4F226 /* EnterAuthCodeStore.swift in Sources */,
-				AB6B52582CD3478A00BDC985 /* CheckEnterFieldStore.swift in Sources */,
 				ABCC50ED2CF03359004AD297 /* PeepItNavigationBar.swift in Sources */,
 				AB11FFCF2CF77EAC0095B818 /* ReportStore.swift in Sources */,
 				ABB444962CA8451900C1EE67 /* RootView.swift in Sources */,

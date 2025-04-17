@@ -20,10 +20,11 @@ struct NicknameView: View {
                 Group {
                     title
 
-                    CheckEnterField(
-                        store: store.scope(
-                            state: \.enterFieldState,
-                            action: \.enterFieldAction)
+                    EnterFieldWithCheck(
+                        obj: "닉네임",
+                        text: $store.nickname,
+                        validState: $store.enterState,
+                        guideMessage: $store.guideMessage
                     )
                     .frame(width: 285)
                     .padding(.top, 50)
@@ -32,7 +33,7 @@ struct NicknameView: View {
 
                 Spacer()
 
-                if store.nicknameValidation == .validated {
+                if store.enterState == .completed {
                     nextButton
                         .padding(.bottom, 18)
                 }

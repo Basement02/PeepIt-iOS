@@ -16,18 +16,22 @@ struct ProfileModifyStore {
     struct State: Equatable {
         /// 기존 아이디
         var id = ""
+
         /// 기존 닉네임
         var nickname = ""
+        /// 닉네임 유효성 상태
+        var nicknameEnterState = EnterState.base
+        /// 닉네임 가이드 문구
+        var nicknameMessage = " "
+
         /// 기존 성별
         var selectedGender: GenderType? = nil
-        /// 닉네임 유효성 검증 상태
-        var nicknameValidation = NicknameValidation.base
-        /// 입력창 히위 뷰 State
-        var enterFieldState = CheckEnterFieldStore.State()
-        /// 프로필
+
+        /// 프로필 이미지
         var profileImgStr: String? = nil
         /// PhotoPicker 변수
         var selectedPhotoItem: PhotosPickerItem? = nil
+        
         /// 유저 프로필 정보
         var userProfile: UserProfile?
     }
@@ -46,8 +50,6 @@ struct ProfileModifyStore {
         case selectGender(GenderType)
         /// 뷰 닫기
         case dismiss
-        /// 하위뷰 액션 연결
-        case enterFieldAction(CheckEnterFieldStore.Action)
         /// 프로필 업데이트
         case updateProfile(profile: UserProfile)
 
@@ -68,16 +70,16 @@ struct ProfileModifyStore {
 
     var body: some Reducer<State, Action> {
         BindingReducer()
-        
-        Scope(
-            state: \.enterFieldState,
-            action: \.enterFieldAction
-        ) {
-            CheckEnterFieldStore()
-        }
 
         Reduce { state, action in
             switch action {
+
+            case .binding(\.nickname):
+                let validState = validateNickname(state.nickname)
+                state.nicknameEnterState = validState.enterState
+                state.nicknameMessage = validState.message
+
+                return .none
 
             case .binding(\.selectedPhotoItem):
                 guard let photoItem = state.selectedPhotoItem else { return .none }
@@ -89,22 +91,11 @@ struct ProfileModifyStore {
                 }
 
             case .onAppear:
-                state.enterFieldState.fieldType = .nickname
-                state.enterFieldState.text = state.nickname
-
                 return .run { send in
                     if let savedProfile = try? await userProfileStorage.load() {
                         await send(.updateProfile(profile: savedProfile))
                     }
                 }
-
-            case .enterFieldAction(.binding(\.text)):
-                state.nicknameValidation = validateNickname(state.enterFieldState.text)
-                state.enterFieldState.enterState = state.nicknameValidation.enterState
-                state.enterFieldState.message = state.nicknameValidation.message
-                state.nickname = state.enterFieldState.text
-
-                return .none
 
             case .backButtonTapped:
                 return .send(.dismiss)
@@ -131,7 +122,6 @@ struct ProfileModifyStore {
 
             case let .updateProfile(profile):
                 state.userProfile = profile
-
                 state.profileImgStr = profile.profile
                 state.nickname = profile.name
                 state.id = profile.id
