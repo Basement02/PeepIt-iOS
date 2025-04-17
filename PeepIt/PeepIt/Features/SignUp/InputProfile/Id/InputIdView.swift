@@ -22,12 +22,12 @@ struct InputIdView: View {
                     title
                         .padding(.bottom, 50)
 
-                    CheckEnterField(
-                        store: store.scope(
-                            state: \.enterFieldState,
-                            action: \.enterFieldAction)
+                    EnterFieldWithCheck(
+                        obj: "아이디",
+                        text: $store.id,
+                        validState: $store.enterState,
+                        guideMessage: $store.guideMessage
                     )
-                    .submitLabel(.continue)
                     .frame(width: 285)
                 }
                 .padding(.leading, 20)
