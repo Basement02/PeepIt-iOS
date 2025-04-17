@@ -12,16 +12,14 @@ struct ThumbnailAlarm: View {
 
     var body: some View {
         ZStack {
-            Image("SampleImage")
-                .resizable()
-
+            AsyncThumbnail(imgStr: peep.data)
             ThumbnailLayer.primary()
             ThumbnailLayer.secondary()
 
             VStack {
                 HStack(spacing: 1) {
                     Image("IconCommentBoldFrame")
-                    Text("00")
+                    Text("\(peep.chatNum)")
                         .pretendard(.body01)
                     Spacer()
                 }
@@ -38,12 +36,15 @@ struct ThumbnailAlarm: View {
                 }
             }
             .frame(width: 94, height: 134)
-
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(Color.coreLime, lineWidth: 1)
         }
-        .clipShape(RoundedRectangle(cornerRadius: 8))
         .frame(width: 110, height: 150)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 }
 
