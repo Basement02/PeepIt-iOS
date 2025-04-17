@@ -597,7 +597,8 @@
 		AB33403E2DAE3480007C31FC /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				AB3340432DAE34E4007C31FC /* AsyncProfile.swift */,
+				ABCCB6DE2DB1216F00A226C4 /* Loading */,
+				AB4BEE062D9A941700CA3936 /* Alarm */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -726,7 +727,9 @@
 		AB416D182CF309620065BD09 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
+				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
 				AB416D192CF309750065BD09 /* ElseMenuView.swift */,
+				ABA11E8D2D1D439400C181DC /* ColorChip.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 			isa = PBXGroup;
 			children = (
 				AB416D1E2CF329590065BD09 /* MiniBtn.swift */,
+				ABA11E9B2D21766300C181DC /* TownTitleView.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -1081,13 +1085,8 @@
 		ABB96D212CD25145003C6742 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				ABC05B662DB0F063003EB650 /* EnterFieldWithCheck.swift */,
-				ABEBFD832CEF550C00E392F3 /* HotLabel.swift */,
-				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
+				ABCCB6E32DB122D400A226C4 /* Modifier */,
 				ABCC50EC2CF03359004AD297 /* PeepItNavigationBar.swift */,
-				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
-				ABA11E8D2D1D439400C181DC /* ColorChip.swift */,
-				ABA11E9B2D21766300C181DC /* TownTitleView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1164,7 +1163,7 @@
 				ABE581C42CCA6F20003366DC /* Info.plist */,
 				ABC305D72C9324CC003B00FE /* Features */,
 				ABC305EF2C95A4BF003B00FE /* Models */,
-				ABC305E72C933EF3003B00FE /* Components */,
+				ABC305E72C933EF3003B00FE /* DesignSystem */,
 				ABC305DA2C932514003B00FE /* Resources */,
 				ABD639D42D7EE7260062A60C /* Network */,
 				AB53DE4F2CA00FD100D8DC1F /* Utils */,
@@ -1237,19 +1236,15 @@
 			path = PeepPreview;
 			sourceTree = "<group>";
 		};
-		ABC305E72C933EF3003B00FE /* Components */ = {
+		ABC305E72C933EF3003B00FE /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
-				ABC305F62C95C8D7003B00FE /* Modifiers */,
-				ABB96D212CD25145003C6742 /* Views */,
-				AB416D122CF2EEF20065BD09 /* Toggle */,
-				AB416D152CF2F7AF0065BD09 /* Video */,
-				AB416D182CF309620065BD09 /* Interface */,
-				AB416D1D2CF329490065BD09 /* Text */,
-				AB4BEE062D9A941700CA3936 /* Alarm */,
+				ABCCB6DD2DB1212400A226C4 /* Components */,
 				AB33403E2DAE3480007C31FC /* UseCase */,
+				ABCCB6DF2DB1219100A226C4 /* Button */,
+				ABB96D212CD25145003C6742 /* Views */,
 			);
-			path = Components;
+			path = DesignSystem;
 			sourceTree = "<group>";
 		};
 		ABC305EF2C95A4BF003B00FE /* Models */ = {
@@ -1269,17 +1264,6 @@
 				AB416D272CF37A950065BD09 /* Notification.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		ABC305F62C95C8D7003B00FE /* Modifiers */ = {
-			isa = PBXGroup;
-			children = (
-				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
-				ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */,
-				ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */,
-				AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */,
-			);
-			path = Modifiers;
 			sourceTree = "<group>";
 		};
 		ABC7012E2CE34CB9004DCFF1 /* Nickname */ = {
@@ -1327,6 +1311,62 @@
 				ABCC50E62CEF9105004AD297 /* GuideStore.swift */,
 			);
 			path = Guide;
+			sourceTree = "<group>";
+		};
+		ABCCB6DD2DB1212400A226C4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				ABCCB6E02DB121B100A226C4 /* Field */,
+				AB416D182CF309620065BD09 /* Interface */,
+				AB416D152CF2F7AF0065BD09 /* Video */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		ABCCB6DE2DB1216F00A226C4 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				AB3340432DAE34E4007C31FC /* AsyncProfile.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		ABCCB6DF2DB1219100A226C4 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				AB416D1D2CF329490065BD09 /* Text */,
+				ABCCB6E12DB1222000A226C4 /* Icon */,
+				AB416D122CF2EEF20065BD09 /* Toggle */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		ABCCB6E02DB121B100A226C4 /* Field */ = {
+			isa = PBXGroup;
+			children = (
+				ABC05B662DB0F063003EB650 /* EnterFieldWithCheck.swift */,
+			);
+			path = Field;
+			sourceTree = "<group>";
+		};
+		ABCCB6E12DB1222000A226C4 /* Icon */ = {
+			isa = PBXGroup;
+			children = (
+				ABCC50E02CEF8F23004AD297 /* BackButton.swift */,
+				ABCC50F02CF03D62004AD297 /* DismissButton.swift */,
+			);
+			path = Icon;
+			sourceTree = "<group>";
+		};
+		ABCCB6E32DB122D400A226C4 /* Modifier */ = {
+			isa = PBXGroup;
+			children = (
+				ABC305E82C933F08003B00FE /* ClearBackgroundViewModifier.swift */,
+				ABE8A0C22CEAE61000AFBEAE /* DropShadowModifier.swift */,
+				ABE8A0CC2CEAEFF100AFBEAE /* PressableButtonStyle.swift */,
+				AB416D2E2CF5B6610065BD09 /* RoundedCorner.swift */,
+			);
+			path = Modifier;
 			sourceTree = "<group>";
 		};
 		ABCE972D2D31203000A07962 /* Object */ = {
