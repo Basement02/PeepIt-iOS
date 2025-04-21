@@ -23,7 +23,7 @@ extension MemberDetailResponseDto {
         return .init(
             id: id,
             name: name,
-            townInfo: nil,
+            townInfo: .init(address: town, bCode: ""), // TODO:
             profile: profile,
             gender: GenderType(type: gender),
             isCertificated: role == "CERTIFICATED",
