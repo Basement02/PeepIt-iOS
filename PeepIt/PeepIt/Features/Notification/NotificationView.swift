@@ -67,7 +67,9 @@ struct NotificationView: View {
                         let peep = store.activePeeps[idx]
 
                         ThumbnailAlarm(peep: peep)
-                            .onTapGesture { store.send(.activePeepCellTapped(selectedPeep: peep)) }
+                            .onTapGesture {
+                                store.send(.activePeepCellTapped(selectedPeep: peep))
+                            }
                             .onAppear {
                                 if store.hasNext && idx == store.activePeeps.count - 4 {
                                     store.send(.fetchActivePeeps)

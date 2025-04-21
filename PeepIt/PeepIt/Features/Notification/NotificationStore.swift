@@ -16,7 +16,7 @@ struct NotificationStore {
         /// 활성화 핍 리스트 관리
         var activePeeps: [Peep] = []
         var page = 0
-        var size = 15
+        var size = 10
         var hasNext = true
 
         /// 알림 리스트
@@ -68,13 +68,21 @@ struct NotificationStore {
             case let .fetchActivePeepResponse(result):
                 switch result {
                 case let .success(pagedPeeps):
-                    state.activePeeps.append(contentsOf: pagedPeeps.content)
+                    if pagedPeeps.page == 0 {
+                        state.activePeeps = pagedPeeps.content
+                    } else {
+                        state.activePeeps.append(contentsOf: pagedPeeps.content)
+                    }
+
                     state.hasNext = pagedPeeps.hasNext
                     state.page += 1
                     return .none
 
-                case .failure:
-                    // TODO: 
+                case let .failure(error):
+                    if error.asPeepItError() == .noPeep {
+                        state.activePeeps = []
+                    }
+
                     return .none
                 }
             }
