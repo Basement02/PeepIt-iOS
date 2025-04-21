@@ -179,6 +179,8 @@
 		ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F02C95A4D1003B00FE /* PeepPreview.swift */; };
 		ABC305F32C95A567003B00FE /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC305F22C95A567003B00FE /* UserInfo.swift */; };
 		ABC793B52DB12D2F001B3FE6 /* AsyncThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B42DB12D2D001B3FE6 /* AsyncThumbnail.swift */; };
+		ABC793B72DB6065C001B3FE6 /* PeepUploadRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */; };
+		ABC793B92DB607FA001B3FE6 /* UploadPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */; };
 		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
@@ -403,6 +405,8 @@
 		ABC305F02C95A4D1003B00FE /* PeepPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepPreview.swift; sourceTree = "<group>"; };
 		ABC305F22C95A567003B00FE /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		ABC793B42DB12D2D001B3FE6 /* AsyncThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncThumbnail.swift; sourceTree = "<group>"; };
+		ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepUploadRequestDto.swift; sourceTree = "<group>"; };
+		ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPeep.swift; sourceTree = "<group>"; };
 		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
@@ -882,6 +886,7 @@
 		AB4BEDE92D92789600CA3936 /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */,
 				AB4BEDF22D928A8200CA3936 /* MapPeepRequest.swift */,
 				AB4BEDF02D9288B500CA3936 /* PageRequestDto.swift */,
 				AB4BEDEA2D92789C00CA3936 /* PeepDetailRequestDto.swift */,
@@ -1380,6 +1385,7 @@
 		ABCCB6E72DB1237100A226C4 /* Peep */ = {
 			isa = PBXGroup;
 			children = (
+				ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */,
 				ABD3CAAF2CA1B52000438747 /* Peep.swift */,
 				ABC305F02C95A4D1003B00FE /* PeepPreview.swift */,
 				AB53DE542CA0289A00D8DC1F /* Chat.swift */,
@@ -1741,6 +1747,7 @@
 				AB416D1C2CF319980065BD09 /* TitleTab.swift in Sources */,
 				AB3340302DA50044007C31FC /* TownAPIClient.swift in Sources */,
 				ABF8E2EF2CD237780096A7EF /* UINavigationController+Extension.swift in Sources */,
+				ABC793B72DB6065C001B3FE6 /* PeepUploadRequestDto.swift in Sources */,
 				ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */,
 				ABE581CA2CCA9A80003366DC /* FontSystem.swift in Sources */,
 				AB0FBF252D4FCFF5003D8372 /* PolygonLayer.swift in Sources */,
@@ -1767,6 +1774,7 @@
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
 				AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
+				ABC793B92DB607FA001B3FE6 /* UploadPeep.swift in Sources */,
 				AB0FBF212D4FC8F7003D8372 /* TownRegisterModalView.swift in Sources */,
 				AB33888A2D9EA87400316D4B /* CodeCheckRequestDto.swift in Sources */,
 				AB0FBF232D4FCF13003D8372 /* TownVerificationView.swift in Sources */,
