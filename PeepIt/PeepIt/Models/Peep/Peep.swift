@@ -15,6 +15,7 @@ struct Peep: Equatable, Hashable, Identifiable {
     let isActive: Bool
     var reaction: String? = nil
     var isVideo: Bool
+    var chatNum: Int
 
     var id: Int { peepId }
 
@@ -28,12 +29,13 @@ extension Peep {
     static var stubPeep0: Peep {
         return .init(
             peepId: 0,
-            data: "",
+            data: "https://peepit-prod-bucket.s3.ap-northeast-2.amazonaws.com//peep274f4423-1f71-4324-a038-1fc6bed4624f_스크린샷 2025-04-17 오후 9.17.28.png",
             content: "한 문장은 몇 자까지일까? 어쨋든 말줄임표를 두 문장까지? 문장 끝까지 보이면 안될 것 같지 않아?0",
             writerId: "1",
             isActive: true,
             reaction: "😥",
-            isVideo: false
+            isVideo: false,
+            chatNum: 0
         )
     }
 
@@ -45,7 +47,8 @@ extension Peep {
             writerId: "1",
             isActive: false,
             reaction: "🤔",
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -56,7 +59,8 @@ extension Peep {
             content: "본문본문2222kjkjsdlkjalsdkjfasdf",
             writerId: "2",
             isActive: true,
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -67,7 +71,8 @@ extension Peep {
             content: "본문본문3",
             writerId: "2",
             isActive: false,
-            isVideo: false
+            isVideo: false,
+            chatNum: 0
         )
     }
 
@@ -78,7 +83,8 @@ extension Peep {
             content: "본문본문4",
             writerId: "2",
             isActive: false,
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -89,7 +95,8 @@ extension Peep {
             content: "본문본문5",
             writerId: "2",
             isActive: false,
-            isVideo: false
+            isVideo: false,
+            chatNum: 0
         )
     }
 
@@ -100,7 +107,8 @@ extension Peep {
             content: "본문본문6",
             writerId: "2",
             isActive: true,
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -111,7 +119,8 @@ extension Peep {
             content: "본문본문7",
             writerId: "2",
             isActive: false,
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -122,7 +131,8 @@ extension Peep {
             content: "본문본문8",
             writerId: "2",
             isActive: true,
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -134,7 +144,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             reaction: "😭",
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -146,7 +157,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             reaction: "😭",
-            isVideo: true
+            isVideo: true,
+            chatNum: 0
         )
     }
 
@@ -158,7 +170,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             reaction: "😭",
-            isVideo: false
+            isVideo: false,
+            chatNum: 0
         )
     }
 }

@@ -23,6 +23,6 @@ extension APIType {
     }
 
     var header: HTTPHeaders? {
-        return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
+        return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"] 
     }
 }
