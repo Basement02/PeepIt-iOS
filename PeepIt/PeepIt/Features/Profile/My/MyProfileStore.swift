@@ -160,9 +160,11 @@ struct MyProfileStore {
                 switch result {
 
                 case let .success(pagedPeeps):
+
                     state.uploadedPeeps.append(contentsOf: pagedPeeps.content)
                     state.uploadedPeepHasNext = pagedPeeps.hasNext
                     state.uploadedPeepPage += 1
+                    
                     return .none
 
                 case let .failure(error):
@@ -187,10 +189,12 @@ struct MyProfileStore {
                 switch result {
 
                 case let .success(pagedPeeps):
+
                     state.chattedCnt = pagedPeeps.totalElements
                     state.activityPeeps.append(contentsOf: pagedPeeps.content)
                     state.activityPeepHasNext = pagedPeeps.hasNext
                     state.activityPeepPage += 1
+                    
                     return .none
 
                 case let .failure(error):
