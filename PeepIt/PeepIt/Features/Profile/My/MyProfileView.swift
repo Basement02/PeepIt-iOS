@@ -68,7 +68,7 @@ struct MyProfileView: View {
                             .resizable()
                             .frame(width: 22.4, height: 22.4)
                         Text(
-                            store.myProfile?.town?.components(separatedBy: " ").last
+                            store.myProfile?.townInfo?.address.components(separatedBy: " ").last
                             ?? ""
                         )
                         .pretendard(.body02)

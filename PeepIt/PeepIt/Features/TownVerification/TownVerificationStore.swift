@@ -47,7 +47,7 @@ struct TownVerificationStore {
         case fetchModifyUserTownResult(Result<Void, Error>)
 
         /// 동네 수정 시 프로필 수정
-        case updateProfile(town: String)
+        case updateProfile(town: String, bCode: String)
     }
 
     @Dependency(\.userProfileStorage) var userProfileStorage
@@ -58,6 +58,7 @@ struct TownVerificationStore {
 
         Reduce { state, action in
             switch action {
+                
             case .binding(\.centerLoc):
                 let newCoord = state.centerLoc
                 return .send(.getLegalCode(loc: newCoord))
@@ -137,10 +138,11 @@ struct TownVerificationStore {
                 switch result {
 
                 case .success:
-                    guard let townName = state.townName else { return .none }
-                    return .concatenate(
+                    guard let townName = state.townName,
+                          let bCode = state.currentBCode else { return .none }
 
-                        .send(.updateProfile(town: townName)),
+                    return .concatenate(
+                        .send(.updateProfile(town: townName, bCode: bCode)),
                         .send(.dismissButtonTapped)
                     )
 
@@ -153,10 +155,10 @@ struct TownVerificationStore {
                     return .none
                 }
 
-            case let .updateProfile(town):
+            case let .updateProfile(town, bCode):
                 return .run { send in
                     var profile = (try await userProfileStorage.load())
-                    profile?.town = town
+                    profile?.townInfo = .init(address: town, bCode: bCode)
 
                     if let newProfile = profile {
                         try await userProfileStorage.save(newProfile)

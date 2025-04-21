@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TownInfo {
+struct TownInfo: Equatable, Codable {
     let address: String
     let bCode: String
 }
