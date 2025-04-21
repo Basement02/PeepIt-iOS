@@ -13,6 +13,9 @@ struct MyProfileStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 사용자 프로필
+        var myProfile: UserProfile?
+
         /// 나의 핍, 나의 활동 탭 선택
         var peepTabSelection = PeepTabType.uploaded
 
@@ -54,6 +57,9 @@ struct MyProfileStore {
         case watchButtonTapped
         case peepCellTapped(peep: Peep)
 
+        /// 프로필 정보 불러오기
+        case updateMyProfile(profile: UserProfile)
+
         /// 사용자가 업로드한 핍 조회 API
         case fetchUploadedPeeps
         case fetchUploadedPeepsResponse(Result<PagedPeeps, Error>)
@@ -70,6 +76,7 @@ struct MyProfileStore {
         case fetchMoreActivityPeeps
     }
 
+    @Dependency(\.userProfileStorage) var userProfileStorage
     @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
@@ -81,10 +88,25 @@ struct MyProfileStore {
                 state.peepTabSelection = .uploaded
                 state.uploadedPeepPage = 0
                 state.uploadedPeepHasNext = true
-                return .send(.fetchUploadedPeeps)
+
+                return .merge(
+                    .run { send in
+                        if let savedProfile = try? await userProfileStorage.load() {
+                            await send(.updateMyProfile(profile: savedProfile))
+                        }
+                    },
+                    .run { send in
+                        await send(.fetchUploadedPeeps)
+                    }
+                )
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }
+
+            case let .updateMyProfile(profile):
+                state.myProfile = profile
+
+                return .none
 
             case let .peepTabTapped(selection):
                 state.peepTabSelection = selection
@@ -95,6 +117,7 @@ struct MyProfileStore {
                     state.uploadedPeepHasNext = true
                     state.uploadedPeeps = .init()
                     return .send(.fetchUploadedPeeps)
+
                 case .myActivity:
                     state.myTabFilter = .all
                     state.activityPeepPage = 0
@@ -142,8 +165,9 @@ struct MyProfileStore {
                     state.uploadedPeepPage += 1
                     return .none
 
-                case .failure:
+                case let .failure(error):
                     // TODO: 에러 처리
+                    print(error)
                     return .none
                 }
 
@@ -169,7 +193,7 @@ struct MyProfileStore {
                     state.activityPeepPage += 1
                     return .none
 
-                case .failure:
+                case let .failure(error):
                     // TODO: 에러 처리
                     return .none
                 }
