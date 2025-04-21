@@ -17,7 +17,7 @@ struct MyProfileView: View {
 
                 PeepItNavigationBar(
                     leading: backButton,
-                    title: "@아이디"
+                    title: "@\(store.myProfile?.id ?? "")"
                 )
 
                 ScrollView {
