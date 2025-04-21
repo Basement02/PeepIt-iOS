@@ -55,7 +55,7 @@ struct TownPeepsView: View {
             Image("IconLocation")
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
-            Text("동이름")
+            Text(store.myTown.components(separatedBy: " ").last ?? "")
                 .pretendard(.body02)
         }
         .padding(.vertical, 9)
@@ -152,7 +152,7 @@ struct TownPeepsView: View {
                 .padding(.bottom, 25)
 
                 HStack {
-                    Text("N월 N일의 인기 핍")
+                    Text("\(store.todayStr)의 인기 핍")
                         .pretendard(.title02)
                     Spacer()
                 }
