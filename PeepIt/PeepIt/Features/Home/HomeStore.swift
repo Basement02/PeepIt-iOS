@@ -71,8 +71,13 @@ struct HomeStore {
         case peepTapped(idx: Int)
         /// 프로필 정보 업데이트
         case updateProfile(profile: UserProfile)
+
+        /// 내 프로필 조회 api
+        case getMyProfile
+        case fetchGetMyProfileResponse(Result<UserProfile, Error>)
     }
 
+    @Dependency(\.memberAPIClient) var memberAPIClient
     @Dependency(\.userProfileStorage) var userProfileStorage
 
     var body: some Reducer<State, Action> {
@@ -106,11 +111,32 @@ struct HomeStore {
                 return .none
 
             case .onAppear:
+                return .send(.getMyProfile)
+
+            case .getMyProfile:
                 return .run { send in
-                    if let savedProfile = try? await userProfileStorage.load() {
-                        await send(.updateProfile(profile: savedProfile))
-                    }
+                    await send(
+                        .fetchGetMyProfileResponse(
+                            Result { try await memberAPIClient.getMemberDetail() }
+                        )
+                    )
                 }
+
+            case let .fetchGetMyProfileResponse(result):
+                switch result {
+                case let .success(profile):
+                    state.userProfile = profile
+
+                    return .run { send in
+                        await send(.updateProfile(profile: profile))
+                    }
+
+                case .failure:
+                    // TODO: 오류 처리
+                    print("오류")
+                }
+
+                return .none
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
@@ -186,8 +212,9 @@ struct HomeStore {
                 return .none
 
             case let .updateProfile(profile):
-                state.userProfile = profile
-                return .none
+                return .run { _ in // 기기에 정보 저장
+                    try await userProfileStorage.save(profile)
+                }
 
             default:
                 return .none
