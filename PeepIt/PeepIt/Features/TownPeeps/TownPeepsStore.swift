@@ -19,7 +19,7 @@ struct TownPeepsStore {
         var peeps: [Peep] = []
 
         var page = 0
-        var size = 10
+        var size = 5
         var hasNext = true
 
         var todayStr = ""
@@ -51,7 +51,6 @@ struct TownPeepsStore {
         Reduce { state, action in
             switch action {
             case .onAppear:
-
                 let formatter = DateFormatter()
                 formatter.dateFormat = "M월 d일"
                 state.todayStr = formatter.string(from: Date())
@@ -82,16 +81,13 @@ struct TownPeepsStore {
                 state.isRefreshing = true
                 state.page = 0
                 state.hasNext = true
-                state.peeps.removeAll()
 
-                return .none
+                let (page, size) = (state.page, state.size)
 
-//                let (page, size) = (state.page, state.size)
-//
-//                return .run { send in
-//                    let result = await Result { try await peepAPIClient.fetchTownPeeps(page, size) }
-//                    await send(.fetchTownPeepsResponse(result))
-//                }
+                return .run { send in
+                    let result = await Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                    await send(.fetchTownPeepsResponse(result))
+                }
 
             case .refreshEnded:
                 state.isRefreshing = false
@@ -114,7 +110,13 @@ struct TownPeepsStore {
             case let .fetchTownPeepsResponse(result):
                 switch result {
                 case let .success(pagedPeeps):
-                    state.peeps.append(contentsOf: pagedPeeps.content)
+
+                    if pagedPeeps.page == 0 {
+                        state.peeps = pagedPeeps.content
+                    } else {
+                        state.peeps.append(contentsOf: pagedPeeps.content)
+                    }
+
                     state.hasNext = pagedPeeps.hasNext
                     state.page += 1
 

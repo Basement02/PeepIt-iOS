@@ -163,26 +163,21 @@ struct TownPeepsView: View {
                 } else {
                     LazyVGrid(
                         columns: [GridItem(.flexible()), GridItem(.flexible())],
-                        alignment: .center,
                         spacing: 8
                     ) {
-                        ForEach(0..<store.peeps.count, id: \.self) { idx in
-                            WithPerceptionTracking {
-                                ThumbnailPeep(peep: store.peeps[idx])
-                                    .onTapGesture {
-                                        store.send(
-                                            .peepCellTapped(idx: idx, peeps: store.peeps)
-                                        )
+                        ForEach(Array(store.peeps.enumerated()), id: \.element.id) { (idx, peep) in
+                            ThumbnailPeep(peep: peep)
+                                .onTapGesture {
+                                    store.send(.peepCellTapped(idx: idx, peeps: store.peeps))
+                                }
+                                .onAppear {
+                                    if idx == store.peeps.count - 2 && store.hasNext {
+                                        store.send(.fetchTownPeeps)
                                     }
-                                    .onAppear {
-                                        if idx == store.peeps.count - 2 && store.hasNext {
-                                            store.send(.fetchTownPeeps)
-                                        }
-                                    }
-                            }
+                                }
                         }
                     }
-                    .padding(.bottom, 11)
+                    .padding(.bottom, 38)
                 }
             }
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
