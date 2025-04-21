@@ -16,6 +16,7 @@ struct Peep: Equatable, Hashable, Identifiable {
     var reaction: String? = nil
     var isVideo: Bool
     var chatNum: Int
+    var stickerNum: Int
 
     var id: Int { peepId }
 
@@ -35,7 +36,8 @@ extension Peep {
             isActive: true,
             reaction: "😥",
             isVideo: false,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -48,7 +50,8 @@ extension Peep {
             isActive: false,
             reaction: "🤔",
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -60,7 +63,8 @@ extension Peep {
             writerId: "2",
             isActive: true,
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -72,7 +76,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             isVideo: false,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -84,7 +89,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -96,7 +102,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             isVideo: false,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -108,7 +115,8 @@ extension Peep {
             writerId: "2",
             isActive: true,
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -120,7 +128,8 @@ extension Peep {
             writerId: "2",
             isActive: false,
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -132,7 +141,8 @@ extension Peep {
             writerId: "2",
             isActive: true,
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -145,7 +155,8 @@ extension Peep {
             isActive: false,
             reaction: "😭",
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -158,7 +169,8 @@ extension Peep {
             isActive: false,
             reaction: "😭",
             isVideo: true,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 
@@ -171,7 +183,8 @@ extension Peep {
             isActive: false,
             reaction: "😭",
             isVideo: false,
-            chatNum: 0
+            chatNum: 0,
+            stickerNum: 0
         )
     }
 }

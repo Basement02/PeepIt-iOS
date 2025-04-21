@@ -55,7 +55,7 @@ struct TownPeepsView: View {
             Image("IconLocation")
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
-            Text("동이름")
+            Text(store.myTown.components(separatedBy: " ").last ?? "")
                 .pretendard(.body02)
         }
         .padding(.vertical, 9)
@@ -152,7 +152,7 @@ struct TownPeepsView: View {
                 .padding(.bottom, 25)
 
                 HStack {
-                    Text("N월 N일의 인기 핍")
+                    Text("\(store.todayStr)의 인기 핍")
                         .pretendard(.title02)
                     Spacer()
                 }
@@ -163,26 +163,21 @@ struct TownPeepsView: View {
                 } else {
                     LazyVGrid(
                         columns: [GridItem(.flexible()), GridItem(.flexible())],
-                        alignment: .center,
                         spacing: 8
                     ) {
-                        ForEach(0..<store.peeps.count, id: \.self) { idx in
-                            WithPerceptionTracking {
-                                ThumbnailPeep(peep: store.peeps[idx])
-                                    .onTapGesture {
-                                        store.send(
-                                            .peepCellTapped(idx: idx, peeps: store.peeps)
-                                        )
+                        ForEach(Array(store.peeps.enumerated()), id: \.element.id) { (idx, peep) in
+                            ThumbnailPeep(peep: peep)
+                                .onTapGesture {
+                                    store.send(.peepCellTapped(idx: idx, peeps: store.peeps))
+                                }
+                                .onAppear {
+                                    if idx == store.peeps.count - 2 && store.hasNext {
+                                        store.send(.fetchTownPeeps)
                                     }
-                                    .onAppear {
-                                        if idx == store.peeps.count - 2 && store.hasNext {
-                                            store.send(.fetchTownPeeps)
-                                        }
-                                    }
-                            }
+                                }
                         }
                     }
-                    .padding(.bottom, 11)
+                    .padding(.bottom, 38)
                 }
             }
             .onPreferenceChange(ScrollOffsetKey.self) { newOffset in
@@ -206,25 +201,28 @@ fileprivate struct ThumbnailPeep: View {
 
     var body: some View {
         ZStack {
-            Image("SampleImage")
-                .resizable()
-
-            ThumbnailLayer.primary()
-
-            ThumbnailLayer.secondary()
+            Group {
+                AsyncThumbnail(imgStr: peep.data)
+                ThumbnailLayer.primary()
+                ThumbnailLayer.secondary()
+            }
+            .frame(
+                width: Constant.isSmallDevice ? 167 : 175,
+                height: Constant.isSmallDevice ? 229 : 240
+            )
 
             VStack {
                 HStack(spacing: 0) {
                     Image("IconCommentBoldFrame")
 
-                    Text("00")
+                    Text("\(peep.chatNum)")
                         .pretendard(.body02)
                         .foregroundStyle(Color.white)
                         .padding(.trailing, 5)
 
                     Image("IconReactionBoldFrame")
 
-                    Text("00")
+                    Text("\(peep.stickerNum)")
                         .pretendard(.body02)
                         .foregroundStyle(Color.white)
 
@@ -245,10 +243,12 @@ fileprivate struct ThumbnailPeep: View {
             .frame(width: 151, height: 218)
         }
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .frame(
-            width: Constant.isSmallDevice ? 167 : 175,
-            height: Constant.isSmallDevice ? 229 : 240
-        )
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 }
 

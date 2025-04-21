@@ -45,8 +45,12 @@ struct TownVerificationStore {
         /// 동네 등록 api
         case modifyUserTown(bCode: String)
         case fetchModifyUserTownResult(Result<Void, Error>)
+
+        /// 동네 수정 시 프로필 수정
+        case updateProfile(town: String, bCode: String)
     }
-    
+
+    @Dependency(\.userProfileStorage) var userProfileStorage
     @Dependency(\.townAPIClient) var townAPIClient
 
     var body: some Reducer<State, Action> {
@@ -54,6 +58,7 @@ struct TownVerificationStore {
 
         Reduce { state, action in
             switch action {
+                
             case .binding(\.centerLoc):
                 let newCoord = state.centerLoc
                 return .send(.getLegalCode(loc: newCoord))
@@ -133,7 +138,13 @@ struct TownVerificationStore {
                 switch result {
 
                 case .success:
-                    return .send(.dismissButtonTapped)
+                    guard let townName = state.townName,
+                          let bCode = state.currentBCode else { return .none }
+
+                    return .concatenate(
+                        .send(.updateProfile(town: townName, bCode: bCode)),
+                        .send(.dismissButtonTapped)
+                    )
 
                 case let .failure(error):
                     if error.asPeepItError() == .bCodeError {
@@ -142,6 +153,16 @@ struct TownVerificationStore {
                     }
                     
                     return .none
+                }
+
+            case let .updateProfile(town, bCode):
+                return .run { send in
+                    var profile = (try await userProfileStorage.load())
+                    profile?.townInfo = .init(address: town, bCode: bCode)
+
+                    if let newProfile = profile {
+                        try await userProfileStorage.save(newProfile)
+                    }
                 }
 
             default:

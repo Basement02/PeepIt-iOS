@@ -32,7 +32,8 @@ extension CommonPeepDto {
             isActive: isActive ?? true, // TODO: - 수정
             reaction: nil, // TODO: - stickerNum 순서 파악 필요
             isVideo: true, // TODO: - isVideo 추가 요청 필요
-            chatNum: chatNum
+            chatNum: chatNum,
+            stickerNum: stickerNum
         )
     }
 }

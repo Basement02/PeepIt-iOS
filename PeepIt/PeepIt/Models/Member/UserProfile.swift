@@ -10,7 +10,7 @@ import Foundation
 struct UserProfile: Equatable, Codable {
     var id: String
     var name: String
-    var town: String?
+    var townInfo: TownInfo?
     var profile: String
     var gender: GenderType
     var isCertificated: Bool
