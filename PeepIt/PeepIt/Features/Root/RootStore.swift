@@ -167,10 +167,6 @@ struct RootStore {
                     )
                     return .none
 
-                case .element(_, action: .write(.uploadButtonTapped)):
-                    for _ in 0..<3 { _ = state.path.popLast() }
-                    return .none
-
                 case .element(_, action: .townPeeps(.uploadButtonTapped)):
                     state.path.append(.camera(.init()))
                     return .none
