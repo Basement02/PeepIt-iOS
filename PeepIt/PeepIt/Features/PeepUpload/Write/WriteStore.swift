@@ -38,8 +38,13 @@ struct WriteStore {
         case viewTapped
         case modalDragOnChanged(height: CGFloat)
         case closeModal
+
+        /// 핍 업로드 api
+        case uploadPeep
+        case fetchPeepUploadResponse(Result<Void, Error>)
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
@@ -52,12 +57,10 @@ struct WriteStore {
                 return .none
 
             case .dismissButtonTapped:
-                return .run { _ in
-                    await dismiss()
-                }
+                return .run { _ in await dismiss() }
 
             case .uploadButtonTapped:
-                return .none
+                return .send(.uploadPeep)
 
             case .bodyTextEditorTapped:
                 state.isBodyInputMode = true
@@ -81,6 +84,37 @@ struct WriteStore {
             case .closeModal:
                 state.modalOffset = Constant.screenHeight
                 return .none
+
+            case .uploadPeep:
+                guard let data = state.image?.jpegData(compressionQuality: 0.8) else { return .none }
+
+                // TODO: 값 수정
+                let peepObj: UploadPeep = .init(
+                    bCode: "1114016400",
+                    content: state.bodyText,
+                    x: 127.01583524268014,
+                    y: 37.564252509725364,
+                    building: "민이집",
+                    data: data
+                )
+
+                return .run { send in
+                    await send(
+                        .fetchPeepUploadResponse(
+                            Result { try await peepAPIClient.uploadPeep(peepObj) }
+                        )
+                    )
+                }
+
+            case let .fetchPeepUploadResponse(result):
+                switch result {
+                case .success:
+                    return .none
+
+                case let .failure(error):
+                    print(error)
+                    return .none
+                }
 
             default:
                 return .none
