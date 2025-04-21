@@ -206,25 +206,28 @@ fileprivate struct ThumbnailPeep: View {
 
     var body: some View {
         ZStack {
-            Image("SampleImage")
-                .resizable()
-
-            ThumbnailLayer.primary()
-
-            ThumbnailLayer.secondary()
+            Group {
+                AsyncThumbnail(imgStr: peep.data)
+                ThumbnailLayer.primary()
+                ThumbnailLayer.secondary()
+            }
+            .frame(
+                width: Constant.isSmallDevice ? 167 : 175,
+                height: Constant.isSmallDevice ? 229 : 240
+            )
 
             VStack {
                 HStack(spacing: 0) {
                     Image("IconCommentBoldFrame")
 
-                    Text("00")
+                    Text("\(peep.chatNum)")
                         .pretendard(.body02)
                         .foregroundStyle(Color.white)
                         .padding(.trailing, 5)
 
                     Image("IconReactionBoldFrame")
 
-                    Text("00")
+                    Text("\(peep.stickerNum)")
                         .pretendard(.body02)
                         .foregroundStyle(Color.white)
 
@@ -245,10 +248,12 @@ fileprivate struct ThumbnailPeep: View {
             .frame(width: 151, height: 218)
         }
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .frame(
-            width: Constant.isSmallDevice ? 167 : 175,
-            height: Constant.isSmallDevice ? 229 : 240
-        )
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 10)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 }
 
