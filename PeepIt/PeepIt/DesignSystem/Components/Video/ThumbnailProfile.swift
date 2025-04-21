@@ -12,12 +12,15 @@ struct ThumbnailProfile: View {
 
     var body: some View {
         ZStack {
-            Image("SampleImage")
-                .resizable()
-
-            ThumbnailLayer.primary()
-
-            ThumbnailLayer.secondary()
+            Group {
+                AsyncThumbnail(imgStr: peep.data)
+                ThumbnailLayer.primary()
+                ThumbnailLayer.secondary()
+            }
+            .frame(
+                width: Constant.isSmallDevice ? 108 : 113,
+                height: Constant.isSmallDevice ? 148 : 155
+            )
 
             VStack {
                 if let reaction = peep.reaction, !peep.isMine {
@@ -50,18 +53,14 @@ struct ThumbnailProfile: View {
             .padding(.bottom, 7.5)
             .padding(.leading, 8)
             .padding(.trailing, 7)
-
-            RoundedRectangle(cornerRadius: 8)
-                .strokeBorder(
-                    Color.coreLime,
-                    lineWidth: peep.isActive ? 1 : 0
-                )
         }
         .clipShape(RoundedRectangle(cornerRadius: 8))
-        .frame(
-            width: Constant.isSmallDevice ? 108 : 113,
-            height: Constant.isSmallDevice ? 148 : 155
-        )
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 8)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 }
 

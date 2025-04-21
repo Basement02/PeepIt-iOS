@@ -17,7 +17,7 @@ struct MyProfileView: View {
 
                 PeepItNavigationBar(
                     leading: backButton,
-                    title: "@아이디"
+                    title: "@\(store.myProfile?.id ?? "")"
                 )
 
                 ScrollView {
@@ -54,22 +54,24 @@ struct MyProfileView: View {
     
     private var profileView: some View {
         VStack(spacing: 26) {
-            Image("ProfileSample")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 91.2, height: 91.2)
+            AsyncProfile(profileUrlStr: store.myProfile?.profile)
+                .frame(width: 91, height: 91)
+                .clipShape(RoundedRectangle(cornerRadius: 21))
 
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 11) {
-                    Text("${닉네임}")
-                        .pretendard(.title02)
+                    Text(store.myProfile?.name ?? "")
+                    .pretendard(.title02)
 
                     HStack(spacing: 2) {
                         Image("IconLocation")
                             .resizable()
                             .frame(width: 22.4, height: 22.4)
-                        Text("동이름")
-                            .pretendard(.body02)
+                        Text(
+                            store.myProfile?.town?.components(separatedBy: " ").last
+                            ?? ""
+                        )
+                        .pretendard(.body02)
                     }
                 }
                 .frame(width: Constant.isSmallDevice ? 343 : 361)
