@@ -20,6 +20,8 @@ struct PeepAPIClient {
     var fetchUserActivePeeps: (Int, Int) async throws -> PagedPeeps
     /// 동네 핍 리스트 조회(최신순)
     var fetchTownPeeps: (Int, Int) async throws -> PagedPeeps
+    /// 핍 업로드
+    var uploadPeep: (UploadPeep) async throws -> Void
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -54,6 +56,18 @@ extension PeepAPIClient: DependencyKey {
             let requestAPI = PeepAPI.getRecentTownPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
+        },
+        uploadPeep: { uploadPeep in
+            let requestDto: PeepUploadRequestDto = .init(
+                legalDistrictCode: uploadPeep.bCode,
+                content: uploadPeep.content,
+                latitude: uploadPeep.y,
+                longitude: uploadPeep.x,
+                building: uploadPeep.building
+            )
+
+            let requestAPI = PeepAPI.postPeep(requestDto, uploadPeep.data)
+            let response: CommonPeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
         }
     )
 }

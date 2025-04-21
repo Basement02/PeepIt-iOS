@@ -19,7 +19,7 @@ enum PeepAPI {
     case getRecentTownPeeps(PageRequestDto)
     case getMapPeeps(MapPeepRequest)
     case getHotPeeps(PageRequestDto)
-    // TODO: - 신규 핍 등록 api
+    case postPeep(PeepUploadRequestDto, Data)
 }
 
 extension PeepAPI: APIType {
@@ -44,11 +44,16 @@ extension PeepAPI: APIType {
             return "/v1/peep/get/map"
         case .getHotPeeps:
             return "/v1/peep/get/hot"
+        case .postPeep:
+            return "/v1/peep/post"
         }
     }
 
     var method: HTTPMethod {
         switch self {
+        case .postPeep:
+            return .post
+
         default:
             return .get
         }
@@ -73,6 +78,11 @@ extension PeepAPI: APIType {
 
         case let .getMapPeeps(requestDto):
             return .requestJSONEncodable(body: requestDto)
+
+        case let .postPeep(requestDto, media):
+            var parts: [MultipartFormDataPart] = []
+
+            return .requestWithMultipartFormData(formData: parts)
         }
     }
 }
