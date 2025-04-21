@@ -161,7 +161,12 @@ struct MyProfileStore {
 
                 case let .success(pagedPeeps):
 
-                    state.uploadedPeeps.append(contentsOf: pagedPeeps.content)
+                    if pagedPeeps.page == 0 {
+                        state.uploadedPeeps = pagedPeeps.content
+                    } else {
+                        state.uploadedPeeps.append(contentsOf: pagedPeeps.content)
+                    }
+
                     state.uploadedPeepHasNext = pagedPeeps.hasNext
                     state.uploadedPeepPage += 1
                     
