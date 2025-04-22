@@ -182,6 +182,7 @@
 		ABC793B72DB6065C001B3FE6 /* PeepUploadRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */; };
 		ABC793B92DB607FA001B3FE6 /* UploadPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */; };
 		ABC793BC2DB762AA001B3FE6 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793BB2DB762A5001B3FE6 /* URL+Extension.swift */; };
+		ABC793BE2DB765C9001B3FE6 /* WriteMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793BD2DB765C5001B3FE6 /* WriteMapView.swift */; };
 		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
@@ -409,6 +410,7 @@
 		ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepUploadRequestDto.swift; sourceTree = "<group>"; };
 		ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPeep.swift; sourceTree = "<group>"; };
 		ABC793BB2DB762A5001B3FE6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		ABC793BD2DB765C5001B3FE6 /* WriteMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteMapView.swift; sourceTree = "<group>"; };
 		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
@@ -1036,6 +1038,7 @@
 				AB71E1CC2CBC06D000D2D3D9 /* WriteView.swift */,
 				AB71E1CE2CBC06D800D2D3D9 /* WriteStore.swift */,
 				AB0FBF1D2D4FACB0003D8372 /* WriteMapModalView.swift */,
+				ABC793BD2DB765C5001B3FE6 /* WriteMapView.swift */,
 			);
 			path = Write;
 			sourceTree = "<group>";
@@ -1693,6 +1696,7 @@
 				AB4BEE132D9BC0E900CA3936 /* NaverLoginStore.swift in Sources */,
 				ABCC50EF2CF03D15004AD297 /* AnnounceModal.swift in Sources */,
 				AB0FBF1E2D4FACB0003D8372 /* WriteMapModalView.swift in Sources */,
+				ABC793BE2DB765C9001B3FE6 /* WriteMapView.swift in Sources */,
 				ABC305F12C95A4D1003B00FE /* PeepPreview.swift in Sources */,
 				AB8A062B2D5B291300A70A9C /* ScrollOffsetKey.swift in Sources */,
 				ABCE97332D342A5800A07962 /* TextLayerStore.swift in Sources */,
