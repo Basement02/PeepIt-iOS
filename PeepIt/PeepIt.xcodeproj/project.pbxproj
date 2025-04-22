@@ -181,6 +181,7 @@
 		ABC793B52DB12D2F001B3FE6 /* AsyncThumbnail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B42DB12D2D001B3FE6 /* AsyncThumbnail.swift */; };
 		ABC793B72DB6065C001B3FE6 /* PeepUploadRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */; };
 		ABC793B92DB607FA001B3FE6 /* UploadPeep.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */; };
+		ABC793BC2DB762AA001B3FE6 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC793BB2DB762A5001B3FE6 /* URL+Extension.swift */; };
 		ABCC50E12CEF8F23004AD297 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E02CEF8F23004AD297 /* BackButton.swift */; };
 		ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E42CEF90FF004AD297 /* GuideView.swift */; };
 		ABCC50E72CEF910D004AD297 /* GuideStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCC50E62CEF9105004AD297 /* GuideStore.swift */; };
@@ -407,6 +408,7 @@
 		ABC793B42DB12D2D001B3FE6 /* AsyncThumbnail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncThumbnail.swift; sourceTree = "<group>"; };
 		ABC793B62DB60654001B3FE6 /* PeepUploadRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepUploadRequestDto.swift; sourceTree = "<group>"; };
 		ABC793B82DB607F6001B3FE6 /* UploadPeep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadPeep.swift; sourceTree = "<group>"; };
+		ABC793BB2DB762A5001B3FE6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		ABCC50E02CEF8F23004AD297 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		ABCC50E42CEF90FF004AD297 /* GuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideView.swift; sourceTree = "<group>"; };
 		ABCC50E62CEF9105004AD297 /* GuideStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStore.swift; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 		AB094DE62CC76EB10091E9FB /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				ABC793BB2DB762A5001B3FE6 /* URL+Extension.swift */,
 				AB3340352DAE2282007C31FC /* UIImage+Extension.swift */,
 				AB4BEDEC2D9279D800CA3936 /* Encodable+Extension.swift */,
 				ABA9A2E12CCE932900AA605B /* Adjusted.swift */,
@@ -1858,6 +1861,7 @@
 				AB9788182D192DF9007E73B6 /* CameraPreview.swift in Sources */,
 				AB4BEDF12D9288B900CA3936 /* PageRequestDto.swift in Sources */,
 				ABD3CAAC2CA1B1D000438747 /* CommentedPeepCell.swift in Sources */,
+				ABC793BC2DB762AA001B3FE6 /* URL+Extension.swift in Sources */,
 				AB0FBF272D4FD8C5003D8372 /* TownVerificationStore.swift in Sources */,
 				AB4BEDED2D9279DF00CA3936 /* Encodable+Extension.swift in Sources */,
 				AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */,

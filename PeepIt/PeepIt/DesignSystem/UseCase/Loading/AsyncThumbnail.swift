@@ -10,16 +10,31 @@ import SwiftUI
 struct AsyncThumbnail: View {
     let imgStr: String?
 
+    @State private var thumbnail: UIImage?
+
     var body: some View {
-        AsyncImage(url: URL(string: imgStr ?? "")) { phase in
-            if let image = phase.image {
-                image
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                Rectangle()
-                    .fill(Color.gray900)
-            }
+        Group {
+             if let image = thumbnail {
+                 Image(uiImage: image)
+                     .resizable()
+                     .scaledToFill()
+                     .clipped()
+             } else {
+                 Rectangle()
+                     .fill(Color.gray900)
+                     .onAppear { loadThumbnail() }
+             }
+         }
+    }
+
+    private func loadThumbnail() {
+        guard
+            let imgStr,
+            let url = URL(string: imgStr)
+        else { return }
+
+        url.loadThumbnail { image in
+            self.thumbnail = image
         }
     }
 }
