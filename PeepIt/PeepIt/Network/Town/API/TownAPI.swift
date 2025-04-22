@@ -18,7 +18,7 @@ extension TownAPI: APIType {
     var baseURL: URL {
         switch self {
         case .getLegalCode:
-            return URL(string: "https://dapi.kakao.com/v2/local/geo/coord2regioncode")!
+            return URL(string: "https://dapi.kakao.com/v2/local/geo")!
         default:
             return URL(string: Environment.baseURL)!
         }
@@ -27,7 +27,7 @@ extension TownAPI: APIType {
     var path: String {
         switch self {
         case .getLegalCode:
-            return ""
+            return "/coord2regioncode"
         case .patchUserTown:
             return "/v1/member/town"
         }
