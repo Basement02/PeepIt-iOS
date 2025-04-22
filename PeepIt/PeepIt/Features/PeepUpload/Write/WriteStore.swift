@@ -30,6 +30,8 @@ struct WriteStore {
         var currentLoc = Coordinate(x: 0, y: 0)
         /// 상단에 표시될 위치
         var location = ""
+        /// 현재 동네  법정동 코드
+        var bCode: String?
     }
 
     enum Action: BindableAction {
@@ -51,8 +53,13 @@ struct WriteStore {
         /// 좌표 -> 주소
         case getAddressFromCoord(coord: Coordinate)
         case fetchAddressResult(Result<CurrentLocationInfo, Error>)
+
+        /// 저장된 개인 법정동 정보 가져오기
+        case getBCode
+        case setBCode(bCode: String)
     }
 
+    @Dependency(\.userProfileStorage) var userProfileStorage
     @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
@@ -64,7 +71,11 @@ struct WriteStore {
 
             case .binding(\.currentLoc):
                 let loc = state.currentLoc
-                return .send(.getAddressFromCoord(coord: loc))
+
+                return .merge(
+                    .send(.getBCode),
+                    .send(.getAddressFromCoord(coord: loc))
+                )
 
             case .binding(\.bodyText):
                 return .none
@@ -114,10 +125,11 @@ struct WriteStore {
                     }
                 }
 
-                guard let data = data else { return .none }
+                guard let data = data,
+                        let bCode = state.bCode else { return .none }
 
                 let peepObj: UploadPeep = .init(
-                    bCode: "1114016400",
+                    bCode: bCode,
                     content: state.bodyText,
                     x: state.currentLoc.x,
                     y: state.currentLoc.y,
@@ -159,6 +171,7 @@ struct WriteStore {
 
             case let .fetchAddressResult(result):
                 switch result {
+                    
                 case let .success(info):
                     let buildingName = !info.building.isEmpty ? info.building :
                         !info.roadName.isEmpty ? info.roadName : info.town
@@ -169,6 +182,18 @@ struct WriteStore {
                     print(error)
                     print("실패")
                 }
+                return .none
+
+            case .getBCode:
+                return .run { send in
+                    if let savedProfile = try? await userProfileStorage.load(),
+                       let bCode = savedProfile.townInfo?.bCode {
+                        await send(.setBCode(bCode: bCode))
+                    }
+                }
+
+            case let .setBCode(bCode):
+                state.bCode = bCode
                 return .none
 
             default:
