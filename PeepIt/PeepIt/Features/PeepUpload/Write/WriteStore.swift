@@ -65,9 +65,7 @@ struct WriteStore {
             switch action {
 
             case .binding(\.currentLoc):
-//                let loc = state.currentLoc
-//                print(loc)
-                let loc = Coordinate(x: 127.01583524268014, y: 37.564252509725364)
+                let loc = state.currentLoc
                 return .send(.getAddressFromCoord(coord: loc))
 
             case .binding(\.bodyText):
