@@ -30,8 +30,6 @@ struct WriteStore {
         var currentLoc = Coordinate(x: 0, y: 0)
         /// 상단에 표시될 위치
         var location = ""
-        /// 위치 정보
-        var locationInfo: CurrentLocationInfo?
     }
 
     enum Action: BindableAction {
@@ -118,17 +116,12 @@ struct WriteStore {
 
                 guard let data = data else { return .none }
 
-                guard let locInfo = state.locationInfo else { return .none }
-
-                let buildingName = !locInfo.building.isEmpty ? locInfo.building :
-                                   !locInfo.roadName.isEmpty ? locInfo.roadName : ""
-
                 let peepObj: UploadPeep = .init(
                     bCode: "1114016400",
                     content: state.bodyText,
                     x: state.currentLoc.x,
                     y: state.currentLoc.y,
-                    building: buildingName,
+                    building: state.location,
                     data: data
                 )
 
@@ -167,8 +160,10 @@ struct WriteStore {
             case let .fetchAddressResult(result):
                 switch result {
                 case let .success(info):
-                    print(info)
-                    state.locationInfo = info
+                    let buildingName = !info.building.isEmpty ? info.building :
+                        !info.roadName.isEmpty ? info.roadName : info.town
+
+                    state.location = buildingName
                     
                 case let .failure(error):
                     print(error)
