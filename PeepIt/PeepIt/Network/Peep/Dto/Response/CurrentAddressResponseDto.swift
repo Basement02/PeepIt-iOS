@@ -75,11 +75,22 @@ extension CurrentAddressResponseDto {
     func toLocationInfo() -> CurrentLocationInfo {
         let roadAddress = documents[0].roadAddress
         let address = documents[0].address
-        
+
+        let roadName: String = {
+            let name = roadAddress?.roadName ?? ""
+            let number = roadAddress?.mainBuildingNo ?? ""
+
+            if name.isEmpty && number.isEmpty {
+                return ""
+            } else {
+                return "\(name) \(number)"
+            }
+        }()
+
         return .init(
             postalCode: roadAddress?.zoneNo ?? "",
             roadAddress: (roadAddress?.addressName ?? address?.addressName) ?? "",
-            roadName: (roadAddress?.roadName ?? "") + " " + (roadAddress?.mainBuildingNo ?? ""),
+            roadName: roadName,
             building: roadAddress?.buildingName ?? "",
             town: address?.region3DepthName ?? ""
         )
