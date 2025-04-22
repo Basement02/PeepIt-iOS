@@ -38,6 +38,7 @@ struct WriteStore {
         case viewTapped
         case modalDragOnChanged(height: CGFloat)
         case closeModal
+        case closeUploadFeature
 
         /// 핍 업로드 api
         case uploadPeep
@@ -86,7 +87,22 @@ struct WriteStore {
                 return .none
 
             case .uploadPeep:
-                guard let data = state.image?.jpegData(compressionQuality: 0.8) else { return .none }
+                var data: Data?
+                var isVideo = false
+
+                if let imageData = state.image?.jpegData(compressionQuality: 0.8) {
+                    data = imageData
+                    isVideo = false
+                } else if let videoURL = state.videoURL {
+                    do {
+                        data = try Data(contentsOf: videoURL)
+                        isVideo = true
+                    } catch {
+                        print("Failed to load video data: \(error)")
+                    }
+                }
+
+                guard let data = data else { return .none }
 
                 // TODO: 값 수정
                 let peepObj: UploadPeep = .init(
@@ -101,7 +117,7 @@ struct WriteStore {
                 return .run { send in
                     await send(
                         .fetchPeepUploadResponse(
-                            Result { try await peepAPIClient.uploadPeep(peepObj) }
+                            Result { try await peepAPIClient.uploadPeep(peepObj, isVideo) }
                         )
                     )
                 }
@@ -109,12 +125,15 @@ struct WriteStore {
             case let .fetchPeepUploadResponse(result):
                 switch result {
                 case .success:
-                    return .none
+                    return .send(.closeUploadFeature)
 
                 case let .failure(error):
                     print(error)
                     return .none
                 }
+
+            case .closeUploadFeature:
+                return .none
 
             default:
                 return .none

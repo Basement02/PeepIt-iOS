@@ -19,7 +19,7 @@ enum PeepAPI {
     case getRecentTownPeeps(PageRequestDto)
     case getMapPeeps(MapPeepRequest)
     case getHotPeeps(PageRequestDto)
-    case postPeep(PeepUploadRequestDto, Data)
+    case postPeep(PeepUploadRequestDto, Data, Bool)
 }
 
 extension PeepAPI: APIType {
@@ -79,9 +79,28 @@ extension PeepAPI: APIType {
         case let .getMapPeeps(requestDto):
             return .requestJSONEncodable(body: requestDto)
 
-        case let .postPeep(requestDto, media):
+        case let .postPeep(requestDto, media, isVideo):
             var parts: [MultipartFormDataPart] = []
 
+            if let dtoData = try? JSONEncoder().encode(requestDto) {
+                parts.append(
+                    MultipartFormDataPart(
+                        name: "peepData",
+                        data: dtoData,
+                        filename: nil,
+                        mimeType: "application/json"
+                    )
+                )
+            }
+
+            parts.append(
+                MultipartFormDataPart(
+                    name: "media",
+                    data: media,
+                    filename: isVideo ? "peep_video.mp4" : "peep.jpg",
+                    mimeType: isVideo ? "video/mp4" : "image/jpeg"
+                )
+            )
             return .requestWithMultipartFormData(formData: parts)
         }
     }
