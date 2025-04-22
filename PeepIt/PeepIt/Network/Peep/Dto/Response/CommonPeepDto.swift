@@ -11,6 +11,9 @@ struct CommonPeepDto: Codable {
     let peepId: Int
     let memberId: String
     let town: String
+    let longitude: Double
+    let latitude: Double
+    let building: String
     let imageUrl: String
     let content: String
     let isEdited: Bool
@@ -19,6 +22,7 @@ struct CommonPeepDto: Codable {
     let uploadAt: String
     let stickerNum: Int
     let chatNum: Int
+    let popularity: Int
 }
 
 extension CommonPeepDto {
@@ -33,7 +37,11 @@ extension CommonPeepDto {
             reaction: nil, // TODO: - stickerNum 순서 파악 필요
             isVideo: true, // TODO: - isVideo 추가 요청 필요
             chatNum: chatNum,
-            stickerNum: stickerNum
+            stickerNum: stickerNum,
+            buildingName: building,
+            x: longitude,
+            y: latitude,
+            popularity: popularity
         )
     }
 }

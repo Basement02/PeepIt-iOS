@@ -17,6 +17,10 @@ struct Peep: Equatable, Hashable, Identifiable {
     var isVideo: Bool
     var chatNum: Int
     var stickerNum: Int
+    let buildingName: String
+    let x: Double
+    let y: Double
+    let popularity: Int
 
     var id: Int { peepId }
 
@@ -37,7 +41,11 @@ extension Peep {
             reaction: "😥",
             isVideo: false,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -51,7 +59,11 @@ extension Peep {
             reaction: "🤔",
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -64,7 +76,11 @@ extension Peep {
             isActive: true,
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -77,7 +93,11 @@ extension Peep {
             isActive: false,
             isVideo: false,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -90,7 +110,11 @@ extension Peep {
             isActive: false,
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -103,7 +127,11 @@ extension Peep {
             isActive: false,
             isVideo: false,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -116,7 +144,11 @@ extension Peep {
             isActive: true,
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -129,7 +161,11 @@ extension Peep {
             isActive: false,
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -142,7 +178,11 @@ extension Peep {
             isActive: true,
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -156,7 +196,11 @@ extension Peep {
             reaction: "😭",
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -170,7 +214,11 @@ extension Peep {
             reaction: "😭",
             isVideo: true,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 
@@ -184,7 +232,11 @@ extension Peep {
             reaction: "😭",
             isVideo: false,
             chatNum: 0,
-            stickerNum: 0
+            stickerNum: 0,
+            buildingName: "빌딩 이름",
+            x: 127.01583524268014,
+            y: 37.564252509725364,
+            popularity: 1
         )
     }
 }

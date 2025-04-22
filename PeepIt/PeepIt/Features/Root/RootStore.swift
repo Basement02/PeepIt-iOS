@@ -167,7 +167,7 @@ struct RootStore {
                     )
                     return .none
 
-                case .element(_, action: .write(.uploadButtonTapped)):
+                case .element(_, action: .write(.closeUploadFeature)):
                     for _ in 0..<3 { _ = state.path.popLast() }
                     return .none
 

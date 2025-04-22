@@ -19,10 +19,21 @@ enum PeepAPI {
     case getRecentTownPeeps(PageRequestDto)
     case getMapPeeps(MapPeepRequest)
     case getHotPeeps(PageRequestDto)
-    // TODO: - 신규 핍 등록 api
+    case postPeep(PeepUploadRequestDto, Data, Bool)
+    case getCurrentLocationInfo(CurrentAddressRequestDto)
 }
 
 extension PeepAPI: APIType {
+
+    var baseURL: URL {
+        switch self {
+        case .getCurrentLocationInfo:
+            return URL(string: "https://dapi.kakao.com/v2/local/geo")!
+        default:
+            return URL(string: Environment.baseURL)!
+        }
+    }
+
 
     var path: String {
         switch self {
@@ -44,11 +55,18 @@ extension PeepAPI: APIType {
             return "/v1/peep/get/map"
         case .getHotPeeps:
             return "/v1/peep/get/hot"
+        case .postPeep:
+            return "/v1/peep/post"
+        case .getCurrentLocationInfo:
+            return "/coord2address"
         }
     }
 
     var method: HTTPMethod {
         switch self {
+        case .postPeep:
+            return .post
+
         default:
             return .get
         }
@@ -73,6 +91,44 @@ extension PeepAPI: APIType {
 
         case let .getMapPeeps(requestDto):
             return .requestJSONEncodable(body: requestDto)
+
+        case let .postPeep(requestDto, media, isVideo):
+            var parts: [MultipartFormDataPart] = []
+
+            if let dtoData = try? JSONEncoder().encode(requestDto) {
+                parts.append(
+                    MultipartFormDataPart(
+                        name: "peepData",
+                        data: dtoData,
+                        filename: nil,
+                        mimeType: "application/json"
+                    )
+                )
+            }
+
+            parts.append(
+                MultipartFormDataPart(
+                    name: "media",
+                    data: media,
+                    filename: isVideo ? "peep_video.mp4" : "peep.jpg",
+                    mimeType: isVideo ? "video/mp4" : "image/jpeg"
+                )
+            )
+            return .requestWithMultipartFormData(formData: parts)
+
+        case let .getCurrentLocationInfo(requestDto):
+            return .requestParameters(parameters: requestDto.toDictionary())
+        }
+    }
+
+    var header: HTTPHeaders? {
+        switch self {
+            
+        case .getCurrentLocationInfo:
+            return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+
+        default:
+            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
         }
     }
 }

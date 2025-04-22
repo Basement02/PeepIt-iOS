@@ -92,7 +92,7 @@ struct WriteView: View {
                 DismissButton { store.send(.dismissButtonTapped) }
             }
 
-            TownTitleView(townName: "동이름")
+            TownTitleView(townName: store.location)
                 .onTapGesture { store.send(.addressTapped) }
         }
         .frame(height: 44)
