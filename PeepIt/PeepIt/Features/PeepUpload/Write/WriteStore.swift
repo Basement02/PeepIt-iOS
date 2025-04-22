@@ -26,6 +26,8 @@ struct WriteStore {
         var modalOffset = Constant.screenHeight
         /// 키보드 관리
         var keyboardHeight = CGFloat(0)
+
+        var currentLoc = Coordinate(x: 0, y: 0)
     }
 
     enum Action: BindableAction {
@@ -43,6 +45,10 @@ struct WriteStore {
         /// 핍 업로드 api
         case uploadPeep
         case fetchPeepUploadResponse(Result<Void, Error>)
+
+        /// 좌표 -> 주소
+        case getAddressFromCoord(coord: Coordinate)
+        case fetchAddressResult(Result<CurrentLocationInfo, Error>)
     }
 
     @Dependency(\.peepAPIClient) var peepAPIClient
@@ -53,6 +59,11 @@ struct WriteStore {
 
         Reduce { state, action in
             switch action {
+
+            case .binding(\.currentLoc):
+                let loc = state.currentLoc
+                print(loc)
+                return .send(.getAddressFromCoord(coord: loc))
 
             case .binding(\.bodyText):
                 return .none
@@ -133,6 +144,25 @@ struct WriteStore {
                 }
 
             case .closeUploadFeature:
+                return .none
+
+            case let .getAddressFromCoord(coord):
+                return .run { send in
+                    await send(
+                        .fetchAddressResult(
+                            Result { try await peepAPIClient.fetchCurrentLocationInfo(coord) }
+                        )
+                    )
+                }
+
+            case let .fetchAddressResult(result):
+                switch result {
+                case let .success(info):
+                    print(info)
+                case let .failure(error):
+                    print(error)
+                    print("실패")
+                }
                 return .none
 
             default:

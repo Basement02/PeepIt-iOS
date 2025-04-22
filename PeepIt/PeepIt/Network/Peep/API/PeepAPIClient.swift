@@ -22,6 +22,8 @@ struct PeepAPIClient {
     var fetchTownPeeps: (Int, Int) async throws -> PagedPeeps
     /// 핍 업로드
     var uploadPeep: (UploadPeep, Bool) async throws -> Void
+    /// 좌표 -> 주소
+    var fetchCurrentLocationInfo: (Coordinate) async throws -> CurrentLocationInfo
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -68,6 +70,12 @@ extension PeepAPIClient: DependencyKey {
 
             let requestAPI = PeepAPI.postPeep(requestDto, uploadPeep.data, isVideo)
             let response: CommonPeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+        },
+        fetchCurrentLocationInfo: { loc in
+            let requestDto: CurrentAddressRequestDto = .init(x: "\(loc.x)", y: "\(loc.y)")
+            let requestAPI = PeepAPI.getCurrentLocationInfo(requestDto)
+            let response: CurrentAddressResponseDto = try await APIFetcher.shared.openAPIFetcher(of: requestAPI)
+            return response.toLocationInfo()
         }
     )
 }

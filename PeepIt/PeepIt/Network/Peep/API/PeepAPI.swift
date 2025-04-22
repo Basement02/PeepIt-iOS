@@ -20,9 +20,20 @@ enum PeepAPI {
     case getMapPeeps(MapPeepRequest)
     case getHotPeeps(PageRequestDto)
     case postPeep(PeepUploadRequestDto, Data, Bool)
+    case getCurrentLocationInfo(CurrentAddressRequestDto)
 }
 
 extension PeepAPI: APIType {
+
+    var baseURL: URL {
+        switch self {
+        case .getCurrentLocationInfo:
+            return URL(string: "https://dapi.kakao.com/v2/local/geo")!
+        default:
+            return URL(string: Environment.baseURL)!
+        }
+    }
+
 
     var path: String {
         switch self {
@@ -46,6 +57,8 @@ extension PeepAPI: APIType {
             return "/v1/peep/get/hot"
         case .postPeep:
             return "/v1/peep/post"
+        case .getCurrentLocationInfo:
+            return "/coord2address"
         }
     }
 
@@ -102,6 +115,20 @@ extension PeepAPI: APIType {
                 )
             )
             return .requestWithMultipartFormData(formData: parts)
+
+        case let .getCurrentLocationInfo(requestDto):
+            return .requestParameters(parameters: requestDto.toDictionary())
+        }
+    }
+
+    var header: HTTPHeaders? {
+        switch self {
+            
+        case .getCurrentLocationInfo:
+            return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+
+        default:
+            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
         }
     }
 }
