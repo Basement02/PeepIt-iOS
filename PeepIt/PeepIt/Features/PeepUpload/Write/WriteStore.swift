@@ -26,8 +26,12 @@ struct WriteStore {
         var modalOffset = Constant.screenHeight
         /// 키보드 관리
         var keyboardHeight = CGFloat(0)
-
+        /// 현재 위치
         var currentLoc = Coordinate(x: 0, y: 0)
+        /// 상단에 표시될 위치
+        var location = ""
+        /// 위치 정보
+        var locationInfo: CurrentLocationInfo?
     }
 
     enum Action: BindableAction {
@@ -61,8 +65,9 @@ struct WriteStore {
             switch action {
 
             case .binding(\.currentLoc):
-                let loc = state.currentLoc
-                print(loc)
+//                let loc = state.currentLoc
+//                print(loc)
+                let loc = Coordinate(x: 127.01583524268014, y: 37.564252509725364)
                 return .send(.getAddressFromCoord(coord: loc))
 
             case .binding(\.bodyText):
@@ -115,20 +120,26 @@ struct WriteStore {
 
                 guard let data = data else { return .none }
 
-                // TODO: 값 수정
+                guard let locInfo = state.locationInfo else { return .none }
+
+                let buildingName = !locInfo.building.isEmpty ? locInfo.building :
+                                   !locInfo.roadName.isEmpty ? locInfo.roadName : ""
+
                 let peepObj: UploadPeep = .init(
                     bCode: "1114016400",
                     content: state.bodyText,
-                    x: 127.01583524268014,
-                    y: 37.564252509725364,
-                    building: "민이집",
+                    x: state.currentLoc.x,
+                    y: state.currentLoc.y,
+                    building: buildingName,
                     data: data
                 )
+
+                let isVideoCpy = isVideo
 
                 return .run { send in
                     await send(
                         .fetchPeepUploadResponse(
-                            Result { try await peepAPIClient.uploadPeep(peepObj, isVideo) }
+                            Result { try await peepAPIClient.uploadPeep(peepObj, isVideoCpy) }
                         )
                     )
                 }
@@ -159,6 +170,8 @@ struct WriteStore {
                 switch result {
                 case let .success(info):
                     print(info)
+                    state.locationInfo = info
+                    
                 case let .failure(error):
                     print(error)
                     print("실패")

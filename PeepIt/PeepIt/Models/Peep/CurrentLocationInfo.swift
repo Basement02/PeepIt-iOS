@@ -7,9 +7,10 @@
 
 import Foundation
 
-struct CurrentLocationInfo {
+struct CurrentLocationInfo: Equatable {
     let postalCode: String
     let roadAddress: String
     let roadName: String
     let building: String
+    let town: String
 }
