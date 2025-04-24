@@ -270,8 +270,10 @@ struct HomeStore {
                 case let .success(result):
                     if state.page == 0 {
                         state.mapPeeps = result.content
+                        state.peepPreviewModal.peeps = result.content
                     } else {
-                        state.mapPeeps.append(contentsOf: result.content)
+                        // TODO: - 지도 핍 페이지네이션 처리
+                        state.peepPreviewModal.peeps.append(contentsOf: result.content)
                     }
 
                     state.hasNext = result.hasNext

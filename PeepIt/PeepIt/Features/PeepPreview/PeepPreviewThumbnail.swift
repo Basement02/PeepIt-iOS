@@ -12,21 +12,18 @@ struct PeepPreviewThumbnail: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Image("SampleImage")
-                .resizable()
-                .scaledToFill()
-                .foregroundStyle(Color.white)
-
-            ThumbnailLayer.primary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            ThumbnailLayer.secondary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            Group {
+                AsyncThumbnail(imgStr: peep.data)
+                ThumbnailLayer.primary()
+                ThumbnailLayer.secondary()
+            }
+            .frame(width: 281, height: 384)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
 
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
                     Image("IconPeep")
-                    Text("현재 위치에서 4km")
+                    Text("현재 위치에서 0km") // TODO:
                     Spacer()
                     hotLabel
                 }
@@ -45,6 +42,12 @@ struct PeepPreviewThumbnail: View {
         }
         .frame(width: 281, height: 384)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 
     private var hotLabel: some View {
@@ -69,7 +72,7 @@ struct PeepPreviewThumbnail: View {
                 .resizable()
                 .frame(width: 25, height: 25)
 
-            Text("hyerim")
+            Text(peep.writerId) // TODO:
                 .pretendard(.body02)
 
             Spacer()
