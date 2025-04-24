@@ -48,7 +48,7 @@ struct HomeMapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
 
         for peep in peeps {
-            let annotation = MKPointAnnotation()
+            let annotation = PeepAnnotation(peep: peep)
             annotation.coordinate = CLLocationCoordinate2D(latitude: peep.y, longitude: peep.x)
             mapView.addAnnotation(annotation)
         }
@@ -140,5 +140,49 @@ struct HomeMapView: UIViewRepresentable {
 
             parent.centerCoord = newCoord
         }
+
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            if annotation is MKUserLocation {
+                return nil
+            }
+
+            if let peepAnnotation = annotation as? PeepAnnotation {
+                let identifier = "PeepAnnotationView"
+                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+                if annotationView == nil {
+                    annotationView = MKAnnotationView(annotation: peepAnnotation, reuseIdentifier: identifier)
+                    annotationView?.canShowCallout = false
+                } else {
+                    annotationView?.annotation = peepAnnotation
+                }
+
+                let baseImage = UIImage(named: "MapPointer")!
+                let size = sizeForPopularity(peepAnnotation.peep.popularity)
+
+                UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+                baseImage.draw(in: CGRect(origin: .zero, size: size))
+                let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+
+                annotationView?.image = resizedImage
+
+                return annotationView
+            }
+
+            return nil
+        }
     }
+}
+
+private func sizeForPopularity(_ popularity: Int) -> CGSize {
+    let minSize: CGFloat = 44
+    let maxSize: CGFloat = 156
+
+    let clampedPopularity = min(max(popularity, 1), 10)
+
+    let scaleFactor = CGFloat(clampedPopularity - 1) / 9.0
+    let size = minSize + (maxSize - minSize) * scaleFactor
+
+    return CGSize(width: size, height: size)
 }

@@ -214,6 +214,7 @@
 		ABD639D72D7EE73A0062A60C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD639D62D7EE7340062A60C /* Environment.swift */; };
 		ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */; };
 		ABE363492DBA9AEB00E6677A /* MapPeepRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */; };
+		ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
 		ABE581BB2CCA6F01003366DC /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */; };
 		ABE581BC2CCA6F01003366DC /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ABE581B32CCA6F00003366DC /* Pretendard-SemiBold.ttf */; };
@@ -446,6 +447,7 @@
 		ABD639D62D7EE7340062A60C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackImageLayer.swift; sourceTree = "<group>"; };
 		ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequestDto.swift; sourceTree = "<group>"; };
+		ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAnnotation.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
 		ABE581B22CCA6F00003366DC /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		ABE581B32CCA6F00003366DC /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 		AB33888B2DA02D3400316D4B /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */,
 				AB3340332DAD7015007C31FC /* MapInteractionState.swift */,
 				AB33888C2DA02D6B00316D4B /* MapView.swift */,
 				AB4A28C82D3FD31A007E8383 /* HomeMapView.swift */,
@@ -1843,6 +1846,7 @@
 				AB4BEDEB2D9278A000CA3936 /* PeepDetailRequestDto.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
 				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
+				ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */,
 				AB4BEE112D9BC0E300CA3936 /* KakaoLoginStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
 				AB416D312CF5C0320065BD09 /* View+Extension.swift in Sources */,
