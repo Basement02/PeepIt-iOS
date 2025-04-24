@@ -37,6 +37,17 @@ struct HomeStore {
         var moveToCurrentLocation = false
         /// 프로필 정보
         var userProfile: UserProfile?
+
+        /// 지도 내 핍 관련
+        /// 지도의 중앙 좌표
+        var centerCoord = Coordinate(x: 0, y: 0)
+        /// 첫 번째 지도 내 핍 호출인지
+        var isFirstSearching = true
+        /// 페이지 관리
+        var page = 0
+        var hasNext = true
+        /// 지도 내 핍
+        var mapPeeps: [Peep] = []
     }
 
     enum Action: BindableAction {
@@ -77,7 +88,7 @@ struct HomeStore {
         case fetchGetMyProfileResponse(Result<UserProfile, Error>)
 
         /// 지도 내 핍 조회 api
-        case getPeepsInMap
+        case getPeepsInMap(coord: Coordinate, page: Int)
         case fetchGetPeepsInMapResponse(Result<PagedPeeps, Error>)
     }
 
@@ -114,6 +125,17 @@ struct HomeStore {
 
             case .binding(\.moveToCurrentLocation):
                 return .none
+
+            case .binding(\.centerCoord):
+                guard state.isFirstSearching else { return .none }
+
+                let coord = state.centerCoord
+                state.isFirstSearching = false
+
+                return .merge(
+                    .send(.onAppear),
+                    .send(.getPeepsInMap(coord: coord, page: 0))
+                )
 
             case .onAppear:
                 return .send(.getMyProfile)
@@ -209,8 +231,12 @@ struct HomeStore {
 
             case .searchButtonTapped:
                 state.isDragged = false
-                // TODO: 검색 api 호출
-                return .none
+
+                state.page = 0
+                state.hasNext = true
+                let centerCoord = state.centerCoord
+
+                return .send(.getPeepsInMap(coord: centerCoord, page: 0))
 
             case .locationButtonTapped:
                 state.moveToCurrentLocation = true
@@ -221,15 +247,15 @@ struct HomeStore {
                     try await userProfileStorage.save(profile)
                 }
 
-            case .getPeepsInMap:
+            case let .getPeepsInMap(coord, page):
                 return .run { send in
                     await send(
                         .fetchGetPeepsInMapResponse(
                             Result { try await peepAPIClient.fetchPeepsInMap(
                                 Coordinate(
-                                    x: 127.01583524268014, y: 37.564252509725364),
-                                    5, // dist
-                                    0, // page
+                                    x: coord.x, y: coord.y),
+                                    10, // dist
+                                    page, // page
                                     10 // size
                                 )
                             }
@@ -237,8 +263,23 @@ struct HomeStore {
                     )
                 }
 
+            // TODO: 모달 핍 페이지네이션
             case let .fetchGetPeepsInMapResponse(result):
-                print(result)
+                switch result {
+
+                case let .success(result):
+                    if state.page == 0 {
+                        state.mapPeeps = result.content
+                    } else {
+                        state.mapPeeps.append(contentsOf: result.content)
+                    }
+
+                    state.hasNext = result.hasNext
+                    state.page += 1
+
+                case .failure:
+                    print("오류")
+                }
                 return .none
 
             default:

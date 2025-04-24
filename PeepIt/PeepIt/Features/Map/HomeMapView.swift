@@ -12,6 +12,7 @@ import CoreLocation
 struct HomeMapView: UIViewRepresentable {
     @Binding var isDragged: Bool
     @Binding var moveToCurrentLocation: Bool
+    @Binding var centerCoord: Coordinate
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -114,6 +115,16 @@ struct HomeMapView: UIViewRepresentable {
             )
 
             mapView?.setRegion(region, animated: true)
+        }
+
+        func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+            let center = mapView.centerCoordinate
+            let newCoord = Coordinate(x: center.longitude, y: center.latitude)
+
+            guard abs(newCoord.x - parent.centerCoord.x) > 0.0001 ||
+                    abs(newCoord.y - parent.centerCoord.y) > 0.0001 else { return }
+
+            parent.centerCoord = newCoord
         }
     }
 }
