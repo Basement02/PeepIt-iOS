@@ -41,7 +41,9 @@ extension CommonPeepDto {
             buildingName: building,
             x: longitude,
             y: latitude,
-            popularity: popularity
+            popularity: popularity,
+            profileUrl: profileUrl,
+            uploadAt: uploadAt
         )
     }
 }

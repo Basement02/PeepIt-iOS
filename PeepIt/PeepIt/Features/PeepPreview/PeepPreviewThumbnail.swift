@@ -36,9 +36,8 @@ struct PeepPreviewThumbnail: View {
             }
             .padding(.top, 19)
             .padding(.bottom, 20)
-            .frame(width: 250)
             .padding(.leading, 16)
-            // TODO: - 활성화 핍 border
+            .frame(width: 250)
         }
         .frame(width: 281, height: 384)
         .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -68,16 +67,16 @@ struct PeepPreviewThumbnail: View {
 
     private var profileView: some View {
         HStack {
-            Image("ProfileSample")
-                .resizable()
+            AsyncProfile(profileUrlStr: peep.profileUrl)
                 .frame(width: 25, height: 25)
+                .clipShape(RoundedRectangle(cornerRadius: 5.5))
 
-            Text(peep.writerId) // TODO:
+            Text(peep.writerId)
                 .pretendard(.body02)
 
             Spacer()
 
-            Text("3분 전")
+            Text(peep.uploadAt)
                 .pretendard(.caption04)
         }
         .foregroundStyle(Color.white)
