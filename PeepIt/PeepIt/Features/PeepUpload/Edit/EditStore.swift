@@ -243,7 +243,7 @@ struct EditStore {
 
             case .renderVideo:
                 guard let url = state.videoURL else { return .none }
-                let (stickers, texts, isSoundOn) = (state.stickerState.stickers, state.texts, state.isVideoSoundOn)
+                let (stickers, texts, isSoundOn) = (state.stickerState.stickers, state.textState.textItems, state.isVideoSoundOn)
                 state.isVideoPlaying = false
 
                 return .run { send in
