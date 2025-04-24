@@ -25,9 +25,11 @@ struct HomeMapView: UIViewRepresentable {
 
         mapView.overrideUserInterfaceStyle = .light
         mapView.showsUserLocation = true
+        mapView.userTrackingMode = .none
 
         context.coordinator.mapView = mapView
-        context.coordinator.setupLocation()
+
+        context.coordinator.setupLocation(for: mapView)
         context.coordinator.setupDragGesture()
 
         return mapView
@@ -68,7 +70,9 @@ struct HomeMapView: UIViewRepresentable {
             locationManager.delegate = self
         }
 
-        func setupLocation() {
+        func setupLocation(for mapView: MKMapView) {
+            self.mapView = mapView
+
             switch locationManager.authorizationStatus {
 
             case .notDetermined:
@@ -76,7 +80,7 @@ struct HomeMapView: UIViewRepresentable {
 
             case .authorizedWhenInUse, .authorizedAlways:
                 locationManager.startUpdatingLocation()
-
+                
             default:
                 break
             }
@@ -87,15 +91,12 @@ struct HomeMapView: UIViewRepresentable {
 
             let region = MKCoordinateRegion(
                 center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
             )
 
             mapView?.setRegion(region, animated: true)
             hasCentered = true
-        }
-
-        func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-            setupLocation()
+            parent.centerCoord = .init(x: location.coordinate.longitude, y: location.coordinate.latitude)
         }
 
         func setupDragGesture() {
@@ -121,10 +122,10 @@ struct HomeMapView: UIViewRepresentable {
 
         func focusToCurrentLocation() {
             guard let location = locationManager.location else { return }
-
+            
             let region = MKCoordinateRegion(
                 center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
             )
 
             mapView?.setRegion(region, animated: true)
