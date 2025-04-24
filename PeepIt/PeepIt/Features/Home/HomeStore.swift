@@ -279,8 +279,8 @@ struct HomeStore {
                     state.hasNext = result.hasNext
                     state.page += 1
 
-                case .failure:
-                    print("오류")
+                case let .failure(error):
+                    print(error)
                 }
                 return .none
 
