@@ -90,7 +90,7 @@ extension PeepAPI: APIType {
             return .requestParameters(parameters: requestDto.toDictionary())
 
         case let .getMapPeeps(requestDto):
-            return .requestJSONEncodable(body: requestDto)
+            return .requestParameters(parameters: requestDto.toDictionary())
 
         case let .postPeep(requestDto, media, isVideo):
             var parts: [MultipartFormDataPart] = []

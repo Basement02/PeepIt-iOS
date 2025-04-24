@@ -75,8 +75,13 @@ struct HomeStore {
         /// 내 프로필 조회 api
         case getMyProfile
         case fetchGetMyProfileResponse(Result<UserProfile, Error>)
+
+        /// 지도 내 핍 조회 api
+        case getPeepsInMap
+        case fetchGetPeepsInMapResponse(Result<PagedPeeps, Error>)
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.memberAPIClient) var memberAPIClient
     @Dependency(\.userProfileStorage) var userProfileStorage
 
@@ -215,6 +220,26 @@ struct HomeStore {
                 return .run { _ in // 기기에 정보 저장
                     try await userProfileStorage.save(profile)
                 }
+
+            case .getPeepsInMap:
+                return .run { send in
+                    await send(
+                        .fetchGetPeepsInMapResponse(
+                            Result { try await peepAPIClient.fetchPeepsInMap(
+                                Coordinate(
+                                    x: 127.01583524268014, y: 37.564252509725364),
+                                    5, // dist
+                                    0, // page
+                                    10 // size
+                                )
+                            }
+                        )
+                    )
+                }
+
+            case let .fetchGetPeepsInMapResponse(result):
+                print(result)
+                return .none
 
             default:
                 return .none
