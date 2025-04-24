@@ -22,7 +22,8 @@ struct HomeView: View {
                             HomeMapView(
                                 isDragged: $store.isDragged,
                                 moveToCurrentLocation: $store.moveToCurrentLocation,
-                                centerCoord: $store.centerCoord
+                                centerCoord: $store.centerCoord,
+                                peeps: $store.mapPeeps
                             )
                             .ignoresSafeArea()
 

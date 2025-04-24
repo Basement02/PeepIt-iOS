@@ -13,6 +13,7 @@ struct HomeMapView: UIViewRepresentable {
     @Binding var isDragged: Bool
     @Binding var moveToCurrentLocation: Bool
     @Binding var centerCoord: Coordinate
+    @Binding var peeps: [Peep]
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -33,10 +34,22 @@ struct HomeMapView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        updateAnnotations(on: uiView)
+        
         guard moveToCurrentLocation else { return }
         
         context.coordinator.focusToCurrentLocation()
         moveToCurrentLocation = false
+    }
+
+    private func updateAnnotations(on mapView: MKMapView) {
+        mapView.removeAnnotations(mapView.annotations)
+
+        for peep in peeps {
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = CLLocationCoordinate2D(latitude: peep.y, longitude: peep.x)
+            mapView.addAnnotation(annotation)
+        }
     }
 
     class Coordinator: NSObject,
