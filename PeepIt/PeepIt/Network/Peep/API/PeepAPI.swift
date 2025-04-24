@@ -17,7 +17,7 @@ enum PeepAPI {
     case getOtherPeeps(PageAndIdRequestDto)
     case getPeepDetail(PeepDetailRequestDto)
     case getRecentTownPeeps(PageRequestDto)
-    case getMapPeeps(MapPeepRequest)
+    case getMapPeeps(MapPeepRequestDto)
     case getHotPeeps(PageRequestDto)
     case postPeep(PeepUploadRequestDto, Data, Bool)
     case getCurrentLocationInfo(CurrentAddressRequestDto)
