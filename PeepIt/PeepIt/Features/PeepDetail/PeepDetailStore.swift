@@ -57,6 +57,9 @@ struct PeepDetailStore {
             case townPeep
             case others
         }
+
+        var peepIdList: [Int] = .init()
+        var peeps: [[Int: Peep]] = .init()
     }
 
     enum Action: BindableAction {
@@ -128,7 +131,7 @@ struct PeepDetailStore {
                 return .none
 
             case .onAppear:
-                return .send(.setReaction)
+                return .none
 
             case .setReaction:
                 guard let reactionStr = state.peepList[state.currentIdx].reaction else {

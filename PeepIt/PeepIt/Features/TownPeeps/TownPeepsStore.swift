@@ -24,6 +24,8 @@ struct TownPeepsStore {
 
         var todayStr = ""
         var myTown = ""
+
+        var peepIdList: [Int] = []
     }
 
     enum Action {
@@ -32,7 +34,7 @@ struct TownPeepsStore {
         case refresh
         case refreshEnded
         case onAppear
-        case peepCellTapped(idx: Int, peeps: [Peep])
+        case peepCellTapped(idx: Int, peepIdList: [Int])
         case uploadButtonTapped
 
         /// 내 동네 불러오기
@@ -113,8 +115,10 @@ struct TownPeepsStore {
 
                     if pagedPeeps.page == 0 {
                         state.peeps = pagedPeeps.content
+                        state.peepIdList = pagedPeeps.content.map { $0.id }
                     } else {
                         state.peeps.append(contentsOf: pagedPeeps.content)
+                        state.peepIdList.append(contentsOf: pagedPeeps.content.map { $0.id })
                     }
 
                     state.hasNext = pagedPeeps.hasNext

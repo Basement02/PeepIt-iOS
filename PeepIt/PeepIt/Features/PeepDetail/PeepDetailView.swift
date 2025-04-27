@@ -26,41 +26,48 @@ struct PeepDetailView: View {
                         TabView(selection: $store.currentIdx) {
                             ForEach(
                                 Array(
-                                    zip(store.peepList.indices,
-                                        store.peepList)
-                                ), id: \.0) { idx, peep in
+                                    zip(store.peepIdList.indices,
+                                        store.peepIdList)
+                                ), id: \.0) { idx, id in
                                 WithPerceptionTracking {
                                     ZStack {
-                                        /// 뒷 배경 사진 레이아웃
-                                        VStack(spacing: 11) {
-                                            Spacer().frame(height: 44)
-
-                                            peepView
-                                                .highPriorityGesture(
-                                                    TapGesture()
-                                                        .onEnded {store.send(.viewTapped) }
-                                                )
-
-                                            Spacer()
-                                        }
-                                        .ignoresSafeArea(.all, edges: .bottom)
-
                                         BackImageLayer.secondary()
                                             .ignoresSafeArea()
                                             .allowsHitTesting(false)
 
-                                        if store.showPeepDetailObject {
-                                            /// 앞 오브젝트
-                                            VStack {
-                                                Spacer()
-                                                detailView(peep: peep)
-                                                    .padding(.horizontal, 16)
-                                                    .padding(.bottom, 84)
-                                            }
-                                            .ignoresSafeArea()
-                                        }
+                                        Text("\(id)")
                                     }
-                                    .tag(idx)
+//                                    ZStack {
+//                                        /// 뒷 배경 사진 레이아웃
+//                                        VStack(spacing: 11) {
+//                                            Spacer().frame(height: 44)
+//
+//                                            peepView
+//                                                .highPriorityGesture(
+//                                                    TapGesture()
+//                                                        .onEnded {store.send(.viewTapped) }
+//                                                )
+//
+//                                            Spacer()
+//                                        }
+//                                        .ignoresSafeArea(.all, edges: .bottom)
+//
+//                                        BackImageLayer.secondary()
+//                                            .ignoresSafeArea()
+//                                            .allowsHitTesting(false)
+//
+//                                        if store.showPeepDetailObject {
+//                                            /// 앞 오브젝트
+//                                            VStack {
+//                                                Spacer()
+//                                                detailView(peep: peep)
+//                                                    .padding(.horizontal, 16)
+//                                                    .padding(.bottom, 84)
+//                                            }
+//                                            .ignoresSafeArea()
+//                                        }
+//                                    }
+//                                    .tag(idx)
                                 }
                             }
                         }
