@@ -38,7 +38,7 @@ struct PeepDetailStore {
         var showingReactionIdx = 0
         /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
         var showPeepDetailObject = false
-        /// 핍 상세 나타날 때 백그라운드 보여줄 타이밍 
+        /// 핍 상세 나타날 때 백그라운드 보여줄 타이밍
         var showPeepDetailBg = false
         /// 공유시트
         var showShareSheet = false
@@ -128,11 +128,32 @@ struct PeepDetailStore {
             switch action {
 
             case .binding(\.currentIdx):
-//                return .concatenate(
-//                    .send(.stopTimer),
-//                    .send(.setReaction)
-//                )
-                return .send(.stopTimer)
+                //                let lowerBound = max(0, state.currentIdx - 3)
+                //                let upperBound = min(state.peeps.count - 1, state.currentIdx + 3)
+                //
+                //                for i in state.peeps.indices {
+                //                    if !(lowerBound...upperBound).contains(i) {
+                //                        state.peeps[i] = nil
+                //                        state.topLocations[i] = nil
+                //                    }
+                //                }
+
+                return .run { [currentIdx = state.currentIdx, peepIdList = state.peepIdList, peeps = state.peeps] send in
+                        let prefetchIndices = [
+                            currentIdx + 1,
+                            currentIdx + 2,
+                            currentIdx - 1,
+                            currentIdx - 2
+                        ]
+
+                        for idx in prefetchIndices {
+                            guard peepIdList.indices.contains(idx) else { continue }
+
+                            if peeps[idx] == nil {
+                                await send(.getPeepDetail(id: peepIdList[idx]))
+                            }
+                        }
+                    }
 
 
             case .binding(\.showShareSheet):
@@ -158,13 +179,15 @@ struct PeepDetailStore {
                     }
                 )
 
+            // TODO: 리액션 로직 수정
             case .setReaction:
-                guard let reactionStr = state.peepList[state.currentIdx].reaction else {
-                    state.peepList[state.currentIdx].reaction = nil
+                guard let peep = state.peeps[safe: state.currentIdx],
+                      let reactionStr = peep?.reaction else {
                     return .send(.setTimer)
                 }
 
-                state.peepList[state.currentIdx].reaction = reactionStr
+                state.peeps[state.currentIdx]?.reaction = reactionStr
+
                 return .none
 
             case .initialReactionButtonTapped:
@@ -228,16 +251,18 @@ struct PeepDetailStore {
                 state.showChat = false
                 return .none
 
+            // TODO: 타이머 로직 수정
             case .setTimer:
-                guard state.peepList[state.currentIdx].reaction == nil else { return .none }
-
-                return .run { send in
-                    while true {
-                        try await Task.sleep(for: .seconds(0.75))
-                        await send(.timerTicked)
-                    }
-                }
-                .cancellable(id: CancelId.timer)
+//                guard state.peeps[state.currentIdx].reaction == nil else { return .none }
+//
+//                return .run { send in
+//                    while true {
+//                        try await Task.sleep(for: .seconds(0.75))
+//                        await send(.timerTicked)
+//                    }
+//                }
+//                .cancellable(id: CancelId.timer)
+                return .none
 
             case .timerTicked:
                 state.showingReactionIdx = (state.showingReactionIdx + 1) % state.reactionList.count
@@ -291,7 +316,7 @@ struct PeepDetailStore {
 }
 
 extension Array {
-    
+
     subscript(safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
     }
