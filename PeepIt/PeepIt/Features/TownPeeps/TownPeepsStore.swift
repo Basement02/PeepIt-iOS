@@ -52,6 +52,7 @@ struct TownPeepsStore {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+
             case .onAppear:
                 let formatter = DateFormatter()
                 formatter.dateFormat = "M월 d일"
@@ -125,8 +126,9 @@ struct TownPeepsStore {
                     state.page += 1
 
                 case let .failure(error):
-                    // TODO: - 에러 처리
-                    print(error)
+                    guard error.asPeepItError() != .noPeep else { return .none }
+
+                    // TODO: 핍이 없는 경우를 제외한 에러일 때 처리
                 }
 
                 /// 새로고침 중이라면 새로고침 끝내기
