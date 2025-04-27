@@ -31,43 +31,47 @@ struct PeepDetailView: View {
                                 ), id: \.0) { idx, id in
                                 WithPerceptionTracking {
                                     ZStack {
-                                        BackImageLayer.secondary()
-                                            .ignoresSafeArea()
-                                            .allowsHitTesting(false)
+                                        if let peep = store.peeps[safe: idx],
+                                            let peepContent = peep {
+                                            /// 뒷 배경 사진 레이아웃
+                                            VStack(spacing: 11) {
+                                                Spacer().frame(height: 44)
 
-                                        Text("\(id)")
+                                                AsyncStoryImage(
+                                                    dataURLStr: peepContent.data,
+                                                    isVideo: peepContent.isVideo
+                                                )
+                                                .highPriorityGesture(
+                                                    TapGesture()
+                                                        .onEnded { store.send(.viewTapped) }
+                                                )
+
+                                                Spacer()
+                                            }
+                                            .ignoresSafeArea(.all, edges: .bottom)
+
+                                            BackImageLayer.secondary()
+                                                .ignoresSafeArea()
+                                                .allowsHitTesting(false)
+
+                                            /// 진입 애니메이션 처리 여부
+                                            if store.showPeepDetailObject {
+                                                /// 앞 오브젝트
+                                                VStack {
+                                                    Spacer()
+                                                    detailView(peep: peepContent)
+                                                        .padding(.horizontal, 16)
+                                                        .padding(.bottom, 84)
+                                                }
+                                                .ignoresSafeArea()
+                                            }
+
+                                        } else {
+                                            Color.base
+                                                .ignoresSafeArea()
+                                        }
                                     }
-//                                    ZStack {
-//                                        /// 뒷 배경 사진 레이아웃
-//                                        VStack(spacing: 11) {
-//                                            Spacer().frame(height: 44)
-//
-//                                            peepView
-//                                                .highPriorityGesture(
-//                                                    TapGesture()
-//                                                        .onEnded {store.send(.viewTapped) }
-//                                                )
-//
-//                                            Spacer()
-//                                        }
-//                                        .ignoresSafeArea(.all, edges: .bottom)
-//
-//                                        BackImageLayer.secondary()
-//                                            .ignoresSafeArea()
-//                                            .allowsHitTesting(false)
-//
-//                                        if store.showPeepDetailObject {
-//                                            /// 앞 오브젝트
-//                                            VStack {
-//                                                Spacer()
-//                                                detailView(peep: peep)
-//                                                    .padding(.horizontal, 16)
-//                                                    .padding(.bottom, 84)
-//                                            }
-//                                            .ignoresSafeArea()
-//                                        }
-//                                    }
-//                                    .tag(idx)
+                                    .tag(idx)
                                 }
                             }
                         }
@@ -236,15 +240,6 @@ extension PeepDetailView {
             .pretendard(.body02)
             .foregroundStyle(Color.coreRed)
         }
-    }
-
-    /// TODO: 이미지로 수정
-    private var peepView: some View {
-        Image("SampleImage")
-            .resizable()
-            .aspectRatio(9/16, contentMode: .fit)
-            .frame(width: Constant.screenWidth)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 
     private func detailView(peep: Peep) -> some View {

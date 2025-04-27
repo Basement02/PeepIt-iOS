@@ -58,8 +58,8 @@ struct PeepDetailStore {
             case others
         }
 
-        var peepIdList: [Int] = .init()
-        var peeps: [[Int: Peep]] = .init()
+        var peepIdList: [Int] = []
+        var peeps: [Peep?] = []
     }
 
     enum Action: BindableAction {
@@ -127,16 +127,34 @@ struct PeepDetailStore {
             switch action {
 
             case .binding(\.currentIdx):
-                return .concatenate(
-                    .send(.stopTimer),
-                    .send(.setReaction)
-                )
+//                return .concatenate(
+//                    .send(.stopTimer),
+//                    .send(.setReaction)
+//                )
+                return .send(.stopTimer)
+
 
             case .binding(\.showShareSheet):
                 return .none
 
             case .onAppear:
-                return .none
+                state.peeps = Array(repeating: nil, count: state.peepIdList.count)
+
+                return .merge(
+                    .send(.getPeepDetail(id: state.peepIdList[state.currentIdx])),
+                    .run { [currentIdx = state.currentIdx, peepIdList = state.peepIdList] send in
+                        let prefetchIds = [
+                            peepIdList[safe: currentIdx + 1],
+                            peepIdList[safe: currentIdx + 2],
+                            peepIdList[safe: currentIdx - 1],
+                            peepIdList[safe: currentIdx - 2]
+                        ].compactMap { $0 }
+
+                        for id in prefetchIds {
+                            await send(.getPeepDetail(id: id))
+                        }
+                    }
+                )
 
             case .setReaction:
                 guard let reactionStr = state.peepList[state.currentIdx].reaction else {
@@ -252,7 +270,9 @@ struct PeepDetailStore {
                 switch result {
 
                 case let .success(peep):
-                    print(peep)
+                    if let index = state.peepIdList.firstIndex(of: peep.id) {
+                        state.peeps[index] = peep
+                    }
 
                 case let .failure(error):
                     print(error)
@@ -264,5 +284,12 @@ struct PeepDetailStore {
                 return .none
             }
         }
+    }
+}
+
+extension Array {
+    
+    subscript(safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }
