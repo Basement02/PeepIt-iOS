@@ -26,6 +26,8 @@ struct PeepAPIClient {
     var fetchCurrentLocationInfo: (Coordinate) async throws -> CurrentLocationInfo
     /// 지도 내 핍 조회
     var fetchPeepsInMap: (Coordinate, Int, Int, Int) async throws -> PagedPeeps
+    /// 핍 디테일 조회
+    var fetchPeepDetail: (Int) async throws -> Peep
 }
 
 extension PeepAPIClient: DependencyKey {
@@ -89,6 +91,12 @@ extension PeepAPIClient: DependencyKey {
             )
             let requestAPI = PeepAPI.getMapPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        fetchPeepDetail: { peepId in
+            let requestDto: PeepDetailRequestDto = .init(peepId: peepId)
+            let requestAPi = PeepAPI.getPeepDetail(requestDto)
+            let response: CommonPeepDto = try await APIFetcher.shared.fetch(of: requestAPi)
             return response.toModel()
         }
     )
