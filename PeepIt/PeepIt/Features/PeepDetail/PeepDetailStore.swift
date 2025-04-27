@@ -99,12 +99,17 @@ struct PeepDetailStore {
         case setTimer
         case timerTicked
         case stopTimer
+
+        /// 개별 핍 api
+        case getPeepDetail(id: Int)
+        case fetchPeepDetailResponse(Result<Peep, Error>)
     }
 
     enum CancelId {
         case timer
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
@@ -232,6 +237,27 @@ struct PeepDetailStore {
 
             case .shareButtonTapped:
                 state.showShareSheet.toggle()
+                return .none
+
+            case let .getPeepDetail(id):
+                return .run { send in
+                    await send(
+                        .fetchPeepDetailResponse(
+                            Result { try await peepAPIClient.fetchPeepDetail(id) }
+                        )
+                    )
+                }
+
+            case let .fetchPeepDetailResponse(result):
+                switch result {
+
+                case let .success(peep):
+                    print(peep)
+
+                case let .failure(error):
+                    print(error)
+                }
+
                 return .none
 
             default:
