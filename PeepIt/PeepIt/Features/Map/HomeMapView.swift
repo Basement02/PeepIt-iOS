@@ -125,7 +125,7 @@ struct HomeMapView: UIViewRepresentable {
             
             let region = MKCoordinateRegion(
                 center: location.coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.001, longitudeDelta: 0.001)
+                span: MKCoordinateSpan(latitudeDelta: 0.002, longitudeDelta: 0.002)
             )
 
             mapView?.setRegion(region, animated: true)
@@ -135,8 +135,8 @@ struct HomeMapView: UIViewRepresentable {
             let center = mapView.centerCoordinate
             let newCoord = Coordinate(x: center.longitude, y: center.latitude)
 
-            guard abs(newCoord.x - parent.centerCoord.x) > 0.0001 ||
-                    abs(newCoord.y - parent.centerCoord.y) > 0.0001 else { return }
+//            guard abs(newCoord.x - parent.centerCoord.x) > 0.0001 ||
+//                    abs(newCoord.y - parent.centerCoord.y) > 0.0001 else { return }
 
             parent.centerCoord = newCoord
         }

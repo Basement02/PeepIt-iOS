@@ -129,7 +129,8 @@ struct HomeStore {
 
                 let coord = state.centerCoord
                 state.isFirstSearching = false
-                state.page = 0
+
+                print("현재 위치", coord)
 
                 return .concatenate(
                     .send(.getMyProfile),
@@ -141,6 +142,7 @@ struct HomeStore {
 
                 let coord = state.centerCoord
                 state.page = 0
+                state.hasNext = true
 
                 return .concatenate(
                     .send(.getMyProfile),
@@ -227,9 +229,9 @@ struct HomeStore {
 
             case .searchButtonTapped:
                 state.isDragged = false
-
                 state.page = 0
                 state.hasNext = true
+
                 let centerCoord = state.centerCoord
 
                 return .send(.getPeepsInMap(coord: centerCoord, page: 0))
@@ -245,7 +247,7 @@ struct HomeStore {
                             Result { try await peepAPIClient.fetchPeepsInMap(
                                 Coordinate(
                                     x: coord.x, y: coord.y),
-                                    10, // dist
+                                    5, // dist
                                     page, // page
                                     15 // size
                                 )
@@ -259,6 +261,7 @@ struct HomeStore {
                 switch result {
 
                 case let .success(result):
+
                     if result.page == 0 {
                         state.mapPeeps = result.content
                         state.peepPreviewModal.peeps = result.content
@@ -271,7 +274,10 @@ struct HomeStore {
                     state.page += 1
 
                 case let .failure(error):
-                    print(error)
+                    if error.asPeepItError() == .noPeep {
+                        state.mapPeeps.removeAll()
+                        state.peepPreviewModal.peeps.removeAll()
+                    }
                 }
                 return .none
 
