@@ -19,7 +19,7 @@ struct TownPeepsStore {
         var peeps: [Peep] = []
 
         var page = 0
-        var size = 5
+        var size = 10
         var hasNext = true
 
         var todayStr = ""
