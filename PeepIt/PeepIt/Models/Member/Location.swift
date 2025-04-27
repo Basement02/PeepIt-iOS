@@ -8,8 +8,8 @@
 import Foundation
 
 struct TownInfo: Equatable, Codable {
-    let address: String
-    let bCode: String
+    var address: String
+    var bCode: String
 }
 
 struct Coordinate: Equatable {
