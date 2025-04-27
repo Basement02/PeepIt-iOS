@@ -17,7 +17,7 @@ enum PeepAPI {
     case getOtherPeeps(PageAndIdRequestDto)
     case getPeepDetail(PeepDetailRequestDto)
     case getRecentTownPeeps(PageRequestDto)
-    case getMapPeeps(MapPeepRequest)
+    case getMapPeeps(MapPeepRequestDto)
     case getHotPeeps(PageRequestDto)
     case postPeep(PeepUploadRequestDto, Data, Bool)
     case getCurrentLocationInfo(CurrentAddressRequestDto)
@@ -90,7 +90,7 @@ extension PeepAPI: APIType {
             return .requestParameters(parameters: requestDto.toDictionary())
 
         case let .getMapPeeps(requestDto):
-            return .requestJSONEncodable(body: requestDto)
+            return .requestParameters(parameters: requestDto.toDictionary())
 
         case let .postPeep(requestDto, media, isVideo):
             var parts: [MultipartFormDataPart] = []

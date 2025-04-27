@@ -37,6 +37,17 @@ struct HomeStore {
         var moveToCurrentLocation = false
         /// 프로필 정보
         var userProfile: UserProfile?
+
+        /// 지도 내 핍 관련
+        /// 지도의 중앙 좌표
+        var centerCoord = Coordinate(x: 0, y: 0)
+        /// 첫 번째 지도 내 핍 호출인지
+        var isFirstSearching = true
+        /// 페이지 관리
+        var page = 0
+        var hasNext = true
+        /// 지도 내 핍
+        var mapPeeps: [Peep] = []
     }
 
     enum Action: BindableAction {
@@ -69,14 +80,17 @@ struct HomeStore {
         case locationButtonTapped
         /// 핍 탭
         case peepTapped(idx: Int)
-        /// 프로필 정보 업데이트
-        case updateProfile(profile: UserProfile)
 
         /// 내 프로필 조회 api
         case getMyProfile
-        case fetchGetMyProfileResponse(Result<UserProfile, Error>)
+        case updateMyProfile(profile: UserProfile)
+
+        /// 지도 내 핍 조회 api
+        case getPeepsInMap(coord: Coordinate, page: Int)
+        case fetchGetPeepsInMapResponse(Result<PagedPeeps, Error>)
     }
 
+    @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.memberAPIClient) var memberAPIClient
     @Dependency(\.userProfileStorage) var userProfileStorage
 
@@ -110,32 +124,40 @@ struct HomeStore {
             case .binding(\.moveToCurrentLocation):
                 return .none
 
+            case .binding(\.centerCoord):
+                guard state.isFirstSearching else { return .none }
+
+                let coord = state.centerCoord
+                state.isFirstSearching = false
+
+                print("현재 위치", coord)
+
+                return .concatenate(
+                    .send(.getMyProfile),
+                    .send(.getPeepsInMap(coord: coord, page: 0))
+                )
+
             case .onAppear:
-                return .send(.getMyProfile)
+                guard !state.isFirstSearching else { return .none }
+
+                let coord = state.centerCoord
+                state.page = 0
+                state.hasNext = true
+
+                return .concatenate(
+                    .send(.getMyProfile),
+                    .send(.getPeepsInMap(coord: coord, page: 0))
+                )
 
             case .getMyProfile:
                 return .run { send in
-                    await send(
-                        .fetchGetMyProfileResponse(
-                            Result { try await memberAPIClient.getMemberDetail() }
-                        )
-                    )
-                }
-
-            case let .fetchGetMyProfileResponse(result):
-                switch result {
-                case let .success(profile):
-                    state.userProfile = profile
-
-                    return .run { send in
-                        await send(.updateProfile(profile: profile))
+                    if let storedProflie = try await userProfileStorage.load() {
+                        await send(.updateMyProfile(profile: storedProflie))
                     }
-
-                case .failure:
-                    // TODO: 오류 처리
-                    print("오류")
                 }
 
+            case let .updateMyProfile(profile):
+                state.userProfile = profile
                 return .none
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
@@ -175,6 +197,9 @@ struct HomeStore {
                 state.townVerificationModalOffset = Constant.screenHeight
                 return .none
 
+            case .townVerification(.dismissButtonTapped):
+                return .send(.getMyProfile)
+
             case .addressButtonTapped:
                 state.showTownVeriModal = true
                 state.townVerificationModalOffset = 0
@@ -204,17 +229,57 @@ struct HomeStore {
 
             case .searchButtonTapped:
                 state.isDragged = false
-                // TODO: 검색 api 호출
-                return .none
+                state.page = 0
+                state.hasNext = true
+
+                let centerCoord = state.centerCoord
+
+                return .send(.getPeepsInMap(coord: centerCoord, page: 0))
 
             case .locationButtonTapped:
                 state.moveToCurrentLocation = true
                 return .none
 
-            case let .updateProfile(profile):
-                return .run { _ in // 기기에 정보 저장
-                    try await userProfileStorage.save(profile)
+            case let .getPeepsInMap(coord, page):
+                return .run { send in
+                    await send(
+                        .fetchGetPeepsInMapResponse(
+                            Result { try await peepAPIClient.fetchPeepsInMap(
+                                Coordinate(
+                                    x: coord.x, y: coord.y),
+                                    5, // dist
+                                    page, // page
+                                    15 // size
+                                )
+                            }
+                        )
+                    )
                 }
+
+            // TODO: 모달 핍 페이지네이션
+            case let .fetchGetPeepsInMapResponse(result):
+                switch result {
+
+                case let .success(result):
+
+                    if result.page == 0 {
+                        state.mapPeeps = result.content
+                        state.peepPreviewModal.peeps = result.content
+                    } else {
+                        // TODO: - 지도 핍 페이지네이션 처리
+                        state.peepPreviewModal.peeps.append(contentsOf: result.content)
+                    }
+
+                    state.hasNext = result.hasNext
+                    state.page += 1
+
+                case let .failure(error):
+                    if error.asPeepItError() == .noPeep {
+                        state.mapPeeps.removeAll()
+                        state.peepPreviewModal.peeps.removeAll()
+                    }
+                }
+                return .none
 
             default:
                 return .none

@@ -12,21 +12,18 @@ struct PeepPreviewThumbnail: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Image("SampleImage")
-                .resizable()
-                .scaledToFill()
-                .foregroundStyle(Color.white)
-
-            ThumbnailLayer.primary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-
-            ThumbnailLayer.secondary()
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            Group {
+                AsyncThumbnail(imgStr: peep.data)
+                ThumbnailLayer.primary()
+                ThumbnailLayer.secondary()
+            }
+            .frame(width: 281, height: 384)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
 
             VStack(alignment: .leading) {
                 HStack(spacing: 2) {
                     Image("IconPeep")
-                    Text("현재 위치에서 4km")
+                    Text("현재 위치에서 0km") // TODO:
                     Spacer()
                     hotLabel
                 }
@@ -39,12 +36,17 @@ struct PeepPreviewThumbnail: View {
             }
             .padding(.top, 19)
             .padding(.bottom, 20)
-            .frame(width: 250)
             .padding(.leading, 16)
-            // TODO: - 활성화 핍 border
+            .frame(width: 250)
         }
         .frame(width: 281, height: 384)
         .clipShape(RoundedRectangle(cornerRadius: 20))
+        .overlay {
+            if peep.isActive {
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(Color.coreLime, lineWidth: 1)
+            }
+        }
     }
 
     private var hotLabel: some View {
@@ -65,16 +67,16 @@ struct PeepPreviewThumbnail: View {
 
     private var profileView: some View {
         HStack {
-            Image("ProfileSample")
-                .resizable()
+            AsyncProfile(profileUrlStr: peep.profileUrl)
                 .frame(width: 25, height: 25)
+                .clipShape(RoundedRectangle(cornerRadius: 5.5))
 
-            Text("hyerim")
+            Text(peep.writerId)
                 .pretendard(.body02)
 
             Spacer()
 
-            Text("3분 전")
+            Text(peep.uploadAt)
                 .pretendard(.caption04)
         }
         .foregroundStyle(Color.white)

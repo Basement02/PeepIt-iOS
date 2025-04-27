@@ -18,7 +18,7 @@ struct CommonPeepDto: Codable {
     let content: String
     let isEdited: Bool
     let profileUrl: String
-    let isActive: Bool?
+    let isActive: Bool
     let uploadAt: String
     let stickerNum: Int
     let chatNum: Int
@@ -33,7 +33,7 @@ extension CommonPeepDto {
             data: imageUrl,
             content: content,
             writerId: memberId,
-            isActive: isActive ?? true, // TODO: - 수정
+            isActive: isActive,
             reaction: nil, // TODO: - stickerNum 순서 파악 필요
             isVideo: true, // TODO: - isVideo 추가 요청 필요
             chatNum: chatNum,
@@ -41,7 +41,9 @@ extension CommonPeepDto {
             buildingName: building,
             x: longitude,
             y: latitude,
-            popularity: popularity
+            popularity: popularity,
+            profileUrl: profileUrl,
+            uploadAt: uploadAt
         )
     }
 }

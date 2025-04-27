@@ -21,7 +21,9 @@ struct HomeView: View {
                         Group {
                             HomeMapView(
                                 isDragged: $store.isDragged,
-                                moveToCurrentLocation: $store.moveToCurrentLocation
+                                moveToCurrentLocation: $store.moveToCurrentLocation,
+                                centerCoord: $store.centerCoord,
+                                peeps: $store.mapPeeps
                             )
                             .ignoresSafeArea()
 

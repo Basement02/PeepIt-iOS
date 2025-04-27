@@ -21,6 +21,8 @@ struct Peep: Equatable, Hashable, Identifiable {
     let x: Double
     let y: Double
     let popularity: Int
+    let profileUrl: String
+    let uploadAt: String
 
     var id: Int { peepId }
 
@@ -45,7 +47,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -63,7 +67,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -80,7 +86,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -97,7 +105,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -114,7 +124,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -131,7 +143,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -148,7 +162,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -165,7 +181,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -182,7 +200,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -200,7 +220,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -218,7 +240,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 
@@ -236,7 +260,9 @@ extension Peep {
             buildingName: "빌딩 이름",
             x: 127.01583524268014,
             y: 37.564252509725364,
-            popularity: 1
+            popularity: 1,
+            profileUrl: "",
+            uploadAt: "1분 전"
         )
     }
 }

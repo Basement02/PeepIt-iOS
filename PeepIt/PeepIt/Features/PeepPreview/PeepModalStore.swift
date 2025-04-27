@@ -70,8 +70,6 @@ struct PeepModalStore {
                 return .none
 
             case .onAppear:
-                state.peeps.append(contentsOf: [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5])
-
                 return .none
 
             case let .modalDragged(dragHeight):

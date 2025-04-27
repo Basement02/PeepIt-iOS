@@ -145,7 +145,7 @@ struct PeepPreviewModalView: View {
         } label: {
             HStack(spacing: 6) {
                 Image("IconUp")
-                Text("nnn개의 핍 보기")
+                Text("\(store.peeps.count)개의 핍 보기")
                     .pretendard(.body04)
 
                 Image("IconEyes")
@@ -183,15 +183,4 @@ fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
             }
         }
     }
-}
-
-#Preview {
-    @Namespace var namespaceStub
-
-    return PeepPreviewModalView(
-        store: .init(initialState: PeepModalStore.State()) {
-            PeepModalStore()
-        },
-        namespace: namespaceStub
-    )
 }
