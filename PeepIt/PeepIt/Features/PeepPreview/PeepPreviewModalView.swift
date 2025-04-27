@@ -184,14 +184,3 @@ fileprivate struct PeepPreviewCollectionView: UIViewControllerRepresentable {
         }
     }
 }
-
-#Preview {
-    @Namespace var namespaceStub
-
-    return PeepPreviewModalView(
-        store: .init(initialState: PeepModalStore.State()) {
-            PeepModalStore()
-        },
-        namespace: namespaceStub
-    )
-}

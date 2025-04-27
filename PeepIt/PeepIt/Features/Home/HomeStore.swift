@@ -129,6 +129,7 @@ struct HomeStore {
 
                 let coord = state.centerCoord
                 state.isFirstSearching = false
+                state.page = 0
 
                 return .concatenate(
                     .send(.getMyProfile),
@@ -137,8 +138,9 @@ struct HomeStore {
 
             case .onAppear:
                 guard !state.isFirstSearching else { return .none }
-                
+
                 let coord = state.centerCoord
+                state.page = 0
 
                 return .concatenate(
                     .send(.getMyProfile),
@@ -245,7 +247,7 @@ struct HomeStore {
                                     x: coord.x, y: coord.y),
                                     10, // dist
                                     page, // page
-                                    10 // size
+                                    15 // size
                                 )
                             }
                         )
@@ -257,7 +259,7 @@ struct HomeStore {
                 switch result {
 
                 case let .success(result):
-                    if state.page == 0 {
+                    if result.page == 0 {
                         state.mapPeeps = result.content
                         state.peepPreviewModal.peeps = result.content
                     } else {
