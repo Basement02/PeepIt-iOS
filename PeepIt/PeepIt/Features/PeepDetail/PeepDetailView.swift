@@ -88,10 +88,6 @@ struct PeepDetailView: View {
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
                     .onAppear { store.send(.onAppear) }
-//                    .highPriorityGesture(
-//                        TapGesture()
-//                            .onEnded {store.send(.viewTapped) }
-//                    )
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -186,7 +182,7 @@ extension PeepDetailView {
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
 
-            Text("동이름, 건물 이름")
+            Text((store.topLocations[safe: store.currentIdx] ?? "") ?? "")
                 .pretendard(.body02)
         }
         .padding(.leading, 15)
@@ -249,12 +245,14 @@ extension PeepDetailView {
                     state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
                 ) {
                     HStack {
-                        Image("ProfileSample")
-                            .resizable()
+                        AsyncProfile(profileUrlStr: peep.profileUrl)
                             .frame(width: 37.62, height: 37.62)
-                        Text("hyerim")
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                        Text(peep.writerId)
                             .pretendard(.headline)
-                        Text("3분 전")
+
+                        Text(peep.uploadAt)
                             .pretendard(.caption04)
 
                         Spacer()

@@ -60,6 +60,7 @@ struct PeepDetailStore {
 
         var peepIdList: [Int] = []
         var peeps: [Peep?] = []
+        var topLocations: [String?] = []
     }
 
     enum Action: BindableAction {
@@ -139,6 +140,7 @@ struct PeepDetailStore {
 
             case .onAppear:
                 state.peeps = Array(repeating: nil, count: state.peepIdList.count)
+                state.topLocations = Array(repeating: nil, count: state.peepIdList.count)
 
                 return .merge(
                     .send(.getPeepDetail(id: state.peepIdList[state.currentIdx])),
@@ -272,6 +274,7 @@ struct PeepDetailStore {
                 case let .success(peep):
                     if let index = state.peepIdList.firstIndex(of: peep.id) {
                         state.peeps[index] = peep
+                        state.topLocations[index] = peep.buildingName
                     }
 
                 case let .failure(error):
