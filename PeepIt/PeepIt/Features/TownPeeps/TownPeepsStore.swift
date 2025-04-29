@@ -54,9 +54,15 @@ struct TownPeepsStore {
             switch action {
 
             case .onAppear:
+                // 날짜 세팅
                 let formatter = DateFormatter()
                 formatter.dateFormat = "M월 d일"
                 state.todayStr = formatter.string(from: Date())
+
+                // 페이지네이션 세팅
+                state.page = 0
+                state.hasNext = true
+                state.peeps.removeAll()
 
                 return .merge(
                     .run { send in
@@ -84,11 +90,10 @@ struct TownPeepsStore {
                 state.isRefreshing = true
                 state.page = 0
                 state.hasNext = true
+                state.peeps.removeAll()
 
-                let (page, size) = (state.page, state.size)
-
-                return .run { send in
-                    let result = await Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                return .run { [size = state.size] send in
+                    let result = await Result { try await peepAPIClient.fetchTownPeeps(0, size) }
                     await send(.fetchTownPeepsResponse(result))
                 }
 
@@ -129,7 +134,7 @@ struct TownPeepsStore {
                     // TODO: 핍이 없는 경우를 제외한 에러일 때 처리
                 }
 
-                /// 새로고침 중이라면 새로고침 끝내기
+                // 새로고침 중이라면 새로고침 끝내기
                 guard state.isRefreshing else { return .none }
                 return .send(.refreshEnded, animation: .linear)
             }

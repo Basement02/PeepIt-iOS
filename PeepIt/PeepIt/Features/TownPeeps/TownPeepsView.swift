@@ -158,14 +158,17 @@ struct TownPeepsView: View {
                 }
                 .padding(.bottom, 25)
 
-                if store.peeps.isEmpty {
+                if store.peeps.isEmpty && !store.isRefreshing {
                     emptyView
                 } else {
                     LazyVGrid(
                         columns: [GridItem(.flexible()), GridItem(.flexible())],
                         spacing: 8
                     ) {
-                        ForEach(Array(store.peeps.enumerated()), id: \.element.id) { (idx, peep) in
+                        ForEach(
+                            Array(store.peeps.enumerated()),
+                            id: \.element.id) { (idx, peep
+                        ) in
                             ThumbnailPeep(peep: peep)
                                 .onTapGesture {
                                     store.send(
