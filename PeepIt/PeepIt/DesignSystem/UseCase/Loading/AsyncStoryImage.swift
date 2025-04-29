@@ -22,7 +22,7 @@ struct AsyncStoryImage: View {
                 if isVideo {
                     LoopingVideoPlayerView(
                         videoURL: url,
-                        isSoundOn: false,
+                        isSoundOn: true,
                         isPlaying: true
                     )
                     .frame(width: Constant.screenWidth, height: Constant.screenWidth * 16/9)
