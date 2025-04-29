@@ -31,8 +31,7 @@ struct PeepDetailView: View {
                                 ), id: \.0) { idx, id in
                                 WithPerceptionTracking {
                                     ZStack {
-                                        if let peep = store.peeps[safe: idx],
-                                            let peepContent = peep {
+                                        if let peepContent = store.peepCache[idx] {
                                             /// 뒷 배경 사진 레이아웃
                                             VStack(spacing: 11) {
                                                 Spacer().frame(height: 44)
@@ -182,7 +181,7 @@ extension PeepDetailView {
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
 
-            Text((store.topLocations[safe: store.currentIdx] ?? "") ?? "")
+            Text(store.peepLocation[store.currentIdx] ?? "")
                 .pretendard(.body02)
         }
         .padding(.leading, 15)

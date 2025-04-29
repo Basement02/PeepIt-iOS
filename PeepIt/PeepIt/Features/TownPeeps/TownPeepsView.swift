@@ -168,11 +168,18 @@ struct TownPeepsView: View {
                         ForEach(Array(store.peeps.enumerated()), id: \.element.id) { (idx, peep) in
                             ThumbnailPeep(peep: peep)
                                 .onTapGesture {
-                                    store.send(.peepCellTapped(idx: idx, peepIdList: store.peepIdList))
+                                    store.send(
+                                        .peepCellTapped(
+                                            idx: idx,
+                                            peepIdList: store.peepIdList,
+                                            page: store.page,
+                                            size: store.size
+                                        )
+                                    )
                                 }
                                 .onAppear {
                                     if idx == store.peeps.count - 2 && store.hasNext {
-                                        store.send(.fetchTownPeeps)
+                                        store.send(.fetchTownPeeps(page: store.page+1, size: store.size))
                                     }
                                 }
                         }

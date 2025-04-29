@@ -58,9 +58,13 @@ struct PeepDetailStore {
             case others
         }
 
+        var size = 5
+        var page = 0
+        var hasNext = true
+
         var peepIdList: [Int] = []
-        var peeps: [Peep?] = []
-        var topLocations: [String?] = []
+        var peepCache: [Int: Peep] = [:] // idx: peep
+        var peepLocation: [Int: String] = [:] // idx: building name
     }
 
     enum Action: BindableAction {
@@ -104,6 +108,17 @@ struct PeepDetailStore {
         /// 개별 핍 api
         case getPeepDetail(id: Int)
         case fetchPeepDetailResponse(Result<Peep, Error>)
+
+        /// 다음 핍 페이지네이션 api
+        case getNextPeepIds(page: Int, size: Int)
+        case fetchNextPeepIdsResponse(Result<PagedPeeps, Error>)
+
+        /// 이전 핍 페이지네이션 api
+        case getPrevPeepIds(page: Int, size: Int)
+        case fetchPrevPeepIdsResponse(Result<PagedPeeps, Error>)
+
+        /// 현재 보고 있는 핍 앞뒤 2개를 미리 fetch
+        case prefetch
     }
 
     enum CancelId {
@@ -128,65 +143,39 @@ struct PeepDetailStore {
             switch action {
 
             case .binding(\.currentIdx):
-                //                let lowerBound = max(0, state.currentIdx - 3)
-                //                let upperBound = min(state.peeps.count - 1, state.currentIdx + 3)
-                //
-                //                for i in state.peeps.indices {
-                //                    if !(lowerBound...upperBound).contains(i) {
-                //                        state.peeps[i] = nil
-                //                        state.topLocations[i] = nil
-                //                    }
-                //                }
 
-                return .run { [currentIdx = state.currentIdx, peepIdList = state.peepIdList, peeps = state.peeps] send in
-                        let prefetchIndices = [
-                            currentIdx + 1,
-                            currentIdx + 2,
-                            currentIdx - 1,
-                            currentIdx - 2
-                        ]
+                var effects: [Effect<Action>] = []
 
-                        for idx in prefetchIndices {
-                            guard peepIdList.indices.contains(idx) else { continue }
+                if state.currentIdx >= state.peepIdList.count - 2 && state.hasNext {
+                    effects.append(.send(.getNextPeepIds(page: state.page + 1, size: state.size)))
+                }
 
-                            if peeps[idx] == nil {
-                                await send(.getPeepDetail(id: peepIdList[idx]))
-                            }
-                        }
-                    }
+                if state.currentIdx == 0 && state.page > 0 {
+                    effects.append(.send(.getPrevPeepIds(page: state.page - 1, size: state.size)))
+                }
+
+                effects.append(.send(.prefetch))
+
+                return .merge(effects)
 
 
             case .binding(\.showShareSheet):
                 return .none
 
             case .onAppear:
-                state.peeps = Array(repeating: nil, count: state.peepIdList.count)
-                state.topLocations = Array(repeating: nil, count: state.peepIdList.count)
-
                 return .merge(
                     .send(.getPeepDetail(id: state.peepIdList[state.currentIdx])),
-                    .run { [currentIdx = state.currentIdx, peepIdList = state.peepIdList] send in
-                        let prefetchIds = [
-                            peepIdList[safe: currentIdx + 1],
-                            peepIdList[safe: currentIdx + 2],
-                            peepIdList[safe: currentIdx - 1],
-                            peepIdList[safe: currentIdx - 2]
-                        ].compactMap { $0 }
-
-                        for id in prefetchIds {
-                            await send(.getPeepDetail(id: id))
-                        }
-                    }
+                    .send(.prefetch)
                 )
 
             // TODO: 리액션 로직 수정
             case .setReaction:
-                guard let peep = state.peeps[safe: state.currentIdx],
-                      let reactionStr = peep?.reaction else {
-                    return .send(.setTimer)
-                }
-
-                state.peeps[state.currentIdx]?.reaction = reactionStr
+//                guard let peep = state.peeps[safe: state.currentIdx],
+//                      let reactionStr = peep?.reaction else {
+//                    return .send(.setTimer)
+//                }
+//
+//                state.peeps[state.currentIdx]?.reaction = reactionStr
 
                 return .none
 
@@ -297,9 +286,9 @@ struct PeepDetailStore {
                 switch result {
 
                 case let .success(peep):
-                    if let index = state.peepIdList.firstIndex(of: peep.id) {
-                        state.peeps[index] = peep
-                        state.topLocations[index] = peep.buildingName
+                    if let idx = state.peepIdList.firstIndex(of: peep.id) {
+                        state.peepCache[idx] = peep
+                        state.peepLocation[idx] = peep.buildingName
                     }
 
                 case let .failure(error):
@@ -307,6 +296,79 @@ struct PeepDetailStore {
                 }
 
                 return .none
+
+            case let .getNextPeepIds(page, size):
+                return .run { send in
+                    await send(
+                        .fetchNextPeepIdsResponse(
+                            Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                        )
+                    )
+                }
+
+            case let .fetchNextPeepIdsResponse(result):
+                switch result {
+
+                case let .success(res):
+                    state.peepIdList.append(contentsOf: res.content.map { $0.peepId })
+                    state.hasNext = res.hasNext
+                    state.page = res.page
+
+                    return .send(.prefetch)
+
+                case let .failure(error):
+                    print("다음 핍 페이지네이션", error)
+                }
+
+                return .none
+
+            case let .getPrevPeepIds(page, size):
+                return .run { send in
+                    await send(
+                        .fetchNextPeepIdsResponse(
+                            Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                        )
+                    )
+                }
+
+            case let .fetchPrevPeepIdsResponse(result):
+                switch result {
+
+                case let .success(res):
+                    state.peepIdList.insert(contentsOf: res.content.map { $0.peepId }, at: 0)
+                    state.hasNext = res.hasNext
+                    state.page = max(0, state.page-1)
+
+                case let .failure(error):
+                    print("이전 핍 페이지네이션", error)
+                }
+
+                return .none
+
+            case .prefetch:
+                let current = state.currentIdx
+                let prefetchRange = (current - 2)...(current + 2)
+
+                // 가져와야 할 핍 ID들 선정
+                let prefetchIds = prefetchRange
+                    .compactMap { idx in state.peepIdList[safe: idx] }
+                    .filter { id in
+                        let idx = state.peepIdList.firstIndex(of: id)!
+                        return state.peepCache[idx] == nil
+                    }
+
+                // 슬라이딩 범위 밖 캐시 제거
+                let validIndices = Set(prefetchRange)
+                state.peepCache = state.peepCache.filter { (idx, _) in
+                    validIndices.contains(idx)
+                }
+
+                // 필요한 ID만 개별 핍 api 요청
+                return .run { send in
+                    for id in prefetchIds {
+                        await send(.getPeepDetail(id: id))
+                    }
+                }
 
             default:
                 return .none

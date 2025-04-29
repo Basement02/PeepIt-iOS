@@ -19,7 +19,7 @@ struct TownPeepsStore {
         var peeps: [Peep] = []
 
         var page = 0
-        var size = 10
+        var size = 5
         var hasNext = true
 
         var todayStr = ""
@@ -34,14 +34,14 @@ struct TownPeepsStore {
         case refresh
         case refreshEnded
         case onAppear
-        case peepCellTapped(idx: Int, peepIdList: [Int])
+        case peepCellTapped(idx: Int, peepIdList: [Int], page: Int, size: Int)
         case uploadButtonTapped
 
         /// 내 동네 불러오기
         case getMyTown(TownInfo?)
 
         /// 동네 핍 조회 api
-        case fetchTownPeeps
+        case fetchTownPeeps(page: Int, size: Int)
         case fetchTownPeepsResponse(Result<PagedPeeps, Error>)
     }
 
@@ -64,8 +64,8 @@ struct TownPeepsStore {
                             await send(.getMyTown(savedProfile.townInfo))
                         }
                     },
-                    .run { send in
-                        await send(.fetchTownPeeps)
+                    .run { [size = state.size] send in
+                        await send(.fetchTownPeeps(page: 0, size: size))
                     }
                 )
 
@@ -99,9 +99,7 @@ struct TownPeepsStore {
             case .peepCellTapped, .uploadButtonTapped:
                 return .none
 
-            case .fetchTownPeeps:
-                let (page, size) = (state.page, state.size)
-
+            case let .fetchTownPeeps(page, size):
                 return .run { send in
                     await send(
                         .fetchTownPeepsResponse(
@@ -123,7 +121,7 @@ struct TownPeepsStore {
                     }
 
                     state.hasNext = pagedPeeps.hasNext
-                    state.page += 1
+                    state.page = pagedPeeps.page
 
                 case let .failure(error):
                     guard error.asPeepItError() != .noPeep else { return .none }
