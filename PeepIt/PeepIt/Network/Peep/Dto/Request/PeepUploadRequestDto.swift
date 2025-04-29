@@ -16,4 +16,5 @@ struct PeepUploadRequestDto: Encodable {
     let roadNameAddress: String = "주소"
     let roadNameCode: String = "도로번호"
     let building: String
+    let isVideo: Bool
 }

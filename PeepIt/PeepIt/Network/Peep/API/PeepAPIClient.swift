@@ -69,7 +69,8 @@ extension PeepAPIClient: DependencyKey {
                 content: uploadPeep.content,
                 latitude: uploadPeep.y,
                 longitude: uploadPeep.x,
-                building: uploadPeep.building
+                building: uploadPeep.building,
+                isVideo: isVideo
             )
 
             let requestAPI = PeepAPI.postPeep(requestDto, uploadPeep.data, isVideo)
