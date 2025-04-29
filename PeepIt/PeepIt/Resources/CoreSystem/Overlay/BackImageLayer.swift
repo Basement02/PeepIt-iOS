@@ -52,7 +52,7 @@ extension BackImageLayer {
             ]),
             startPoint: .top,
             endPoint: .bottom,
-            opacity: 0.6
+            opacity: 0.2
         )
     }
 }

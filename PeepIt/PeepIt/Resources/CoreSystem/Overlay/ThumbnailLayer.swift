@@ -31,10 +31,10 @@ struct ThumbnailLayer: View {
 extension ThumbnailLayer {
 
     static func primary() -> ThumbnailLayer {
-        return ThumbnailLayer(startPoint: .leading, endPoint: .trailing, opacity: 0.5)
+        return ThumbnailLayer(startPoint: .leading, endPoint: .trailing, opacity: 0.2)
     }
 
     static func secondary() -> ThumbnailLayer {
-        return ThumbnailLayer(startPoint: .top, endPoint: .bottom, opacity: 0.6)
+        return ThumbnailLayer(startPoint: .top, endPoint: .bottom, opacity: 0.2)
     }
 }

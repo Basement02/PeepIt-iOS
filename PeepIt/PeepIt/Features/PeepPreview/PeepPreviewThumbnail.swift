@@ -11,7 +11,7 @@ struct PeepPreviewThumbnail: View {
     let peep: Peep
 
     var body: some View {
-        ZStack(alignment: .leading) {
+        ZStack {
             Group {
                 AsyncThumbnail(imgStr: peep.data)
                 ThumbnailLayer.primary()
@@ -20,7 +20,7 @@ struct PeepPreviewThumbnail: View {
             .frame(width: 281, height: 384)
             .clipShape(RoundedRectangle(cornerRadius: 20))
 
-            VStack(alignment: .leading) {
+            VStack {
                 HStack(spacing: 2) {
                     Image("IconPeep")
                     Text("현재 위치에서 0km") // TODO:
@@ -36,8 +36,7 @@ struct PeepPreviewThumbnail: View {
             }
             .padding(.top, 19)
             .padding(.bottom, 20)
-            .padding(.leading, 16)
-            .frame(width: 250)
+            .padding(.horizontal, 15)
         }
         .frame(width: 281, height: 384)
         .clipShape(RoundedRectangle(cornerRadius: 20))
