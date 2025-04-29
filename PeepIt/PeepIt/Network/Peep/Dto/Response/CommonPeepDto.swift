@@ -23,6 +23,7 @@ struct CommonPeepDto: Codable {
     let stickerNum: Int
     let chatNum: Int
     let popularity: Int
+    let isVideo: Bool
 }
 
 extension CommonPeepDto {
@@ -35,7 +36,7 @@ extension CommonPeepDto {
             writerId: memberId,
             isActive: isActive,
             reaction: nil, // TODO: - stickerNum 순서 파악 필요
-            isVideo: true, // TODO: - isVideo 추가 요청 필요
+            isVideo: isVideo,
             chatNum: chatNum,
             stickerNum: stickerNum,
             buildingName: building,

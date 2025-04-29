@@ -26,38 +26,48 @@ struct PeepDetailView: View {
                         TabView(selection: $store.currentIdx) {
                             ForEach(
                                 Array(
-                                    zip(store.peepList.indices,
-                                        store.peepList)
-                                ), id: \.0) { idx, peep in
+                                    zip(store.peepIdList.indices,
+                                        store.peepIdList)
+                                ), id: \.0) { idx, id in
                                 WithPerceptionTracking {
                                     ZStack {
-                                        /// 뒷 배경 사진 레이아웃
-                                        VStack(spacing: 11) {
-                                            Spacer().frame(height: 44)
+                                        if let peepContent = store.peepCache[idx] {
+                                            /// 뒷 배경 사진 레이아웃
+                                            VStack(spacing: 11) {
+                                                Spacer().frame(height: 44)
 
-                                            peepView
+                                                AsyncStoryImage(
+                                                    dataURLStr: peepContent.data,
+                                                    isVideo: peepContent.isVideo
+                                                )
                                                 .highPriorityGesture(
                                                     TapGesture()
-                                                        .onEnded {store.send(.viewTapped) }
+                                                        .onEnded { store.send(.viewTapped) }
                                                 )
 
-                                            Spacer()
-                                        }
-                                        .ignoresSafeArea(.all, edges: .bottom)
-
-                                        BackImageLayer.secondary()
-                                            .ignoresSafeArea()
-                                            .allowsHitTesting(false)
-
-                                        if store.showPeepDetailObject {
-                                            /// 앞 오브젝트
-                                            VStack {
                                                 Spacer()
-                                                detailView(peep: peep)
-                                                    .padding(.horizontal, 16)
-                                                    .padding(.bottom, 84)
                                             }
-                                            .ignoresSafeArea()
+                                            .ignoresSafeArea(.all, edges: .bottom)
+
+                                            BackImageLayer.secondary()
+                                                .ignoresSafeArea()
+                                                .allowsHitTesting(false)
+
+                                            /// 진입 애니메이션 처리 여부
+                                            if store.showPeepDetailObject {
+                                                /// 앞 오브젝트
+                                                VStack {
+                                                    Spacer()
+                                                    detailView(peep: peepContent)
+                                                        .padding(.horizontal, 16)
+                                                        .padding(.bottom, 84)
+                                                }
+                                                .ignoresSafeArea()
+                                            }
+
+                                        } else {
+                                            Color.base
+                                                .ignoresSafeArea()
                                         }
                                     }
                                     .tag(idx)
@@ -77,10 +87,6 @@ struct PeepDetailView: View {
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
                     .onAppear { store.send(.onAppear) }
-//                    .highPriorityGesture(
-//                        TapGesture()
-//                            .onEnded {store.send(.viewTapped) }
-//                    )
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -175,7 +181,7 @@ extension PeepDetailView {
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
 
-            Text("동이름, 건물 이름")
+            Text(store.peepLocation[store.currentIdx] ?? "")
                 .pretendard(.body02)
         }
         .padding(.leading, 15)
@@ -231,15 +237,6 @@ extension PeepDetailView {
         }
     }
 
-    /// TODO: 이미지로 수정
-    private var peepView: some View {
-        Image("SampleImage")
-            .resizable()
-            .aspectRatio(9/16, contentMode: .fit)
-            .frame(width: Constant.screenWidth)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-    }
-
     private func detailView(peep: Peep) -> some View {
         HStack(alignment: .bottom, spacing: 12) {
             VStack(spacing: 9) {
@@ -247,12 +244,14 @@ extension PeepDetailView {
                     state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
                 ) {
                     HStack {
-                        Image("ProfileSample")
-                            .resizable()
+                        AsyncProfile(profileUrlStr: peep.profileUrl)
                             .frame(width: 37.62, height: 37.62)
-                        Text("hyerim")
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
+
+                        Text(peep.writerId)
                             .pretendard(.headline)
-                        Text("3분 전")
+
+                        Text(peep.uploadAt)
                             .pretendard(.caption04)
 
                         Spacer()

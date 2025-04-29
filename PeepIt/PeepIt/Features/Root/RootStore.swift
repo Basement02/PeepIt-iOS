@@ -158,7 +158,7 @@ struct RootStore {
                 case let .element(_, action: .camera(.pushToEdit(image, videoURL))):
                     state.path.append(
                         .edit(EditStore.State(image: image, videoURL: videoURL))
-                    ) 
+                    )
                     return .none
 
                 case let .element(_, action: .edit(.pushToWriteBody(image, videoURL))):
@@ -183,14 +183,16 @@ struct RootStore {
                     state.path.removeAll()
                     return .none
 
-                case let .element(_, action: .townPeeps(.peepCellTapped(idx, peeps))):
+                case let .element(_, action: .townPeeps(.peepCellTapped(idx, peepIdList, page, size))):
                     state.path.append(
                         .peepDetail(PeepDetailStore.State(
                             entryType: .townPeep,
-                            peepList: peeps,
                             currentIdx: idx,
                             showPeepDetailObject: true,
-                            showPeepDetailBg: true
+                            showPeepDetailBg: true,
+                            size: size,
+                            page: page,
+                            peepIdList: peepIdList
                         ))
                     )
                     return .none

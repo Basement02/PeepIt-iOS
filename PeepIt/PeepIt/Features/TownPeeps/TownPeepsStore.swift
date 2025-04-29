@@ -24,6 +24,8 @@ struct TownPeepsStore {
 
         var todayStr = ""
         var myTown = ""
+
+        var peepIdList: [Int] = []
     }
 
     enum Action {
@@ -32,14 +34,14 @@ struct TownPeepsStore {
         case refresh
         case refreshEnded
         case onAppear
-        case peepCellTapped(idx: Int, peeps: [Peep])
+        case peepCellTapped(idx: Int, peepIdList: [Int], page: Int, size: Int)
         case uploadButtonTapped
 
         /// 내 동네 불러오기
         case getMyTown(TownInfo?)
 
         /// 동네 핍 조회 api
-        case fetchTownPeeps
+        case fetchTownPeeps(page: Int, size: Int)
         case fetchTownPeepsResponse(Result<PagedPeeps, Error>)
     }
 
@@ -50,10 +52,17 @@ struct TownPeepsStore {
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
+
             case .onAppear:
+                // 날짜 세팅
                 let formatter = DateFormatter()
                 formatter.dateFormat = "M월 d일"
                 state.todayStr = formatter.string(from: Date())
+
+                // 페이지네이션 세팅
+                state.page = 0
+                state.hasNext = true
+                state.peeps.removeAll()
 
                 return .merge(
                     .run { send in
@@ -61,8 +70,8 @@ struct TownPeepsStore {
                             await send(.getMyTown(savedProfile.townInfo))
                         }
                     },
-                    .run { send in
-                        await send(.fetchTownPeeps)
+                    .run { [size = state.size] send in
+                        await send(.fetchTownPeeps(page: 0, size: size))
                     }
                 )
 
@@ -81,11 +90,10 @@ struct TownPeepsStore {
                 state.isRefreshing = true
                 state.page = 0
                 state.hasNext = true
+                state.peeps.removeAll()
 
-                let (page, size) = (state.page, state.size)
-
-                return .run { send in
-                    let result = await Result { try await peepAPIClient.fetchTownPeeps(page, size) }
+                return .run { [size = state.size] send in
+                    let result = await Result { try await peepAPIClient.fetchTownPeeps(0, size) }
                     await send(.fetchTownPeepsResponse(result))
                 }
 
@@ -96,9 +104,7 @@ struct TownPeepsStore {
             case .peepCellTapped, .uploadButtonTapped:
                 return .none
 
-            case .fetchTownPeeps:
-                let (page, size) = (state.page, state.size)
-
+            case let .fetchTownPeeps(page, size):
                 return .run { send in
                     await send(
                         .fetchTownPeepsResponse(
@@ -113,19 +119,22 @@ struct TownPeepsStore {
 
                     if pagedPeeps.page == 0 {
                         state.peeps = pagedPeeps.content
+                        state.peepIdList = pagedPeeps.content.map { $0.id }
                     } else {
                         state.peeps.append(contentsOf: pagedPeeps.content)
+                        state.peepIdList.append(contentsOf: pagedPeeps.content.map { $0.id })
                     }
 
                     state.hasNext = pagedPeeps.hasNext
-                    state.page += 1
+                    state.page = pagedPeeps.page
 
                 case let .failure(error):
-                    // TODO: - 에러 처리
-                    print(error)
+                    guard error.asPeepItError() != .noPeep else { return .none }
+
+                    // TODO: 핍이 없는 경우를 제외한 에러일 때 처리
                 }
 
-                /// 새로고침 중이라면 새로고침 끝내기
+                // 새로고침 중이라면 새로고침 끝내기
                 guard state.isRefreshing else { return .none }
                 return .send(.refreshEnded, animation: .linear)
             }
