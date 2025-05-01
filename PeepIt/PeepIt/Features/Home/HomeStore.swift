@@ -37,6 +37,8 @@ struct HomeStore {
         var moveToCurrentLocation = false
         /// 프로필 정보
         var userProfile: UserProfile?
+        /// 사용자 bCode
+        var bCode = ""
 
         /// 지도 내 핍 관련
         /// 지도의 중앙 좌표
@@ -46,6 +48,7 @@ struct HomeStore {
         /// 페이지 관리
         var page = 0
         var hasNext = true
+
         /// 지도 내 핍
         var mapPeeps: [Peep] = []
     }
@@ -144,10 +147,7 @@ struct HomeStore {
                 state.page = 0
                 state.hasNext = true
 
-                return .concatenate(
-                    .send(.getMyProfile),
-                    .send(.getPeepsInMap(coord: coord, page: 0))
-                )
+                return .send(.getMyProfile)
 
             case .getMyProfile:
                 return .run { send in
@@ -158,7 +158,9 @@ struct HomeStore {
 
             case let .updateMyProfile(profile):
                 state.userProfile = profile
-                return .none
+                state.bCode = profile.townInfo?.bCode ?? ""
+
+                return .send(.getPeepsInMap(coord: state.centerCoord, page: 0))
 
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
@@ -241,15 +243,15 @@ struct HomeStore {
                 return .none
 
             case let .getPeepsInMap(coord, page):
-                return .run { send in
+                return .run { [bCode = state.bCode] send in
                     await send(
                         .fetchGetPeepsInMapResponse(
                             Result { try await peepAPIClient.fetchPeepsInMap(
-                                Coordinate(
-                                    x: coord.x, y: coord.y),
+                                Coordinate(x: coord.x, y: coord.y),
                                     5, // dist
                                     page, // page
-                                    15 // size
+                                    15, // size
+                                    bCode // bCode
                                 )
                             }
                         )

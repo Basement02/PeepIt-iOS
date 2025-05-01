@@ -25,7 +25,7 @@ struct PeepAPIClient {
     /// 좌표 -> 주소
     var fetchCurrentLocationInfo: (Coordinate) async throws -> CurrentLocationInfo
     /// 지도 내 핍 조회
-    var fetchPeepsInMap: (Coordinate, Int, Int, Int) async throws -> PagedPeeps
+    var fetchPeepsInMap: (Coordinate, Int, Int, Int, String) async throws -> PagedPeeps
     /// 핍 디테일 조회
     var fetchPeepDetail: (Int) async throws -> Peep
 }
@@ -82,14 +82,16 @@ extension PeepAPIClient: DependencyKey {
             let response: CurrentAddressResponseDto = try await APIFetcher.shared.openAPIFetcher(of: requestAPI)
             return response.toLocationInfo()
         },
-        fetchPeepsInMap: { coord, dist, page, size in
+        fetchPeepsInMap: { coord, dist, page, size, bCode in
             let requestDto: MapPeepRequestDto = .init(
                 longitude: coord.x,
                 latitude: coord.y,
+                legalCode: bCode,
                 dist: dist,
                 page: page,
                 size: size
             )
+            
             let requestAPI = PeepAPI.getMapPeeps(requestDto)
             let response: PagedResponsePeepDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
