@@ -19,6 +19,7 @@ struct HomeStore {
         var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴
         var townVerification = TownVerificationStore.State() // 동네 등록 모달
         var map = HomeMapStore.State() // 지도 관련
+        var user = UserStore.State() // 유저 관련
 
         /// 핍 상세 보여주기 여부
         var showPeepDetail = false
@@ -55,6 +56,7 @@ struct HomeStore {
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
         case map(HomeMapStore.Action)
+        case user(UserStore.Action)
 
         /// 뷰 등장
         case onAppear
@@ -74,10 +76,6 @@ struct HomeStore {
         case showDetailObject
         /// 핍 탭
         case peepTapped(idx: Int)
-
-        /// 내 프로필 조회 api
-        case getMyProfile
-        case updateMyProfile(profile: UserProfile)
 
         /// 지도 내 핍 조회 api
         case getPeepsInMap(coord: Coordinate, page: Int)
@@ -111,29 +109,19 @@ struct HomeStore {
             HomeMapStore()
         }
 
+        Scope(state: \.user, action: \.user) {
+            UserStore()
+        }
+
         Reduce { state, action in
+
             switch action {
 
-            case .binding(\.centerCoord):
-                return .send(.map(.updateCenter(state.centerCoord)))
+//            case .binding(\user.centerCoord):
+//                return .send(.map(.updateCenter(state.centerCoord)))
 
             case .onAppear:
-                guard !state.isFirstSearching else { return .none }
-                return .send(.getMyProfile)
-
-            /// 프로필 조회
-            case .getMyProfile:
-                return .run { send in
-                    if let storedProflie = try await userProfileStorage.load() {
-                        await send(.updateMyProfile(profile: storedProflie))
-                    }
-                }
-
-            case let .updateMyProfile(profile):
-                state.userProfile = profile
-                state.bCode = profile.townInfo?.bCode ?? ""
-
-                return .none
+                return .send(.user(.getMyProfile))
 
             /// 미리보기 모달 관련 처리
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
@@ -176,7 +164,7 @@ struct HomeStore {
                 return .none
 
             case .townVerification(.dismissButtonTapped):
-                return .send(.getMyProfile)
+                return .none // 사용자 정보 업데이트
 
             /// 홈
             case .addressButtonTapped:
@@ -214,7 +202,12 @@ struct HomeStore {
                 return .send(.getPeepsInMap(coord: coord, page: 0))
 
             case let .getPeepsInMap(coord, page):
-                return .run { [bCode = state.bCode] send in
+                guard let bCode = state.user.userBCode else {
+                    print("동네 인증 정보 없음")
+                    return .none
+                }
+
+                return .run { send in
                     await send(
                         .fetchGetPeepsInMapResponse(
                             Result { try await peepAPIClient.fetchPeepsInMap(
@@ -235,8 +228,6 @@ struct HomeStore {
 
                 case let .success(result):
 
-                    print(result)
-
                     if result.page == 0 {
                         state.map.mapPeeps = result.content
                         state.peepPreviewModal.peeps = result.content
@@ -253,8 +244,6 @@ struct HomeStore {
                         state.map.mapPeeps.removeAll()
                         state.peepPreviewModal.peeps.removeAll()
                     }
-
-                    print(error)
                 }
 
                 return .none

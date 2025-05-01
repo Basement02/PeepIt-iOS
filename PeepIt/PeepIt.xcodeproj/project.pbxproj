@@ -135,6 +135,7 @@
 		AB53DE582CA02BD600D8DC1F /* ChatBubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */; };
 		AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB53DE592CA02D1F00D8DC1F /* ChatType.swift */; };
 		AB62BABE2DC3E2A200FAF8AA /* HomeMapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62BABD2DC3E29C00FAF8AA /* HomeMapStore.swift */; };
+		AB62BAC02DC3E96200FAF8AA /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */; };
 		AB653BDD2D395E390002F04F /* YieldTouches.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB653BDC2D395E330002F04F /* YieldTouches.swift */; };
 		AB6B525B2CD7D9D200BDC985 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */; };
 		AB71E1C82CBC065600D2D3D9 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1C72CBC065600D2D3D9 /* EditView.swift */; };
@@ -370,6 +371,7 @@
 		AB53DE572CA02BD600D8DC1F /* ChatBubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBubbleView.swift; sourceTree = "<group>"; };
 		AB53DE592CA02D1F00D8DC1F /* ChatType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatType.swift; sourceTree = "<group>"; };
 		AB62BABD2DC3E29C00FAF8AA /* HomeMapStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMapStore.swift; sourceTree = "<group>"; };
+		AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		AB653BDC2D395E330002F04F /* YieldTouches.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YieldTouches.swift; sourceTree = "<group>"; };
 		AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		AB71E1C72CBC065600D2D3D9 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
@@ -1242,6 +1244,7 @@
 				ABC305CB2C932341003B00FE /* HomeView.swift */,
 				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
 				AB62BABD2DC3E29C00FAF8AA /* HomeMapStore.swift */,
+				AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1758,6 +1761,7 @@
 				AB416D142CF2EF040065BD09 /* TagTab.swift in Sources */,
 				AB33E3BA2D747AEB00D0D7DD /* PeepModalCollectionViewController.swift in Sources */,
 				AB416D2B2CF4572E0065BD09 /* WithdrawModal.swift in Sources */,
+				AB62BAC02DC3E96200FAF8AA /* UserStore.swift in Sources */,
 				AB4BEDE42D92717200CA3936 /* PeepAPIClient.swift in Sources */,
 				ABB444992CA8452900C1EE67 /* RootStore.swift in Sources */,
 				ABC171F82CAB19E200370901 /* TermStore.swift in Sources */,
