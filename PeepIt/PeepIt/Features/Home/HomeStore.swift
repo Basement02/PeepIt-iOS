@@ -18,6 +18,7 @@ struct HomeStore {
         var peepDetail = PeepDetailStore.State() // 핍 상세
         var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴
         var townVerification = TownVerificationStore.State() // 동네 등록 모달
+        var map = HomeMapStore.State() // 지도 관련
 
         /// 핍 상세 보여주기 여부
         var showPeepDetail = false
@@ -31,10 +32,6 @@ struct HomeStore {
         var mainViewMoved = false
         /// 선택된 핍 인덱스 저장
         var selectedPeepIndex: Int? = nil
-        /// 드래그 여부 파악(이 동네에서 검색 버튼 띄움)
-        var isDragged = false
-        /// 현재 위치로 이동
-        var moveToCurrentLocation = false
         /// 프로필 정보
         var userProfile: UserProfile?
         /// 사용자 bCode
@@ -48,9 +45,6 @@ struct HomeStore {
         /// 페이지 관리
         var page = 0
         var hasNext = true
-
-        /// 지도 내 핍
-        var mapPeeps: [Peep] = []
     }
 
     enum Action: BindableAction {
@@ -60,6 +54,7 @@ struct HomeStore {
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
+        case map(HomeMapStore.Action)
 
         /// 뷰 등장
         case onAppear
@@ -77,10 +72,6 @@ struct HomeStore {
         case showSideMenu
         /// 핍 상세에서 오브젝트 보여주기 (애니메이션)
         case showDetailObject
-        /// 이 동네에서 검색 버튼 탭
-        case searchButtonTapped
-        /// 현재 위치 버튼 탭
-        case locationButtonTapped
         /// 핍 탭
         case peepTapped(idx: Int)
 
@@ -116,39 +107,21 @@ struct HomeStore {
             PeepDetailStore()
         }
 
+        Scope(state: \.map, action: \.map) {
+            HomeMapStore()
+        }
+
         Reduce { state, action in
             switch action {
 
-            case .binding(\.isDragged):
-                guard state.isDragged else { return .none }
-
-                return .send(.peepPreviewModal(.modalScrollDown))
-
-            case .binding(\.moveToCurrentLocation):
-                return .none
-
             case .binding(\.centerCoord):
-                guard state.isFirstSearching else { return .none }
-
-                let coord = state.centerCoord
-                state.isFirstSearching = false
-
-                print("현재 위치", coord)
-
-                return .concatenate(
-                    .send(.getMyProfile),
-                    .send(.getPeepsInMap(coord: coord, page: 0))
-                )
+                return .send(.map(.updateCenter(state.centerCoord)))
 
             case .onAppear:
                 guard !state.isFirstSearching else { return .none }
-
-                let coord = state.centerCoord
-                state.page = 0
-                state.hasNext = true
-
                 return .send(.getMyProfile)
 
+            /// 프로필 조회
             case .getMyProfile:
                 return .run { send in
                     if let storedProflie = try await userProfileStorage.load() {
@@ -160,8 +133,9 @@ struct HomeStore {
                 state.userProfile = profile
                 state.bCode = profile.townInfo?.bCode ?? ""
 
-                return .send(.getPeepsInMap(coord: state.centerCoord, page: 0))
+                return .none
 
+            /// 미리보기 모달 관련 처리
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
                 state.selectedPeepIndex = idx
@@ -182,6 +156,7 @@ struct HomeStore {
                 state.peepDetail.showPeepDetailObject = true
                 return .none
 
+            /// 핍 상세
             case .peepDetail(.backButtonTapped):
                 state.showPeepDetail = false
                 state.selectedPeepIndex = nil
@@ -190,6 +165,7 @@ struct HomeStore {
                 state.peepPreviewModal.selectedPosition = nil
                 return .none
 
+            /// 동네 인증
             case let .townVerification(.modalDragOnChanged(height)):
                 state.townVerificationModalOffset = height
                 return .none
@@ -202,6 +178,7 @@ struct HomeStore {
             case .townVerification(.dismissButtonTapped):
                 return .send(.getMyProfile)
 
+            /// 홈
             case .addressButtonTapped:
                 state.showTownVeriModal = true
                 state.townVerificationModalOffset = 0
@@ -229,18 +206,12 @@ struct HomeStore {
                 state.peepPreviewModal.scrollToIdx = idx
                 return .none
 
-            case .searchButtonTapped:
-                state.isDragged = false
-                state.page = 0
-                state.hasNext = true
+            /// 지도
+            case .map(.closePreviewModal):
+                return .send(.peepPreviewModal(.modalScrollDown))
 
-                let centerCoord = state.centerCoord
-
-                return .send(.getPeepsInMap(coord: centerCoord, page: 0))
-
-            case .locationButtonTapped:
-                state.moveToCurrentLocation = true
-                return .none
+            case let .map(.getMapPeepsFromCenterCoord(coord)):
+                return .send(.getPeepsInMap(coord: coord, page: 0))
 
             case let .getPeepsInMap(coord, page):
                 return .run { [bCode = state.bCode] send in
@@ -264,8 +235,10 @@ struct HomeStore {
 
                 case let .success(result):
 
+                    print(result)
+
                     if result.page == 0 {
-                        state.mapPeeps = result.content
+                        state.map.mapPeeps = result.content
                         state.peepPreviewModal.peeps = result.content
                     } else {
                         // TODO: - 지도 핍 페이지네이션 처리
@@ -273,14 +246,17 @@ struct HomeStore {
                     }
 
                     state.hasNext = result.hasNext
-                    state.page += 1
+                    state.page = result.page
 
                 case let .failure(error):
                     if error.asPeepItError() == .noPeep {
-                        state.mapPeeps.removeAll()
+                        state.map.mapPeeps.removeAll()
                         state.peepPreviewModal.peeps.removeAll()
                     }
+
+                    print(error)
                 }
+
                 return .none
 
             default:

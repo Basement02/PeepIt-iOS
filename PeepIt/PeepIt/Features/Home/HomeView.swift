@@ -20,10 +20,10 @@ struct HomeView: View {
                     ZStack {
                         Group {
                             HomeMapView(
-                                isDragged: $store.isDragged,
-                                moveToCurrentLocation: $store.moveToCurrentLocation,
-                                centerCoord: $store.centerCoord,
-                                peeps: $store.mapPeeps
+                                isDragged: $store.map.isDragged,
+                                moveToCurrentLocation: $store.map.moveToCurrentLoc,
+                                centerCoord: $store.map.centerCoord,
+                                peeps: $store.map.mapPeeps
                             )
                             .ignoresSafeArea()
 
@@ -39,7 +39,7 @@ struct HomeView: View {
                                     topBar
                                         .padding(.horizontal, 16)
 
-                                    if store.isDragged {
+                                    if store.map.isDragged {
                                         searchThisMapButton
                                             .padding(.top, 15)
                                     }
@@ -176,7 +176,7 @@ extension HomeView {
 
     private var searchThisMapButton: some View {
         Button {
-            store.send(.searchButtonTapped)
+            store.send(.map(.searchButtonTapped))
         } label: {
             HStack(spacing: 1) {
                 Image("IconSearchStar")
@@ -200,7 +200,7 @@ extension HomeView {
 
     private var currentLocationButton: some View {
         Button {
-            store.send(.locationButtonTapped)
+            store.send(.map(.locationButtonTapped))
         } label: {
             Image("IconNavigationTarget")
                 .frame(width: 44, height: 44)
