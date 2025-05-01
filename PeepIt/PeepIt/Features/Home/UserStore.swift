@@ -23,6 +23,9 @@ struct UserStore {
         /// 내 프로필 조회 api
         case getMyProfile
         case updateMyProfile(profile: UserProfile)
+
+        /// 업데이트 끝
+        case didFinishLoadProfile
     }
 
     @Dependency(\.userProfileStorage) var userProfileStorage
@@ -36,6 +39,7 @@ struct UserStore {
                 return .run { send in
                     if let storedProflie = try await userProfileStorage.load() {
                         await send(.updateMyProfile(profile: storedProflie))
+                        await send(.didFinishLoadProfile)
                     }
                 }
 
@@ -43,6 +47,9 @@ struct UserStore {
                 state.userProfile = profile
                 state.userBCode = profile.townInfo?.bCode
                 
+                return .none
+
+            case .didFinishLoadProfile:
                 return .none
             }
         }

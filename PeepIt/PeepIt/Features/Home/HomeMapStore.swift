@@ -28,7 +28,7 @@ struct HomeMapStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
         /// 중앙 좌표 업데이트
-        case updateCenter(Coordinate)
+        case updateCenter
         /// 이 지도에서 검색 탭
         case searchButtonTapped
         /// 현재 위치로 돌아가기
@@ -47,26 +47,30 @@ struct HomeMapStore {
         Reduce { state, action in
             switch action {
 
+            case .binding(\.centerCoord):
+                return .none
+
             case .binding(\.isDragged):
                 guard state.isDragged else { return .none }
 
                 return .send(.closePreviewModal)
 
-            case let .updateCenter(coord):
+            case .updateCenter:
                 guard state.isFirstSearching else { return .none }
 
-                state.centerCoord = coord
                 state.isFirstSearching = false
 
-                return .send(.getMapPeepsFromCenterCoord(coord: coord))
+                return .send(.getMapPeepsFromCenterCoord(coord: state.centerCoord))
 
             case .searchButtonTapped:
                 state.isDragged = false
+                
                 return .send(.getMapPeepsFromCenterCoord(coord: state.centerCoord))
 
             case .locationButtonTapped:
                 state.moveToCurrentLoc = true
                 state.isDragged = true
+
                 return .none
 
             case .closePreviewModal:

@@ -33,10 +33,6 @@ struct HomeStore {
         var mainViewMoved = false
         /// 선택된 핍 인덱스 저장
         var selectedPeepIndex: Int? = nil
-        /// 프로필 정보
-        var userProfile: UserProfile?
-        /// 사용자 bCode
-        var bCode = ""
 
         /// 지도 내 핍 관련
         /// 지도의 중앙 좌표
@@ -116,9 +112,6 @@ struct HomeStore {
         Reduce { state, action in
 
             switch action {
-
-//            case .binding(\user.centerCoord):
-//                return .send(.map(.updateCenter(state.centerCoord)))
 
             case .onAppear:
                 return .send(.user(.getMyProfile))
@@ -201,7 +194,14 @@ struct HomeStore {
             case let .map(.getMapPeepsFromCenterCoord(coord)):
                 return .send(.getPeepsInMap(coord: coord, page: 0))
 
+            /// 프로필
+            case .user(.didFinishLoadProfile):
+                let coord = state.map.centerCoord
+                
+                return .send(.getPeepsInMap(coord: coord, page: 0))
+
             case let .getPeepsInMap(coord, page):
+
                 guard let bCode = state.user.userBCode else {
                     print("동네 인증 정보 없음")
                     return .none

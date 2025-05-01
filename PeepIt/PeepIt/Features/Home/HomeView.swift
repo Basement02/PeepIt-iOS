@@ -167,7 +167,7 @@ extension HomeView {
         Button {
             store.send(.profileButtonTapped)
         } label: {
-            AsyncProfile(profileUrlStr: store.userProfile?.profile)
+            AsyncProfile(profileUrlStr: store.user.userProfile?.profile)
                 .frame(width: 45, height: 45)
         }
         .buttonStyle(PressableOpacityButtonStyle())
