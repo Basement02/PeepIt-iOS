@@ -14,10 +14,10 @@ struct HomeStore {
     @ObservableState
     struct State: Equatable {
         /// 홈 관련 하위 뷰
-        var peepPreviewModal = PeepModalStore.State() // 미리보기 핍 모달
-        var peepDetail = PeepDetailStore.State() // 핍 상세
-        var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴
-        var townVerification = TownVerificationStore.State() // 동네 등록 모달
+        var peepPreviewModal = PeepModalStore.State() // 미리보기 핍 모달 관련
+        var peepDetail = PeepDetailStore.State() // 핍 상세 관련
+        var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴 관련
+        var townVerification = TownVerificationStore.State() // 동네 등록 모달 관련
         var map = HomeMapStore.State() // 지도 관련
         var user = UserStore.State() // 유저 관련
 
@@ -34,12 +34,7 @@ struct HomeStore {
         /// 선택된 핍 인덱스 저장
         var selectedPeepIndex: Int? = nil
 
-        /// 지도 내 핍 관련
-        /// 지도의 중앙 좌표
-        var centerCoord = Coordinate(x: 0, y: 0)
-        /// 첫 번째 지도 내 핍 호출인지
-        var isFirstSearching = true
-        /// 페이지 관리
+        /// 핍 페이지 관리
         var page = 0
         var hasNext = true
     }
