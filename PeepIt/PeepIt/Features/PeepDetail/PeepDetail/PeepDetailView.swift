@@ -23,8 +23,8 @@ struct PeepDetailView: View {
                             Spacer().frame(height: 44)
 
                             AsyncStoryImage(
-                                dataURLStr: "",
-                                isVideo: true
+                                dataURLStr: store.peep?.data,
+                                isVideo: store.peep?.isVideo ?? false
                             )
                             .onTapGesture { store.send(.viewTapped) }
 
@@ -39,13 +39,14 @@ struct PeepDetailView: View {
                         VStack {
                             topBar
                             Spacer()
-                            detailView(peep: .stubPeep0)
+                            detailView(peep: store.peep)
                                 .padding(.bottom, 84)
                         }
                         .padding(.horizontal, 16)
                     }
                     .ignoresSafeArea(.all, edges: .bottom)
                     .toolbar(.hidden, for: .navigationBar)
+                    .onAppear { store.send(.onAppear) }
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
@@ -131,7 +132,7 @@ extension PeepDetailView {
                 .resizable()
                 .frame(width: 22.4, height: 22.4)
 
-            Text("위치")
+            Text(store.location)
                 .pretendard(.body02)
         }
         .padding(.leading, 15)
@@ -200,44 +201,47 @@ extension PeepDetailView {
         }
     }
 
-    private func detailView(peep: Peep) -> some View {
-        HStack(alignment: .bottom, spacing: 12) {
-            VStack(spacing: 9) {
-                HStack {
-                    AsyncProfile(profileUrlStr: peep.profileUrl)
-                        .frame(width: 37.62, height: 37.62)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+    @ViewBuilder
+    private func detailView(peep: Peep?) -> some View {
+        if let peep = peep {
+            HStack(alignment: .bottom, spacing: 12) {
+                VStack(spacing: 9) {
+                    HStack {
+                        AsyncProfile(profileUrlStr: peep.profileUrl)
+                            .frame(width: 37.62, height: 37.62)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                    Text(peep.writerId)
-                        .pretendard(.headline)
+                        Text(peep.writerId)
+                            .pretendard(.headline)
 
-                    Text(peep.uploadAt)
-                        .pretendard(.caption04)
+                        Text(peep.uploadAt)
+                            .pretendard(.caption04)
 
-                    Spacer()
+                        Spacer()
+                    }
+                    .foregroundStyle(Color.white)
+
+                    HStack {
+                        Text(peep.content.forceCharWrapping)
+                            .pretendard(.body03)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.leading)
+                            .truncationMode(.tail)
+                        Spacer()
+                    }
+                    .frame(height: 50, alignment: .topLeading)
                 }
-                .foregroundStyle(Color.white)
 
-                HStack {
-                    Text(peep.content.forceCharWrapping)
-                        .pretendard(.body03)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                        .truncationMode(.tail)
-                    Spacer()
-                }
-                .frame(height: 50, alignment: .topLeading)
-            }
-
-            VStack(spacing: 15) {
-                ReactionListView(
-                    store: store.scope(
-                        state: \.reaction,
-                        action: \.reaction
+                VStack(spacing: 15) {
+                    ReactionListView(
+                        store: store.scope(
+                            state: \.reaction,
+                            action: \.reaction
+                        )
                     )
-                )
 
-                chattingButton
+                    chattingButton
+                }
             }
         }
     }
@@ -255,17 +259,6 @@ extension PeepDetailView {
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
 }
-
-#Preview {
-    NavigationStack {
-        PeepDetailView(
-            store: .init(initialState: PeepDetailStore.State()) {
-                PeepDetailStore()
-            }
-        )
-    }
-}
-
 
 #Preview {
     NavigationStack {
