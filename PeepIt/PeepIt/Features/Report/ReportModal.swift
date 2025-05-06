@@ -30,10 +30,10 @@ struct ReportModal: View {
                         content
                     }
                 }
+                .offset(y: store.modalOffset)
+                .animation(.easeInOut(duration: 0.3), value: store.modalOffset)
             }
             .ignoresSafeArea()
-            .offset(y: store.modalOffset)
-            .animation(.easeInOut(duration: 0.3), value: store.modalOffset)
             .onTapGesture { endTextEditing() }
         }
     }

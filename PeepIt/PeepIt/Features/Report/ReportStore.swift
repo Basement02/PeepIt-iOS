@@ -45,6 +45,8 @@ struct ReportStore {
         case closeSheet
         /// 드래그
         case dragOnChanged(height: CGFloat)
+        /// 모달 배경 숨기기
+        case closeModalBg
     }
 
     var body: some Reducer<State, Action> {
@@ -71,14 +73,21 @@ struct ReportStore {
                 return .none
 
             case .closeSheet:
-                state.showModalBg = false
                 state.isReasonListShowed = false
                 state.selectedReportReason = nil
                 state.modalOffset = Constant.screenHeight
-                return .none
+
+                return .run { send in
+                    try await Task.sleep(nanoseconds: 200_000_000) 
+                    await send(.closeModalBg)
+                }
 
             case let .dragOnChanged(height):
                 state.modalOffset = height
+                return .none
+
+            case .closeModalBg:
+                state.showModalBg = false
                 return .none
 
             default:
