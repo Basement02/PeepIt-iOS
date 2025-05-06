@@ -42,7 +42,7 @@ struct PeepPreviewThumbnail: View {
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay {
             if peep.isActive {
-                RoundedRectangle(cornerRadius: 14)
+                RoundedRectangle(cornerRadius: 20)
                     .strokeBorder(Color.coreLime, lineWidth: 1)
             }
         }

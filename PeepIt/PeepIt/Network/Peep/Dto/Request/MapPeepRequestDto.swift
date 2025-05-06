@@ -10,6 +10,7 @@ import Foundation
 struct MapPeepRequestDto: Encodable {
     let longitude: Double
     let latitude: Double
+    let legalCode: String
     let dist: Int
     let page: Int
     let size: Int
