@@ -49,11 +49,21 @@ struct PeepDetailView: View {
                     .overlay(alignment: .topTrailing) {
                         /// 상단 우측 더보기 메뉴
                         if store.state.showElseMenu {
-                            ElseMenuView(
-                                firstButton: shareButton,
-                                secondButton: reportButton,
-                                bgColor: Color.blur2
-                            )
+                            Group {
+                                if store.isMine {
+                                    ElseMenuView(
+                                        firstButton: shareButton,
+                                        secondButton: deleteButton,
+                                        bgColor: Color.blur2
+                                    )
+                                } else {
+                                    ElseMenuView(
+                                        firstButton: shareButton,
+                                        secondButton: reportButton,
+                                        bgColor: Color.blur2
+                                    )
+                                }
+                            }
                             .padding(.top, 69)
                             .padding(.trailing, 36)
                         }
@@ -171,6 +181,19 @@ extension PeepDetailView {
             HStack(spacing: 3) {
                 Image("CombiReportBtnN")
                 Text("신고하기")
+            }
+            .pretendard(.body02)
+            .foregroundStyle(Color.coreRed)
+        }
+    }
+
+    private var deleteButton: some View {
+        Button {
+
+        } label: {
+            HStack(spacing: 3) {
+                Image("IconDelete")
+                Text("삭제하기")
             }
             .pretendard(.body02)
             .foregroundStyle(Color.coreRed)
