@@ -16,7 +16,7 @@ struct AsyncStoryImage: View {
         return URL(string: str)
     }
 
-    var body: some View {
+    private var mediaView: some View {
         Group {
             if let url = url {
                 if isVideo {
@@ -25,25 +25,27 @@ struct AsyncStoryImage: View {
                         isSoundOn: true,
                         isPlaying: true
                     )
-                    .frame(width: Constant.screenWidth, height: Constant.screenWidth * 16/9)
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
                 } else {
                     AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(9/16, contentMode: .fit)
-                            .frame(width: Constant.screenWidth)
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                        
+                        image.resizable()
                     } placeholder: {
-                        Color.base
+                        placeholderView
                     }
                 }
             } else {
-                Color.base
-                    .aspectRatio(9/16, contentMode: .fit)
-                    .frame(width: Constant.screenWidth)
+                placeholderView
             }
         }
+    }
+
+    private var placeholderView: some View {
+        Color.gray900
+    }
+
+    var body: some View {
+        mediaView
+            .aspectRatio(9/16, contentMode: .fit)
+            .frame(width: Constant.screenWidth)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
     }
 }
