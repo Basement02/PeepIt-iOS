@@ -211,11 +211,13 @@
 		ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */; };
 		ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */; };
 		ABD631C12C9757AC00AFF299 /* PeepDetailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */; };
-		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
+		ABD631C32C9757B400AFF299 /* PeepDetailListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailListStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
 		ABD639D72D7EE73A0062A60C /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD639D62D7EE7340062A60C /* Environment.swift */; };
 		ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */; };
+		ABDDB0B72DCA54060054ABDA /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0B62DCA54060054ABDA /* PeepDetailView.swift */; };
+		ABDDB0B92DCA540D0054ABDA /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */; };
 		ABE363492DBA9AEB00E6677A /* MapPeepRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */; };
 		ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
@@ -447,11 +449,13 @@
 		ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileStore.swift; sourceTree = "<group>"; };
 		ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailListView.swift; sourceTree = "<group>"; };
-		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
+		ABD631C22C9757B400AFF299 /* PeepDetailListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailListStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
 		ABD639D62D7EE7340062A60C /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackImageLayer.swift; sourceTree = "<group>"; };
+		ABDDB0B62DCA54060054ABDA /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
+		ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequestDto.swift; sourceTree = "<group>"; };
 		ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAnnotation.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
@@ -1497,6 +1501,7 @@
 			isa = PBXGroup;
 			children = (
 				ABDDB0B42DCA53D50054ABDA /* PeepDetailList */,
+				ABDDB0B52DCA53ED0054ABDA /* PeepDetail */,
 			);
 			path = PeepDetail;
 			sourceTree = "<group>";
@@ -1537,9 +1542,18 @@
 			isa = PBXGroup;
 			children = (
 				ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */,
-				ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */,
+				ABD631C22C9757B400AFF299 /* PeepDetailListStore.swift */,
 			);
 			path = PeepDetailList;
+			sourceTree = "<group>";
+		};
+		ABDDB0B52DCA53ED0054ABDA /* PeepDetail */ = {
+			isa = PBXGroup;
+			children = (
+				ABDDB0B62DCA54060054ABDA /* PeepDetailView.swift */,
+				ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */,
+			);
+			path = PeepDetail;
 			sourceTree = "<group>";
 		};
 		ABE3DB1C2CA976B30090243C /* Nickname */ = {
@@ -1810,6 +1824,7 @@
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,
 				ABC793C02DB76D41001B3FE6 /* CurrentAddressRequestDto.swift in Sources */,
 				AB53DE5A2CA02D1F00D8DC1F /* ChatType.swift in Sources */,
+				ABDDB0B72DCA54060054ABDA /* PeepDetailView.swift in Sources */,
 				AB3388A32DA2F83D00316D4B /* MemberAPI.swift in Sources */,
 				ABC793B52DB12D2F001B3FE6 /* AsyncThumbnail.swift in Sources */,
 				AB4BEDFD2D967FB600CA3936 /* AuthAPI.swift in Sources */,
@@ -1865,7 +1880,7 @@
 				ABE8A0CB2CEAEAB100AFBEAE /* BackMapLayer.swift in Sources */,
 				AB4BEDEB2D9278A000CA3936 /* PeepDetailRequestDto.swift in Sources */,
 				ABCC50E52CEF90FF004AD297 /* GuideView.swift in Sources */,
-				ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */,
+				ABD631C32C9757B400AFF299 /* PeepDetailListStore.swift in Sources */,
 				ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */,
 				AB4BEE112D9BC0E300CA3936 /* KakaoLoginStore.swift in Sources */,
 				AB468D1D2CA9420800C1E430 /* NotificationView.swift in Sources */,
@@ -1889,6 +1904,7 @@
 				AB4BEE022D96802A00CA3936 /* IdCheckRequestDto.swift in Sources */,
 				AB3340322DAD6616007C31FC /* ModifyTownRequestDTo.swift in Sources */,
 				AB468D132CA93F7D00C1E430 /* SideMenuType.swift in Sources */,
+				ABDDB0B92DCA540D0054ABDA /* PeepDetailStore.swift in Sources */,
 				AB26A8212CB2D3D4007D432E /* TermType.swift in Sources */,
 				ABCE972F2D31203F00A07962 /* StickerLayerStore.swift in Sources */,
 				AB468D312CA954C700C1E430 /* GenderType.swift in Sources */,
