@@ -15,7 +15,7 @@ struct HomeStore {
     struct State: Equatable {
         /// 홈 관련 하위 뷰
         var peepPreviewModal = PeepModalStore.State() // 미리보기 핍 모달 관련
-        var peepDetail = PeepDetailStore.State() // 핍 상세 관련
+        var peepDetailList = PeepDetailListStore.State() // 핍 상세 관련
         var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴 관련
         var townVerification = TownVerificationStore.State() // 동네 등록 모달 관련
         var map = HomeMapStore.State() // 지도 관련
@@ -42,7 +42,7 @@ struct HomeStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
-        case peepDetail(PeepDetailStore.Action)
+        case peepDetailList(PeepDetailListStore.Action)
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
@@ -92,8 +92,8 @@ struct HomeStore {
             TownVerificationStore()
         }
 
-        Scope(state: \.peepDetail, action: \.peepDetail) {
-            PeepDetailStore()
+        Scope(state: \.peepDetailList, action: \.peepDetailList) {
+            PeepDetailListStore()
         }
 
         Scope(state: \.map, action: \.map) {
@@ -115,13 +115,13 @@ struct HomeStore {
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
                 state.showPeepDetail = true
                 state.selectedPeepIndex = idx
-                state.peepDetail.peepList = peeps
-                state.peepDetail.currentIdx = idx
+                state.peepDetailList.peepList = peeps
+                state.peepDetailList.currentIdx = idx
 
                 return .none
 
             case .peepPreviewModal(.showPeepDetail):
-                state.peepDetail.showPeepDetailBg = true
+                state.peepDetailList.showPeepDetailBg = true
 
                 return .run { send in
                     try await Task.sleep(for: .seconds(0.15))
@@ -129,11 +129,11 @@ struct HomeStore {
                 }
 
             case .showDetailObject:
-                state.peepDetail.showPeepDetailObject = true
+                state.peepDetailList.showPeepDetailObject = true
                 return .none
 
             /// 핍 상세
-            case .peepDetail(.backButtonTapped):
+            case .peepDetailList(.backButtonTapped):
                 state.showPeepDetail = false
                 state.selectedPeepIndex = nil
                 state.peepPreviewModal.showPeepDetail = false

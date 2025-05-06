@@ -93,23 +93,11 @@ struct ChatView: View {
                     }
                     /// 채팅 신고
                     .overlay(alignment: .bottom) {
-                        if store.showReportModal {
-                            Color.op.ignoresSafeArea()
-                                .onTapGesture { store.send(.closeReportModal) }
-                        }
-
                         ReportModal(
                             store: store.scope(
                                 state: \.report,
                                 action: \.report
                             )
-                        )
-                        .ignoresSafeArea()
-                        .frame(maxWidth: .infinity)
-                        .offset(y: store.reportModalOffset)
-                        .animation(
-                            .easeInOut(duration: 0.3),
-                            value: store.showReportModal
                         )
                     }
                 }

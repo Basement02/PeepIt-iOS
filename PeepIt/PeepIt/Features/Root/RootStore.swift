@@ -51,6 +51,7 @@ struct RootStore {
         case write(WriteStore)
 
         /// 핍
+        case peepDetailList(PeepDetailListStore)
         case peepDetail(PeepDetailStore)
     }
 
@@ -185,7 +186,7 @@ struct RootStore {
 
                 case let .element(_, action: .townPeeps(.peepCellTapped(idx, peepIdList, page, size))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
+                        .peepDetailList(PeepDetailListStore.State(
                             entryType: .townPeep,
                             currentIdx: idx,
                             showPeepDetailObject: true,
@@ -199,40 +200,20 @@ struct RootStore {
 
                 case let .element(_, action: .notification(.activePeepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
-                            entryType: .others,
-                            peepList: [selectedPeep],
-                            currentIdx: 0,
-                            showPeepDetailObject: true,
-                            showPeepDetailBg: true
-                        ))
+                        .peepDetail(PeepDetailStore.State(isMine: true, peepId: selectedPeep.peepId))
                     )
                     return .none
 
                 case let .element(_, action: .myProfile(.peepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
-                            entryType: .others,
-                            peepList: [selectedPeep],
-                            currentIdx: 0,
-                            showPeepDetailObject: true,
-                            showPeepDetailBg: true
-                        ))
+                        .peepDetail(PeepDetailStore.State(isMine: true, peepId: selectedPeep.peepId))
                     )
-
                     return .none
 
                 case let .element(_, action: .otherProfile(.peepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
-                            entryType: .others,
-                            peepList: [selectedPeep],
-                            currentIdx: 0,
-                            showPeepDetailObject: true,
-                            showPeepDetailBg: true
-                        ))
+                        .peepDetail(PeepDetailStore.State(isMine: false, peepId: selectedPeep.peepId))
                     )
-
                     return .none
 
 
