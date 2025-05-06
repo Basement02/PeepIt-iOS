@@ -14,6 +14,7 @@ struct PeepDetailStore {
     struct State: Equatable {
         var report = ReportStore.State()
         var chat = ChatStore.State()
+        var reaction = ReactionListStore.State()
 
         var isMine = true
         var peepId = 0
@@ -28,7 +29,8 @@ struct PeepDetailStore {
 
         case report(ReportStore.Action)
         case chat(ChatStore.Action)
-        
+        case reaction(ReactionListStore.Action)
+
         case backButtonTapped
         case viewTapped
         case elseMenuButtonTapped
@@ -54,6 +56,10 @@ struct PeepDetailStore {
 
         Scope(state: \.chat, action: \.chat) {
             ChatStore()
+        }
+
+        Scope(state: \.reaction, action: \.reaction) {
+            ReactionListStore()
         }
 
         Reduce { state, action in

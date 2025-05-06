@@ -221,11 +221,12 @@ extension PeepDetailView {
             }
 
             VStack(spacing: 15) {
-//                if store.showReactionList {
-//                    reactionListView
-//                } else {
-//                    initialReactionView(peep: peep)
-//                }
+                ReactionListView(
+                    store: store.scope(
+                        state: \.reaction,
+                        action: \.reaction
+                    )
+                )
 
                 chattingButton
             }

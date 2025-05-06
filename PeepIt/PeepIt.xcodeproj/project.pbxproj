@@ -218,6 +218,8 @@
 		ABDD3EC82CEB867C00A60C01 /* BackImageLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */; };
 		ABDDB0B72DCA54060054ABDA /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0B62DCA54060054ABDA /* PeepDetailView.swift */; };
 		ABDDB0B92DCA540D0054ABDA /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */; };
+		ABDDB0BC2DCA5FE70054ABDA /* ReactionListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0BB2DCA5FE40054ABDA /* ReactionListStore.swift */; };
+		ABDDB0C02DCA60890054ABDA /* ReactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0BF2DCA60890054ABDA /* ReactionListView.swift */; };
 		ABE363492DBA9AEB00E6677A /* MapPeepRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */; };
 		ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
@@ -456,6 +458,8 @@
 		ABDD3EC72CEB867C00A60C01 /* BackImageLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackImageLayer.swift; sourceTree = "<group>"; };
 		ABDDB0B62DCA54060054ABDA /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
 		ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
+		ABDDB0BB2DCA5FE40054ABDA /* ReactionListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionListStore.swift; sourceTree = "<group>"; };
+		ABDDB0BF2DCA60890054ABDA /* ReactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionListView.swift; sourceTree = "<group>"; };
 		ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequestDto.swift; sourceTree = "<group>"; };
 		ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAnnotation.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
@@ -1502,6 +1506,7 @@
 			children = (
 				ABDDB0B42DCA53D50054ABDA /* PeepDetailList */,
 				ABDDB0B52DCA53ED0054ABDA /* PeepDetail */,
+				ABDDB0BA2DCA5FDC0054ABDA /* Reaction */,
 			);
 			path = PeepDetail;
 			sourceTree = "<group>";
@@ -1554,6 +1559,15 @@
 				ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */,
 			);
 			path = PeepDetail;
+			sourceTree = "<group>";
+		};
+		ABDDB0BA2DCA5FDC0054ABDA /* Reaction */ = {
+			isa = PBXGroup;
+			children = (
+				ABDDB0BF2DCA60890054ABDA /* ReactionListView.swift */,
+				ABDDB0BB2DCA5FE40054ABDA /* ReactionListStore.swift */,
+			);
+			path = Reaction;
 			sourceTree = "<group>";
 		};
 		ABE3DB1C2CA976B30090243C /* Nickname */ = {
@@ -1830,6 +1844,7 @@
 				AB4BEDFD2D967FB600CA3936 /* AuthAPI.swift in Sources */,
 				AB26A8232CB2DE59007D432E /* InputIdView.swift in Sources */,
 				AB26A8292CB2ED99007D432E /* ProfileInfoStore.swift in Sources */,
+				ABDDB0C02DCA60890054ABDA /* ReactionListView.swift in Sources */,
 				AB33E3C62D77592600D0D7DD /* UploaderBubbleView.swift in Sources */,
 				ABD3CAAA2CA1AC8400438747 /* ReactedPeepCell.swift in Sources */,
 				ABC793B92DB607FA001B3FE6 /* UploadPeep.swift in Sources */,
@@ -1897,6 +1912,7 @@
 				AB4F35BF2D6238AF00F799ED /* ShareSheet.swift in Sources */,
 				AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */,
 				AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */,
+				ABDDB0BC2DCA5FE70054ABDA /* ReactionListStore.swift in Sources */,
 				ABCC50E92CF03081004AD297 /* Announce.swift in Sources */,
 				AB3704A02D7FFE3900EBBC85 /* BaseResponse.swift in Sources */,
 				ABC305DF2C93345D003B00FE /* HomeStore.swift in Sources */,
