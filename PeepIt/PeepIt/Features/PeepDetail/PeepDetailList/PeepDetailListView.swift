@@ -100,28 +100,12 @@ struct PeepDetailListView: View {
                         }
                     }
                     .overlay(alignment: .bottom) {
-                        /// 신고 모달 오픈 시 bg
-                        if store.isReportSheetVisible {
-                            Color.op
-                                .ignoresSafeArea()
-                                .onTapGesture {
-                                    store.send(.closeReportSheet)
-                                }
-                        }
-
                         /// 신고 모달
                         ReportModal(
                             store: store.scope(
                                 state: \.report,
                                 action: \.report
                             )
-                        )
-                        .ignoresSafeArea()
-                        .frame(maxWidth: .infinity)
-                        .offset(y: store.modalOffset)
-                        .animation(
-                            .easeInOut(duration: 0.3),
-                            value: store.isReportSheetVisible
                         )
                     }
                     .overlay {
@@ -356,7 +340,7 @@ extension PeepDetailListView {
     @ViewBuilder
     private func reactionCell(
         reaction: PeepDetailListStore.State.ReactionType
-    ) -> some View{
+    ) -> some View {
         if store.peepList[store.currentIdx].reaction == reaction.rawValue {
             Button {
 

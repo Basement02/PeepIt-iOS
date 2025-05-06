@@ -24,10 +24,6 @@ struct PeepDetailListStore {
         var showReactionList = false
         /// 더보기 메뉴 보여주기 여부
         var showElseMenu = false
-        /// 차단 모달 보여주기 여부
-        var isReportSheetVisible = false
-        /// 신고 모달 offset 관련
-        var modalOffset = Constant.screenHeight
         /// 신고 모달 관련
         var report = ReportStore.State()
         /// 채팅 보여주기
@@ -217,26 +213,11 @@ struct PeepDetailListStore {
                 state.showElseMenu = newState
                 return .none
 
-            case .openReportSheet:
-                state.isReportSheetVisible = true
-                state.modalOffset = 0
-                return .none
-
-            case .closeReportSheet:
-                state.isReportSheetVisible = false
-                state.modalOffset = Constant.screenHeight
-                return .none
-
             case .reportButtonTapped:
-                return .merge(
-                    .send(.setShowingElseMenu(false)),
-                    .send(.openReportSheet)
-                )
+                state.showElseMenu = false
+                return .send(.report(.openModal))
 
-            case .report(.closeButtonTapped):
-                return .send(.closeReportSheet)
-
-            case .chatAction(.closeChatButtonTapped):
+            case .chatAction(.closeChatDetail):
                 state.showChat = false
                 return .none
 
@@ -259,10 +240,6 @@ struct PeepDetailListStore {
 
             case .stopTimer:
                 return .cancel(id: CancelId.timer)
-
-            case let .report(.dragOnChanged(height)):
-                state.modalOffset = height
-                return .none
 
             case .viewTapped:
                 state.showElseMenu = false
