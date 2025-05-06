@@ -88,7 +88,7 @@ struct HomeView: View {
                         /// 핍 상세
                         if store.showPeepDetail {
                             PeepDetailListView(
-                                store: store.scope(state: \.peepDetail, action: \.peepDetail)
+                                store: store.scope(state: \.peepDetailList, action: \.peepDetailList)
                             )
                             .matchedGeometryEffect(id: "peep", in: namespace)
                             .transition(.scale(scale: 1))
