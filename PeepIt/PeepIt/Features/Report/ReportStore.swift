@@ -29,18 +29,21 @@ struct ReportStore {
             case other = "다른 문제가 있어요"
         }
 
-        var currentOffset = CGFloat.zero
+        var modalOffset = Constant.screenHeight
+        var showModalBg = false
     }
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+        /// 모달 띄우기
+        case openModal
         /// 신고 사유 선택 초기 버튼 탭
         case reasonSelectButtonTapped
         /// 신고 사유 선택
         case reasonSelected(type: State.ReportReasonType)
-        /// 취소 버튼 탭
-        case closeButtonTapped
-
+        /// 모달 내리기
+        case closeSheet
+        /// 드래그
         case dragOnChanged(height: CGFloat)
     }
 
@@ -53,6 +56,11 @@ struct ReportStore {
             case .binding(\.reportReason):
                 return .none
 
+            case .openModal:
+                state.showModalBg = true
+                state.modalOffset = 0
+                return .none
+
             case .reasonSelectButtonTapped:
                 state.isReasonListShowed.toggle()
                 return .none
@@ -62,13 +70,15 @@ struct ReportStore {
                 state.selectedReportReason = type
                 return .none
 
-            case .closeButtonTapped:
+            case .closeSheet:
+                state.showModalBg = false
                 state.isReasonListShowed = false
                 state.selectedReportReason = nil
+                state.modalOffset = Constant.screenHeight
                 return .none
 
             case let .dragOnChanged(height):
-                state.currentOffset = height
+                state.modalOffset = height
                 return .none
 
             default:

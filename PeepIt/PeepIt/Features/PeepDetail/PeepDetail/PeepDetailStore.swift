@@ -85,7 +85,7 @@ struct PeepDetailStore {
 
             case .reportButtonTapped:
                 state.showReportSheet = true
-                return .none
+                return .send(.report(.openModal))
 
             case .chatButtonTapped:
                 state.showChat = true

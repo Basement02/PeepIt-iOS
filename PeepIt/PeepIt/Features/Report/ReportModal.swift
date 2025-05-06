@@ -16,14 +16,24 @@ struct ReportModal: View {
 
     var body: some View {
         WithPerceptionTracking {
-            ZStack(alignment: .bottom) {
-                Color.clear
+            ZStack {
+                if store.showModalBg {
+                    Color.op
+                        .onTapGesture { store.send(.closeSheet) }
+                }
 
-                VStack(spacing: 0) {
-                    slideBar
-                    content
+                ZStack(alignment: .bottom) {
+                    Color.clear
+
+                    VStack(spacing: 0) {
+                        slideBar
+                        content
+                    }
                 }
             }
+            .ignoresSafeArea()
+            .offset(y: store.modalOffset)
+            .animation(.easeInOut(duration: 0.3), value: store.modalOffset)
             .onTapGesture { endTextEditing() }
         }
     }
@@ -52,7 +62,7 @@ struct ReportModal: View {
                     .onEnded { value in
                         /// 100 초과 드래그 될 시 모달 내려감
                         if value.translation.height > 100 {
-                            store.send(.closeButtonTapped)
+                            store.send(.closeSheet)
                         } else {
                             store.send(.dragOnChanged(height: 0))
                         }
@@ -122,7 +132,7 @@ struct ReportModal: View {
 
     private var cancelButton: some View {
         Button {
-            store.send(.closeButtonTapped)
+            store.send(.closeSheet)
         } label: {
             Text("취소")
                 .pretendard(.caption02)

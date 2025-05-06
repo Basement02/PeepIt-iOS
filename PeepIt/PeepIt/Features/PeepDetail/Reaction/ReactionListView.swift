@@ -12,15 +12,16 @@ struct ReactionListView: View {
     let store: StoreOf<ReactionListStore>
 
     var body: some View {
-
-        VStack(spacing: 15) {
-            if store.showReactionList {
-                reactionListView
-            } else {
-                initialReactionView(reaction: nil)
+        WithPerceptionTracking {
+            VStack(spacing: 15) {
+                if store.showReactionList {
+                    reactionListView
+                } else {
+                    initialReactionView(reaction: nil)
+                }
             }
+            .onAppear { store.send(.onAppear) }
         }
-        .onAppear { store.send(.onAppear) }
     }
 
     private func initialReactionView(

@@ -59,27 +59,13 @@ struct PeepDetailView: View {
                         }
                     }
                     .overlay(alignment: .bottom) {
-                        /// 신고 모달 오픈 시 bg
-                        if store.showReportSheet {
-                            Color.op
-                                .ignoresSafeArea()
-                                .onTapGesture { store.send(.closeSheet) }
-                        }
-
                         /// 신고 모달
-//                        ReportModal(
-//                            store: store.scope(
-//                                state: \.report,
-//                                action: \.report
-//                            )
-//                        )
-//                        .ignoresSafeArea()
-//                        .frame(maxWidth: .infinity)
-////                        .offset(y: store.modalOffset)
-//                        .animation(
-//                            .easeInOut(duration: 0.3),
-//                            value: store.showReportSheet
-//                        )
+                        ReportModal(
+                            store: store.scope(
+                                state: \.report,
+                                action: \.report
+                            )
+                        )
                     }
                     .overlay {
                         /// 채팅 상세
@@ -245,63 +231,6 @@ extension PeepDetailView {
         .background(Color.blur1)
         .clipShape(RoundedRectangle(cornerRadius: 14))
     }
-
-//    private func initialReactionView(peep: Peep) -> some View {
-//        if let selectedReaction = peep.reaction {
-//            RoundedRectangle(cornerRadius: 12)
-//                .fill(Color.coreLimeOp)
-//                .frame(width: 50, height: 50)
-//                .overlay {
-//                    Text(selectedReaction)
-//                        .font(.system(size: 24))
-//                }
-////                .highPriorityGesture(
-////                    TapGesture()
-////                        .onEnded { store.send(.initialReactionButtonTapped) }
-////                )
-//        } else {
-//            RoundedRectangle(cornerRadius: 12)
-//                .fill(Color.blur2)
-//                .frame(width: 50, height: 50)
-////                .overlay {
-////                    Text(store.reactionList[store.showingReactionIdx].rawValue)
-////                        .font(.system(size: 24))
-////                }
-////                .highPriorityGesture(
-////                    TapGesture()
-////                        .onEnded { store.send(.initialReactionButtonTapped) }
-////                )
-//        }
-//    }
-
-//    private var reactionListView: some View {
-//        ZStack {
-//            BackdropBlurView(bgColor: .blur2, radius: 5)
-//                .frame(width: 50, height: 250)
-//
-//            Text("R")
-//
-////            VStack(spacing: 0) {
-////                ForEach(
-////                    Array(zip(store.reactionList.indices,
-////                              store.reactionList))
-////                    , id: \.0
-////                ) { idx, reaction in
-////                    ZStack(alignment: .bottom) {
-////                        reactionCell(reaction: reaction)
-////
-////                        if idx < store.reactionList.count - 1 {
-////                            Rectangle()
-////                                .fill(Color.op)
-////                                .frame(width: 34, height: 0.5)
-////                        }
-////                    }
-////                }
-////            }
-////        }
-////        .clipShape(RoundedRectangle(cornerRadius: 12))
-//    }
-
 }
 
 #Preview {
