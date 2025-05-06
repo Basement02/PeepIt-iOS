@@ -58,15 +58,13 @@ struct PeepDetailView: View {
                             .padding(.trailing, 36)
                         }
                     }
-//                    .overlay(alignment: .bottom) {
+                    .overlay(alignment: .bottom) {
                         /// 신고 모달 오픈 시 bg
-//                        if store.isReportSheetVisible {
-//                            Color.op
-//                                .ignoresSafeArea()
-//                                .onTapGesture {
-//                                    store.send(.closeReportSheet)
-//                                }
-//                        }
+                        if store.showReportSheet {
+                            Color.op
+                                .ignoresSafeArea()
+                                .onTapGesture { store.send(.closeSheet) }
+                        }
 
                         /// 신고 모달
 //                        ReportModal(
@@ -77,12 +75,12 @@ struct PeepDetailView: View {
 //                        )
 //                        .ignoresSafeArea()
 //                        .frame(maxWidth: .infinity)
-//                        .offset(y: store.modalOffset)
+////                        .offset(y: store.modalOffset)
 //                        .animation(
 //                            .easeInOut(duration: 0.3),
-//                            value: store.isReportSheetVisible
+//                            value: store.showReportSheet
 //                        )
-//                    }
+                    }
                     .overlay {
                         /// 채팅 상세
                         if store.showChat {

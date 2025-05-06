@@ -14,9 +14,13 @@ struct PeepDetailStore {
     struct State: Equatable {
         var report = ReportStore.State()
         var chat = ChatStore.State()
+
+        var isMine = true
+        var peepId = 0
         var showElseMenu = false
         var showChat = false
         var showShareSheet = false
+        var showReportSheet = false
     }
 
     enum Action: BindableAction {
@@ -24,12 +28,14 @@ struct PeepDetailStore {
 
         case report(ReportStore.Action)
         case chat(ChatStore.Action)
+        
         case backButtonTapped
         case viewTapped
         case elseMenuButtonTapped
         case shareButtonTapped
         case reportButtonTapped
         case chatButtonTapped
+        case closeSheet
     }
 
     enum CancelId {
@@ -68,9 +74,11 @@ struct PeepDetailStore {
                 return .none
 
             case .shareButtonTapped:
+                state.showShareSheet.toggle()
                 return .none
 
             case .reportButtonTapped:
+                state.showReportSheet = true
                 return .none
 
             case .chatButtonTapped:
@@ -79,6 +87,10 @@ struct PeepDetailStore {
 
             case .chat(.closeChatButtonTapped):
                 state.showChat = false
+                return .none
+
+            case .closeSheet:
+                state.showReportSheet = false
                 return .none
 
             default:
