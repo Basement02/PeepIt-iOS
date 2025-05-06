@@ -1496,8 +1496,7 @@
 		ABD631BF2C97579C00AFF299 /* PeepDetail */ = {
 			isa = PBXGroup;
 			children = (
-				ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */,
-				ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */,
+				ABDDB0B42DCA53D50054ABDA /* PeepDetailList */,
 			);
 			path = PeepDetail;
 			sourceTree = "<group>";
@@ -1532,6 +1531,15 @@
 				AB37049C2D7FFDB100EBBC85 /* API */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		ABDDB0B42DCA53D50054ABDA /* PeepDetailList */ = {
+			isa = PBXGroup;
+			children = (
+				ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */,
+				ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */,
+			);
+			path = PeepDetailList;
 			sourceTree = "<group>";
 		};
 		ABE3DB1C2CA976B30090243C /* Nickname */ = {
