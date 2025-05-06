@@ -12,6 +12,10 @@ struct PeepDetailListStore {
 
     @ObservableState
     struct State: Equatable {
+        var report = ReportStore.State()
+        var chat = ChatStore.State()
+        var reaction = ReactionListStore.State()
+
         /// 핍 상세 진입 경로
         var entryType = EntryType.peepPreview
         /// 스크롤된 핍 리스트
@@ -24,14 +28,8 @@ struct PeepDetailListStore {
         var showReactionList = false
         /// 더보기 메뉴 보여주기 여부
         var showElseMenu = false
-        /// 신고 모달 관련
-        var report = ReportStore.State()
         /// 채팅 보여주기
         var showChat = false
-        /// 채팅 관련
-        var chatState = ChatStore.State()
-        /// 반응 선택 x일 때 보여줄 리액션들
-        var showingReactionIdx = 0
         /// 핍 상세 나타날 때 위의 오브젝트들 보여주기 여부
         var showPeepDetailObject = false
         /// 핍 상세 나타날 때 백그라운드 보여줄 타이밍
@@ -65,6 +63,12 @@ struct PeepDetailListStore {
 
     enum Action: BindableAction {
         case binding(BindingAction<State>)
+
+        case report(ReportStore.Action)
+        case chat(ChatStore.Action)
+        case reaction(ReactionListStore.Action)
+
+
         /// 뷰 나타날 때
         case onAppear
         /// 반응 리스트 보여주기
@@ -73,33 +77,16 @@ struct PeepDetailListStore {
         case showChat
         /// 뒤로 가기
         case backButtonTapped
-        /// 반응 선택
-        case selectReaction(reaction: PeepDetailListStore.State.ReactionType)
-        /// 선택 해제
-        case unselectReaction
         /// 더보기 메뉴 보여주기 여부
-        case setShowingElseMenu(Bool)
+        case elseMenuButtonTapped
         /// 더보기 메뉴 - 신고 버튼 탭
         case reportButtonTapped
-        /// 신고 모달 열기
-        case openReportSheet
-        /// 신고 모달 닫기
-        case closeReportSheet
-        /// 신고 모달 관련
-        case report(ReportStore.Action)
-        /// 채팅 관련
-        case chatAction(ChatStore.Action)
         /// 뷰 탭
         case viewTapped
         /// 공유하기
         case shareButtonTapped
         /// 리액션 설정
         case setReaction
-
-        /// 타이머
-        case setTimer
-        case timerTicked
-        case stopTimer
 
         /// 개별 핍 api
         case getPeepDetail(id: Int)
@@ -117,10 +104,6 @@ struct PeepDetailListStore {
         case prefetch
     }
 
-    enum CancelId {
-        case timer
-    }
-
     @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.dismiss) var dismiss
 
@@ -131,8 +114,12 @@ struct PeepDetailListStore {
             ReportStore()
         }
 
-        Scope(state: \.chatState, action: \.chatAction) {
+        Scope(state: \.chat, action: \.chat) {
             ChatStore()
+        }
+
+        Scope(state: \.reaction, action: \.reaction) {
+            ReactionListStore()
         }
 
         Reduce { state, action in
@@ -188,58 +175,23 @@ struct PeepDetailListStore {
                 state.showPeepDetailObject = false
 
                 let entry = state.entryType
+
                 return .run { _ in
                     guard entry != .peepPreview else { return }
                     await dismiss()
                 }
 
-            case let .selectReaction(selectedReaction):
-                state.showReactionList = false
-
-                guard let reactionStr = state.peepList[state.currentIdx].reaction,
-                      reactionStr == selectedReaction.rawValue else {
-                    state.peepList[state.currentIdx].reaction = selectedReaction.rawValue
-                    return .send(.stopTimer)
-                }
-
-                return .send(.unselectReaction)
-
-            case .unselectReaction:
-                state.reactionList = PeepDetailListStore.State.ReactionType.allCases
-                state.peepList[state.currentIdx].reaction = nil
-                return .send(.setTimer)
-
-            case let .setShowingElseMenu(newState):
-                state.showElseMenu = newState
+            case .elseMenuButtonTapped:
+                state.showElseMenu.toggle()
                 return .none
 
             case .reportButtonTapped:
                 state.showElseMenu = false
                 return .send(.report(.openModal))
 
-            case .chatAction(.closeChatDetail):
+            case .chat(.closeChatDetail):
                 state.showChat = false
                 return .none
-
-            // TODO: 타이머 로직 수정
-            case .setTimer:
-//                guard state.peeps[state.currentIdx].reaction == nil else { return .none }
-//
-//                return .run { send in
-//                    while true {
-//                        try await Task.sleep(for: .seconds(0.75))
-//                        await send(.timerTicked)
-//                    }
-//                }
-//                .cancellable(id: CancelId.timer)
-                return .none
-
-            case .timerTicked:
-                state.showingReactionIdx = (state.showingReactionIdx + 1) % state.reactionList.count
-                return .none
-
-            case .stopTimer:
-                return .cancel(id: CancelId.timer)
 
             case .viewTapped:
                 state.showElseMenu = false

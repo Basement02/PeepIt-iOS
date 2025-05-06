@@ -113,8 +113,8 @@ struct PeepDetailListView: View {
                         if store.showChat {
                             ChatView(
                                 store: store.scope(
-                                    state: \.chatState,
-                                    action: \.chatAction
+                                    state: \.chat,
+                                    action: \.chat
                                 )
                             )
                         }
@@ -151,7 +151,7 @@ extension PeepDetailListView {
 
     private var moreButton: some View {
         Button {
-            store.send(.setShowingElseMenu(!store.showElseMenu))
+            store.send(.elseMenuButtonTapped)
         } label: {
             Image("IconElse")
                 .resizable()
@@ -255,11 +255,12 @@ extension PeepDetailListView {
             }
 
             VStack(spacing: 15) {
-                if store.showReactionList {
-                    reactionListView
-                } else {
-                    initialReactionView(peep: peep)
-                }
+                ReactionListView(
+                    store: store.scope(
+                        state: \.reaction,
+                        action: \.reaction
+                    )
+                )
 
                 chattingButton
             }
@@ -281,106 +282,6 @@ extension PeepDetailListView {
             TapGesture()
                 .onEnded { store.send(.showChat) }
         )
-    }
-
-    private func initialReactionView(peep: Peep) -> some View {
-        if let selectedReaction = peep.reaction {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.coreLimeOp)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text(selectedReaction)
-                        .font(.system(size: 24))
-                }
-                .highPriorityGesture(
-                    TapGesture()
-                        .onEnded { store.send(.initialReactionButtonTapped) }
-                )
-        } else {
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color.blur2)
-                .frame(width: 50, height: 50)
-                .overlay {
-                    Text(store.reactionList[store.showingReactionIdx].rawValue)
-                        .font(.system(size: 24))
-                }
-                .highPriorityGesture(
-                    TapGesture()
-                        .onEnded { store.send(.initialReactionButtonTapped) }
-                )
-        }
-    }
-
-    private var reactionListView: some View {
-        ZStack {
-            BackdropBlurView(bgColor: .blur2, radius: 5)
-                .frame(width: 50, height: 250)
-
-            VStack(spacing: 0) {
-                ForEach(
-                    Array(zip(store.reactionList.indices,
-                              store.reactionList))
-                    , id: \.0
-                ) { idx, reaction in
-                    ZStack(alignment: .bottom) {
-                        reactionCell(reaction: reaction)
-
-                        if idx < store.reactionList.count - 1 {
-                            Rectangle()
-                                .fill(Color.op)
-                                .frame(width: 34, height: 0.5)
-                        }
-                    }
-                }
-            }
-        }
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-    }
-
-    @ViewBuilder
-    private func reactionCell(
-        reaction: PeepDetailListStore.State.ReactionType
-    ) -> some View {
-        if store.peepList[store.currentIdx].reaction == reaction.rawValue {
-            Button {
-
-            } label: {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.coreLimeOp)
-                    .frame(width: 50, height: 50)
-                    .overlay {
-                        Text(reaction.rawValue)
-                            .font(.system(size: 24))
-                    }
-            }
-            .highPriorityGesture(
-                TapGesture()
-                    .onEnded { store.send(.selectReaction(reaction: reaction)) }
-            )
-        } else {
-            Button {
-
-            } label: {
-                Rectangle()
-                    .frame(width: 50, height: 50)
-                    .hidden()
-            }
-            .buttonStyle(
-                PressableViewButtonStyle(
-                    normalView: RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.clear).contentShape(Rectangle()),
-                    pressedView: RoundedRectangle(cornerRadius: 12).fill(Color.blur1)
-                )
-            )
-            .frame(width: 50, height: 50)
-            .overlay {
-                Text(reaction.rawValue).font(.system(size: 24))
-            }
-            .highPriorityGesture(
-                TapGesture()
-                    .onEnded { store.send(.selectReaction(reaction: reaction)) }
-            )
-        }
     }
 }
 
