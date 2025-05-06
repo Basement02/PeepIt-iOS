@@ -276,7 +276,7 @@ extension PeepDetailListView {
                 .frame(width: 29.66, height: 29.66)
         }
         .frame(width: 50, height: 50)
-        .background(Color.blur1)
+        .background(Color.blur2)
         .clipShape(RoundedRectangle(cornerRadius: 14))
         .highPriorityGesture(
             TapGesture()
