@@ -15,7 +15,7 @@ struct HomeStore {
     struct State: Equatable {
         /// 홈 관련 하위 뷰
         var peepPreviewModal = PeepModalStore.State() // 미리보기 핍 모달 관련
-        var peepDetail = PeepDetailStore.State() // 핍 상세 관련
+        var peepDetail = PeepDetailListStore.State() // 핍 상세 관련
         var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴 관련
         var townVerification = TownVerificationStore.State() // 동네 등록 모달 관련
         var map = HomeMapStore.State() // 지도 관련
@@ -42,7 +42,7 @@ struct HomeStore {
     enum Action: BindableAction {
         case binding(BindingAction<State>)
 
-        case peepDetail(PeepDetailStore.Action)
+        case peepDetail(PeepDetailListStore.Action)
         case sideMenu(SideMenuStore.Action)
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
@@ -93,7 +93,7 @@ struct HomeStore {
         }
 
         Scope(state: \.peepDetail, action: \.peepDetail) {
-            PeepDetailStore()
+            PeepDetailListStore()
         }
 
         Scope(state: \.map, action: \.map) {

@@ -210,7 +210,7 @@
 		ABD3CAB42CA1BE0100438747 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */; };
 		ABD3CAB72CA1BF2F00438747 /* OtherProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */; };
 		ABD3CAB92CA1BF3900438747 /* OtherProfileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */; };
-		ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */; };
+		ABD631C12C9757AC00AFF299 /* PeepDetailListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */; };
 		ABD631C32C9757B400AFF299 /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */; };
 		ABD631C62C97602500AFF299 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C52C97602500AFF299 /* ChatView.swift */; };
 		ABD631C92C97611100AFF299 /* ChatStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABD631C82C97611100AFF299 /* ChatStore.swift */; };
@@ -446,7 +446,7 @@
 		ABD3CAB32CA1BE0100438747 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAB62CA1BF2F00438747 /* OtherProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileView.swift; sourceTree = "<group>"; };
 		ABD3CAB82CA1BF3900438747 /* OtherProfileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherProfileStore.swift; sourceTree = "<group>"; };
-		ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailView.swift; sourceTree = "<group>"; };
+		ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailListView.swift; sourceTree = "<group>"; };
 		ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABD631C52C97602500AFF299 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		ABD631C82C97611100AFF299 /* ChatStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStore.swift; sourceTree = "<group>"; };
@@ -1496,7 +1496,7 @@
 		ABD631BF2C97579C00AFF299 /* PeepDetail */ = {
 			isa = PBXGroup;
 			children = (
-				ABD631C02C9757AC00AFF299 /* PeepDetailView.swift */,
+				ABD631C02C9757AC00AFF299 /* PeepDetailListView.swift */,
 				ABD631C22C9757B400AFF299 /* PeepDetailStore.swift */,
 			);
 			path = PeepDetail;
@@ -1917,7 +1917,7 @@
 				AB53DE532CA0123D00D8DC1F /* PeepModalStore.swift in Sources */,
 				AB4A28C92D3FD31A007E8383 /* HomeMapView.swift in Sources */,
 				AB3340442DAE34E4007C31FC /* AsyncProfile.swift in Sources */,
-				ABD631C12C9757AC00AFF299 /* PeepDetailView.swift in Sources */,
+				ABD631C12C9757AC00AFF299 /* PeepDetailListView.swift in Sources */,
 				ABD3CAB02CA1B52000438747 /* Peep.swift in Sources */,
 				AB11FFCD2CF77EA10095B818 /* ReportModal.swift in Sources */,
 			);

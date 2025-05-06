@@ -51,7 +51,7 @@ struct RootStore {
         case write(WriteStore)
 
         /// 핍
-        case peepDetail(PeepDetailStore)
+        case peepDetail(PeepDetailListStore)
     }
 
     @ObservableState
@@ -185,7 +185,7 @@ struct RootStore {
 
                 case let .element(_, action: .townPeeps(.peepCellTapped(idx, peepIdList, page, size))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
+                        .peepDetail(PeepDetailListStore.State(
                             entryType: .townPeep,
                             currentIdx: idx,
                             showPeepDetailObject: true,
@@ -199,7 +199,7 @@ struct RootStore {
 
                 case let .element(_, action: .notification(.activePeepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
+                        .peepDetail(PeepDetailListStore.State(
                             entryType: .others,
                             peepList: [selectedPeep],
                             currentIdx: 0,
@@ -211,7 +211,7 @@ struct RootStore {
 
                 case let .element(_, action: .myProfile(.peepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
+                        .peepDetail(PeepDetailListStore.State(
                             entryType: .others,
                             peepList: [selectedPeep],
                             currentIdx: 0,
@@ -224,7 +224,7 @@ struct RootStore {
 
                 case let .element(_, action: .otherProfile(.peepCellTapped(selectedPeep))):
                     state.path.append(
-                        .peepDetail(PeepDetailStore.State(
+                        .peepDetail(PeepDetailListStore.State(
                             entryType: .others,
                             peepList: [selectedPeep],
                             currentIdx: 0,

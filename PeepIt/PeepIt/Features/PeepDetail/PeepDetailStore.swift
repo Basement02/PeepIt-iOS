@@ -1,5 +1,5 @@
 //
-//  PeepDetailStore.swift
+//  PeepDetailListStore.swift
 //  PeepIt
 //
 //  Created by 김민 on 9/16/24.
@@ -8,7 +8,7 @@
 import ComposableArchitecture
 
 @Reducer
-struct PeepDetailStore {
+struct PeepDetailListStore {
 
     @ObservableState
     struct State: Equatable {
@@ -78,7 +78,7 @@ struct PeepDetailStore {
         /// 뒤로 가기
         case backButtonTapped
         /// 반응 선택
-        case selectReaction(reaction: PeepDetailStore.State.ReactionType)
+        case selectReaction(reaction: PeepDetailListStore.State.ReactionType)
         /// 선택 해제
         case unselectReaction
         /// 더보기 메뉴 보여주기 여부
@@ -209,7 +209,7 @@ struct PeepDetailStore {
                 return .send(.unselectReaction)
 
             case .unselectReaction:
-                state.reactionList = PeepDetailStore.State.ReactionType.allCases
+                state.reactionList = PeepDetailListStore.State.ReactionType.allCases
                 state.peepList[state.currentIdx].reaction = nil
                 return .send(.setTimer)
 

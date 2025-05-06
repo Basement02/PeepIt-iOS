@@ -119,7 +119,7 @@ struct RootView: View {
 
                 /// 핍
                 case let .peepDetail(store):
-                    PeepDetailView(store: store)
+                    PeepDetailListView(store: store)
                 }
             }
         }

@@ -1,5 +1,5 @@
 //
-//  PeepDetailView.swift
+//  PeepDetailListView.swift
 //  PeepIt
 //
 //  Created by 김민 on 9/16/24.
@@ -8,8 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct PeepDetailView: View {
-    @Perception.Bindable var store: StoreOf<PeepDetailStore>
+struct PeepDetailListView: View {
+    @Perception.Bindable var store: StoreOf<PeepDetailListStore>
 
     var body: some View {
         WithPerceptionTracking {
@@ -146,7 +146,7 @@ struct PeepDetailView: View {
     }
 }
 
-extension PeepDetailView {
+extension PeepDetailListView {
 
     private var topBar: some View {
         HStack {
@@ -355,7 +355,7 @@ extension PeepDetailView {
 
     @ViewBuilder
     private func reactionCell(
-        reaction: PeepDetailStore.State.ReactionType
+        reaction: PeepDetailListStore.State.ReactionType
     ) -> some View{
         if store.peepList[store.currentIdx].reaction == reaction.rawValue {
             Button {
@@ -402,9 +402,9 @@ extension PeepDetailView {
 
 #Preview {
     NavigationStack {
-        PeepDetailView(
-            store: .init(initialState: PeepDetailStore.State()) {
-                PeepDetailStore()
+        PeepDetailListView(
+            store: .init(initialState: PeepDetailListStore.State()) {
+                PeepDetailListStore()
             }
         )
     }
