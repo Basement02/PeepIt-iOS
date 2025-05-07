@@ -125,6 +125,19 @@ struct RootView: View {
                     PeepDetailView(store: store)
                 }
             }
+            .overlay {
+                if let popUp = store.activePopUp {
+                    if popUp == .logout {
+                        Color.blur2.ignoresSafeArea()
+                    }
+
+                    PopUpAView(
+                        popUpType: popUp,
+                        onConfirm: { store.send(.popUpConfirmed(popUp)) },
+                        onCancel: { store.send(.hidePopUp) }
+                    )
+                }
+            }
         }
     }
 }
