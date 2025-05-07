@@ -220,6 +220,10 @@ struct RootStore {
                     )
                     return .none
 
+                case let .element(_, action: .peepDetailList(.profileTapped(id))):
+                    state.path.append(.otherProfile(OtherProfileStore.State(userId: id)))
+                    return .none
+
                 default:
                     return .none
                 }

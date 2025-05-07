@@ -224,24 +224,25 @@ extension PeepDetailListView {
     private func detailView(peep: Peep) -> some View {
         HStack(alignment: .bottom, spacing: 12) {
             VStack(spacing: 9) {
-                NavigationLink(
-                    state: RootStore.Path.State.otherProfile(OtherProfileStore.State())
-                ) {
-                    HStack {
-                        AsyncProfile(profileUrlStr: peep.profileUrl)
-                            .frame(width: 37.62, height: 37.62)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                HStack {
+                    AsyncProfile(profileUrlStr: peep.profileUrl)
+                        .frame(width: 37.62, height: 37.62)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
 
-                        Text(peep.writerId)
-                            .pretendard(.headline)
+                    Text(peep.writerId)
+                        .pretendard(.headline)
 
-                        Text(peep.uploadAt)
-                            .pretendard(.caption04)
+                    Text(peep.uploadAt)
+                        .pretendard(.caption04)
 
-                        Spacer()
-                    }
-                    .foregroundStyle(Color.white)
+                    Spacer()
                 }
+                .foregroundStyle(Color.white)
+                .contentShape(Rectangle())
+                .highPriorityGesture(
+                    TapGesture()
+                        .onEnded { store.send(.profileTapped(id: peep.writerId)) }
+                )
 
                 HStack {
                     Text(peep.content.forceCharWrapping)

@@ -13,8 +13,12 @@ struct OtherProfileStore {
 
     @ObservableState
     struct State: Equatable {
+        /// 유저 아이디
+        var userId = ""
+
+        var userProfile: UserProfile?
         /// 핍 리스트
-        var uploadedPeeps: [Peep] = [.stubPeep0, .stubPeep1, .stubPeep2, .stubPeep3, .stubPeep4, .stubPeep5, .stubPeep6, .stubPeep7, .stubPeep8, .stubPeep9]
+        var uploadedPeeps: [Peep] = []
         /// 상단 우측 더보기 버튼 탭 여부
         var isElseButtonTapped = false
         /// 유저 차단 여부
@@ -25,6 +29,7 @@ struct OtherProfileStore {
         var isModalVisible = false
         /// 공유하기 보여주기
         var showShareSheet = false
+        /// 유저 프로필
     }
 
     enum Action: BindableAction {
@@ -55,8 +60,13 @@ struct OtherProfileStore {
         case shareButtonTapped
         /// 핍 셀 선택
         case peepCellTapped(peep: Peep)
+
+        /// 멤버 조회 api
+        case fetchMemberDetail(id: String)
+        case fetchMemberDetailResponse(Result<UserProfile, Error>)
     }
 
+    @Dependency(\.memberAPIClient) var memberAPIClient
     @Dependency(\.dismiss) var dismiss
 
     var body: some Reducer<State, Action> {
@@ -68,8 +78,7 @@ struct OtherProfileStore {
                 return .none
 
             case .onAppear:
-                // TODO: 차단 여부 로드
-                return .none
+                return .send(.fetchMemberDetail(id: state.userId))
 
             case let .elseButtonTapped(newState):
                 state.isElseButtonTapped = newState
@@ -132,7 +141,28 @@ struct OtherProfileStore {
 
             case .peepCellTapped:
                 return .none
-                
+
+            case let .fetchMemberDetail(id):
+                return .run { send in
+                    await send(
+                        .fetchMemberDetailResponse(
+                            Result { try await memberAPIClient.getOtherMemberDetail(id) }
+                        )
+                    )
+                }
+
+            case let .fetchMemberDetailResponse(result):
+                switch result {
+                case let .success(profile):
+                    state.userProfile = profile
+                    
+                case .failure:
+                    print("실패")
+                }
+
+                return .none
+
+
             default:
                 return .none
             }
