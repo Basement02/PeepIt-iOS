@@ -147,7 +147,8 @@ struct EditView: View {
                     LoopingVideoPlayerView(
                         videoURL: url,
                         isSoundOn: store.isVideoSoundOn,
-                        isPlaying: store.isVideoPlaying
+                        isPlaying: store.isVideoPlaying,
+                        isReadyToPlay: .constant(true)
                     )
                 }
             }

@@ -6,6 +6,7 @@
 //
 
 import AVFoundation
+import Combine
 import UIKit
 import SwiftUI
 
@@ -13,9 +14,10 @@ struct LoopingVideoPlayerView: UIViewRepresentable {
     var videoURL: URL
     var isSoundOn: Bool
     var isPlaying: Bool
+    @Binding var isReadyToPlay: Bool
 
     func makeUIView(context: Context) -> LoopingVideoPlayerUIView {
-        return LoopingVideoPlayerUIView(url: videoURL, isSoundOn: isSoundOn)
+        return LoopingVideoPlayerUIView(url: videoURL, isSoundOn: isSoundOn, isReadyToPlay: $isReadyToPlay)
     }
 
     func updateUIView(_ uiView: LoopingVideoPlayerUIView, context: Context) {
@@ -34,47 +36,54 @@ final class LoopingVideoPlayerUIView: UIView {
     private var playerLayer = AVPlayerLayer()
     private var playerLooper: AVPlayerLooper?
     private var queuePlayer: AVQueuePlayer?
+    private var playerItem: AVPlayerItem?
 
-    init(url: URL, isSoundOn: Bool) {
+    private var statusCancellable: AnyCancellable?
+    private var isReadyToPlayBinding: Binding<Bool>
+
+    init(url: URL, isSoundOn: Bool, isReadyToPlay: Binding<Bool>) {
+        self.isReadyToPlayBinding = isReadyToPlay
         let item = AVPlayerItem(url: url)
+        self.playerItem = item
 
         super.init(frame: .zero)
 
-        /// player 세팅
         let player = AVQueuePlayer(playerItem: item)
         player.volume = isSoundOn ? 1.0 : 0.0
         self.queuePlayer = player
-
-        playerLayer.player = player
-
+        self.playerLayer.player = player
         self.layer.addSublayer(playerLayer)
 
-        /// 루프 생성
-        playerLooper = AVPlayerLooper(player: player, templateItem: item)
+        self.playerLooper = AVPlayerLooper(player: player, templateItem: item)
 
-        /// 루프 시작
-        player.play()
+        statusCancellable = item
+            .publisher(for: \.status)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] status in
+                if status == .readyToPlay {
+                    self?.isReadyToPlayBinding.wrappedValue = true
+                }
+            }
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func toggleSound(isSoundOn: Bool) {
-        queuePlayer?.volume = isSoundOn ? 1.0 : 0.0
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        playerLayer.frame = bounds
     }
 
-    func pauseVideo() {
-        queuePlayer?.pause()
+    func toggleSound(isSoundOn: Bool) {
+        queuePlayer?.volume = isSoundOn ? 1.0 : 0.0
     }
 
     func playVideo() {
         queuePlayer?.play()
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        playerLayer.frame = bounds
+    func pauseVideo() {
+        queuePlayer?.pause()
     }
 }

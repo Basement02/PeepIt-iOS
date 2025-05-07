@@ -220,6 +220,7 @@
 		ABDDB0B92DCA540D0054ABDA /* PeepDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */; };
 		ABDDB0BC2DCA5FE70054ABDA /* ReactionListStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0BB2DCA5FE40054ABDA /* ReactionListStore.swift */; };
 		ABDDB0C02DCA60890054ABDA /* ReactionListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0BF2DCA60890054ABDA /* ReactionListView.swift */; };
+		ABDDB0C22DCB6BCB0054ABDA /* PopUpAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABDDB0C12DCB6BCB0054ABDA /* PopUpAView.swift */; };
 		ABE363492DBA9AEB00E6677A /* MapPeepRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */; };
 		ABE3634D2DBAB10200E6677A /* PeepAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */; };
 		ABE3DB1F2CA976D10090243C /* ModifyGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */; };
@@ -460,6 +461,7 @@
 		ABDDB0B82DCA54090054ABDA /* PeepDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepDetailStore.swift; sourceTree = "<group>"; };
 		ABDDB0BB2DCA5FE40054ABDA /* ReactionListStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionListStore.swift; sourceTree = "<group>"; };
 		ABDDB0BF2DCA60890054ABDA /* ReactionListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionListView.swift; sourceTree = "<group>"; };
+		ABDDB0C12DCB6BCB0054ABDA /* PopUpAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpAView.swift; sourceTree = "<group>"; };
 		ABE363482DBA9AE700E6677A /* MapPeepRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPeepRequestDto.swift; sourceTree = "<group>"; };
 		ABE3634C2DBAB0FE00E6677A /* PeepAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeepAnnotation.swift; sourceTree = "<group>"; };
 		ABE3DB1E2CA976D10090243C /* ModifyGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyGenderView.swift; sourceTree = "<group>"; };
@@ -976,6 +978,7 @@
 		AB4BEE072D9A944200CA3936 /* PopUp */ = {
 			isa = PBXGroup;
 			children = (
+				ABDDB0C12DCB6BCB0054ABDA /* PopUpAView.swift */,
 				AB4BEE0A2D9A945900CA3936 /* PopUpBView.swift */,
 			);
 			path = PopUp;
@@ -1944,6 +1947,7 @@
 				AB33889E2DA2DFDE00316D4B /* Token.swift in Sources */,
 				ABD3CAA72CA098EE00438747 /* MyActivityPeep.swift in Sources */,
 				AB1E17B52D5392EA00653C74 /* KeyboardHeightDetector.swift in Sources */,
+				ABDDB0C22DCB6BCB0054ABDA /* PopUpAView.swift in Sources */,
 				ABA67D512D2AFFC70018EC92 /* VideoRenderService.swift in Sources */,
 				AB468D222CA9429600C1E430 /* AnnounceView.swift in Sources */,
 				ABCE972C2D31202C00A07962 /* StickerLayerView.swift in Sources */,

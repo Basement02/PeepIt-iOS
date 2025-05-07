@@ -64,6 +64,8 @@ struct RootStore {
 
         var login = LoginStore.State()
         var home = HomeStore.State()
+
+        var activePopUp: PopUpType? = nil
     }
 
     enum Action {
@@ -73,6 +75,10 @@ struct RootStore {
 
         case login(LoginStore.Action)
         case home(HomeStore.Action)
+
+        case showPopUp(PopUpType)
+        case hidePopUp
+        case popUpConfirmed(PopUpType)
     }
 
     var body: some Reducer<State, Action> {
@@ -106,9 +112,7 @@ struct RootStore {
                 return .none
 
             case .home(.sideMenu(.logoutButtonTapped)):
-                state.authState = .unAuthorized
-                state.path.removeAll()
-                return .none
+                return .send(.showPopUp(.logout))
 
             case .home(.uploadButtonTapped):
                 state.path.append(.camera(.init()))
@@ -216,10 +220,28 @@ struct RootStore {
                     )
                     return .none
 
-
                 default:
                     return .none
                 }
+
+            case let .showPopUp(popup):
+                 state.activePopUp = popup
+                 return .none
+
+             case .hidePopUp:
+                 state.activePopUp = nil
+                 return .none
+
+             case let .popUpConfirmed(popUp):
+                 state.activePopUp = nil
+
+                 switch popUp {
+                 case .logout:
+                     state.authState = .unAuthorized
+                     state.path.removeAll()
+                     
+                     return .none
+                 }
 
             default:
                 return .none
