@@ -87,6 +87,8 @@ struct PeepDetailListStore {
         case shareButtonTapped
         /// 리액션 설정
         case setReaction
+        /// 프로필 탭
+        case profileTapped(id: String)
 
         /// 개별 핍 api
         case getPeepDetail(id: Int)
@@ -298,6 +300,9 @@ struct PeepDetailListStore {
                         await send(.getPeepDetail(id: id))
                     }
                 }
+
+            case .profileTapped:
+                return .none
 
             default:
                 return .none

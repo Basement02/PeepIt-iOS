@@ -67,6 +67,7 @@ struct OtherProfileView: View {
                 }
 
                 /// 차단 안내문 모달
+                // TODO: 모달 드래그 로직 이동
                 VStack {
                     Spacer()
                     BlockDescriptionModal(store: self.store)
