@@ -21,7 +21,7 @@ struct OtherProfileView: View {
 
                     PeepItNavigationBar(
                         leading: backButton,
-                        title: "@아이디",
+                        title: "@\(store.userProfile?.id ?? "")",
                         trailing: elseButton
                     )
                     .padding(.bottom, 43)
@@ -117,21 +117,23 @@ struct OtherProfileView: View {
 
     private var profileView: some View {
         VStack(spacing: 26) {
-            Image("ProfileSample")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 91.2, height: 91.2)
+            AsyncProfile(profileUrlStr: store.userProfile?.profile)
+                .frame(width: 91, height: 91)
+                .clipShape(RoundedRectangle(cornerRadius: 21))
 
             VStack(spacing: 11) {
-                Text("${닉네임}")
+                Text("\(store.userProfile?.name ?? "")")
                     .pretendard(.title02)
 
                 HStack(spacing: 2) {
                     Image("IconLocation")
                         .resizable()
                         .frame(width: 22.4, height: 22.4)
-                    Text("동이름")
-                        .pretendard(.body02)
+                    Text(
+                        store.userProfile?.townInfo?.address.components(separatedBy: " ").last
+                        ?? ""
+                    )
+                    .pretendard(.body02)
                 }
             }
             .padding(.vertical, 7)

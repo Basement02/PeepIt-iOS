@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct MemberAPIClient {
     var getMemberDetail: () async throws -> UserProfile
+    var getOtherMemberDetail: (String) async throws -> UserProfile
     var signUp: (UserInfo, String) async throws -> Token
     var modifyUserProfileImage: (Data) async throws -> String
     var modifyUserProfile: (UserProfile) async throws -> UserProfile
@@ -20,6 +21,11 @@ extension MemberAPIClient: DependencyKey {
     static let liveValue: MemberAPIClient = MemberAPIClient(
         getMemberDetail: { 
             let requestAPI: MemberAPI = .getMemberDetail
+            let response: MemberDetailResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
+            return response.toModel()
+        },
+        getOtherMemberDetail: { memberId in
+            let requestAPI: MemberAPI = .getOtherMemberDetail(memberId)
             let response: MemberDetailResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
         },

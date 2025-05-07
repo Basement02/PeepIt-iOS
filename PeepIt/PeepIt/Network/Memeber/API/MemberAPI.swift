@@ -10,6 +10,7 @@ import Alamofire
 
 enum MemberAPI {
     case getMemberDetail
+    case getOtherMemberDetail(String)
     case signUp(SignUpDto, String)
     case patchUserProfileImage(ProfileImgRequestDto)
     case patchUserProfile(ModifyProfileRequestDto)
@@ -21,6 +22,8 @@ extension MemberAPI: APIType {
         switch self {
         case .getMemberDetail:
             return "/v1/member/detail"
+        case let .getOtherMemberDetail(memberId):
+            return "/v1/member/detail/\(memberId)"
         case .signUp:
             return "/v1/member/sign-up"
         case .patchUserProfileImage:
@@ -32,7 +35,7 @@ extension MemberAPI: APIType {
     
     var method: HTTPMethod {
         switch self {
-        case .getMemberDetail:
+        case .getMemberDetail, .getOtherMemberDetail:
             return .get
         case .signUp:
             return .post
@@ -43,8 +46,12 @@ extension MemberAPI: APIType {
     
     var task: APITask {
         switch self {
+            
         case .getMemberDetail:
             return .requestPlain
+
+        case let .getOtherMemberDetail(memberId):
+            return .requestParameters(parameters: memberId.toDictionary())
 
         case let .signUp(requestDto, _):
             return .requestJSONEncodable(body: requestDto)
