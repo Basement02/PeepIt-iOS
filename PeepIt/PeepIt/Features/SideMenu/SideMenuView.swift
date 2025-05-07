@@ -41,7 +41,7 @@ struct SideMenuView: View {
                     }
                     .padding(.bottom, 186)
 
-                    Group {
+                    VStack(alignment: .leading, spacing: 0) {
                         versionLabel
                             .padding(.bottom, 12)
 
@@ -56,14 +56,14 @@ struct SideMenuView: View {
                             Spacer()
                             settingButton
                         }
-                        .frame(height: 29.4)
+                        .frame(height: 30)
                     }
-                    .padding(.trailing, 15.6)
+                    .padding(.trailing, 16)
 
                     Spacer()
                 }
                 .padding(.leading, 16)
-                .ignoresSafeArea(.all, edges: .bottom)
+                .ignoresSafeArea()
                 .toolbar(.hidden, for: .navigationBar)
                 .frame(width: 318)
                 .background(Color.base)
@@ -104,7 +104,7 @@ struct SideMenuView: View {
     private var goToAppStoreButton: some View {
         let button = HStack(spacing: 2) {
             Text("[핍잇이 마음에 드시나요?](https://www.apple.com)") // TODO: 변경
-                .pretendard(.caption02)
+                .pretendard(.body04)
 
             Image("IconLink")
                 .resizable()
