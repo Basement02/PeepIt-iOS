@@ -143,10 +143,15 @@ struct AuthenticationStore {
             case let .fetchRequestSMSCodeResponse(result):
                 switch result {
                 case .success:
+                    state.phoneNumberValid = .valid
                     return .send(.moveToEnterCode(phone: state.phoneNumber))
 
-                case .failure:
-                    // TODO: 전송 실패 처리
+                case let .failure(error):
+                    if error.asPeepItError() == .duplicatePhoneNumber {
+                        state.phoneNumberValid = .duplicated
+                    }
+
+                    print(error)
                     return .none
                 }
 
