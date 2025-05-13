@@ -68,7 +68,10 @@ extension APIFetcher {
 
     private func createDataRequest(for endpoint: APIType) -> DataRequest {
         let url = endpoint.baseURL.appendingPathComponent(endpoint.path)
-        let interceptor = Interceptor() // TODO: 수정
+        let interceptor = NetworkInterceptor(
+            keychain: KeychainClient.live,
+            requestHeader: endpoint.header
+        )
 
         switch endpoint.task {
 
