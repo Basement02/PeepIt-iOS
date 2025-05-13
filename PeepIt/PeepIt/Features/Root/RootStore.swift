@@ -81,9 +81,14 @@ struct RootStore {
         case showPopUp(PopUpType)
         case hidePopUp
         case popUpConfirmed(PopUpType)
+
+        /// 로그아웃 api
+        case logout
+        case fetchLogoutResponse(Result<Void, Error>)
     }
 
     @Dependency(\.keychain) var keychain
+    @Dependency(\.authAPIClient) var authAPIClient
 
     var body: some Reducer<State, Action> {
 
@@ -98,7 +103,7 @@ struct RootStore {
 
             case .finishLoading:
                 // TODO: 토큰 만료 여부, 토큰 존재 여부에 따라 분기
-                guard let _ = keychain.load(TokenType.access.rawValue) else {
+                guard let access = keychain.load(TokenType.access.rawValue) else {
                     state.authState = .unAuthorized
                     state.isLoading = false
                     return .none
@@ -257,12 +262,26 @@ struct RootStore {
 
                  switch popUp {
                  case .logout:
-                     state.authState = .unAuthorized
-                     state.path.removeAll()
-                     _ = keychain.deleteAll()
-
-                     return .none
+                     return .send(.logout)
                  }
+
+            case .logout:
+                return .run { send in
+                    await send(
+                        .fetchLogoutResponse(
+                            Result { try await authAPIClient.logout() }
+                        )
+                    )
+                }
+
+            case let .fetchLogoutResponse(result):
+                if case .success = result {
+                    state.authState = .unAuthorized
+                    state.path.removeAll()
+                    _ = keychain.deleteAll()
+                }
+
+                return .none
 
             default:
                 return .none
