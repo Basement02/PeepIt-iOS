@@ -58,13 +58,14 @@ extension AuthAPI: APIType {
             return .requestJSONEncodable(body: requestDto)
         }
     }
-    
-    var header: HTTPHeaders? {
+
+    var header: HeaderType {
         switch self {
-        case .requestSMSCode, .getSMSCodeVerifyResult:
-            return ["Authorization": "Bearer "]
-        default:
-            return nil
+        case .getPhoneCheckResult, .requestSMSCode, .getSMSCodeVerifyResult:
+            return .jwtToken
+            
+        case .getIdCheckResult, .loginWithSocialAccount:
+            return .none
         }
     }
 }

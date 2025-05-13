@@ -53,13 +53,14 @@ extension TownAPI: APIType {
         }
     }
 
-    var header: HTTPHeaders? {
+    var header: HeaderType {
         switch self {
-        case .getLegalCode:
-            return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
 
-        case .patchUserTown:
-            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
+        case .getLegalCode:
+            return .kakaoLocalHeader
+
+        default:
+            return .jwtToken
         }
     }
 }

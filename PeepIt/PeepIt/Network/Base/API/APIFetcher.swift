@@ -76,7 +76,6 @@ extension APIFetcher {
             return AF.request(
                 url,
                 method: endpoint.method,
-                headers: endpoint.header,
                 interceptor: interceptor
             )
 
@@ -86,7 +85,6 @@ extension APIFetcher {
                 method: endpoint.method,
                 parameters: body,
                 encoder: JSONParameterEncoder.default,
-                headers: endpoint.header,
                 interceptor: interceptor
             )
 
@@ -96,7 +94,6 @@ extension APIFetcher {
                 method: endpoint.method,
                 parameters: parameters,
                 encoding: URLEncoding.queryString,
-                headers: endpoint.header,
                 interceptor: interceptor
             )
 
@@ -105,8 +102,7 @@ extension APIFetcher {
                 url,
                 method: endpoint.method,
                 parameters: parameters,
-                encoding: URLEncoding.queryString,
-                headers: endpoint.header
+                encoding: URLEncoding.queryString
             )
 
         case let .requestWithMultipartFormData(formData):
@@ -126,8 +122,7 @@ extension APIFetcher {
                      }
                  },
                  to: url,
-                 method: endpoint.method,
-                 headers: endpoint.header
+                 method: endpoint.method
              )
         }
     }
