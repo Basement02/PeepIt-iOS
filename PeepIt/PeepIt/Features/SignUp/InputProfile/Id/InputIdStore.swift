@@ -154,13 +154,9 @@ struct InputIdStore {
                     state.idValidation = .validated
 
                 case let .failure(error):
-                    guard
-                        let networkError = error as? NetworkError,
-                        case let .serverError(exception) = networkError,
-                        let errorCase = PeepItError(rawValue: exception.code)
-                    else { return .none }
-
-                    if errorCase == .duplicateId { state.idValidation = .duplicated }
+                    if error.asPeepItError() == .duplicateId {
+                        state.idValidation = .duplicated
+                    }
                 }
 
                 return .send(.setEnterField)

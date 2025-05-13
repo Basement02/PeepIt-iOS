@@ -13,7 +13,7 @@ protocol APIType {
     var path: String { get }
     var method: HTTPMethod { get }
     var task: APITask { get }
-    var header: HTTPHeaders? { get }
+    var header: HeaderType { get }
 }
 
 extension APIType {
@@ -22,7 +22,7 @@ extension APIType {
         return URL(string: Environment.baseURL)!
     }
 
-    var header: HTTPHeaders? {
-        return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"] 
+    var header: HeaderType {
+        return .none
     }
 }

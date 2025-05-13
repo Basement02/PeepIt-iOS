@@ -145,6 +145,8 @@
 		AB71E1D22CBC245C00D2D3D9 /* StickerModalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */; };
 		AB71E1D42CBC254600D2D3D9 /* StickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */; };
 		AB71E1D82CBE3F3B00D2D3D9 /* StickerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */; };
+		AB85D6572DD2FBE60019D255 /* NetworkInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB85D6562DD2FBDE0019D255 /* NetworkInterceptor.swift */; };
+		AB85D6592DD2FC360019D255 /* HeaderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB85D6582DD2FC2F0019D255 /* HeaderType.swift */; };
 		AB8A062B2D5B291300A70A9C /* ScrollOffsetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A062A2D5B291300A70A9C /* ScrollOffsetKey.swift */; };
 		AB8A25862CD7EC1A0007A7A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */; };
 		AB9788142D114B84007E73B6 /* BlockDescriptionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9788132D114B84007E73B6 /* BlockDescriptionModal.swift */; };
@@ -386,6 +388,8 @@
 		AB71E1D12CBC245C00D2D3D9 /* StickerModalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalStore.swift; sourceTree = "<group>"; };
 		AB71E1D32CBC254600D2D3D9 /* StickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerModalView.swift; sourceTree = "<group>"; };
 		AB71E1D72CBE3F3B00D2D3D9 /* StickerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerItem.swift; sourceTree = "<group>"; };
+		AB85D6562DD2FBDE0019D255 /* NetworkInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkInterceptor.swift; sourceTree = "<group>"; };
+		AB85D6582DD2FC2F0019D255 /* HeaderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderType.swift; sourceTree = "<group>"; };
 		AB8A062A2D5B291300A70A9C /* ScrollOffsetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollOffsetKey.swift; sourceTree = "<group>"; };
 		AB8A25852CD7EC1A0007A7A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		AB9788132D114B84007E73B6 /* BlockDescriptionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockDescriptionModal.swift; sourceTree = "<group>"; };
@@ -721,6 +725,7 @@
 				ABD639D62D7EE7340062A60C /* Environment.swift */,
 				AB37049F2D7FFE2F00EBBC85 /* BaseResponse.swift */,
 				AB3340372DAE24F4007C31FC /* MultipartFormDataPart.swift */,
+				AB85D6562DD2FBDE0019D255 /* NetworkInterceptor.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -740,6 +745,7 @@
 				AB3704942D7FCF1D00EBBC85 /* APITask.swift */,
 				AB3704922D7FCF0F00EBBC85 /* APIType.swift */,
 				AB3704962D7FD12B00EBBC85 /* APIFetcher.swift */,
+				AB85D6582DD2FC2F0019D255 /* HeaderType.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -900,8 +906,8 @@
 		AB4BEDE52D9277DB00CA3936 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
 				AB4BEDE62D9277EE00CA3936 /* PeepAPI.swift */,
+				AB4BEDE32D92716F00CA3936 /* PeepAPIClient.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1083,6 +1089,15 @@
 			path = StickerModal;
 			sourceTree = "<group>";
 		};
+		AB85D65A2DD30E1D0019D255 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
+				AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		AB97881B2D192FA0007E73B6 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -1121,7 +1136,6 @@
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
 				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
-				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -1228,6 +1242,7 @@
 			isa = PBXGroup;
 			children = (
 				ABB444972CA8451D00C1EE67 /* Root */,
+				AB85D65A2DD30E1D0019D255 /* Common */,
 				AB51597D2CAAFA5D0043AA0A /* Login */,
 				ABC171E82CAB183600370901 /* SignUp */,
 				AB33888B2DA02D3400316D4B /* Map */,
@@ -1255,7 +1270,6 @@
 				ABC305CB2C932341003B00FE /* HomeView.swift */,
 				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
 				AB62BABD2DC3E29C00FAF8AA /* HomeMapStore.swift */,
-				AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1832,10 +1846,12 @@
 				AB71E1CF2CBC06D800D2D3D9 /* WriteStore.swift in Sources */,
 				AB416D282CF37A950065BD09 /* Notification.swift in Sources */,
 				AB416D1F2CF329590065BD09 /* MiniBtn.swift in Sources */,
+				AB85D6592DD2FC360019D255 /* HeaderType.swift in Sources */,
 				ABC171F32CAB198C00370901 /* AuthenticationView.swift in Sources */,
 				AB469C712C9FED6C00DC7B8A /* SideMenuView.swift in Sources */,
 				AB4BEDF32D928A8900CA3936 /* MapPeepRequest.swift in Sources */,
 				ABC305E92C933F08003B00FE /* ClearBackgroundViewModifier.swift in Sources */,
+				AB85D6572DD2FBE60019D255 /* NetworkInterceptor.swift in Sources */,
 				AB33403D2DAE2E4A007C31FC /* UserProfileStorageClient.swift in Sources */,
 				ABA11E9C2D21766300C181DC /* TownTitleView.swift in Sources */,
 				ABA9A2E22CCE932900AA605B /* Adjusted.swift in Sources */,

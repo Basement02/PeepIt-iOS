@@ -19,6 +19,7 @@ struct KeychainClient {
     var save: (_ key: String, _ value: String) -> Bool
     var load: (_ key: String) -> String?
     var delete: (_ key: String) -> Bool
+    var deleteAll: () -> Bool
 }
 
 extension KeychainClient {
@@ -58,6 +59,14 @@ extension KeychainClient {
             let query: [String: Any] = [
                 kSecClass as String: kSecClassGenericPassword,
                 kSecAttrAccount as String: key
+            ]
+            let status = SecItemDelete(query as CFDictionary)
+            return status == errSecSuccess || status == errSecItemNotFound
+        },
+
+        deleteAll: {
+            let query: [String: Any] = [
+                kSecClass as String: kSecClassGenericPassword
             ]
             let status = SecItemDelete(query as CFDictionary)
             return status == errSecSuccess || status == errSecItemNotFound

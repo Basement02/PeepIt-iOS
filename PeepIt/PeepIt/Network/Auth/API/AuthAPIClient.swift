@@ -15,6 +15,7 @@ struct AuthAPIClient {
     var sendSMSCode: (String) async throws -> ()
     var checkSMSCodeVerified: (String, String) async throws -> ()
     var login: (String, String) async throws -> Token // 추후 로그인 타입으로 수정
+    var logout: () async throws -> ()
 }
 
 extension AuthAPIClient: DependencyKey {
@@ -45,6 +46,10 @@ extension AuthAPIClient: DependencyKey {
             let requestAPI = AuthAPI.loginWithSocialAccount(requestDto)
             let response: LoginResponseDto = try await APIFetcher.shared.fetch(of: requestAPI)
             return response.toModel()
+        },
+        logout: {
+            let requestAPI = AuthAPI.logout
+            let response: EmptyDecodable = try await APIFetcher.shared.fetch(of: requestAPI)
         }
     )
 }

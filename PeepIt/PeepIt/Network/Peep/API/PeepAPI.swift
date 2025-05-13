@@ -121,14 +121,13 @@ extension PeepAPI: APIType {
         }
     }
 
-    var header: HTTPHeaders? {
+    var header: HeaderType {
         switch self {
-            
         case .getCurrentLocationInfo:
-            return ["Authorization": "KakaoAK \(Environment.kakaoRestAPIKey)"]
+            return .kakaoLocalHeader
 
         default:
-            return ["Authorization": "Bearer \(Environment.jwtTokenTmp)"]
+            return .jwtToken
         }
     }
 }

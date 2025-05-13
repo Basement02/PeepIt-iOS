@@ -14,6 +14,7 @@ enum AuthAPI {
     case requestSMSCode(PhoneNumberRequest)
     case getSMSCodeVerifyResult(CodeCheckRequestDto)
     case loginWithSocialAccount(LoginRequestDto)
+    case logout
 }
 
 extension AuthAPI: APIType {
@@ -30,6 +31,8 @@ extension AuthAPI: APIType {
             return "/v1/auth/verify/sms-code"
         case .loginWithSocialAccount:
             return "/v1/auth/social"
+        case .logout:
+            return "/v1/auth/logout"
         }
     }
     
@@ -39,6 +42,8 @@ extension AuthAPI: APIType {
                 .getSMSCodeVerifyResult,
                 .loginWithSocialAccount:
             return .post
+        case .logout:
+            return .delete
         default:
             return .get
         }
@@ -48,23 +53,31 @@ extension AuthAPI: APIType {
         switch self {
         case let .getPhoneCheckResult(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
+
         case let .getIdCheckResult(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
+
         case let .requestSMSCode(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
+
         case let .getSMSCodeVerifyResult(requestDto):
             return .requestParameters(parameters: requestDto.toDictionary())
+
         case let .loginWithSocialAccount(requestDto):
             return .requestJSONEncodable(body: requestDto)
+
+        case .logout:
+            return .requestPlain
         }
     }
-    
-    var header: HTTPHeaders? {
+
+    var header: HeaderType {
         switch self {
-        case .requestSMSCode, .getSMSCodeVerifyResult:
-            return ["Authorization": "Bearer "]
-        default:
-            return nil
+        case .getPhoneCheckResult, .requestSMSCode, .getSMSCodeVerifyResult, .logout:
+            return .jwtToken
+            
+        case .getIdCheckResult, .loginWithSocialAccount:
+            return .none
         }
     }
 }

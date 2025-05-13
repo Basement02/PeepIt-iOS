@@ -64,6 +64,7 @@ struct RootStore {
 
         var login = LoginStore.State()
         var home = HomeStore.State()
+        var user = UserStore.State()
 
         var activePopUp: PopUpType? = nil
     }
@@ -75,11 +76,19 @@ struct RootStore {
 
         case login(LoginStore.Action)
         case home(HomeStore.Action)
+        case user(UserStore.Action)
 
         case showPopUp(PopUpType)
         case hidePopUp
         case popUpConfirmed(PopUpType)
+
+        /// 로그아웃 api
+        case logout
+        case fetchLogoutResponse(Result<Void, Error>)
     }
+
+    @Dependency(\.keychain) var keychain
+    @Dependency(\.authAPIClient) var authAPIClient
 
     var body: some Reducer<State, Action> {
 
@@ -87,10 +96,22 @@ struct RootStore {
 
         Scope(state: \.login, action: \.login) { LoginStore() }
 
+        Scope(state: \.user, action: \.user) { UserStore() }
+
         Reduce { state, action in
             switch action {
 
             case .finishLoading:
+                // TODO: 토큰 만료 여부, 토큰 존재 여부에 따라 분기
+                guard let access = keychain.load(TokenType.access.rawValue) else {
+                    state.authState = .unAuthorized
+                    state.isLoading = false
+                    return .none
+                }
+
+                return .send(.user(.getMyProfileFromServer))
+
+            case .user(.didFinishLoadProfile):
                 state.isLoading = false
                 return .none
 
@@ -241,11 +262,26 @@ struct RootStore {
 
                  switch popUp {
                  case .logout:
-                     state.authState = .unAuthorized
-                     state.path.removeAll()
-                     
-                     return .none
+                     return .send(.logout)
                  }
+
+            case .logout:
+                return .run { send in
+                    await send(
+                        .fetchLogoutResponse(
+                            Result { try await authAPIClient.logout() }
+                        )
+                    )
+                }
+
+            case let .fetchLogoutResponse(result):
+                if case .success = result {
+                    state.authState = .unAuthorized
+                    state.path.removeAll()
+                    _ = keychain.deleteAll()
+                }
+
+                return .none
 
             default:
                 return .none
