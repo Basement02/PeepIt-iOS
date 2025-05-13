@@ -15,4 +15,5 @@ struct UserProfile: Equatable, Codable {
     var gender: GenderType
     var isCertificated: Bool
     var isAgree: Bool
+    var isBlocked: Bool
 }

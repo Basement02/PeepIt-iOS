@@ -11,24 +11,32 @@ struct MemberDetailResponseDto: Decodable {
     let id: String
     let role: String
     let name: String
-    let town: String
+    let town: String?
     let gender: String
     let profile: String
-    let legalCode: String
+    let legalCode: String?
     let isAgree: Bool
+    let isBlocked: Bool
 }
 
 extension MemberDetailResponseDto {
 
     func toModel() -> UserProfile {
+        var townInfo: TownInfo?
+
+        if let town = town, let legalCode = legalCode {
+            townInfo = .init(address: town, bCode: legalCode)
+        }
+
         return .init(
             id: id,
             name: name,
-            townInfo: .init(address: town, bCode: legalCode), // TODO:
+            townInfo: townInfo,
             profile: profile,
             gender: GenderType(type: gender),
-            isCertificated: role == "CERTIFICATED",
-            isAgree: isAgree
+            isCertificated: role == "CERTIFIED",
+            isAgree: isAgree,
+            isBlocked: isBlocked
         )
     }
 }
