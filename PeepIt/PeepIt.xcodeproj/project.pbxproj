@@ -1089,6 +1089,15 @@
 			path = StickerModal;
 			sourceTree = "<group>";
 		};
+		AB85D65A2DD30E1D0019D255 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
+				AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		AB97881B2D192FA0007E73B6 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,7 +1136,6 @@
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
 				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
-				AB33403C2DAE2E43007C31FC /* UserProfileStorageClient.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
@@ -1234,6 +1242,7 @@
 			isa = PBXGroup;
 			children = (
 				ABB444972CA8451D00C1EE67 /* Root */,
+				AB85D65A2DD30E1D0019D255 /* Common */,
 				AB51597D2CAAFA5D0043AA0A /* Login */,
 				ABC171E82CAB183600370901 /* SignUp */,
 				AB33888B2DA02D3400316D4B /* Map */,
@@ -1261,7 +1270,6 @@
 				ABC305CB2C932341003B00FE /* HomeView.swift */,
 				ABC305DE2C93345D003B00FE /* HomeStore.swift */,
 				AB62BABD2DC3E29C00FAF8AA /* HomeMapStore.swift */,
-				AB62BABF2DC3E95F00FAF8AA /* UserStore.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
