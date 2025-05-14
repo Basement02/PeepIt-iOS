@@ -112,7 +112,6 @@ struct RootStore {
                 }
 
                 return .send(.user(.getMyProfileFromServer))
-                return .none
 
             case .user(.didFinishLoadProfile):
                 state.isLoading = false
