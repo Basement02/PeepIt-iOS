@@ -11,13 +11,42 @@ import ComposableArchitecture
 struct WithdrawModal: View {
     @Perception.Bindable var store: StoreOf<SettingStore>
 
+    @State private var keyboardHeight = CGFloat(0)
+    @FocusState private var isFocused: Bool
+
     var body: some View {
         WithPerceptionTracking {
-            VStack(spacing: 0) {
-                slideBar
-                content
+            GeometryReader { proxy in
+                WithPerceptionTracking {
+                    ZStack {
+                        if store.isWithdrawSheetVisible {
+                            Color.op
+                                .ignoresSafeArea()
+                                .onTapGesture { store.send(.closeSheet) }
+                        }
+
+                        VStack(spacing: 0) {
+                            slideBar
+                            content
+                        }
+                        .ignoresSafeArea(.all, edges: .bottom)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 775)
+                        .background(Color.clear)
+                        .offset(y: store.modalOffset)
+                        .animation(
+                            .easeInOut(duration: 0.3),
+                            value: store.isWithdrawSheetVisible
+                        )
+                    }
+                    .modifier(KeyboardHeightDetector($keyboardHeight))
+                    .onChange(of: store.isWithdrawSheetVisible) { new in
+                        if !new {
+                            isFocused = false
+                        }
+                    }
+                }
             }
-            .ignoresSafeArea(.all, edges: .bottom)
         }
     }
 
@@ -62,6 +91,8 @@ struct WithdrawModal: View {
                             .padding(.bottom, 21.6)
                     }
                     .frame(width: 317)
+                    .padding(.bottom, keyboardHeight)
+                    .animation(.easeInOut(duration: 0.3), value: keyboardHeight)
                 }
                 .scrollIndicators(.hidden)
             }
@@ -118,6 +149,7 @@ struct WithdrawModal: View {
                     Text("서비스 탈퇴에 동의합니다.")
                         .foregroundStyle(Color.gray400)
                     TextField("", text: $store.withdrawMessage)
+                        .focused($isFocused)
                         .tint(Color.coreLime)
                 }
                 .pretendard(.body02)
@@ -187,6 +219,7 @@ struct WithdrawModal: View {
                     }
 
                     TextEditor(text: $store.withdrawReason)
+                        .focused($isFocused)
                         .pretendard(.body05)
                         .tint(Color.coreLime)
                         .scrollContentBackground(.hidden)

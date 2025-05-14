@@ -42,23 +42,7 @@ struct SettingView: View {
                         .background(Color.base)
                         .toolbar(.hidden, for: .navigationBar)
 
-                        if store.isWithdrawSheetVisible {
-                            Color.op
-                                .ignoresSafeArea()
-                                .onTapGesture {
-                                    store.send(.closeSheet)
-                                }
-                        }
-
                         WithdrawModal(store: self.store)
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 775 - proxy.safeAreaInsets.bottom)
-                            .background(Color.clear)
-                            .offset(y: store.modalOffset)
-                            .animation(
-                                .easeInOut(duration: 0.3),
-                                value: store.isWithdrawSheetVisible
-                            )
                     }
                 }
             }
