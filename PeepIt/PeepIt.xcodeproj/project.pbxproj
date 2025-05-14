@@ -1135,10 +1135,10 @@
 		ABB444972CA8451D00C1EE67 /* Root */ = {
 			isa = PBXGroup;
 			children = (
+				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
 				ABB444952CA8451900C1EE67 /* RootView.swift */,
 				ABB444982CA8452900C1EE67 /* RootStore.swift */,
 				AB8772A52DD42C4300E6878D /* PathStore.swift */,
-				AB6B525A2CD7D9D200BDC985 /* LaunchScreen.swift */,
 			);
 			path = Root;
 			sourceTree = "<group>";
