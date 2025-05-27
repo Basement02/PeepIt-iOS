@@ -45,6 +45,9 @@ struct MyProfileStore {
 
         /// 핍 페이지네이션 사이즈
         var size = 15
+
+        @Shared(.fileStorage(.documentsDirectory.appending(component: "user.json")))
+        var user: UserProfile?
     }
 
     enum Action {
@@ -89,16 +92,20 @@ struct MyProfileStore {
                 state.uploadedPeepPage = 0
                 state.uploadedPeepHasNext = true
 
-                return .merge(
-                    .run { send in
-                        if let savedProfile = try? await userProfileStorage.load() {
-                            await send(.updateMyProfile(profile: savedProfile))
-                        }
-                    },
-                    .run { send in
-                        await send(.fetchUploadedPeeps)
-                    }
-                )
+//                return .merge(
+//                    .run { send in
+//                        if let savedProfile = try? await userProfileStorage.load() {
+//                            await send(.updateMyProfile(profile: savedProfile))
+//                        }
+//                    },
+//                    .run { send in
+//                        await send(.fetchUploadedPeeps)
+//                    }
+//                )
+
+                return .run { send in
+                    await send(.fetchUploadedPeeps)
+                }
 
             case .backButtonTapped:
                 return .run { _ in await self.dismiss() }

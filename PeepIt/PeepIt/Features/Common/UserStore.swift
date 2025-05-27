@@ -13,10 +13,8 @@ struct UserStore {
 
     @ObservableState
     struct State: Equatable {
-        /// 사용자 프로필 정보
-        var userProfile: UserProfile?
-        /// 사용자가 인증한 동네의 법정동 코드
-        var userBCode: String?
+        @Shared(.fileStorage(.documentsDirectory.appending(component: "user.json")))
+        var user: UserProfile?
     }
 
     enum Action {
@@ -83,9 +81,8 @@ struct UserStore {
                 }
 
             case let .updateMyProfile(profile):
-                state.userProfile = profile
-                state.userBCode = profile.townInfo?.bCode
-                
+                state.user = profile
+
                 return .send(.didFinishLoadProfile)
 
             case .didFinishLoadProfile:

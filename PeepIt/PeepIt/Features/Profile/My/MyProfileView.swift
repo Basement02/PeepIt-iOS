@@ -17,7 +17,7 @@ struct MyProfileView: View {
 
                 PeepItNavigationBar(
                     leading: backButton,
-                    title: "@\(store.myProfile?.id ?? "")"
+                    title: "@\(store.user?.id ?? "")"
                 )
 
                 ScrollView {
@@ -54,13 +54,13 @@ struct MyProfileView: View {
     
     private var profileView: some View {
         VStack(spacing: 26) {
-            AsyncProfile(profileUrlStr: store.myProfile?.profile)
+            AsyncProfile(profileUrlStr: store.user?.profile)
                 .frame(width: 91, height: 91)
                 .clipShape(RoundedRectangle(cornerRadius: 21))
 
             ZStack(alignment: .topTrailing) {
                 VStack(spacing: 11) {
-                    Text(store.myProfile?.name ?? "")
+                    Text(store.user?.name ?? "")
                     .pretendard(.title02)
 
                     HStack(spacing: 2) {
@@ -68,7 +68,7 @@ struct MyProfileView: View {
                             .resizable()
                             .frame(width: 22.4, height: 22.4)
                         Text(
-                            store.myProfile?.townInfo?.address.components(separatedBy: " ").last
+                            store.user?.townInfo?.address.components(separatedBy: " ").last
                             ?? ""
                         )
                         .pretendard(.body02)

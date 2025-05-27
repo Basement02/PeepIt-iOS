@@ -19,7 +19,6 @@ struct HomeStore {
         var sideMenu = SideMenuStore.State() // 좌측에서 등장하는 사이드메뉴 관련
         var townVerification = TownVerificationStore.State() // 동네 등록 모달 관련
         var map = HomeMapStore.State() // 지도 관련
-        var user = UserStore.State() // 유저 관련
 
         /// 핍 상세 보여주기 여부
         var showPeepDetail = false
@@ -37,6 +36,10 @@ struct HomeStore {
         /// 핍 페이지 관리
         var page = 0
         var hasNext = true
+
+        /// 저장된 유저 정보
+        @Shared(.fileStorage(.documentsDirectory.appending(component: "user.json")))
+        var user: UserProfile?
     }
 
     enum Action: BindableAction {
@@ -47,7 +50,6 @@ struct HomeStore {
         case peepPreviewModal(PeepModalStore.Action)
         case townVerification(TownVerificationStore.Action)
         case map(HomeMapStore.Action)
-        case user(UserStore.Action)
 
         /// 뷰 등장
         case onAppear
@@ -75,7 +77,6 @@ struct HomeStore {
 
     @Dependency(\.peepAPIClient) var peepAPIClient
     @Dependency(\.memberAPIClient) var memberAPIClient
-    @Dependency(\.userProfileStorage) var userProfileStorage
 
     var body: some Reducer<State, Action> {
         BindingReducer()
@@ -100,16 +101,14 @@ struct HomeStore {
             HomeMapStore()
         }
 
-        Scope(state: \.user, action: \.user) {
-            UserStore()
-        }
-
         Reduce { state, action in
 
             switch action {
 
             case .onAppear:
-                return .send(.user(.getMyProfile))
+                let coord = state.map.centerCoord
+
+                return .send(.getPeepsInMap(coord: coord, page: 0))
 
             /// 미리보기 모달 관련 처리
             case let .peepPreviewModal(.startEntryAnimation(idx, peeps)):
@@ -189,15 +188,9 @@ struct HomeStore {
             case let .map(.getMapPeepsFromCenterCoord(coord)):
                 return .send(.getPeepsInMap(coord: coord, page: 0))
 
-            /// 프로필
-            case .user(.didFinishLoadProfile):
-                let coord = state.map.centerCoord
-                
-                return .send(.getPeepsInMap(coord: coord, page: 0))
-
             case let .getPeepsInMap(coord, page):
 
-                guard let bCode = state.user.userBCode else {
+                guard let bCode = state.user?.townInfo?.bCode else {
                     print("동네 인증 정보 없음")
                     return .none
                 }
