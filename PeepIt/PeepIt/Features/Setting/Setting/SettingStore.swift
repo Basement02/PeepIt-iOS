@@ -36,7 +36,27 @@ struct SettingStore {
         /// 탈퇴 버튼 보여주기 여부
         var isWithdrawActivated = false
 
-        /// 설정 종류
+        /// 본인 인증 여부
+        var isCertificated = false
+
+        enum AccountSettingType: String, CaseIterable {
+            case certification = "본인 인증"
+            case block = "차단한 계정"
+            case withdraw = "탈퇴하기"
+
+            func destinationState() -> RootStore.Path.State? {
+                switch self {
+                case .certification:
+                    return .inputPhoneNumber(AuthenticationStore.State())
+                case .block:
+                    return .blockList(BlockListStore.State())
+                case .withdraw:
+                    return nil
+                }
+            }
+        }
+
+        /// 서비스 설정 종류
         enum ServiceTermType: String, CaseIterable {
             case alarm = "알림 설정"
             case guide = "이용 안내"

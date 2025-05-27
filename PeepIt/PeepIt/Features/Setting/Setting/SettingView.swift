@@ -18,7 +18,7 @@ struct SettingView: View {
                     ZStack(alignment: .bottom) {
                         VStack(spacing: 0) {
                             PeepItNavigationBar(
-                                leading: backButton,
+                                leading: BackButton { store.send(.backButtonTapped) },
                                 title: "설정"
                             )
                             .padding(.bottom, 39)
@@ -46,12 +46,6 @@ struct SettingView: View {
                     }
                 }
             }
-        }
-    }
-
-    private var backButton: some View {
-        BackButton {
-            store.send(.backButtonTapped)
         }
     }
 
@@ -84,21 +78,66 @@ struct SettingView: View {
         .background(Color.base)
     }
 
+    private var certificatedIcon: some View {
+        HStack {
+            Text("본인인증")
+                .pretendard(.foodnote)
+                .padding(.leading, 11)
+
+            Spacer()
+
+            HStack(spacing: 2) {
+                Image("IconSafety")
+                    .resizable()
+                    .frame(width: 21, height: 21)
+
+                Text("완료")
+            }
+            .pretendard(.caption03)
+            .foregroundStyle(Color.coreLime)
+        }
+        .frame(height: 21)
+    }
+
     private var accountSettingList: some View {
         VStack(spacing: 32) {
             accountView
 
-            NavigationLink(
-                state: RootStore.Path.State.blockList(BlockListStore.State())
-            ) {
-                menuView(title: "차단한 계정")
-            }
-            .foregroundStyle(Color.white)
+            ForEach(
+                Array(zip(SettingStore.State.AccountSettingType.allCases.indices,
+                          SettingStore.State.AccountSettingType.allCases)
+                ), id: \.0
+            ) { idx, item in
+                Group {
+                    switch item {
 
-            menuView(title: "탈퇴하기")
-                .onTapGesture {
-                    store.send(.openWithdrawSheet)
+                    case .certification:
+                        if store.isCertificated {
+                            certificatedIcon
+                        } else {
+                            NavigationLink(
+                                state: RootStore.Path.State.inputPhoneNumber(AuthenticationStore.State())
+                            ) {
+                                menuView(title: "본인인증")
+                            }
+                        }
+
+                    case .withdraw:
+                        menuView(title: "탈퇴하기")
+                            .onTapGesture { store.send(.openWithdrawSheet) }
+
+                    default:
+                        if let dest = item.destinationState() {
+                            NavigationLink(state: dest) {
+                                menuView(title: item.rawValue)
+                            }
+                        } else {
+                            EmptyView()
+                        }
+                    }
                 }
+                .foregroundStyle(Color.white)
+            }
         }
     }
 
